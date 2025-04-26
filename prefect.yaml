@@ -1,0 +1,9 @@
+
+prefect-version: 2.14.10
+
+deployments:
+- name: sync-diarco
+  entrypoint: flows/sync_diarco_flow.py:sync_diarco_flow
+  work_pool:
+    name: default-agent-pool
+    work_queue_name: default

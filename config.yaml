@@ -1,0 +1,9 @@
+
+# Configuración básica para Prefect DIARCO
+default:
+  postgres:
+    host: localhost
+    port: 5432
+    dbname: connexa_staging
+    user: usuario
+    password: clave
