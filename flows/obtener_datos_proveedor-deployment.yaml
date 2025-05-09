@@ -1,0 +1,5 @@
+name: Obtener Datos Proveedor
+entrypoint: obtener_datos_proveedor.py:capturar_datos_proveedores
+work_pool:
+  name: dmz-pool
+  work_queue_name: default

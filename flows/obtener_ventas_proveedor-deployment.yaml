@@ -1,0 +1,5 @@
+name: Obtener Ventas Proveedor
+entrypoint: obtener_ventas_proveedor.py:capturar_ventas_proveedores
+work_pool:
+  name: dmz-pool
+  work_queue_name: default

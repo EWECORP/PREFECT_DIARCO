@@ -1,0 +1,5 @@
+name: Replicación Parametrizada Excel
+entrypoint: replicacion_parametrizada_excel.py:replicacion_parametrizada_excel
+work_pool:
+  name: dmz-pool
+  work_queue_name: default

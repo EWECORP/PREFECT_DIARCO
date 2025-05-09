@@ -1,4 +1,6 @@
 
+# Rutina para Obtener ARTICULOS y VENTAS por LISTA de PROVEEDORES (Parámetros)
+
 import os
 import sys
 import pandas as pd
@@ -34,8 +36,10 @@ PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 
 # Crear engine SQL Server
-sql_engine_str = f"mssql+pyodbc://{SQL_USER}:{SQL_PASSWORD}@{SQL_SERVER}/{SQL_DATABASE}?driver=ODBC+Driver+17+for+SQL+Server"
-data_sync = create_engine(sql_engine_str)
+def open_sql_conn():
+    print(f"Conectando a SQL Server: {SQL_SERVER}")
+    print(f"Conectando a SQL Server: {SQL_DATABASE}") 
+    return create_engine(f"mssql+pyodbc://{SQL_USER}:{SQL_PASSWORD}@{SQL_SERVER}/{SQL_DATABASE}?driver=ODBC+Driver+17+for+SQL+Server")
 
 def open_pg_conn():
     return pg2.connect(dbname=PG_DB, user=PG_USER, password=PG_PASSWORD, host=PG_HOST, port=PG_PORT)
@@ -56,6 +60,10 @@ def infer_postgres_types(df):
 @task(name="cargar_articulos_proveedor_pg")
 def cargar_articulos_proveedores(lista_ids):
     ids = ','.join(map(str, lista_ids))
+    
+    runlogger = get_run_logger()
+    runlogger.info(f"-> Generando Articulos y Pendientes para IDs: {ids}")
+    runlogger.debug("Este es un mensaje de depuración desde una tarea.")
     print(f"-> Generando datos para ID: {ids}")
 
     # ----------------------------------------------------------------
@@ -128,9 +136,10 @@ def cargar_articulos_proveedores(lista_ids):
     ORDER BY S.[C_ARTICULO],S.[C_SUCU_EMPR];
     """
     # logger.info(f"---->  QUERY: {query}")
-    
+    data_sync = open_sql_conn()
     df = pd.read_sql(query, data_sync)
     logger.info(f"{len(df)} filas leídas de los Proveedores {ids}")
+    runlogger.info(f"{len(df)} filas leídas de los Proveedores {ids}")
     conn = open_pg_conn()
     cur = conn.cursor()
     table_name = f"src.Base_Forecast_Articulos"
@@ -144,7 +153,7 @@ def cargar_articulos_proveedores(lista_ids):
     conn.commit()
     cur.close()
     conn.close()
-    logger.info(f"Datos cargados en PostgreSQL → {table_name}")
+    runlogger.info(f"Datos cargados en PostgreSQL → {table_name}")
     return df
 
 
@@ -152,6 +161,9 @@ def cargar_articulos_proveedores(lista_ids):
 def cargar_ventas_proveedores(lista_ids):
     ids = ','.join(map(str, lista_ids))
     print(f"-> Generando datos cd ventas para ID: {ids}")
+    runlogger = get_run_logger()
+    runlogger.info(f"-> Generando Ventas para IDs: {ids}")
+    runlogger.debug("Este es un mensaje de depuración desde una tarea.")
 
     # ----------------------------------------------------------------
     # FILTRA solo PRODUCTOS HABILITADOS y Traer datos de STOCK y PENDIENTES desde PRODUCCIÓN
@@ -179,9 +191,10 @@ def cargar_ventas_proveedores(lista_ids):
         """
         
     # logger.info(f"---->  QUERY: {query}")
-    
+    data_sync = open_sql_conn()
     df = pd.read_sql(query, data_sync)
     logger.info(f"{len(df)} filas leídas del Proveedor {ids}")
+    
     conn = open_pg_conn()
     cur = conn.cursor()
     table_name = f"src.Base_Forecast_Ventas"
@@ -196,6 +209,7 @@ def cargar_ventas_proveedores(lista_ids):
     cur.close()
     conn.close()
     logger.info(f"Datos cargados en PostgreSQL → {table_name}")
+    runlogger.info(f"Datos cargados en PostgreSQL → {table_name}")
     return df
 
 

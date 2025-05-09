@@ -1,5 +1,5 @@
 
-# Rutina para actualizar el SURTIDO, PENDIENTES y STOCK de los artículos por PROVEEDOR (Parámetros)
+# Rutina para obtener Base_Forecast_Stock de los artículos por PROVEEDOR (Parámetros)
 
 import os
 import sys
@@ -69,80 +69,63 @@ def infer_postgres_types(df):
     return ", ".join(col_defs)
 
     
-@task(name="cargar_articulos_proveedor_pg")
-def cargar_articulos_proveedores(lista_ids):
+@task(name="cargar_stock_proveedores_pg")
+def cargar_stock_proveedores_pg(lista_ids):
     ids = ','.join(map(str, lista_ids))
     print(f"-> Generando datos para ID: {ids}")
-
     # ----------------------------------------------------------------
     # FILTRA solo PRODUCTOS HABILITADOS y Traer datos de STOCK y PENDIENTES desde PRODUCCIÓN
     # ----------------------------------------------------------------
-    query = f"""
-    SELECT A.[C_PROVEEDOR_PRIMARIO]
-        ,S.[C_ARTICULO]
-        ,S.[C_SUCU_EMPR]
-        ,S.[I_PRECIO_VTA]
-        ,S.[I_COSTO_ESTADISTICO]
-        ,S.[Q_FACTOR_VTA_SUCU]
-        ,S.[Q_BULTOS_PENDIENTE_OC]-- OJO esto está en BULTOS DIARCO
-        ,S.[Q_PESO_PENDIENTE_OC]
-        ,S.[Q_UNID_PESO_PEND_RECEP_TRANSF]
-        ,ST.Q_UNID_ARTICULO AS Q_STOCK_UNIDADES-- Stock Cierre Dia Anterior
-        ,ST.Q_PESO_ARTICULO AS Q_STOCK_PESO
-        ,S.[M_OFERTA_SUCU]
-        ,S.[M_HABILITADO_SUCU]
-        ,S.[M_FOLDER]
-        ,A.M_BAJA  --- Puede no ser necesaria al hacer inner
-        ,S.[F_ULTIMA_VTA]
-        ,S.[Q_VTA_ULTIMOS_15DIAS]-- OJO esto está en BULTOS DIARCO
-        ,S.[Q_VTA_ULTIMOS_30DIAS]-- OJO esto está en BULTOS DIARCO
-        ,S.[Q_TRANSF_PEND]-- OJO esto está en BULTOS DIARCO
-        ,S.[Q_TRANSF_EN_PREP]-- OJO esto está en BULTOS DIARCO
-        --- ,A.[N_ARTICULO]
-        ,A.[C_FAMILIA]
-        ,A.[C_RUBRO]
-        ,A.[C_CLASIFICACION_COMPRA] -- ojo nombre erroneo en la contratabla
-        ,(R.[Q_VENTA_30_DIAS] + R.[Q_VENTA_15_DIAS]) AS Q_VENTA_ACUM_30 -- OJO esto está en BULTOS DIARCO
-        ,R.[Q_DIAS_CON_STOCK] -- Cantidad de dias para promediar venta diaria
-        ,R.[Q_REPONER] -- OJO esto está en BULTOS DIARCO
-        ,R.[Q_REPONER_INCLUIDO_SOBRE_STOCK]-- OJO esto está en BULTOS DIARCO (Venta Promedio * Comprar Para + Lead Time - STOCK - PEND, OC)
-            --- Ojo la venta promerio excluye  las oferta para no alterar el promedio
-        ,R.[Q_VENTA_DIARIA_NORMAL]-- OJO esto está en BULTOS DIARCO
-        ,R.[Q_DIAS_STOCK]
-        ,R.[Q_DIAS_SOBRE_STOCK]
-        ,R.[Q_DIAS_ENTREGA_PROVEEDOR]
-        ,AP.[Q_FACTOR_PROVEEDOR]
-        ,AP.[U_PISO_PALETIZADO]
-        ,AP.[U_ALTURA_PALETIZADO]
-        ,CCP.[I_LISTA_CALCULADO]
-        ,GETDATE() as Fecha_Procesado
-        ,0 as Marca_Procesado
+    query = f"""              
+        SELECT 
+            A.[C_PROVEEDOR_PRIMARIO] AS Codigo_Proveedor,
+            S.[C_ARTICULO] AS Codigo_Articulo,
+            S.[C_SUCU_EMPR] AS Codigo_Sucursal,
+            S.[I_PRECIO_VTA] AS Precio_Venta,
+            S.[I_COSTO_ESTADISTICO] AS Precio_Costo,
+            S.[Q_FACTOR_VTA_SUCU] AS Factor_Venta,
+            ST.Q_UNID_ARTICULO + ST.Q_PESO_ARTICULO AS Stock_Unidades, -- Stock Cierre Día Anterior            
+            (R.[Q_VENTA_30_DIAS] + R.[Q_VENTA_15_DIAS]) * S.[Q_FACTOR_VTA_SUCU] AS Venta_Unidades_30_Dias, -- OJO convertida desde BULTOS DIARCO            
+            (ST.Q_UNID_ARTICULO + ST.Q_PESO_ARTICULO) * S.[I_COSTO_ESTADISTICO] AS Stock_Valorizado, -- Stock Cierre Día Anterior            
+            (R.[Q_VENTA_30_DIAS] + R.[Q_VENTA_15_DIAS]) * S.[Q_FACTOR_VTA_SUCU] * S.[I_COSTO_ESTADISTICO] AS Venta_Valorizada,
             
-    FROM [DIARCOP001].[DiarcoP].[dbo].[T051_ARTICULOS_SUCURSAL] S
-    INNER JOIN [DIARCOP001].[DiarcoP].[dbo].[T050_ARTICULOS] A
-        ON A.[C_ARTICULO] = S.[C_ARTICULO]
-    LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T060_STOCK] ST
-        ON ST.C_ARTICULO = S.[C_ARTICULO] 
-        AND ST.C_SUCU_EMPR = S.[C_SUCU_EMPR]
+            CASE 
+                WHEN (ISNULL(R.[Q_VENTA_30_DIAS], 0) + ISNULL(R.[Q_VENTA_15_DIAS], 0)) * ISNULL(S.[Q_FACTOR_VTA_SUCU], 0) * ISNULL(S.[I_COSTO_ESTADISTICO], 0) = 0 THEN NULL
+                ELSE 
+                    ROUND(
+                        ((ISNULL(ST.Q_UNID_ARTICULO,0) + ISNULL(ST.Q_PESO_ARTICULO,0)) * ISNULL(S.[I_COSTO_ESTADISTICO],0)) / 
+                        NULLIF(
+                            (ISNULL(R.[Q_VENTA_30_DIAS],0) + ISNULL(R.[Q_VENTA_15_DIAS],0)) * ISNULL(S.[Q_FACTOR_VTA_SUCU],0) * ISNULL(S.[I_COSTO_ESTADISTICO],0),
+                            0
+                        ), 
+                        0
+                    ) * 30
+            END AS Dias_Stock,
+            
+            S.[F_ULTIMA_VTA],            
+            S.[Q_VTA_ULTIMOS_15DIAS] * S.[Q_FACTOR_VTA_SUCU] AS VENTA_UNIDADES_1Q, -- OJO esto está en BULTOS DIARCO
+            S.[Q_VTA_ULTIMOS_30DIAS] * S.[Q_FACTOR_VTA_SUCU] AS VENTA_UNIDADES_2Q -- OJO esto está en BULTOS DIARCO
 
-    LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T052_ARTICULOS_PROVEEDOR] AP
-        ON A.[C_PROVEEDOR_PRIMARIO] = AP.[C_PROVEEDOR]
-            AND S.[C_ARTICULO] = AP.[C_ARTICULO]
-    LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T055_ARTICULOS_CONDCOMPRA_COSTOS] CCP
-        ON A.[C_PROVEEDOR_PRIMARIO] = CCP.[C_PROVEEDOR]
-            AND S.[C_ARTICULO] = CCP.[C_ARTICULO]
-            AND S.[C_SUCU_EMPR] = CCP.[C_SUCU_EMPR]
+        FROM [DIARCOP001].[DiarcoP].[dbo].[T051_ARTICULOS_SUCURSAL] S
+        INNER JOIN [DIARCOP001].[DiarcoP].[dbo].[T050_ARTICULOS] A
+            ON A.[C_ARTICULO] = S.[C_ARTICULO]
+        LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T060_STOCK] ST
+            ON ST.C_ARTICULO = S.[C_ARTICULO] 
+            AND ST.C_SUCU_EMPR = S.[C_SUCU_EMPR]
+        LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T710_ESTADIS_REPOSICION] R
+            ON R.[C_ARTICULO] = S.[C_ARTICULO]
+            AND R.[C_SUCU_EMPR] = S.[C_SUCU_EMPR]
 
-    LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T710_ESTADIS_REPOSICION] R
-        ON R.[C_ARTICULO] = S.[C_ARTICULO]
-        AND R.[C_SUCU_EMPR] = S.[C_SUCU_EMPR]
+        WHERE 
+            S.[M_HABILITADO_SUCU] = 'S' -- Permitido Reponer
+            AND A.M_BAJA = 'N'          -- Activo en Maestro Artículos
+            AND A.[C_PROVEEDOR_PRIMARIO] IN ( {ids} ) -- Solo del Proveedor
 
-    WHERE S.[M_HABILITADO_SUCU] = 'S' -- Permitido Reponer
-        AND A.M_BAJA = 'N'  -- Activo en Maestro Artículos
-        AND A.[C_PROVEEDOR_PRIMARIO] IN ( {ids} )-- Solo del Proveedor
-    
-    ORDER BY S.[C_ARTICULO],S.[C_SUCU_EMPR];
+        ORDER BY 
+            S.[C_ARTICULO],
+            S.[C_SUCU_EMPR];
     """
+
     # logger.info(f"---->  QUERY: {query}")
     data_sync = open_sql_conn()    
     df = pd.read_sql(query, data_sync)
@@ -150,7 +133,7 @@ def cargar_articulos_proveedores(lista_ids):
     # Reemplazar en PostgreSQL la Base de Estimación para FORECAST
     conn = open_pg_conn()
     cur = conn.cursor()
-    table_name = f"src.Base_Forecast_Articulos"
+    table_name = f"src.Base_Forecast_Stock"
     columns = ', '.join(df.columns)
     cur.execute(f"DROP TABLE IF EXISTS {table_name} CASCADE")
     create_sql = f"CREATE TABLE {table_name} ({infer_postgres_types(df)})"
@@ -165,15 +148,15 @@ def cargar_articulos_proveedores(lista_ids):
     return df
 
 
-@flow(name="capturar_articulos_proveedores")
-def capturar_articulos_proveedores(lista_ids: list = [1074, 190, 20, 174]):
+@flow(name="capturar_stock_proveedores")
+def capturar_stock_proveedores(lista_ids: list = [1074, 190, 20, 174]):
     log = get_run_logger()
     try:
-        filas_art = cargar_articulos_proveedores.with_options(name="Carga Artículos").submit(lista_ids).result()
-        log.info(f"Artículos: {filas_art} filas insertadas")
+        filas_art = cargar_stock_proveedores_pg.with_options(name="Carga Stock").submit(lista_ids).result()
+        log.info(f"Stock Artículos: {filas_art} filas insertadas")
     except Exception as e:
         log.error(f"Error cargando artículos: {e}")
 
 if __name__ == "__main__":
-    capturar_articulos_proveedores()
+    capturar_stock_proveedores()
     logger.info("--------------->  Flujo de replicación FINALIZADO.")

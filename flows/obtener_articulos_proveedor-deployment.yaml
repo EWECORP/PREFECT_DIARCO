@@ -1,0 +1,5 @@
+name: Obtener Artículos Proveedor
+entrypoint: obtener_articulos_proveedor.py:capturar_articulos_proveedores
+work_pool:
+  name: dmz-pool
+  work_queue_name: default

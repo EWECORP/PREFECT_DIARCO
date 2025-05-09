@@ -1,0 +1,13 @@
+name: Actualizar Stock
+flow_name: actualizar_stock_historico
+entrypoint: actualizar_stock_historico.py:capturar_stock_articulos
+parameters: {}
+work_pool:
+  name: dmz-pool
+  work_queue_name: null
+  job_variables: {}
+schedule: null
+tags: []
+description: "Deployment para ejecutar la rutina de stock desde cliente DMZ"
+version: null
+infra_overrides: {}
