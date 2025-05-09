@@ -214,7 +214,7 @@ def cargar_ventas_proveedores(lista_ids):
 
 
 @flow(name="capturar_datos_proveedores")
-def capturar_datos_proveedores(lista_ids: list = [1074, 190, 20, 174]):
+def capturar_datos_proveedores(lista_ids: list = [ 190, 2676, 3835, 6363,  20, 1074]):
     log = get_run_logger()
     try:
         filas_art = cargar_articulos_proveedores.with_options(name="Carga Artículos").submit(lista_ids).result()

@@ -123,7 +123,7 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
 
 
 @flow(name="capturar_oc_demoradas_proveedores")
-def capturar_oc_demoradas_proveedores(lista_ids: list = [1074, 190, 20, 174]):
+def capturar_oc_demoradas_proveedores(lista_ids: list = [190, 2676, 3835, 6363,  20, 1074]):
     log = get_run_logger()
     try:
         filas_art = cargar_oc_demoradas_proveedores_pg.with_options(name="Carga Stock").submit(lista_ids).result()

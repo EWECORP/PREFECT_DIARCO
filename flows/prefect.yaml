@@ -32,25 +32,38 @@ pull:
 #     work_queue_name: null
 #     job_variables: {}
 
-
 deployments:
-  - name: deployment-STOCK
-    flow_name: capturar_stock_articulos    
-    entrypoint: obtener_actualizar_stock.py:capturar_stock_articulos
-    work_pool:
-      name: dmz-pool
-      work_queue_name: stock-queue
-
   - name: deployment-ARTICULOS
     flow_name: obtener_articulos_proveedor
-    entrypoint: obtener_articulos_proveedor.py:obtener_articulos_proveedor
+    entrypoint: obtener_articulos_proveedor.py:capturar_articulos_proveedores
     work_pool:
       name: dmz-pool
       work_queue_name: articulos-queue
 
   - name: deployment-VENTAS
     flow_name: obtener_ventas_proveedor
-    entrypoint: obtener_ventas_proveedor.py:obtener_ventas_proveedor
+    entrypoint: obtener_ventas_proveedor.py:capturar_ventas_proveedores
     work_pool:
       name: dmz-pool
       work_queue_name: ventas-queue
+
+  - name: deployment-STOCK
+    flow_name: obtener_stock_proveedor    
+    entrypoint: obtener_stock_proveedor.py:capturar_stock_proveedores
+    work_pool:
+      name: dmz-pool
+      work_queue_name: stock-queue
+  
+  - name: deployment-PRECIOS
+    flow_name: obtener_precios_proveedor  
+    entrypoint: obtener_precios_proveedor.py:capturar_precios_proveedores
+    work_pool:
+      name: dmz-pool
+      work_queue_name: precios-queue
+    
+  - name: deployment-OC_DEMORADA
+    flow_name: obtener_oc_demoradas_proveedor  
+    entrypoint: obtener_oc_demoradas_proveedor.py:capturar_oc_demoradas_proveedores
+    work_pool:
+      name: dmz-pool
+      work_queue_name: OC_Demoradas-queue

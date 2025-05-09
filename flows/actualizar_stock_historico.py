@@ -203,10 +203,11 @@ def cargar_stock_articulos_PG():
     logger.info(f"Datos cargados en PostgreSQL → {table_name}, total {total_rows} registros")
     return total_rows
 
-# Cargar datos en PostgreSQL
+# Cargar datos en PostgreSQL PRIMERA VEZ
 @task(name="replicar_matriz_stock_PG")
 def replicar_matriz_stock_PG():
-    query4 = "SELECT * FROM [repl].[T710_ESTADIS_STOCK]"
+    query4 = "SELECT * FROM [repl].[T710_ESTADIS_STOCK] WHERE C_ANIO * 100 + C_MES > 202406;"
+
     table_name = "src.t710_estadis_stock"
     chunk_size = 50000
     total_rows = 0
