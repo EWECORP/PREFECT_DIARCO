@@ -1,0 +1,18 @@
+name: replicacion_oc_diaria
+flow_name: flujo_replicacion_oc
+tags: [replicacion, ordenes-compra]
+description: >
+  Flujo encadenado que replica las órdenes de compra (T080_OC_CABE) y sus líneas (T081_OC_DETA) 
+  desde el origen legado hacia el esquema repl, manteniendo consistencia y trazabilidad.
+schedule:
+  cron: "0 5 * * *"  # Todos los días a las 5 AM
+  timezone: "America/Argentina/Buenos_Aires"
+infrastructure:
+  type: process
+  env: {}
+  labels: []
+parameters: {}
+work_pool:
+  name: dmz-diarco
+  work_queue_name: default
+  job_variables: {}

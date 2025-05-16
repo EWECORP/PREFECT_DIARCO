@@ -118,7 +118,7 @@ def cargar_precios_proveedores_pg(lista_ids):
 
 
 @flow(name="capturar_precios_proveedores")
-def capturar_precios_proveedores(lista_ids: list = [ 190, 2676, 3835, 6363,  20, 1074]):
+def capturar_precios_proveedores(lista_ids):
     log = get_run_logger()
     try:
         filas_art = cargar_precios_proveedores_pg.with_options(name="Carga Precios").submit(lista_ids).result()
@@ -127,5 +127,6 @@ def capturar_precios_proveedores(lista_ids: list = [ 190, 2676, 3835, 6363,  20,
         log.error(f"Error cargando Precios: {e}")
 
 if __name__ == "__main__":
-    capturar_precios_proveedores()
+    ids = list(map(int, sys.argv[1:]))  # ← lee los proveedores como argumentos
+    capturar_precios_proveedores(ids)
     logger.info("--------------->  Flujo de replicación FINALIZADO.")

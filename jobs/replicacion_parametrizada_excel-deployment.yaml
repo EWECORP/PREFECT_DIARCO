@@ -1,0 +1,12 @@
+name: Replicación Parametrizada
+flow_name: replicacion_parametrizada_excel
+entrypoint: scripts/push/replicacion_parametrizada_excel.py:replicacion_parametrizada_excel
+parameters: {}
+work_pool:
+  name: dmz-diarco
+  work_queue_name: transacionales-queue
+schedule: null
+tags: ['replicacion', 'parametrizada']
+description: "Ejecuta replicación de tablas según parámetros definidos en Excel"
+version: null
+infra_overrides: {}

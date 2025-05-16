@@ -1,0 +1,5 @@
+name: Actualizar Stock
+entrypoint: obtener_actualizar_stock.py:capturar_stock_articulos
+work_pool:
+  name: dmz-pool
+  work_queue_name: default

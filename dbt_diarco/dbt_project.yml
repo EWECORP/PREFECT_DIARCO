@@ -1,0 +1,23 @@
+name: 'dbt_diarco'
+version: '1.0'
+config-version: 2
+
+profile: 'diarco_postgres'
+
+model-paths: ['models']
+seed-paths: ['seeds']
+test-paths: ['tests']
+snapshot-paths: ['snapshots']
+
+models:
+  dbt_diarco:
+    src:
+      materialized: view
+    stg:
+      materialized: view
+    int:
+      materialized: view
+    mart:
+      materialized: table
+    meta:
+      materialized: table

@@ -1,0 +1,12 @@
+name: Actualizar Stock Histórico
+flow_name: actualizar_stock_historico
+entrypoint: scripts/push/actualizar_stock_historico.py:capturar_stock_articulos
+parameters: {}
+work_pool:
+  name: dmz-diarco
+  work_queue_name: stock-queue
+schedule: null
+tags: ['stock', 'historico']
+description: "Actualiza stock histórico de artículos desde sistemas legacy"
+version: null
+infra_overrides: {}

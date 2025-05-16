@@ -1,0 +1,12 @@
+name: Obtener Datos Proveedor
+flow_name: capturar_datos_proveedores
+entrypoint: scripts/push/obtener_datos_proveedor.py:capturar_datos_proveedores
+parameters: {}
+work_pool:
+  name: dmz-diarco
+  work_queue_name: maestros-queue
+schedule: null
+tags: ['proveedores', 'metadata']
+description: "Captura metadatos generales de proveedores"
+version: null
+infra_overrides: {}

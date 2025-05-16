@@ -1,0 +1,12 @@
+name: Obtener Ventas Proveedor
+flow_name: capturar_ventas_proveedores
+entrypoint: scripts/push/obtener_ventas_proveedor.py:capturar_ventas_proveedores
+parameters: {}
+work_pool:
+  name: dmz-diarco
+  work_queue_name: ventas-queue
+schedule: null
+tags: ['ventas', 'proveedores']
+description: "Obtiene las ventas históricas por proveedor, artículo y sucursal"
+version: null
+infra_overrides: {}

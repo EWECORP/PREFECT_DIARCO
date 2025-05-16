@@ -164,9 +164,8 @@ def cargar_articulos_proveedores(lista_ids):
     logger.info(f"Datos cargados en PostgreSQL → {table_name}")
     return df
 
-
 @flow(name="capturar_articulos_proveedores")
-def capturar_articulos_proveedores(lista_ids: list = [ 190, 2676, 3835, 6363,  20, 1074]):
+def capturar_articulos_proveedores(lista_ids):
     log = get_run_logger()
     try:
         filas_art = cargar_articulos_proveedores.with_options(name="Carga Artículos").submit(lista_ids).result()
@@ -175,5 +174,6 @@ def capturar_articulos_proveedores(lista_ids: list = [ 190, 2676, 3835, 6363,  2
         log.error(f"Error cargando artículos: {e}")
 
 if __name__ == "__main__":
-    capturar_articulos_proveedores()
+    ids = list(map(int, sys.argv[1:]))  # ← lee los proveedores como argumentos
+    capturar_articulos_proveedores(ids)
     logger.info("--------------->  Flujo de replicación FINALIZADO.")

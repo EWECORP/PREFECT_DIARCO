@@ -1,5 +1,5 @@
 
-# Rutina para obtener Base_Forecast_Oc_Demoradas por PROVEEDOR (Parámetros)
+# Rutina para obtener Base_Forecast_Stock de los artículos por PROVEEDOR (Parámetros)
 
 import os
 import sys
@@ -69,35 +69,61 @@ def infer_postgres_types(df):
     return ", ".join(col_defs)
 
     
-@task(name="cargar_oc_demoradas_proveedores_pg")
-def cargar_oc_demoradas_proveedores_pg(lista_ids):
+@task(name="cargar_stock_proveedores_pg")
+def cargar_stock_proveedores_pg(lista_ids):
     ids = ','.join(map(str, lista_ids))
     print(f"-> Generando datos para ID: {ids}")
     # ----------------------------------------------------------------
-    # FILTRA Ordenes de Compra Demoradas por Proveedor
+    # FILTRA solo PRODUCTOS HABILITADOS y Traer datos de STOCK y PENDIENTES desde PRODUCCIÓN
     # ----------------------------------------------------------------
     query = f"""              
-        SELECT  [C_OC]
-            ,[U_PREFIJO_OC]
-            ,[U_SUFIJO_OC]      
-            ,[U_DIAS_LIMITE_ENTREGA]
-            , DATEADD(DAY, [U_DIAS_LIMITE_ENTREGA], [F_ENTREGA]) as FECHA_LIMITE
-            , DATEDIFF (DAY, DATEADD(DAY, [U_DIAS_LIMITE_ENTREGA], [F_ENTREGA]), GETDATE()) as Demora
-            ,[C_PROVEEDOR] as Codigo_Proveedor
-            ,[C_SUCU_COMPRA] as Codigo_Sucursal
-            ,[C_SUCU_DESTINO]
-            ,[C_SUCU_DESTINO_ALT]
-            ,[C_SITUAC]
-            ,[F_SITUAC]
-            ,[F_ALTA_SIST]
-            ,[F_EMISION]
-            ,[F_ENTREGA]    
-            ,[C_USUARIO_OPERADOR]    
+        SELECT 
+            A.[C_PROVEEDOR_PRIMARIO] AS Codigo_Proveedor,
+            S.[C_ARTICULO] AS Codigo_Articulo,
+            S.[C_SUCU_EMPR] AS Codigo_Sucursal,
+            S.[I_PRECIO_VTA] AS Precio_Venta,
+            S.[I_COSTO_ESTADISTICO] AS Precio_Costo,
+            S.[Q_FACTOR_VTA_SUCU] AS Factor_Venta,
+            ST.Q_UNID_ARTICULO + ST.Q_PESO_ARTICULO AS Stock_Unidades, -- Stock Cierre Día Anterior            
+            (R.[Q_VENTA_30_DIAS] + R.[Q_VENTA_15_DIAS]) * S.[Q_FACTOR_VTA_SUCU] AS Venta_Unidades_30_Dias, -- OJO convertida desde BULTOS DIARCO            
+            (ST.Q_UNID_ARTICULO + ST.Q_PESO_ARTICULO) * S.[I_COSTO_ESTADISTICO] AS Stock_Valorizado, -- Stock Cierre Día Anterior            
+            (R.[Q_VENTA_30_DIAS] + R.[Q_VENTA_15_DIAS]) * S.[Q_FACTOR_VTA_SUCU] * S.[I_COSTO_ESTADISTICO] AS Venta_Valorizada,
             
-        FROM [DIARCOP001].[DiarcoP].[dbo].[T080_OC_CABE]  
-        WHERE [C_SITUAC] = 1
-        AND C_PROVEEDOR IN ( {ids} )
-        AND DATEADD(DAY, [U_DIAS_LIMITE_ENTREGA], [F_ENTREGA]) < GETDATE();
+            CASE 
+                WHEN (ISNULL(R.[Q_VENTA_30_DIAS], 0) + ISNULL(R.[Q_VENTA_15_DIAS], 0)) * ISNULL(S.[Q_FACTOR_VTA_SUCU], 0) * ISNULL(S.[I_COSTO_ESTADISTICO], 0) = 0 THEN NULL
+                ELSE 
+                    ROUND(
+                        ((ISNULL(ST.Q_UNID_ARTICULO,0) + ISNULL(ST.Q_PESO_ARTICULO,0)) * ISNULL(S.[I_COSTO_ESTADISTICO],0)) / 
+                        NULLIF(
+                            (ISNULL(R.[Q_VENTA_30_DIAS],0) + ISNULL(R.[Q_VENTA_15_DIAS],0)) * ISNULL(S.[Q_FACTOR_VTA_SUCU],0) * ISNULL(S.[I_COSTO_ESTADISTICO],0),
+                            0
+                        ), 
+                        0
+                    ) * 30
+            END AS Dias_Stock,
+            
+            S.[F_ULTIMA_VTA],            
+            S.[Q_VTA_ULTIMOS_15DIAS] * S.[Q_FACTOR_VTA_SUCU] AS VENTA_UNIDADES_1Q, -- OJO esto está en BULTOS DIARCO
+            S.[Q_VTA_ULTIMOS_30DIAS] * S.[Q_FACTOR_VTA_SUCU] AS VENTA_UNIDADES_2Q -- OJO esto está en BULTOS DIARCO
+
+        FROM [DIARCOP001].[DiarcoP].[dbo].[T051_ARTICULOS_SUCURSAL] S
+        INNER JOIN [DIARCOP001].[DiarcoP].[dbo].[T050_ARTICULOS] A
+            ON A.[C_ARTICULO] = S.[C_ARTICULO]
+        LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T060_STOCK] ST
+            ON ST.C_ARTICULO = S.[C_ARTICULO] 
+            AND ST.C_SUCU_EMPR = S.[C_SUCU_EMPR]
+        LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T710_ESTADIS_REPOSICION] R
+            ON R.[C_ARTICULO] = S.[C_ARTICULO]
+            AND R.[C_SUCU_EMPR] = S.[C_SUCU_EMPR]
+
+        WHERE 
+            S.[M_HABILITADO_SUCU] = 'S' -- Permitido Reponer
+            AND A.M_BAJA = 'N'          -- Activo en Maestro Artículos
+            AND A.[C_PROVEEDOR_PRIMARIO] IN ( {ids} ) -- Solo del Proveedor
+
+        ORDER BY 
+            S.[C_ARTICULO],
+            S.[C_SUCU_EMPR];
     """
 
     # logger.info(f"---->  QUERY: {query}")
@@ -107,7 +133,7 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
     # Reemplazar en PostgreSQL la Base de Estimación para FORECAST
     conn = open_pg_conn()
     cur = conn.cursor()
-    table_name = f"src.Base_Forecast_Oc_Demoradas"
+    table_name = f"src.Base_Forecast_Stock"
     columns = ', '.join(df.columns)
     cur.execute(f"DROP TABLE IF EXISTS {table_name} CASCADE")
     create_sql = f"CREATE TABLE {table_name} ({infer_postgres_types(df)})"
@@ -122,15 +148,16 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
     return df
 
 
-@flow(name="capturar_oc_demoradas_proveedores")
-def capturar_oc_demoradas_proveedores(lista_ids: list = [190, 2676, 3835, 6363,  20, 1074]):
+@flow(name="capturar_stock_proveedores")
+def capturar_stock_proveedores(lista_ids):
     log = get_run_logger()
     try:
-        filas_art = cargar_oc_demoradas_proveedores_pg.with_options(name="Carga Stock").submit(lista_ids).result()
-        log.info(f"OC Demoradas: {filas_art} filas insertadas")
+        filas_art = cargar_stock_proveedores_pg.with_options(name="Carga Stock").submit(lista_ids).result()
+        log.info(f"Stock Artículos: {filas_art} filas insertadas")
     except Exception as e:
-        log.error(f"Error cargando registros: {e}")
+        log.error(f"Error cargando artículos: {e}")
 
 if __name__ == "__main__":
-    capturar_oc_demoradas_proveedores()
+    ids = list(map(int, sys.argv[1:]))  # ← lee los proveedores como argumentos
+    capturar_stock_proveedores(ids)
     logger.info("--------------->  Flujo de replicación FINALIZADO.")

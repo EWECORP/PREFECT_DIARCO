@@ -1,0 +1,23 @@
+name: push_datos_forecast
+flow_name: forecast_flow
+tags: [forecast, push, sincronizacion]
+description: >
+  Ejecuta en secuencia todos los scripts necesarios para alimentar Connexa
+  con datos de ventas, stock, precios y condiciones para cálculo de forecast.
+
+schedule:
+  cron: "0 6 * * *"  # Todos los días a las 6 AM
+  timezone: "America/Argentina/Buenos_Aires"
+
+infrastructure:
+  type: process
+  env: {}
+  labels: []
+
+parameters:
+  lista_ids: [20, 190, 2676, 3835, 6363, 1074]  # valor por defecto
+
+work_pool:
+  name: dmz-diarco
+  work_queue_name: obrener_datos_forecast
+  job_variables: {}

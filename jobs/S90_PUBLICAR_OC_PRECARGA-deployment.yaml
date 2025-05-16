@@ -1,0 +1,14 @@
+name: Publicar OC Precarga
+flow_name: flujo_publicar_OC_precarga
+entrypoint: scripts/pull/S90_PUBLICAR_OC_PRECARGA.py:flujo_publicar_OC_precarga
+work_pool:
+  name: dmz-pool
+  work_queue_name: default
+schedule:
+  cron: "*/10 8-17 * * 1-5"
+  timezone: "America/Argentina/Buenos_Aires"
+description: "Publicación de OC Precarga desde PostgreSQL a SQL Server cada 10 minutos de Lunes a Viernes (8-18hs)"
+parameters: {}
+tags: ["pull", "oc", "precarga"]
+version: null
+infra_overrides: {}

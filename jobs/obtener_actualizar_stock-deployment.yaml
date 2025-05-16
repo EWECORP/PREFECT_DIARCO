@@ -1,0 +1,12 @@
+name: Actualizar Stock Actual
+flow_name: capturar_stock_articulos
+entrypoint: scripts/push/obtener_actualizar_stock.py:capturar_stock_articulos
+parameters: {}
+work_pool:
+  name: dmz-diarco
+  work_queue_name: stock-queue
+schedule: null
+tags: ['stock', 'actual']
+description: "Actualiza stock actual de artículos"
+version: null
+infra_overrides: {}

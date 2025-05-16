@@ -214,7 +214,7 @@ def cargar_ventas_proveedores(lista_ids):
 
 
 @flow(name="capturar_datos_proveedores")
-def capturar_datos_proveedores(lista_ids: list = [ 190, 2676, 3835, 6363,  20, 1074]):
+def capturar_datos_proveedores(lista_ids):
     log = get_run_logger()
     try:
         filas_art = cargar_articulos_proveedores.with_options(name="Carga Artículos").submit(lista_ids).result()
@@ -230,5 +230,6 @@ def capturar_datos_proveedores(lista_ids: list = [ 190, 2676, 3835, 6363,  20, 1
 
 
 if __name__ == "__main__":
-    capturar_datos_proveedores()
+    ids = list(map(int, sys.argv[1:]))  # ← lee los proveedores como argumentos
+    capturar_datos_proveedores(ids)
     logger.info("--------------->  Flujo de replicación FINALIZADO.")

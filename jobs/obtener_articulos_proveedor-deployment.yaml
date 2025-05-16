@@ -1,0 +1,12 @@
+name: Obtener Artículos de Proveedor
+flow_name: capturar_articulos_proveedores
+entrypoint: scripts/push/obtener_articulos_proveedor.py:capturar_articulos_proveedores
+parameters: {}
+work_pool:
+  name: dmz-diarco
+  work_queue_name: articulos-queue
+schedule: null
+tags: ['articulos', 'proveedores']
+description: "Obtiene y sincroniza los artículos de cada proveedor"
+version: null
+infra_overrides: {}
