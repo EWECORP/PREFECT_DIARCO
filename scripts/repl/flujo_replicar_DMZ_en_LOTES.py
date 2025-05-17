@@ -59,11 +59,15 @@ def sync_dmz_optimizado():
     ]
     resultados = [ejecutar_sp.submit(sp) for sp in batch_rapido]
     [r.result() for r in resultados]
+    
+    logger.info(f"⏳ Ejecutando BATCH-RAPIDO - Grupo 1/6 ")
 
     # === SPs críticos (con dependencias) en serie ===
     ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL")
     ejecutar_sp("repl.usp_replicar_T052_ARTICULOS_PROVEEDOR")
     ejecutar_sp("repl.usp_replicar_T060_STOCK")
+    
+    logger.info(f"⏳ Ejecutando SP Encadenados - Grupo 2/6 ")
 
     # === Largos y pesados ===
     for sp in [
@@ -73,6 +77,7 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO",
     ]:
         ejecutar_sp(sp)
+    logger.info(f"⏳ Ejecutando ESTADISTICAS PESADAS - Grupo 3/6 ")
 
     # === Planes, condiciones, snc ===
     grupo_condiciones = [
@@ -82,6 +87,8 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T085_ARTICULOS_EAN_EDI"
     ]
     [ejecutar_sp.submit(sp) for sp in grupo_condiciones]
+
+    logger.info(f"⏳ Replicando ARTICULOS y PARAMETROS - Grupo 4/6 ")
 
     # === Tableros Metabase Varios ===
     grupo_tableros = [
@@ -95,6 +102,8 @@ def sync_dmz_optimizado():
     ]
     [ejecutar_sp.submit(sp) for sp in grupo_tableros]
 
+    logger.info(f"⏳ Replicando INFO TABLEROS - Grupo 5/6 ")
+    
     # === Competencia ===
     for sp in [
         "repl.usp_replicar_T090_COMPETENCIA",
@@ -103,7 +112,7 @@ def sync_dmz_optimizado():
     ]:
         ejecutar_sp(sp)
 
-    logger.info("🚀 Replicación DMZ Optimizada Finalizada")
+    logger.info("🚀 Replicación DMZ Optimizada Finalizada - Grupo 6/6")
 
 if __name__ == "__main__":
     sync_dmz_optimizado()

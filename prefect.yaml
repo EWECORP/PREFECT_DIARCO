@@ -7,13 +7,49 @@ pull:
 
 deployments:
   - name: publicar_oc_precarga
-    entrypoint: scripts/pull/S90_PUBLICAR_OC_PRECARGA.py:flujo_publicar_OC_precarga
+    entrypoint: scripts/pull/flujo_pull_PRECARGA_OC.py:precargar_OC_connexa
     description: "Publica las OC en estado 90 desde PostgreSQL hacia SQL Server"
     tags: ["pull", "oc", "precarga"]
     work_pool:
-      name: dmz-pool
+      name: dmz-diarco
       work_queue_name: pull-connexa
     schedule:
       cron: "*/10 8-17 * * 1-5"
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}
+
+  - name: replicar_dmz_lotes
+    entrypoint: scripts/repl/flujo_replicar_DMZ_en_LOTES.py:sync_dmz_optimizado
+    description: "Obtiene actualizaciones de los datos LEGACY en la DMZ (CDC)"
+    tags: ["repl", "dmz", "datos"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    schedule:
+      cron:  "0 5 * * *"  # Todos los días a las 5 AM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}
+
+  - name: replicar_OC_dmz
+    entrypoint: scripts/repl/flujo_replicar_OC_en_dmz.py:flujo_replicacion_oc
+    description: "Actualizar dasot de las OC en la DMZ (CDC)"
+    tags: ["repl", "dmz", "datos"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    schedule:
+      cron:  "0 5 * * *"  # Todos los días a las 5 AM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}
+
+  - name: Push_datos_para_FORECAST
+    entrypoint: scripts/push/flujo_push_datos_forecast.py:forecast_flow
+    description: "Carga Diaria de Datos de proveedores habilitados"
+    tags: ["push", "forecast", "datos"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: push-forecast
+    schedule:
+      cron:  "0 6 * * *"  # Todos los días a las 6 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}

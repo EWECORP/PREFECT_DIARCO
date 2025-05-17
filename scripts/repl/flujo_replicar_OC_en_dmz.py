@@ -1,4 +1,4 @@
-from prefect import flow, task
+from prefect import flow, task, get_run_logger
 import pyodbc
 import os
 import sys
@@ -47,9 +47,13 @@ def ejecutar_sp_detalle():
 
 @flow(name="Flujo Replicacion OC CAB + DET")
 def flujo_replicacion_oc():
+    logger = get_run_logger()
     r1 = ejecutar_sp_cabecera()
+    
+    logger.info(r1)
     if r1:
         r2 = ejecutar_sp_detalle()
+        logger.info(r2)
         return r2
 
 # Para correr el flujo manualmente

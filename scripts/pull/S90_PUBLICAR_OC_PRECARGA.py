@@ -129,7 +129,7 @@ def publicar_oc_precarga():
         FROM public.t080_oc_precarga_kikker
         WHERE m_publicado = false
         """
-        df_oc = pd.read_sql(query, conn_pg)
+        df_oc = pd.read_sql(query, conn_pg) # type: ignore
 
         if df_oc.empty:
             logging.warning("[WARNING] No hay registros pendientes de publicación")

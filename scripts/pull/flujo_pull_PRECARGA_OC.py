@@ -60,8 +60,8 @@ def ejecutar_script(nombre):
 
 
 
-@flow(name="Pull Datos desde CONNEXA")
-def forecast_flow():
+@flow(name="Pull Datos OC PRECARGA desde CONNEXA")
+def precargar_OC_connexa():
     scripts = [
         "S90_PUBLICAR_OC_PRECARGA.py"
     ]
@@ -69,7 +69,7 @@ def forecast_flow():
         ejecutar_script(script)
 
 if __name__ == "__main__":
-    forecast_flow()
+    precargar_OC_connexa()
     
     
 # 🔁 Patrón recomendado

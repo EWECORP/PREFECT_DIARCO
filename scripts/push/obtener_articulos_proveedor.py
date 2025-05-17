@@ -79,6 +79,7 @@ def cargar_articulos_proveedores(lista_ids):
     # ----------------------------------------------------------------
     query = f"""
     SELECT A.[C_PROVEEDOR_PRIMARIO]
+        ,A.[C_COMPRADOR]
         ,S.[C_ARTICULO]
         ,S.[C_SUCU_EMPR]
         ,S.[I_PRECIO_VTA]
