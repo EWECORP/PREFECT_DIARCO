@@ -84,6 +84,12 @@ def cargar_stock_proveedores_pg(lista_ids):
             S.[I_PRECIO_VTA] AS Precio_Venta,
             S.[I_COSTO_ESTADISTICO] AS Precio_Costo,
             S.[Q_FACTOR_VTA_SUCU] AS Factor_Venta,
+            A.[M_VENDE_POR_PESO],
+            CASE
+                WHEN A.[M_VENDE_POR_PESO] = 'S' THEN ST.Q_PESO_ARTICULO
+                ELSE ST.Q_UNID_ARTICULO
+            END AS Stock_Unidades, -- Stock Cierre Día Anterior 
+            
             ST.Q_UNID_ARTICULO + ST.Q_PESO_ARTICULO AS Stock_Unidades, -- Stock Cierre Día Anterior            
             (R.[Q_VENTA_30_DIAS] + R.[Q_VENTA_15_DIAS]) * S.[Q_FACTOR_VTA_SUCU] AS Venta_Unidades_30_Dias, -- OJO convertida desde BULTOS DIARCO            
             (ST.Q_UNID_ARTICULO + ST.Q_PESO_ARTICULO) * S.[I_COSTO_ESTADISTICO] AS Stock_Valorizado, -- Stock Cierre Día Anterior            

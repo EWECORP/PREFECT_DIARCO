@@ -90,6 +90,7 @@ def limpiar_campos_oc(df):
     # Números exactos
     df["u_prefijo_oc"] = pd.to_numeric(df["u_prefijo_oc"], errors="coerce").fillna(0).astype(int)
     df["u_sufijo_oc"]  = pd.to_numeric(df["u_sufijo_oc"], errors="coerce").fillna(0).astype(int)
+    df["c_comprador"]  = pd.to_numeric(df["c_comprador"], errors="coerce").fillna(0).astype(int)
 
     # Timestamps (permitimos NaT)
     df["f_genero_oc"] = df["f_genero_oc"].fillna(pd.Timestamp('1900-01-01 00:00:00.000'))

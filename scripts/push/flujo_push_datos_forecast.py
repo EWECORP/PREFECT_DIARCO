@@ -34,7 +34,7 @@ from typing import Optional
 @flow(name="Push Datos para FORECAST")
 def forecast_flow(lista_ids: Optional[list] = None):
     if lista_ids is None:
-        lista_ids = [190, 2676, 3835, 6363, 1074]  # default
+        lista_ids = [190, 2676, 3835, 6363, 1074, 20, 8449]  # default
     print(f"[INFO] Proveedores: {lista_ids}")
     scripts = [
         "obtener_articulos_proveedor.py",
