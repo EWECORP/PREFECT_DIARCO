@@ -38,7 +38,6 @@ def forecast_flow(lista_ids: Optional[list] = None):
     print(f"[INFO] Proveedores: {lista_ids}")
     scripts = [
         "obtener_articulos_proveedor.py",
-        "obtener_datos_proveedor.py",
         "obtener_oc_demoradas_proveedor.py",
         "obtener_precios_proveedor.py",
         "obtener_stock_proveedor.py",
