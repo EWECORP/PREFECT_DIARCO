@@ -41,7 +41,8 @@ def forecast_flow(lista_ids: Optional[list] = None):
         "obtener_oc_demoradas_proveedor.py",
         "obtener_precios_proveedor.py",
         "obtener_stock_proveedor.py",
-        "obtener_ventas_proveedor.py"
+        "obtener_ventas_proveedor.py",
+        "obtener_historico_ofertas_stock.py"
     ]
     for script in scripts:
         ejecutar_script(script, lista_ids=lista_ids)
