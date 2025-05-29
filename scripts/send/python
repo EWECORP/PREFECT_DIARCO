@@ -1,0 +1,6 @@
+Procesando tabla: T_5_MOVIMIENTOS_DIARIOS_5
+Archivo CSV generado: ./output\T_5_MOVIMIENTOS_DIARIOS_5.csv
+Archivo ZIP generado: ./output\T_5_MOVIMIENTOS_DIARIOS_5.csv.zip
+Subiendo archivo a SFTP: /archivos/usr_diarco/data-online/T_5_MOVIMIENTOS_DIARIOS_5.csv.zip
+Archivo subido correctamente a SFTP: /archivos/usr_diarco/data-online/T_5_MOVIMIENTOS_DIARIOS_5.csv.zip
+Proceso completado.

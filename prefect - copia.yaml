@@ -54,20 +54,20 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: exportar_tabla_sql_sftp
-    entrypoint: scripts/send/exportar_tabla_sqlserver_sftp.py:exportar_tabla_sql_sftp
-    description: "Flujo para exportar una tabla desde SQL Server, comprimirla y transferirla vía SFTP"
-    tags: ["replicacion", "sqlserver", "sftp", "etl"]
+  - name: enviar_tablas_sftp
+    entrypoint: scripts/send/exportar_tabla_sqlserver_sftp.py:exportar_tabla_sqlserver_sftp
+    description: "Envío parametrizado de tablas desde SQL Server a PostgreSQL vía SFTP"
+    tags: ["pipeline", "replicacion", "datos"]
     work_pool:
       name: dmz-diarco
       work_queue_name: default
-    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
+    parameters: {}  # Se pasan al ejecutar deployment manualmente
 
   - name: flujo_maestro_replicacion
-    entrypoint: scripts/send/flujo_maestro_replica_datos.py:flujo_maestro
-    description: "Flujo maestro orquestador para exportar, transferir e importar tablas entre SQL Server y PostgreSQL"
-    tags: ["orquestador", "replicacion", "pipeline", "etl"]
+    entrypoint: scripts/maestro/flujo_maestro_replica_datos.py:flujo_maestro
+    description: "Orquestador maestro que exporta e importa tablas entre SQL Server y PostgreSQL"
+    tags: ["maestro", "replicacion", "pipeline"]
     work_pool:
       name: dmz-diarco
       work_queue_name: default
-    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
+    parameters: {} # Se pasan al ejecutar deployment manualmente
