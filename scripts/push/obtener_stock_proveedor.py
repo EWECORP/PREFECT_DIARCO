@@ -113,13 +113,13 @@ def cargar_stock_proveedores_pg(lista_ids):
             S.[Q_VTA_ULTIMOS_15DIAS] * S.[Q_FACTOR_VTA_SUCU] AS VENTA_UNIDADES_1Q, -- OJO esto está en BULTOS DIARCO
             S.[Q_VTA_ULTIMOS_30DIAS] * S.[Q_FACTOR_VTA_SUCU] AS VENTA_UNIDADES_2Q -- OJO esto está en BULTOS DIARCO
 
-        FROM [DIARCOP001].[DiarcoP].[dbo].[T051_ARTICULOS_SUCURSAL] S
-        INNER JOIN [DIARCOP001].[DiarcoP].[dbo].[T050_ARTICULOS] A
+        FROM [repl].[T051_ARTICULOS_SUCURSAL] S
+        INNER JOIN [repl].[T050_ARTICULOS] A
             ON A.[C_ARTICULO] = S.[C_ARTICULO]
-        LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T060_STOCK] ST
+        LEFT JOIN [repl].[T060_STOCK] ST
             ON ST.C_ARTICULO = S.[C_ARTICULO] 
             AND ST.C_SUCU_EMPR = S.[C_SUCU_EMPR]
-        LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T710_ESTADIS_REPOSICION] R
+        LEFT JOIN [repl].[T710_ESTADIS_REPOSICION] R
             ON R.[C_ARTICULO] = S.[C_ARTICULO]
             AND R.[C_SUCU_EMPR] = S.[C_SUCU_EMPR]
 

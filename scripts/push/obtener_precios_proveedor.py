@@ -85,7 +85,7 @@ def cargar_precios_proveedores_pg(lista_ids):
         ,S.[I_COSTO_ESTADISTICO]
         --,S.[M_HABILITADO_SUCU]
         --,A.M_BAJA                   
-        FROM [DIARCOP001].[DiarcoP].[dbo].[T051_ARTICULOS_SUCURSAL] S
+        FROM [repl].[T051_ARTICULOS_SUCURSAL] S
         LEFT JOIN [DIARCOP001].[DiarcoP].[dbo].[T050_ARTICULOS] A
             ON A.[C_ARTICULO] = S.[C_ARTICULO]
         

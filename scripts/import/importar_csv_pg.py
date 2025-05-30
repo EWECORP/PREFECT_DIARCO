@@ -12,23 +12,36 @@ from utils.postgres import PG_CONN_STR, PG_RAW_CONN
 from sqlalchemy import create_engine, text, inspect
 from sqlalchemy.orm import sessionmaker
 
-
 @task
 def descomprimir_archivo(nombre_zip):
     with zipfile.ZipFile(nombre_zip, 'r') as zipf:
-        zipf.extractall()
-    return nombre_zip.replace(".zip", ".csv")
+        # Asumimos que hay un único archivo .csv dentro del ZIP
+        nombres_archivos = zipf.namelist()
+        archivo_csv_original = [f for f in nombres_archivos if f.lower().endswith(".csv")][0]
+        
+        zipf.extract(archivo_csv_original)  # Extrae con el nombre original
+        
+        # Renombrar a minúsculas
+        archivo_csv_nuevo = archivo_csv_original.lower()
+        if archivo_csv_original != archivo_csv_nuevo:
+            os.rename(archivo_csv_original, archivo_csv_nuevo)
+
+    return archivo_csv_nuevo
+
 
 @task
 def validar_o_crear_tabla(schema: str, tabla: str, archivo_csv: str):
     logger = get_run_logger()
     engine = create_engine(PG_CONN_STR)
-    df_csv = pd.read_csv(archivo_csv, delimiter='|', dtype=str, nrows=100)  # Sample
+    df_csv = pd.read_csv(archivo_csv, delimiter='|', dtype=str, nrows=100)
+
+    tabla = tabla.lower()
+    df_csv.columns = [col.lower() for col in df_csv.columns]
 
     with engine.connect() as conn:
         inspector = inspect(engine)
         if inspector.has_table(tabla, schema=schema):
-            columnas_pg = [col['name'] for col in inspector.get_columns(tabla, schema=schema)]
+            columnas_pg = [col['name'].lower() for col in inspector.get_columns(tabla, schema=schema)]
             columnas_csv = df_csv.columns.tolist()
 
             if columnas_pg != columnas_csv:
@@ -44,15 +57,21 @@ def validar_o_crear_tabla(schema: str, tabla: str, archivo_csv: str):
 @task
 def cargar_csv_postgres(csv_path, esquema, tabla):
     logger = get_run_logger()
-    total_lineas = sum(1 for _ in open(csv_path, encoding='utf-8')) - 1  # -1 por el header
+    tabla = tabla.lower()
     
-    with psycopg2.connect(**PG_RAW_CONN) as conn: # type: ignore
+    # Relee el archivo para verificar las columnas
+    df_temp = pd.read_csv(csv_path, delimiter='|', dtype=str, nrows=1)
+    columnas = [col.lower() for col in df_temp.columns]
+
+    total_lineas = sum(1 for _ in open(csv_path, encoding='utf-8')) - 1
+    
+    with psycopg2.connect(**PG_RAW_CONN) as conn:
         with conn.cursor() as cur:
             with open(csv_path, "r", encoding="utf-8") as f:
                 next(f)  # Skip header
                 cur.copy_expert(
                     sql=f"""
-                        COPY "{esquema}"."{tabla}" 
+                        COPY "{esquema}"."{tabla}" ({','.join(f'"{col}"' for col in columnas)})
                         FROM STDIN 
                         WITH CSV 
                         DELIMITER '|' 
@@ -68,6 +87,7 @@ def cargar_csv_postgres(csv_path, esquema, tabla):
 
 @flow(name="importar_csv_pg")
 def importar_csv_pg(esquema: str, tabla: str, nombre_zip: str):
+    tabla = tabla.lower()
     csv_file = descomprimir_archivo(f"/sftp/archivos/usr_diarco/orquestador/{nombre_zip}")
     validar_o_crear_tabla(esquema, tabla, csv_file)
     cargar_csv_postgres(csv_file, esquema, tabla)

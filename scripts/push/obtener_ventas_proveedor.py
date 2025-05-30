@@ -76,8 +76,8 @@ def cargar_ventas_proveedores(lista_ids):
             ,A.[C_CLASIFICACION_COMPRA] as Clasificacion
             ,GETDATE() as Fecha_Procesado
             ,0 as Marca_Procesado
-        FROM [DCO-DBCORE-P02].[DiarcoEst].[dbo].[T702_EST_VTAS_POR_ARTICULO] V
-        LEFT JOIN [DCO-DBCORE-P02].[DiarcoEst].[dbo].[T050_ARTICULOS] A 
+        FROM [repl].[T702_EST_VTAS_POR_ARTICULO] V
+        LEFT JOIN [repl].[T050_ARTICULOS] A 
             ON V.C_ARTICULO = A.C_ARTICULO
         WHERE A.[C_PROVEEDOR_PRIMARIO] IN ({ids}) AND V.F_VENTA >= '20240101' AND A.M_BAJA ='N'
         ORDER BY V.F_VENTA;
