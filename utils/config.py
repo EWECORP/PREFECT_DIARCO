@@ -7,7 +7,7 @@ SQLSERVER_CONN_STR = (
 )
 
 SFTP_CONFIG = {
-    'host': '140.99.164.229',
+    'host': '186.158.182.54',
     'port': 22,
     'username': 'usr_diarco',
     'password': 'diarco2024',

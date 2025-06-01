@@ -7,10 +7,34 @@ from prefect import flow, task, get_run_logger
 import zipfile
 import os
 import psycopg2
-from utils.postgres import PG_CONN_STR, PG_RAW_CONN
-
+from datetime import datetime
+import shutil  # Para mover archivos
 from sqlalchemy import create_engine, text, inspect
 from sqlalchemy.orm import sessionmaker
+
+PG_CONN_STR = "postgresql+psycopg2://postgres:aladelta10$@localhost:5432/diarco_data"
+
+PG_RAW_CONN = {
+    "host": "localhost",
+    "port": "5432",
+    "dbname": "diarco_data",
+    "user": "postgres",
+    "password": "aladelta10$"
+}
+
+# Directorio donde se encuentran los archivos CSV
+directorio_archivos = '/sftp/archivos/usr_diarco/orquestador'
+directorio_archivos_backup = '/sftp/archivos/usr_diarco/orquestador/backup'
+
+# Función para mover un archivo después de procesarlo
+def mover_archivo(archivo_origen, destino):
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    nombre_archivo, extension = os.path.splitext(os.path.basename(archivo_origen))
+    nuevo_nombre_archivo = f"{nombre_archivo}_{timestamp}{extension}"
+    archivo_destino = os.path.join(destino, nuevo_nombre_archivo)
+    
+    shutil.move(archivo_origen, archivo_destino)
+    print(f"Archivo {archivo_origen} movido a {archivo_destino}")
 
 @task
 def descomprimir_archivo(nombre_zip):
@@ -28,13 +52,13 @@ def descomprimir_archivo(nombre_zip):
 
     return archivo_csv_nuevo
 
-
 @task
 def validar_o_crear_tabla(schema: str, tabla: str, archivo_csv: str):
     logger = get_run_logger()
     engine = create_engine(PG_CONN_STR)
-    df_csv = pd.read_csv(archivo_csv, delimiter='|', dtype=str, nrows=100)
-
+    # Permitir inferencia de tipos de datos
+    df_csv = pd.read_csv(archivo_csv, delimiter='|', nrows=100)
+    
     tabla = tabla.lower()
     df_csv.columns = [col.lower() for col in df_csv.columns]
 
@@ -64,8 +88,10 @@ def cargar_csv_postgres(csv_path, esquema, tabla):
     columnas = [col.lower() for col in df_temp.columns]
 
     total_lineas = sum(1 for _ in open(csv_path, encoding='utf-8')) - 1
+    #👉 Los registros existentes no se reemplazan ni se modifican.
+    #👉 Los nuevos registros se agregan al final de la tabla, como inserciones nuevas.
     
-    with psycopg2.connect(**PG_RAW_CONN) as conn:
+    with psycopg2.connect(**PG_RAW_CONN) as conn: # type: ignore
         with conn.cursor() as cur:
             with open(csv_path, "r", encoding="utf-8") as f:
                 next(f)  # Skip header

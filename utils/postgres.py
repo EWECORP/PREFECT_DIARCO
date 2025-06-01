@@ -5,10 +5,10 @@ import psycopg2
 from sqlalchemy import create_engine, inspect, text
 from prefect import get_run_logger
 
-PG_CONN_STR = "postgresql+psycopg2://postgres:aladelta10$@140.99.164.229:5432/diarco_data"
+PG_CONN_STR = "postgresql+psycopg2://postgres:aladelta10$@186.158.182.54:5432/diarco_data"
 
 PG_RAW_CONN = {
-    "host": "140.99.164.229",
+    "host": "186.158.182.54",
     "port": "5432",
     "dbname": "diarco_data",
     "user": "postgres",

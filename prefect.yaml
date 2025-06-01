@@ -63,7 +63,7 @@ deployments:
       work_queue_name: default
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: flujo_maestro_replicacion
+  - name: Push_tablas_DMZ_a_Postgres
     entrypoint: scripts/send/flujo_maestro_replica_datos.py:flujo_maestro
     description: "Flujo maestro orquestador para exportar, transferir e importar tablas entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
