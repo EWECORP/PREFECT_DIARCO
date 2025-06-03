@@ -95,9 +95,9 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
             ,[C_USUARIO_OPERADOR]    
             
         FROM [repl].[T080_OC_CABE]  
-        WHERE [C_SITUAC] = 1
-        AND C_PROVEEDOR IN ( {ids} )
-        AND DATEADD(DAY, [U_DIAS_LIMITE_ENTREGA], [F_ENTREGA]) < GETDATE();
+        WHERE C_PROVEEDOR IN ( {ids} )
+        AND [FECHA_LIMITE] < GETDATE()
+        AND [C_SITUAC] = 1;
     """
 
     # logger.info(f"---->  QUERY: {query}")
