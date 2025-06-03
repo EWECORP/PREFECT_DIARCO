@@ -81,8 +81,8 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
             ,[U_PREFIJO_OC]
             ,[U_SUFIJO_OC]      
             ,[U_DIAS_LIMITE_ENTREGA]
-            , DATEADD(DAY, [U_DIAS_LIMITE_ENTREGA], [F_ENTREGA]) as FECHA_LIMITE
-            , DATEDIFF (DAY, DATEADD(DAY, [U_DIAS_LIMITE_ENTREGA], [F_ENTREGA]), GETDATE()) as Demora
+            ,[FECHA_LIMITE]
+            ,DATEDIFF (DAY, [FECHA_LIMITE], GETDATE()) as Demora
             ,[C_PROVEEDOR] as Codigo_Proveedor
             ,[C_SUCU_COMPRA] as Codigo_Sucursal
             ,[C_SUCU_DESTINO]
@@ -92,7 +92,7 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
             ,[F_ALTA_SIST]
             ,[F_EMISION]
             ,[F_ENTREGA]    
-            ,[C_USUARIO_OPERADOR]    
+            ,[C_USUARIO_OPERADOR]      
             
         FROM [repl].[T080_OC_CABE]  
         WHERE C_PROVEEDOR IN ( {ids} )
