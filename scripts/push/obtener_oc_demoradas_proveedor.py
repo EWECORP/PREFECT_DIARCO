@@ -12,7 +12,7 @@ from prefect.filesystems import LocalFileSystem
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
-storage = LocalFileSystem(basepath="D:/services/ETL_DIARCO/flows") #D:\Services\ETL_DIARCO\flows  "D:/services/ETL_DIARCO/flows
+# storage = LocalFileSystem(basepath="D:/services/ETL_DIARCO/flows") #D:\Services\ETL_DIARCO\flows  "D:/services/ETL_DIARCO/flows
 
 # Configurar logging
 logger = logging.getLogger("replicacion_logger")
