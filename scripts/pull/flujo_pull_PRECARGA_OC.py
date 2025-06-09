@@ -1,5 +1,5 @@
 from prefect import flow, task, get_run_logger
-from scripts.utils.logger import setup_logger
+from utils.logger import setup_logger
 import subprocess
 import traceback
 import sys
