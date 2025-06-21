@@ -74,7 +74,7 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
     ids = ','.join(map(str, lista_ids))
     print(f"-> Generando datos para ID: {ids}")
     # ----------------------------------------------------------------
-    # FILTRA Ordenes de Compra Demoradas por Proveedor
+    # FILTRA Ordenes de Compra Demoradas por Proveedor  (FULL DEMORADAS)
     # ----------------------------------------------------------------
     query = f"""              
         SELECT  [C_OC]
@@ -95,8 +95,7 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
             ,[C_USUARIO_OPERADOR]      
             
         FROM [repl].[T080_OC_CABE]  
-        WHERE C_PROVEEDOR IN ( {ids} )
-        AND [FECHA_LIMITE] < GETDATE()
+        WHERE [FECHA_LIMITE] < GETDATE()
         AND [C_SITUAC] = 1;
     """
 

@@ -126,7 +126,7 @@ def cargar_stock_proveedores_pg(lista_ids):
         WHERE 
             S.[M_HABILITADO_SUCU] = 'S' -- Permitido Reponer
             AND A.M_BAJA = 'N'          -- Activo en Maestro Artículos
-            AND A.[C_PROVEEDOR_PRIMARIO] IN ( {ids} ) -- Solo del Proveedor
+            --- AND A.[C_PROVEEDOR_PRIMARIO] IN ( {ids} ) -- Solo del Proveedor  --- FULL PROVEEDORES
 
         ORDER BY 
             S.[C_ARTICULO],

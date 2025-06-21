@@ -34,15 +34,17 @@ from typing import Optional
 @flow(name="Push Datos para FORECAST")
 def forecast_flow(lista_ids: Optional[list] = None):
     if lista_ids is None:
-        lista_ids = [190, 2676, 3835, 6363, 1074, 20, 8449, 5395, 4565, 1434, 12673]  # default
+        lista_ids = [190, 20]  # default
     print(f"[INFO] Proveedores: {lista_ids}")
     scripts = [
-        "obtener_articulos_proveedor.py",
-        "obtener_oc_demoradas_proveedor.py",
-        "obtener_precios_proveedor.py",
-        "obtener_stock_proveedor.py",
-        "obtener_ventas_proveedor.py",
-        "obtener_historico_ofertas_stock.py"
+        "obtener_base_productos_vigentes.py",   ## OJO, Este no usa parámetros FULL
+        "obtener_base_stock.py",                ## OJO, Este no usa parámetros FULL
+        "obtener_articulos_proveedor.py",       ## OJO, Este no usa parámetros FULL
+        "obtener_oc_demoradas_proveedor.py",    ## OJO, Este no usa parámetros FULL
+        "obtener_precios_proveedor.py",         ## OJO, Este no usa parámetros FULL
+        "obtener_stock_proveedor.py",           ## OJO, Este no usa parámetros FULL
+        "obtener_ventas_proveedor.py",          ## OJO, Este no usa parámetros FULL
+        "obtener_historico_ofertas_stock.py"    ## OJO, Este no usa parámetros FULL
     ]
     for script in scripts:
         ejecutar_script(script, lista_ids=lista_ids)

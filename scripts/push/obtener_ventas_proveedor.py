@@ -55,7 +55,7 @@ def infer_postgres_types(df):
     return ", ".join(col_defs)
 
 
-# FILTRA solo PRODUCTOS HABILITADOS y Traer datos de STOCK y PENDIENTES desde PRODUCCIÓN
+# FILTRA solo PRODUCTOS HABILITADOS y Traer datos de STOCK y PENDIENTES desde PRODUCCIÓN (pasaso a full)
 @task(name="cargar_ventas_proveedor_pg")
 def cargar_ventas_proveedores(lista_ids):
     ids = ','.join(map(str, lista_ids))
@@ -79,7 +79,8 @@ def cargar_ventas_proveedores(lista_ids):
         FROM [repl].[T702_EST_VTAS_POR_ARTICULO] V
         LEFT JOIN [repl].[T050_ARTICULOS] A 
             ON V.C_ARTICULO = A.C_ARTICULO
-        WHERE A.[C_PROVEEDOR_PRIMARIO] IN ({ids}) AND V.F_VENTA >= '20240101' AND A.M_BAJA ='N'
+        WHERE V.F_VENTA >= '20240101' AND A.M_BAJA ='N'
+            --- AND A.C_PROVEEDOR_PRIMARIO IN ({ids})
         ORDER BY V.F_VENTA;
     """
 

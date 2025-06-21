@@ -163,7 +163,7 @@ def cargar_ofertas_stock(lista_ids):
         FROM [repl].[T710_ESTADIS_OFERTA_FOLDER] O
         LEFT JOIN [repl].[T050_ARTICULOS] A ON O.C_ARTICULO = A.C_ARTICULO
         WHERE C_ANIO = 2025
-        AND A.C_PROVEEDOR_PRIMARIO IN ({ids});
+        --- AND A.C_PROVEEDOR_PRIMARIO IN ({ids});
     """
     df_oferta = pd.read_sql(query_oferta, conn) # type: ignore
     conn.dispose()  # Cerrar conexión SQL Server

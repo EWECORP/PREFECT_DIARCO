@@ -91,7 +91,7 @@ def cargar_precios_proveedores_pg(lista_ids):
         
         WHERE S.[M_HABILITADO_SUCU] = 'S' -- Permitido Reponer
             AND A.M_BAJA = 'N'  -- Activo en Maestro Artículos
-            AND A.[C_PROVEEDOR_PRIMARIO] IN ( {ids} ) -- Lista de  Proveedores      
+            --- AND A.[C_PROVEEDOR_PRIMARIO] IN ( {ids} ) -- Lista de  Proveedores      
         ORDER BY S.[C_ARTICULO],S.[C_SUCU_EMPR];
     """
 
