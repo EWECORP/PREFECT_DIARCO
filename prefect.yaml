@@ -42,7 +42,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: Push_datos_para_FORECAST
+  - name: Push_datos_Diarios_para_FORECAST
     entrypoint: scripts/push/flujo_push_datos_forecast.py:forecast_flow
     description: "Carga Diaria de Datos de proveedores habilitados"
     tags: ["push", "forecast", "datos"]
@@ -50,7 +50,7 @@ deployments:
       name: dmz-diarco
       work_queue_name: push-forecast
     schedule:
-      cron:  "0 7 * * *"  # Todos los días a las 6 AM  
+      cron:  "30 6 * * 1-5"   # Todos los días ábiles a las 6:30 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 

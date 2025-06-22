@@ -74,7 +74,6 @@ ESQUEMA_BASE_PRODUCTOS = {
     "capacid_gondola": "INTEGER",
     "stock_minimo": "DOUBLE PRECISION",
     "cod_comprador": "INTEGER",
-    "q_factor_compra": "INTEGER",
     "promocion": "INTEGER",
     "active_for_purchase": "INTEGER",     
     "active_for_sale": "INTEGER",
@@ -82,6 +81,7 @@ ESQUEMA_BASE_PRODUCTOS = {
     "delivered_id": "VARCHAR",
     "product_base_id": "VARCHAR",
     "own_production": "INTEGER",
+    "q_factor_compra": "INTEGER", # NO ESTABA EN EL ORDEN CORRECTO
     "full_capacity_pallet": "INTEGER",
     "number_of_layers": "INTEGER",
     "number_of_boxes_per_layer": "INTEGER",

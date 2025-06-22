@@ -58,31 +58,36 @@ def open_pg_conn():
 # ====================== ESQUEMA DEFINIDO MANUALMENTE ======================
 
 ESQUEMA_BASE_STOCK = {
-    "Codigo_Articulo": "INTEGER",
-    "Codigo_Sucursal"   : "INTEGER",
-    "Codigo_Proveedor" : "INTEGER",
-    "Precio_Venta" : "DOUBLE PRECISION",
-    "Precio_Costo" : "DOUBLE PRECISION",
-    "Factor_Venta" : "INTEGER",
-    "M_Vende_Por_Peso" : "INTEGER",
-    "Venta_Unidades_1Q": "DOUBLE PRECISION",
-    "Venta_Unidades_2Q": "DOUBLE PRECISION",
-    "Venta_Mes_Unidades": "DOUBLE PRECISION",
-    "Venta_Mes_Valorizada": "DOUBLE PRECISION",
-    "Dias_Stock": "INTEGER",
+    "codigo_articulo": "INTEGER",
+    "codigo_sucursal": "INTEGER",
+    "codigo_proveedor": "INTEGER",
+    "precio_venta": "DOUBLE PRECISION",
+    "precio_costo": "DOUBLE PRECISION",
+    "factor_venta": "INTEGER",
+    "m_vende_por_peso": "VARCHAR",
+    "venta_unidades_1q": "DOUBLE PRECISION",
+    "venta_unidades_2q": "DOUBLE PRECISION",
+    "venta_mes_unidades": "DOUBLE PRECISION",
+    "venta_mes_valorizada": "DOUBLE PRECISION",
+    "dias_stock": "INTEGER",
     "fecha_stock": "TIMESTAMP",
     "stock": "DOUBLE PRECISION",
-    "venta_pendiente": "DOUBLE PRECISION",
+    "transfer_pendiente": "DOUBLE PRECISION",
     "pedido_pendiente": "DOUBLE PRECISION",
     "promocion": "INTEGER",
     "lote": "VARCHAR",
     "validez_lote": "TIMESTAMP",
     "stock_reserva": "DOUBLE PRECISION",
     "validez_promocion": "INTEGER",
+    "q_dias_stock": "INTEGER",
+    "q_dias_sobre_stock": "INTEGER",
+    "i_lista_calculado": "DOUBLE PRECISION",
+    "pedido_sgm": "DOUBLE PRECISION",
     "fuente_origen": "VARCHAR",
     "fecha_extraccion": "TIMESTAMP",
     "estado_sincronizacion": "INTEGER"
 }
+
 
 def crear_sentencia_create(schema_dict: dict, table_name: str) -> str:
     columnas_sql = ", ".join([f'"{col}" {tipo}' for col, tipo in schema_dict.items()])
@@ -93,6 +98,8 @@ def insert_dataframe_postgres(df: pd.DataFrame, table_fullname: str):
     
     # Conversión completa a tipos nativos y manejo de NAs
     df = df.astype(object).where(pd.notnull(df), None)
+    df.rename(columns={col: col.lower() for col in df.columns}, inplace=True)
+
 
     with open_pg_conn() as conn:
         with conn.cursor() as cur:
@@ -124,19 +131,32 @@ def cargar_base_stock_sucursal_pg():
         df["ESTADO_SINCRONIZACION"] = 0
     
         # Adecuación de columnas numéricas
-        df["C_ARTICULO"] = pd.to_numeric(df["C_ARTICULO"], errors="coerce").astype("Int64")
-        df["STOCK"] = pd.to_numeric(df["STOCK"], errors="coerce").astype("Float64")
-        df["VENTA_PENDIENTE"] = pd.to_numeric(df["VENTA_PENDIENTE"], errors="coerce").astype("Float64")
-        df["PEDIDO_PENDIENTE"] = pd.to_numeric(df["PEDIDO_PENDIENTE"], errors="coerce").astype("Float64")
-        df["COSTO_UNIT_ULT_ENTRADA"] = pd.to_numeric(df["COSTO_UNIT_ULT_ENTRADA"], errors="coerce").astype("Float64")
-        df["PRECIO_UNIT_VENTA"] = pd.to_numeric(df["PRECIO_UNIT_VENTA"], errors="coerce").astype("Float64")
-        df["PROMOCION"] = pd.to_numeric(df["PROMOCION"], errors="coerce").astype("Int64")
-        
-        df["STOCK_RESERVA"] = pd.to_numeric(df["STOCK_RESERVA"], errors="coerce").astype("Float64")
-        df["VALIDEZ_PROMOCION"] = pd.to_numeric(df["VALIDEZ_PROMOCION"], errors="coerce").astype("Int64")
-
-        # Adecuación de fechas
+        df["Codigo_Articulo"] = pd.to_numeric(df["Codigo_Articulo"], errors="coerce").astype("Int64")
+        df["Codigo_Sucursal"] = pd.to_numeric(df["Codigo_Sucursal"], errors="coerce").astype("Int64")
+        df["Codigo_Proveedor"] = pd.to_numeric(df["Codigo_Proveedor"], errors="coerce").astype("Int64")
+        df["Precio_Venta"] = pd.to_numeric(df["Precio_Venta"], errors="coerce").astype("Float64")
+        df["Precio_Costo"] = pd.to_numeric(df["Precio_Costo"], errors="coerce").astype("Float64")
+        df["Factor_Venta"] = pd.to_numeric(df["Factor_Venta"], errors="coerce").astype("Int64") 
+        df["M_Vende_Por_Peso"] = df["M_Vende_Por_Peso"].astype("string")      
+        df["Venta_Unidades_1Q"] = pd.to_numeric(df["Venta_Unidades_1Q"], errors="coerce").astype("Float64")
+        df["Venta_Unidades_2Q"] = pd.to_numeric(df["Venta_Unidades_2Q"], errors="coerce").astype("Float64")
+        df["Venta_Mes_Unidades"] = pd.to_numeric(df["Venta_Mes_Unidades"], errors="coerce").astype("Float64")
+        df["Venta_Mes_Valorizada"] = pd.to_numeric(df["Venta_Mes_Valorizada"], errors="coerce").astype("Float64")
+        df["Dias_Stock"] = pd.to_numeric(df["Dias_Stock"], errors="coerce").astype("Float64")
         df["FECHA_STOCK"] = pd.to_datetime(df["FECHA_STOCK"], errors="coerce")
+        df["STOCK"] = pd.to_numeric(df["STOCK"], errors="coerce").astype("Float64")
+        df["TRANSFER_PENDIENTE"] = pd.to_numeric(df["TRANSFER_PENDIENTE"], errors="coerce").astype("Float64")
+        df["PEDIDO_PENDIENTE"] = pd.to_numeric(df["PEDIDO_PENDIENTE"], errors="coerce").astype("Float64")
+        df["PROMOCION"] = pd.to_numeric(df["PROMOCION"], errors="coerce").astype("Int64") 
+        df["LOTE"] = df["LOTE"].astype("string").str.strip()
+        df["VALIDEZ_LOTE"] = pd.to_datetime(df["VALIDEZ_LOTE"], errors="coerce")
+        df["STOCK_RESERVA"] = pd.to_numeric(df["STOCK_RESERVA"], errors="coerce").astype("Float64")       
+        df["VALIDEZ_PROMOCION"] = pd.to_numeric(df["VALIDEZ_PROMOCION"], errors="coerce").astype("Int64")
+        df["Q_DIAS_STOCK"] = pd.to_numeric(df["Q_DIAS_STOCK"], errors="coerce").astype("Int64")
+        df["Q_DIAS_SOBRE_STOCK"] = pd.to_numeric(df["Q_DIAS_SOBRE_STOCK"], errors="coerce").astype("Int64")
+        df["I_LISTA_CALCULADO"] = pd.to_numeric(df["I_LISTA_CALCULADO"], errors="coerce").astype("Float64") 
+        df["Pedido_SGM"] = pd.to_numeric(df["Pedido_SGM"], errors="coerce").astype("Float64") 
+
 
         logger.info(f"✅ {len(df)} registros leídos desde SQL Server.")
     except Exception as e:
