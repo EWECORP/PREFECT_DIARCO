@@ -82,6 +82,7 @@ def sync_DMZ_completo():
     ejecutar_sp("repl.usp_replicar_T114_RUBROS")
     ejecutar_sp("repl.usp_replicar_T117_COMPRADORES")
     ejecutar_sp("repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO")  # TARDA MUCHO !!!! Solo 2025 se está extrayendo
+    ejecutar_sp("repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO")  # NUEVA INCLUSIÖN
     ejecutar_sp("repl.usp_replicar_T710_ESTADIS_OFERTA_FOLDER")  # TARDA MUCHO !!!! Solo 2025 se está extrayendo
     ejecutar_sp("repl.usp_replicar_T710_ESTADIS_REPOSICION")  # TARDA MUCHO !!!! Solo 2025 se está extrayendo
     ejecutar_sp("repl.usp_replicar_T710_ESTADIS_STOCK")  # TARDA MUCHO !!!! Solo 2025 se está extrayendo
