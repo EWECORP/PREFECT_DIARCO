@@ -50,7 +50,19 @@ deployments:
       name: dmz-diarco
       work_queue_name: push-forecast
     schedule:
-      cron:  "30 6 * * 1-5"   # Todos los días ábiles a las 6:30 AM  
+      cron:  "30 6 * * 1-5"   # Todos los días hábiles a las 6:30 AM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}
+
+  - name: Push_datos_Ventas_Stock_Diarios
+    entrypoint: scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas
+    description: "Carga Diaria de Datos de Ventas y Stock"
+    tags: ["send", "forecast", "datos"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: push-forecast
+    schedule:
+      cron:  "0 7 * * *"   # Todos los días a las 7:00 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
@@ -71,3 +83,7 @@ deployments:
       name: dmz-diarco
       work_queue_name: default
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
+
+
+
+#  prefect deploy scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas  --name Push_datos_Ventas_Stock_Diarios  --work-queue push-forecast  --cron "30 6 * * *"

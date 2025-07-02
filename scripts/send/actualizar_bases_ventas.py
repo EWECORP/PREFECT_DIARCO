@@ -1,4 +1,4 @@
-# obtenactualizar_base_ventas.py
+# actualizar_bases_ventas.py
 
 import os
 import sys
@@ -11,8 +11,7 @@ import logging
 from prefect import flow, task, get_run_logger
 from datetime import datetime
 
-from flujo_maestro_replica_datos import flujo_maestro
-
+from flujo_maestro_replica_datos import flujo_maestro, generar_nombre_archivo
 
 # ====================== CONFIGURACIÓN Y LOGGING ======================
 load_dotenv()
@@ -36,7 +35,7 @@ logger = logging.getLogger("replicacion_logger")
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 os.makedirs("logs", exist_ok=True)
-file_handler = logging.FileHandler("logs/replicacion_psycopg2.log", encoding="utf-8")
+file_handler = logging.FileHandler("logs/actualizar_base_ventas.log", encoding="utf-8")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 console_handler = logging.StreamHandler(sys.stdout)
@@ -57,15 +56,16 @@ def open_pg_conn():
         port=PG_PORT
     )
 
-# ====================== ESQUEMA DEFINIDO MANUALMENTE ======================
+# ====================== FUNCIONES ======================
 @task
 def obtener_fecha_max_f_venta(tabla_pg: str) -> str:
     """Obtiene la fecha máxima de f_venta desde una tabla en el esquema src."""
-    conn = open_pg_conn
+    conn = open_pg_conn()  # <- CORREGIDO: se ejecuta la función
     cursor = conn.cursor()
     query = f"SELECT MAX(f_venta) FROM src.{tabla_pg}"
     cursor.execute(query)
     resultado = cursor.fetchone()
+    cursor.close()
     conn.close()
 
     if resultado and resultado[0]:
@@ -88,7 +88,7 @@ def actualizar_bases_ventas():
         filtro_sql = f"F_VENTA > '{fecha_max}'"
         print(f"🧪 Filtro aplicado: {filtro_sql}")
 
-        # Invoca el flujo maestro
+        print(f"🚀 Iniciando replicación para {tabla_sql} con filtro: {filtro_sql}")
         flujo_maestro(
             esquema="repl",
             tabla=tabla_sql,
