@@ -78,7 +78,7 @@ def obtener_fecha_max_f_venta(tabla_pg: str) -> str:
 @flow(name="actualizar_bases_ventas")
 def actualizar_bases_ventas():
     tablas = [
-        ("t702_est_vtas_por_articulo", "T702_EST_VTAS_POR_ARTICULOS"),
+        ("t702_est_vtas_por_articulo", "T702_EST_VTAS_POR_ARTICULO"),
         ("t702_est_vtas_por_articulo_dbarrio", "T702_EST_VTAS_POR_ARTICULO_DBARRIO")
     ]
 
