@@ -84,6 +84,16 @@ deployments:
       work_queue_name: default
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-
+  - name: Actualizar_tablas_maestras_Postgres
+    entrypoint: scripts/send/actualizar_tablas_maestras.py:actualizar_tablas_maestras
+    description: "Flujo maestro orquestador para subir tablas maestras entre SQL Server y PostgreSQL"
+    tags: ["orquestador", "replicacion", "pipeline", "etl"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron:  "30 6 * * 1-5"   # Todos los días hábiles a las 6:30 AM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
 #  prefect deploy scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas  --name Push_datos_Ventas_Stock_Diarios  --work-queue push-forecast  --cron "30 6 * * *"
