@@ -1,4 +1,7 @@
 # actualizar_bases_ventas.py
+# OBJETIVO: Actualizar las bases de ventas en PostgreSQL desde SQL Server.
+# AUTOR: [EWE]
+# Las tablas ya existen. DETECTA Fecha Máxima y copia los registros faltantes.
 
 import os
 import sys

@@ -96,7 +96,7 @@ def actualizar_tablas_maestras():
         try:
             logger.info(f"🔄 Procesando tabla {tabla_pg}...")
             vaciar_tabla.submit(tabla_pg)
-            flujo_maestro(esquema="repl", tabla=tabla_sql)
+            flujo_maestro(esquema="repl", tabla=tabla_sql, filtro_sql="1=1")
             logger.info(f"✅ Tabla {tabla_pg} actualizada con éxito.")
         except Exception as e:
             logger.error(f"❌ Error procesando {tabla_pg}: {e}")
