@@ -70,6 +70,7 @@ def sync_dmz_optimizado():
     ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL")
     ejecutar_sp("repl.usp_replicar_T052_ARTICULOS_PROVEEDOR")
     ejecutar_sp("repl.usp_replicar_T060_STOCK")
+    ejecutar_sp("repl.usp_replicar_M_3_ARTICULOS")
 
     # === Largos y pesados ===
     logger.info("⏳ Ejecutando ESTADISTICAS PESADAS - Grupo 3/6 ")

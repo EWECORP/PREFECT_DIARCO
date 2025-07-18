@@ -88,6 +88,7 @@ def actualizar_tablas_maestras():
         ("t020_proveedor", "T020_PROVEEDOR"),
         ("t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
         ("t060_stock", "T060_STOCK"),
+        ("m_3_articulos", "M_3_ARTICULOS"),
         ("t100_empresa_suc", "T100_EMPRESA_SUC")
     ]
 
