@@ -5,8 +5,6 @@ De acuerdo al cronograma definido va a buscar las OK que estén en estado 90 par
 SGM - TESTING / PRODUCCIÓN   SE MUEVE A --> ETL_DIARCO  (LOS CAMBIOS SE REALIZARÄN EN ETL_DIARCO)
 Autor: EWE - Zeetrex
 Fecha: 2025-05-11
-Modificación: 22/07 -- Se agrega función de consolidación de Articulos y Proveedores que tengan Abastecimiento = 0
-            - Entrega en el CD, generando sumatoria de artículos.
 """
 
 import pandas as pd
@@ -112,17 +110,21 @@ def validar_longitudes(df):
         max_len = df[col].astype(str).map(len).max()
         print(f"{col}: longitud máxima = {max_len}")
 
-# Función para consolidar OC Precarga
-def consolidar_oc_precarga():
-    logging.info("[INFO] Iniciando consolidación por abastecimiento")  
+
+# Función principal de publicación
+def publicar_oc_precarga():
+    logging.info("[INFO] Iniciando publicación de OC Precarga")
+    
     conn_pg = None
+    conn_sql = None
+    cursor_sql = None
 
     try:
-         # 1. Conexión a PostgreSQL
+        # 1. Conexión a PostgreSQL
         conn_pg = Open_Diarco_Data()
         if conn_pg is None:
             raise ConnectionError("[ERROR] No se pudo conectar a PostgreSQL")
-        
+
         query = """
         SELECT *
         FROM public.t080_oc_precarga_kikker
@@ -134,156 +136,6 @@ def consolidar_oc_precarga():
             logging.warning("[WARNING] No hay registros pendientes de publicación")
             return
 
-        # Convertir a enteros antes de armar la cláusula IN
-        lista_proveedores = (
-            pd.to_numeric(df_oc['c_proveedor'], errors='coerce')
-            .dropna()
-            .astype(int)
-            .unique()
-            .tolist()
-        )
-
-        # Formatea la lista para usarla en la consulta SQL
-        in_clause = ', '.join([f"'{prov}'" for prov in lista_proveedores])
-
-        # 1B. Traer productos vigentes de PostgreSQL
-        queryp = f"""
-        SELECT c_sucu_empr, c_articulo, c_proveedor_primario, abastecimiento, cod_cd
-        FROM src.base_productos_vigentes
-        WHERE c_proveedor_primario IN ({in_clause})
-        """
-        df_prod = pd.read_sql(queryp, conn_pg) # type: ignore
-
-        df_merged = df_oc.merge(
-            df_prod,
-            how='left',
-            left_on=['c_sucu_empr', 'c_articulo', 'c_proveedor'],
-            right_on=['c_sucu_empr', 'c_articulo', 'c_proveedor_primario']
-        )
-
-        # Filtrar por cod_cd = '41CD'
-        df_41= df_merged[df_merged['cod_cd'] == '41CD']
-        if df_41.empty:
-            logging.warning("[WARNING] No hay registros de cod_cd '41CD' para publicar")
-        else:
-            df_grouped_41 = df_41.groupby(
-            ['c_proveedor', 'c_articulo'],
-            as_index=False
-                ).agg({
-                    'q_bultos_kilos_diarco': 'sum',
-                    'f_alta_sist': 'first',
-                    'c_usuario_genero_oc': 'first',
-                    'c_terminal_genero_oc': 'first',    
-                    'f_genero_oc': 'first',
-                    'c_usuario_bloqueo': 'first',
-                    'm_procesado': 'first',
-                    'f_procesado': 'first',
-                    'u_prefijo_oc': 'first',
-                    'u_sufijo_oc': 'first',
-                    'c_compra_kikker': 'first',
-                    'c_usuario_modif': 'first',
-                    'c_comprador': 'first'
-                }).reset_index(drop=True)
-
-            df_grouped_41['c_sucu_empr'] = 41
-            # Borrar en Origen
-            df_merged.drop(df_merged[df_merged['cod_cd'] == '41CD'].index, inplace=True)
-            # Publicar en Destino
-            df_merged = pd.concat([df_merged, df_grouped_41], ignore_index=True)
-
-        # Filtrar por cod_cd = '82CD'
-        df_82= df_merged[df_merged['cod_cd'] == '82CD']
-        if df_82.empty:
-            logging.warning("[WARNING] No hay registros de cod_cd '82CD' para publicar")
-        else:
-            df_grouped_82 = df_82.groupby(
-            ['c_proveedor', 'c_articulo'],
-            as_index=False
-                ).agg({
-                    'q_bultos_kilos_diarco': 'sum',
-                    'f_alta_sist': 'first',
-                    'c_usuario_genero_oc': 'first',
-                    'c_terminal_genero_oc': 'first',    
-                    'f_genero_oc': 'first',
-                    'c_usuario_bloqueo': 'first',
-                    'm_procesado': 'first',
-                    'f_procesado': 'first',
-                    'u_prefijo_oc': 'first',
-                    'u_sufijo_oc': 'first',
-                    'c_compra_kikker': 'first',
-                    'c_usuario_modif': 'first',
-                    'c_comprador': 'first'
-                }).reset_index(drop=True)
-
-            df_grouped_82['c_sucu_empr'] = 82
-            # Borrar en Origen
-            df_merged.drop(df_merged[df_merged['cod_cd'] == '82CD'].index, inplace=True)
-            # Publicar en Destino
-            df_merged = pd.concat([df_merged, df_grouped_82], ignore_index=True)
-
-        
-        # 1C. Traer Stock CENTROS DE DISTRIBUCIÓN
-        querystock = f"""
-         SELECT S.c_sucu_empr ,S.c_articulo ,S.q_peso_articulo ,P.q_factor_proveedor
-	            ,S.q_unid_articulo / p.q_factor_proveedor as stock
-            FROM src.t060_stock S
-            LEFT JOIN src.t052_articulos_proveedor P
-                ON S.c_articulo = P.c_articulo
-                WHERE P.c_proveedor in ({in_clause}) 
-                and S.c_sucu_empr IN(41, 82)
-        """
-
-        df_stock = pd.read_sql(querystock, conn_pg) # type: ignore
-        if df_stock.empty:
-            logging.warning("[WARNING] No hay stock disponible para los proveedores seleccionados")
-        else:
-            df_stock.rename(columns={'c_sucu_empr': 'c_sucu_empr_stock', 'c_articulo': 'c_articulo_stock'}, inplace=True)
-            # Hacemos el merge con clave múltiple
-            # Esto agrega el stock a df_merged
-            df_merged = df_merged.merge(
-                df_stock[['c_sucu_empr_stock', 'c_articulo_stock', 'stock']],
-                how='left',
-                left_on=['c_sucu_empr', 'c_articulo'],
-                right_on=['c_sucu_empr_stock', 'c_articulo_stock']
-            )
-            # Restar a q_bultos_kilos_diarco stock y tranformar a entero
-            df_merged['q_bultos_kilos_diarco'] = (
-                df_merged['q_bultos_kilos_diarco'] - df_merged['stock']
-                ).clip(lower=0).astype(int) 
-            # Eliminar columnas de stock
-            df_merged.drop(columns=['c_sucu_empr_stock', 'c_articulo_stock', 'stock'], inplace=True)
-
-        conn_pg.close()
-        return df_merged 
-
-    except Exception as e:
-        logging.error("[ERROR] Error durante la CONSOLIDACIÓN de OC Precarga")
-        logging.error(traceback.format_exc())
-        print("[ERROR] Error durante la ejecución:", e)
-
-# Función principal de publicación
-def publicar_oc_precarga():
-    logging.info("[INFO] Iniciando publicación de OC Precarga")
-    df_oc = consolidar_oc_precarga()
-    if df_oc is None or df_oc.empty:
-        logging.warning("[WARNING] No hay registros consolidados para publicar")
-        return
-
-    # Abrir conexión a PostgreSQL SOLO para el update
-    conn_pg = Open_Diarco_Data()
-    if conn_pg is None:
-        raise ConnectionError("[ERROR] No se pudo reconectar a PostgreSQL para actualizar publicados")
-
-    conn_sql = None
-    cursor_sql = None
-
-    try:
-        
-        if df_oc.empty:
-            logging.warning("[WARNING] No hay registros pendientes de publicación")
-            return
-
-        # Agrupar por c_proveedor_primario y c_articulo, sumando las cantidades
         total_rows = len(df_oc)
         logging.info(f"[INFO] Registros a publicar: {total_rows}")
 
@@ -322,16 +174,13 @@ def publicar_oc_precarga():
         print(f"✔ Se insertaron {total_rows} registros en SQL Server.")
 
         # 3. Marcar como publicados en PostgreSQL
-        lista_compra_kikker = df_oc['c_compra_kikker'].dropna().unique().tolist()
-        placeholders = ', '.join(['%s'] * len(lista_compra_kikker))
-        update_stmt = f"""
-                UPDATE public.t080_oc_precarga_kikker
-                SET m_publicado = true
-                WHERE c_compra_kikker IN ({placeholders})
-            """
-
         with conn_pg.cursor() as cursor_pg:
-            cursor_pg.execute(update_stmt, lista_compra_kikker)
+            update_stmt = """
+            UPDATE public.t080_oc_precarga_kikker
+            SET m_publicado = true
+            WHERE m_publicado = false
+            """
+            cursor_pg.execute(update_stmt)
             rows_updated = cursor_pg.rowcount
             conn_pg.commit()
 
