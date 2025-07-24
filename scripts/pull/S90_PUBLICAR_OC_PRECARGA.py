@@ -37,6 +37,12 @@ if not os.path.exists(ENV_PATH):
 secrets = dotenv_values(ENV_PATH)
 folder = f"{secrets['BASE_DIR']}/{secrets['FOLDER_DATOS']}"
 folder_logs = f"{secrets['BASE_DIR']}/{secrets['FOLDER_LOG']}"
+timestamp = time.strftime("%Y%m%d_%H%M%S")
+
+## Corregir Warning PANDAS
+# from sqlalchemy import create_engine
+# engine = create_engine("postgresql+psycopg2://usuario:clave@host:puerto/base")
+# df = pd.read_sql(query, engine)
 
 # Funciones Locales
 def Open_Connection():
@@ -95,10 +101,11 @@ def limpiar_campos_oc(df):
     df["c_comprador"]  = pd.to_numeric(df["c_comprador"], errors="coerce").fillna(0).astype(int)
 
     # Timestamps (permitimos NaT)
+    df["f_genero_oc"] = pd.to_datetime(df["f_genero_oc"], errors='coerce')
+    df["f_procesado"] = pd.to_datetime(df["f_procesado"], errors='coerce')
     df["f_genero_oc"] = df["f_genero_oc"].fillna(pd.Timestamp('1900-01-01 00:00:00.000'))
     df["f_procesado"] = df["f_procesado"].fillna(pd.Timestamp('1900-01-01 00:00:00.000'))
-    #df["f_genero_oc"] = pd.to_datetime(df["f_genero_oc"], errors='coerce')
-    #df["f_procesado"] = pd.to_datetime(df["f_procesado"], errors='coerce')
+    
 
     return df
 
@@ -154,12 +161,18 @@ def consolidar_oc_precarga():
         """
         df_prod = pd.read_sql(queryp, conn_pg) # type: ignore
 
+        if df_prod.empty:
+            logging.warning("[WARNING] No hay productos vigentes para los proveedores seleccionados")
+            return
+
         df_merged = df_oc.merge(
             df_prod,
             how='left',
             left_on=['c_sucu_empr', 'c_articulo', 'c_proveedor'],
             right_on=['c_sucu_empr', 'c_articulo', 'c_proveedor_primario']
         )
+        
+        df_merged.drop(columns=['c_proveedor_primario'], inplace=True)
 
         # Filtrar por cod_cd = '41CD'
         df_41= df_merged[df_merged['cod_cd'] == '41CD']
@@ -186,6 +199,7 @@ def consolidar_oc_precarga():
                 }).reset_index(drop=True)
 
             df_grouped_41['c_sucu_empr'] = 41
+            df_grouped_41['m_publicado'] = False
             # Borrar en Origen
             df_merged.drop(df_merged[df_merged['cod_cd'] == '41CD'].index, inplace=True)
             # Publicar en Destino
@@ -216,6 +230,7 @@ def consolidar_oc_precarga():
                 }).reset_index(drop=True)
 
             df_grouped_82['c_sucu_empr'] = 82
+            df_grouped_82['m_publicado'] = False
             # Borrar en Origen
             df_merged.drop(df_merged[df_merged['cod_cd'] == '82CD'].index, inplace=True)
             # Publicar en Destino
@@ -223,23 +238,17 @@ def consolidar_oc_precarga():
 
         
         # 1C. Traer Stock CENTROS DE DISTRIBUCIÓN
-        # querystock = f"""
-        #  SELECT S.c_sucu_empr ,S.c_articulo ,S.q_peso_articulo ,P.q_factor_proveedor
-        #         ,S.q_unid_articulo / p.q_factor_proveedor as stock
-        #     FROM src.t060_stock S
-        #     LEFT JOIN src.t052_articulos_proveedor P
-        #         ON S.c_articulo = P.c_articulo
-        #         WHERE P.c_proveedor in ({in_clause}) 
-        #         and S.c_sucu_empr IN(41, 82)
-        # """
-
         querystock = f"""
             SELECT codigo_sucursal as c_sucu_empr, 
                 codigo_articulo as c_articulo,
+                P.q_factor_compra,
                 COALESCE(pedido_pendiente, 0) as pedido_pendiente, 
                 COALESCE(transfer_pendiente, 0) as transfer_pendiente, 
-                COALESCE(pedido_pendiente, 0) + COALESCE(transfer_pendiente, 0) AS stock
+                (COALESCE(pedido_pendiente, 0) + COALESCE(transfer_pendiente, 0)) / P.q_factor_compra AS stock
+            
             FROM src.base_stock_sucursal
+            LEFT JOIN src.base_productos_vigentes P ON
+                codigo_sucursal = c_sucu_empr AND codigo_articulo = c_articulo
 
             WHERE codigo_proveedor in ({in_clause}) 
             and codigo_sucursal IN(41, 82)
@@ -250,6 +259,11 @@ def consolidar_oc_precarga():
             logging.warning("[WARNING] No hay stock disponible para los proveedores seleccionados")
         else:
             df_stock.rename(columns={'c_sucu_empr': 'c_sucu_empr_stock', 'c_articulo': 'c_articulo_stock'}, inplace=True)
+            df_stock.to_csv(
+                os.path.join(folder_logs, f"{timestamp}_stock.csv"),
+                index=False,
+                encoding='utf-8-sig'
+            )
             # Hacemos el merge con clave múltiple
             # Esto agrega el stock a df_merged
             df_merged = df_merged.merge(
@@ -258,28 +272,34 @@ def consolidar_oc_precarga():
                 left_on=['c_sucu_empr', 'c_articulo'],
                 right_on=['c_sucu_empr_stock', 'c_articulo_stock']
             )
-            
+            df_merged.drop(columns=['c_sucu_empr_stock', 'c_articulo_stock'], inplace=True)
+
             # Guardar el DataFrame combinado en un archivo CSV
-            time = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+            
             os.makedirs(folder_logs, exist_ok=True)
-            logging.info(f"[INFO] Guardando DataFrame combinado en {folder_logs}/{time}_merged_stock.csv")
+            logging.info(f"[INFO] Guardando DataFrame combinado en {folder_logs}/{timestamp}_merged_stock.csv")
             logging.info(f"[INFO] DataFrame combinado tiene {df_merged.shape[0]} filas y {df_merged.shape[1]} columnas")
             
             df_merged.to_csv(
-                os.path.join(folder_logs, f"{time}_merged_stock.csv"),
+                os.path.join(folder_logs, f"{timestamp}_merged_stock.csv"),
                 index=False,
                 encoding='utf-8-sig'
             )
             # Restar a q_bultos_kilos_diarco stock y tranformar a entero
             df_merged['q_bultos_kilos_diarco'] = (
-                df_merged['q_bultos_kilos_diarco'].fillna(0) - df_merged['stock'].fillna(0)
+            df_merged['q_bultos_kilos_diarco'].fillna(0) - df_merged['stock'].fillna(0)
             ).clip(lower=0).astype(int)
 
-            # Eliminar columnas de stock
-            df_merged.drop(columns=['c_sucu_empr_stock', 'c_articulo_stock', 'stock'], inplace=True)
+            # Eliminar columnas campos stock
+            df_merged.drop(columns=['abastecimiento', 'cod_cd', 'stock'], inplace=True)
             
             # Eliminar filas donde q_bultos_kilos_diarco sea menor o igual a 0
             df_merged = df_merged[df_merged['q_bultos_kilos_diarco'] > 0].reset_index(drop=True)
+            df_merged.to_csv(
+            os.path.join(folder_logs, f"{timestamp}_pedido_consolidado.csv"),
+            index=False,
+            encoding='utf-8-sig'
+            )
 
         conn_pg.close()
         return df_merged 
