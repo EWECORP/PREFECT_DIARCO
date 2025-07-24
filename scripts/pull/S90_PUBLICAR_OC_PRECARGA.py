@@ -223,14 +223,24 @@ def consolidar_oc_precarga():
 
         
         # 1C. Traer Stock CENTROS DE DISTRIBUCIÓN
+        # querystock = f"""
+        #  SELECT S.c_sucu_empr ,S.c_articulo ,S.q_peso_articulo ,P.q_factor_proveedor
+	    #         ,S.q_unid_articulo / p.q_factor_proveedor as stock
+        #     FROM src.t060_stock S
+        #     LEFT JOIN src.t052_articulos_proveedor P
+        #         ON S.c_articulo = P.c_articulo
+        #         WHERE P.c_proveedor in ({in_clause}) 
+        #         and S.c_sucu_empr IN(41, 82)
+        # """
+
         querystock = f"""
-         SELECT S.c_sucu_empr ,S.c_articulo ,S.q_peso_articulo ,P.q_factor_proveedor
-	            ,S.q_unid_articulo / p.q_factor_proveedor as stock
-            FROM src.t060_stock S
-            LEFT JOIN src.t052_articulos_proveedor P
-                ON S.c_articulo = P.c_articulo
-                WHERE P.c_proveedor in ({in_clause}) 
-                and S.c_sucu_empr IN(41, 82)
+         SELECT codigo_sucursal as c_sucu_empr, 
+                codigo_articulo as c_articulo,  
+                COALESCE(pedido_pendiente, 0) + COALESCE(transfer_pendiente, 0) AS stock
+            FROM src.base_stock_sucursal
+ 
+            WHERE codigo_proveedor in ({in_clause}) 
+            and codigo_sucursal IN(41, 82)
         """
 
         df_stock = pd.read_sql(querystock, conn_pg) # type: ignore
@@ -248,8 +258,9 @@ def consolidar_oc_precarga():
             )
             # Restar a q_bultos_kilos_diarco stock y tranformar a entero
             df_merged['q_bultos_kilos_diarco'] = (
-                df_merged['q_bultos_kilos_diarco'] - df_merged['stock']
-                ).clip(lower=0).astype(int) 
+                df_merged['q_bultos_kilos_diarco'].fillna(0) - df_merged['stock'].fillna(0)
+            ).clip(lower=0).astype(int)
+
             # Eliminar columnas de stock
             df_merged.drop(columns=['c_sucu_empr_stock', 'c_articulo_stock', 'stock'], inplace=True)
 
