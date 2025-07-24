@@ -118,7 +118,7 @@ def consolidar_oc_precarga():
     conn_pg = None
 
     try:
-         # 1. Conexión a PostgreSQL
+        # 1. Conexión a PostgreSQL
         conn_pg = Open_Diarco_Data()
         if conn_pg is None:
             raise ConnectionError("[ERROR] No se pudo conectar a PostgreSQL")
@@ -225,7 +225,7 @@ def consolidar_oc_precarga():
         # 1C. Traer Stock CENTROS DE DISTRIBUCIÓN
         # querystock = f"""
         #  SELECT S.c_sucu_empr ,S.c_articulo ,S.q_peso_articulo ,P.q_factor_proveedor
-	    #         ,S.q_unid_articulo / p.q_factor_proveedor as stock
+        #         ,S.q_unid_articulo / p.q_factor_proveedor as stock
         #     FROM src.t060_stock S
         #     LEFT JOIN src.t052_articulos_proveedor P
         #         ON S.c_articulo = P.c_articulo
@@ -234,14 +234,16 @@ def consolidar_oc_precarga():
         # """
 
         querystock = f"""
-         SELECT codigo_sucursal as c_sucu_empr, 
-                codigo_articulo as c_articulo,  
+            SELECT codigo_sucursal as c_sucu_empr, 
+                codigo_articulo as c_articulo,
+                COALESCE(pedido_pendiente, 0) as pedido_pendiente, 
+                COALESCE(transfer_pendiente, 0) as transfer_pendiente, 
                 COALESCE(pedido_pendiente, 0) + COALESCE(transfer_pendiente, 0) AS stock
             FROM src.base_stock_sucursal
- 
+
             WHERE codigo_proveedor in ({in_clause}) 
             and codigo_sucursal IN(41, 82)
-        """
+            """
 
         df_stock = pd.read_sql(querystock, conn_pg) # type: ignore
         if df_stock.empty:
@@ -256,6 +258,18 @@ def consolidar_oc_precarga():
                 left_on=['c_sucu_empr', 'c_articulo'],
                 right_on=['c_sucu_empr_stock', 'c_articulo_stock']
             )
+            
+            # Guardar el DataFrame combinado en un archivo CSV
+            time = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+            os.makedirs(folder_logs, exist_ok=True)
+            logging.info(f"[INFO] Guardando DataFrame combinado en {folder_logs}/{time}_merged_stock.csv")
+            logging.info(f"[INFO] DataFrame combinado tiene {df_merged.shape[0]} filas y {df_merged.shape[1]} columnas")
+            
+            df_merged.to_csv(
+                os.path.join(folder_logs, f"{time}_merged_stock.csv"),
+                index=False,
+                encoding='utf-8-sig'
+            )
             # Restar a q_bultos_kilos_diarco stock y tranformar a entero
             df_merged['q_bultos_kilos_diarco'] = (
                 df_merged['q_bultos_kilos_diarco'].fillna(0) - df_merged['stock'].fillna(0)
@@ -263,6 +277,9 @@ def consolidar_oc_precarga():
 
             # Eliminar columnas de stock
             df_merged.drop(columns=['c_sucu_empr_stock', 'c_articulo_stock', 'stock'], inplace=True)
+            
+            # Eliminar filas donde q_bultos_kilos_diarco sea menor o igual a 0
+            df_merged = df_merged[df_merged['q_bultos_kilos_diarco'] > 0].reset_index(drop=True)
 
         conn_pg.close()
         return df_merged 
