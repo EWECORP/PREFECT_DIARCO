@@ -41,18 +41,25 @@ def Open_Diarco_Data():
     return None  # Retorna None si todos los intentos fallan
 
 # Tablas a controlar
-tablas_a_controlar = [
-    "sucursales_excluidas", "base_stock_sucursal", "t100_empresa_suc",
+tablas_originales_a_controlar = [
+    "sucursales_excluidas",  
     "t055_articulos_condcompra_costos", "historico_stock_sucursal",
     "t085_articulos_ean_edi", "t702_est_vtas_por_articulo", "t710_estadis_stock",
-    "t114_rubros", "t060_stock", "t117_compradores", "t020_proveedor",
-    "base_productos_vigentes", "base_forecast_oc_demoradas", "t702_est_vtas_por_articulo_dbarrio",
-    "base_forecast_stock", "base_forecast_ventas", "base_forecast_articulos",
-    "m_91_sucursales", "base_forecast_precios", "t080_oc_cabe",
-    "t051_articulos_sucursal", "t020_proveedor_gestion_compra",
-    "t055_articulos_param_stock", "t710_estadis_reposicion",
-    "t052_articulos_proveedor", "m_3_articulos", "t055_lead_time_b2_sucursales",
-    "t710_estadis_oferta_folder", "t710_estadis_precios", "t050_articulos"
+    "t114_rubros", "t117_compradores", 
+     "base_forecast_oc_demoradas", 
+    "base_forecast_stock", "base_forecast_ventas", 
+    "m_91_sucursales", "base_forecast_precios", 
+    
+    "t055_articulos_param_stock",
+    "t052_articulos_proveedor",  "t055_lead_time_b2_sucursales"
+]
+# Contiene campo fecha_extraccion
+tablas_a_controlar = [
+    "base_forecast_articulos", "base_productos_vigentes", "base_stock_sucursal",
+    "m_3_articulos", "t020_proveedor_gestion_compra", "t050_articulos", "t051_articulos_sucursal", 
+    "t020_proveedor", "t060_stock", "t080_oc_cabe", "t081_oc_deta", "t100_empresa_suc",
+    "t702_est_vtas_por_articulo_dbarrio", "t710_estadis_oferta_folder", "t710_estadis_precios",
+    "t710_estadis_reposicion"
 ]
 
 def controlar_tablas(conn):
