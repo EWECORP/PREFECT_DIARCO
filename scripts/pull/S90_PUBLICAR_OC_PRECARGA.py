@@ -242,9 +242,11 @@ def consolidar_oc_precarga():
             SELECT codigo_sucursal as c_sucu_empr, 
                 codigo_articulo as c_articulo,
                 P.q_factor_compra,
+				COALESCE(stock, 0) as stock_origen,
                 COALESCE(pedido_pendiente, 0) as pedido_pendiente, 
                 COALESCE(transfer_pendiente, 0) as transfer_pendiente, 
-                (COALESCE(pedido_pendiente, 0) + COALESCE(transfer_pendiente, 0)) / P.q_factor_compra AS stock
+                FLOOR((COALESCE(stock, 0) + COALESCE(pedido_pendiente, 0) + COALESCE(transfer_pendiente, 0)) 
+				/ COALESCE(P.q_factor_compra,1 )) AS stock
             
             FROM src.base_stock_sucursal
             LEFT JOIN src.base_productos_vigentes P ON
