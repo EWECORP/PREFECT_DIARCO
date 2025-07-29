@@ -35,8 +35,8 @@ if not os.path.exists(ENV_PATH):
     sys.exit(1)
     
 secrets = dotenv_values(ENV_PATH)
-folder = f"{secrets['BASE_DIR']}/{secrets['FOLDER_DATOS']}"
-folder_logs = f"{secrets['BASE_DIR']}/{secrets['FOLDER_LOG']}"
+folder = f"{secrets['FOLDER_DATOS']}"
+folder_logs = f"{secrets['FOLDER_LOG']}"
 timestamp = time.strftime("%Y%m%d_%H%M%S")
 
 ## Corregir Warning PANDAS
