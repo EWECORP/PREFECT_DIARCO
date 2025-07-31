@@ -83,21 +83,34 @@ def vaciar_tabla(tabla_pg: str) -> None:
 def actualizar_tablas_maestras():
     logger = get_run_logger()
     tablas = [
-        ("t050_articulos", "T050_ARTICULOS"),
-        ("t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),
-        ("t020_proveedor", "T020_PROVEEDOR"),
-        ("t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
-        ("t060_stock", "T060_STOCK"),
-        ("m_3_articulos", "M_3_ARTICULOS"),
-        ("t100_empresa_suc", "T100_EMPRESA_SUC")
+        ("repl","t050_articulos", "T050_ARTICULOS"),
+        ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),
+        ("repl", "t020_proveedor", "T020_PROVEEDOR"),
+        ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
+        ("repl", "t060_stock", "T060_STOCK"),
+        ("repl", "m_3_articulos", "M_3_ARTICULOS"),
+        ("repl", "t100_empresa_suc", "T100_EMPRESA_SUC"),
+
+        ("dbo", "m_1_categorias", "M_1_CATEGORIAS"),
+        ("dbo", "m_10_proveedores", "M_10_PROVEEDORES"),
+        ("dbo", "m_2_movimientos", "M_2_MOVIMIENTOS"),
+        ("dbo", "m_3_1_familia", "M_3_1_FAMILIA"),
+        ("dbo", "m_3_2_familia_articulo", "M_3_2_FAMILIA_ARTICULO"),
+        ("dbo", "m_9_compradores", "M_9_COMPRADORES"),
+        ("dbo", "m_91_sucursales", "M_91_SUCURSALES"),
+        ("dbo", "m_92_depositos", "M_92_DEPOSITOS"),
+        ("dbo", "m_93_sustitutos", "M_93_SUSTITUTOS"),
+        ("dbo", "m_94_alternativos", "M_94_ALTERNATIVOS"),
+        ("dbo", "m_95_sensibles", "M_95_SENSIBLES"),
+        ("dbo", "m_96_stock_seguridad", "M_96_STOCK_SEGURIDAD")
     ]
 
-    for tabla_pg, tabla_sql in tablas:
+    for origen, tabla_pg, tabla_sql in tablas:
 
         try:
             logger.info(f"🔄 Procesando tabla {tabla_pg}...")
             vaciar_tabla.submit(tabla_pg)
-            flujo_maestro(esquema="repl", tabla=tabla_sql, filtro_sql="1=1")
+            flujo_maestro(esquema=origen, tabla=tabla_sql, filtro_sql="1=1")
             logger.info(f"✅ Tabla {tabla_pg} actualizada con éxito.")
         except Exception as e:
             logger.error(f"❌ Error procesando {tabla_pg}: {e}")
