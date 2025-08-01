@@ -1,45 +1,64 @@
 # flujo_maestro_replica_datos.py
+# VERSIÓN: 1.0.0
+# DESCRIPCIÓN: Flujo maestro para replicar datos entre SFTP y PostgreSQL.   
 
 from datetime import datetime
 from prefect import flow, task
 from prefect.deployments import run_deployment
 import os
 import time
+import paramiko  # SFTP remoto
+from dotenv import load_dotenv
 
+load_dotenv()
+
+# 1. Generar nombre del archivo ZIP
 @task
 def generar_nombre_archivo(esquema: str, tabla: str) -> str:
     fecha = datetime.today().strftime("%Y%m%d_%H%M%S")
     return f"{esquema}_{tabla}_{fecha}.zip"
 
+# 2. Esperar a que el archivo aparezca en el servidor SFTP remoto
 @task(retries=0)
-def esperar_archivo_disponible(nombre_zip: str, carpeta_destino: str = "/sftp/archivos/usr_diarco/orquestador", espera_maxima: int = 180, intervalo: int = 10):
-    """
-    Espera activa hasta que el archivo ZIP esté disponible, o se alcance el timeout.
-    """
-    ruta_completa = os.path.join(carpeta_destino, nombre_zip)
-    tiempo_esperado = 0
+def esperar_archivo_en_sftp_remoto(nombre_zip: str, espera_maxima: int = 180, intervalo: int = 10):
+    ruta_remota = f"./archivos/usr_diarco/orquestador/{nombre_zip}"
 
-    print(f"🕒 Esperando que aparezca el archivo: {ruta_completa}")
+    host = os.getenv("SFTP_HOST")
+    port = int(os.getenv("SFTP_PORT", "22"))
+    user = os.getenv("SFTP_USER")
+    password = os.getenv("SFTP_PASSWORD")
 
-    while not os.path.exists(ruta_completa):
-        if tiempo_esperado >= espera_maxima:
-            raise FileNotFoundError(f"❌ Timeout de espera alcanzado. Archivo no encontrado: {ruta_completa}")
-        print(f"⏳ Espera acumulada: {tiempo_esperado}s - Archivo aún no disponible...")
+    if not all([host, user, password]):
+        raise ValueError("❌ Variables de entorno faltantes para conexión SFTP: SFTP_HOST, SFTP_USER, SFTP_PASSWORD.")
+
+    tiempo = 0
+    print(f"🔐 Conectando al SFTP remoto: {host}:{port} como {user}")
+    while tiempo < espera_maxima:
+        try:
+            with paramiko.Transport((host, port)) as transport:
+                transport.connect(username=user, password=password)
+                sftp = paramiko.SFTPClient.from_transport(transport)
+                sftp.stat(ruta_remota)
+                print(f"✅ Archivo disponible en el SFTP remoto: {ruta_remota}")
+                return True
+        except FileNotFoundError:
+            print(f"⏳ [{tiempo}s] Archivo aún no disponible: {ruta_remota}")
+        except Exception as e:
+            print(f"⚠️ Error en conexión SFTP: {e}")
+
         time.sleep(intervalo)
-        tiempo_esperado += intervalo
+        tiempo += intervalo
 
-    print(f"✅ Archivo encontrado: {ruta_completa}")
-    return ruta_completa
+    raise FileNotFoundError(f"❌ Archivo no encontrado tras {espera_maxima}s en el SFTP remoto: {ruta_remota}")
 
+# 3. Flujo maestro
 @flow(name="flujo_maestro_replica_datos")
 def flujo_maestro(esquema: str, tabla: str, filtro_sql: str):
     print(f"🚀 Iniciando replicación para {esquema}.{tabla}")
 
-    # 1. Generar nombre de archivo ZIP
     nombre_zip = generar_nombre_archivo(esquema, tabla)
     print(f"📦 Nombre de archivo generado: {nombre_zip}")
 
-    # 2. Ejecutar flujo exportador (esperar a que termine)
     print(f"📤 Ejecutando flujo exportador...")
     export_result = run_deployment(
         name="exportar_tabla_sql_sftp/exportar_tabla_sql_sftp",
@@ -53,16 +72,14 @@ def flujo_maestro(esquema: str, tabla: str, filtro_sql: str):
     )
     print(f"✅ Exportación completada con estado: {export_result.state.name}")  # type: ignore
 
-    # 3. Verificar disponibilidad del archivo ZIP
-    print(f"🔍 Verificando existencia del archivo transferido...")
-    esperar_archivo_disponible(nombre_zip)
+    print(f"🔍 Esperando disponibilidad del archivo en el SFTP remoto...")
+    esperar_archivo_en_sftp_remoto(nombre_zip)
 
-    # 4. Ejecutar flujo importador
     print(f"📥 Ejecutando flujo importador...")
     import_result = run_deployment(
         name="importar_csv_pg/importar_csv_pg",
         parameters={
-            "esquema": "src",  # Esquema de destino en PostgreSQL
+            "esquema": "src",
             "tabla": tabla,
             "nombre_zip": nombre_zip
         },
