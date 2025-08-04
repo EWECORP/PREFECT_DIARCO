@@ -92,8 +92,32 @@ deployments:
       name: dmz-diarco
       work_queue_name: default
     schedule:
-      cron:  "30 6 * * 1-5"   # Todos los días hábiles a las 6:30 AM  
+      cron:  "30 6 * * *"   # Todos los días  a las 6:30 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
+
+  - name: Actualizar_tablas_Tabulares_Postgres
+    entrypoint: scripts/send/actualizar_tablas_tabulares.py:actualizar_tablas_tabulares
+    description: "Flujo maestro orquestador para subir tablas Tabulares entre SQL Server y PostgreSQL"
+    tags: ["orquestador", "replicacion", "pipeline", "etl"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron:  "50 6 * * *"   # Todos los días a las 6:30 AM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
+
+  # - name: Actualizar_Bases_Ventas_Postgres
+  #   entrypoint: scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas
+  #   description: "Flujo maestro orquestador para subir tablas Ventas DIARDO + BARRIO entre SQL Server y PostgreSQL"
+  #   tags: ["orquestador", "replicacion", "pipeline", "etl"]
+  #   work_pool:
+  #     name: dmz-diarco
+  #     work_queue_name: default
+  #   schedule:
+  #     cron:  "01 6 * * *"   # Todos los días a las 6:01 AM  
+  #     timezone: "America/Argentina/Buenos_Aires"
+  #   parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
 #  prefect deploy scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas  --name Push_datos_Ventas_Stock_Diarios  --work-queue push-forecast  --cron "30 6 * * *"
