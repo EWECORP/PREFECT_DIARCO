@@ -111,6 +111,53 @@ def insert_dataframe_postgres(df: pd.DataFrame, table_fullname: str):
             execute_values(cur, insert_sql, values, page_size=5000)
         conn.commit()
 
+@task(name="Eliminar duplicados en base_productos_vigentes")
+def eliminar_duplicados():
+    logger = get_run_logger()
+    try:
+        with open_pg_conn() as conn:
+            with conn.cursor() as cur:
+                query_count = """
+                    WITH cte AS (
+                        SELECT ROW_NUMBER() OVER (
+                            PARTITION BY c_sucu_empr, c_articulo, c_proveedor_primario
+                            ORDER BY fecha_extraccion DESC NULLS LAST
+                        ) AS rn
+                    FROM src.base_productos_vigentes
+                    )
+                    SELECT COUNT(*) FROM cte WHERE rn > 1;
+                """
+                cur.execute(query_count)
+                duplicados = cur.fetchone()[0]
+
+                if duplicados == 0:
+                    logger.info("✅ No se encontraron duplicados.")
+                    return 0
+
+                logger.info(f"⚠️ Se eliminarán {duplicados} registros duplicados.")
+
+                query_delete = """
+                    WITH cte AS (
+                        SELECT ctid,
+                            ROW_NUMBER() OVER (
+                                PARTITION BY c_sucu_empr, c_articulo, c_proveedor_primario
+                                ORDER BY fecha_extraccion DESC NULLS LAST
+                            ) AS rn
+                        FROM src.base_productos_vigentes
+                    )
+                    DELETE FROM src.base_productos_vigentes
+                    WHERE ctid IN (
+                        SELECT ctid FROM cte WHERE rn > 1
+                    );
+                """
+                cur.execute(query_delete)
+            conn.commit()
+            logger.info("🟢 Duplicados eliminados correctamente.")
+            return duplicados
+    except Exception as e:
+        logger.error(f"❌ Error al eliminar duplicados: {e}")
+        raise
+
 # ====================== TAREAS PREFECT ======================
 @task(name="cargar_base_productos_pg")
 def cargar_base_productos():
@@ -162,6 +209,9 @@ def capturar_base_articulos():
     try:
         df_resultado = cargar_base_productos.with_options(name="Carga Base Productos Vigentes").submit().result()
         log.info(f"✅ Proceso completado: {len(df_resultado)} filas cargadas")
+
+        registros_eliminados = eliminar_duplicados().result()
+        log.info(f"✅ Proceso de eliminación de duplicados completado. Registros eliminados: {registros_eliminados}")
     except Exception as e:
         log.error(f"🔥 Error general en el flujo: {e}")
 

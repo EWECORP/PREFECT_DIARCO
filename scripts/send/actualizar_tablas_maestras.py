@@ -84,12 +84,13 @@ def actualizar_tablas_maestras():
     logger = get_run_logger()
     tablas = [
         ("repl","t050_articulos", "T050_ARTICULOS"),
-        ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),
         ("repl", "t020_proveedor", "T020_PROVEEDOR"),
         ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
         ("repl", "t060_stock", "T060_STOCK"),
         ("repl", "m_3_articulos", "M_3_ARTICULOS"),
         ("repl", "t100_empresa_suc", "T100_EMPRESA_SUC"),
+        ("repl", "t114_rubros", "T114_RUBROS"),
+        ("repl", "t117_compradores", "T117_COMPRADORES"),
 
         ("dbo", "m_1_categorias", "M_1_CATEGORIAS"),
         ("dbo", "m_10_proveedores", "M_10_PROVEEDORES"),
@@ -102,7 +103,10 @@ def actualizar_tablas_maestras():
         ("dbo", "m_93_sustitutos", "M_93_SUSTITUTOS"),
         ("dbo", "m_94_alternativos", "M_94_ALTERNATIVOS"),
         ("dbo", "m_95_sensibles", "M_95_SENSIBLES"),
-        ("dbo", "m_96_stock_seguridad", "M_96_STOCK_SEGURIDAD")
+        ("dbo", "m_96_stock_seguridad", "M_96_STOCK_SEGURIDAD"),
+
+        ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
+        ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION")
     ]
 
     for origen, tabla_pg, tabla_sql in tablas:

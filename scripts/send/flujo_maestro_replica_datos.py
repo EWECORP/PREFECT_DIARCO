@@ -20,7 +20,7 @@ def generar_nombre_archivo(esquema: str, tabla: str) -> str:
 
 # 2. Esperar a que el archivo aparezca en el servidor SFTP remoto
 @task(retries=0)
-def esperar_archivo_en_sftp_remoto(nombre_zip: str, espera_maxima: int = 680, intervalo: int = 10):
+def esperar_archivo_en_sftp_remoto(nombre_zip: str, espera_maxima: int = 1680, intervalo: int = 15):
     ruta_remota = f"./archivos/usr_diarco/orquestador/{nombre_zip}"
 
     host = os.getenv("SFTP_HOST")
