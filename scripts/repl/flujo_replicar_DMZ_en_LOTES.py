@@ -86,9 +86,13 @@ def sync_dmz_optimizado():
     # === Planes, condiciones, snc ===
     logger.info("⏳ Replicando ARTICULOS y PARAMETROS - Grupo 4/6 ")
     grupo_condiciones = [
+        "repl.usp_replicar_T114_RUBROS",
+        "repl.usp_replicar_T117_COMPRADORES",
         "repl.usp_replicar_T021_PROV_COMPROB",
         "repl.usp_replicar_T055_ARTICULOS_PARAM_STOCK",
         "repl.usp_replicar_T055_LEAD_TIME_B2_SUCURSALES",
+        "repl.usp_replicar_T080_OC_CABE",
+        "repl.usp_replicar_T081_OC_DETA",
         "repl.usp_replicar_T085_ARTICULOS_EAN_EDI"
     ]
     resultados_cond = [ejecutar_sp.submit(sp) for sp in grupo_condiciones]
