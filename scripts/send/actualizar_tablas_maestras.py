@@ -106,7 +106,7 @@ def actualizar_tablas_maestras():
         ("dbo", "m_96_stock_seguridad", "M_96_STOCK_SEGURIDAD"),
 
         ("repl", "t080_oc_cabe", "T080_OC_CABE"),  
-        ("repl", "t081_oc_deta", "T081_OC_DETAL"),  
+        ("repl", "t081_oc_deta", "T081_OC_DETA"),  
         ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
         ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION")
     ]
