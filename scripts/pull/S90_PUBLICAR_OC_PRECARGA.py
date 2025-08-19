@@ -12,6 +12,7 @@ Modificación: 22/07 -- Se agrega función de consolidación de Articulos y Prov
 import pandas as pd
 import pyodbc
 import psycopg2 as pg2
+from sqlalchemy import create_engine
 
 # Cargar configuración DINAMICA de acuerdo al entorno
 from dotenv import dotenv_values
@@ -47,6 +48,12 @@ timestamp = time.strftime("%Y%m%d_%H%M%S")
 # from sqlalchemy import create_engine
 # engine = create_engine("postgresql+psycopg2://usuario:clave@host:puerto/base")
 # df = pd.read_sql(query, engine)
+# Para PostgreSQL
+# pg_url = f"postgresql+psycopg2://{secrets['PG_USER']}:{secrets['PG_PASSWORD']}@{secrets['PG_HOST']}:{secrets['PG_PORT']}/{secrets['PG_DB']}"
+# # engine_pg = create_engine(pg_url)
+# df_oc   = pd.read_sql(query,   engine_pg)
+# df_prod = pd.read_sql(queryp,  engine_pg)
+# df_stock= pd.read_sql(querystock, engine_pg)
 
 # Funciones Locales
 def Open_Connection():
@@ -89,9 +96,8 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 
-# Función para limpiar y normalizar los campos
 def limpiar_campos_oc(df):
-    # Normalizar textos respetando la longitud máxima del destino
+    # --- Texto con longitudes destino ---
     df["c_usuario_genero_oc"]   = df["c_usuario_genero_oc"].fillna("").astype(str).str[:10]
     df["c_terminal_genero_oc"]  = df["c_terminal_genero_oc"].fillna("").astype(str).str[:15]
     df["c_usuario_bloqueo"]     = df["c_usuario_bloqueo"].fillna("").astype(str).str[:10]
@@ -99,19 +105,47 @@ def limpiar_campos_oc(df):
     df["c_compra_kikker"]       = df["c_compra_kikker"].fillna("").astype(str).str[:20]
     df["c_usuario_modif"]       = df["c_usuario_modif"].fillna("").astype(str).str[:20]
 
-    # Números exactos
-    df["u_prefijo_oc"] = pd.to_numeric(df["u_prefijo_oc"], errors="coerce").fillna(0).astype(int)
-    df["u_sufijo_oc"]  = pd.to_numeric(df["u_sufijo_oc"], errors="coerce").fillna(0).astype(int)
-    df["c_comprador"]  = pd.to_numeric(df["c_comprador"], errors="coerce").fillna(0).astype(int)
+    # --- Claves y numéricos EXACTOS como INT ---
+    for col in ["c_proveedor", "c_articulo", "c_sucu_empr", "u_prefijo_oc", "u_sufijo_oc", "c_comprador"]:
+        df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0).astype(int)
 
-    # Timestamps (permitimos NaT)
-    df["f_genero_oc"] = pd.to_datetime(df["f_genero_oc"], errors='coerce')
-    df["f_procesado"] = pd.to_datetime(df["f_procesado"], errors='coerce')
-    df["f_genero_oc"] = df["f_genero_oc"].fillna(pd.Timestamp('1900-01-01 00:00:00.000'))
-    df["f_procesado"] = df["f_procesado"].fillna(pd.Timestamp('1900-01-01 00:00:00.000'))
-    
+    # Cantidad a publicar en bultos/kilos como INT (>=0)
+    df["q_bultos_kilos_diarco"] = pd.to_numeric(df["q_bultos_kilos_diarco"], errors="coerce").fillna(0)
+    df["q_bultos_kilos_diarco"] = df["q_bultos_kilos_diarco"].clip(lower=0).astype(int)
+
+    # --- Timestamps ---
+    df["f_alta_sist"]  = pd.to_datetime(df.get("f_alta_sist"),  errors='coerce')
+    df["f_genero_oc"]  = pd.to_datetime(df.get("f_genero_oc"),  errors='coerce')
+    df["f_procesado"]  = pd.to_datetime(df.get("f_procesado"),  errors='coerce')
+    df["f_genero_oc"]  = df["f_genero_oc"].fillna(pd.Timestamp('1900-01-01 00:00:00'))
+    df["f_procesado"]  = df["f_procesado"].fillna(pd.Timestamp('1900-01-01 00:00:00'))
+
+    # --- Deduplicar intratable por PK destino ---
+    df = df.drop_duplicates(subset=["c_proveedor", "c_articulo", "c_sucu_empr"], keep="last").reset_index(drop=True)
+    return df
+
+def forzar_enteros(df: pd.DataFrame) -> pd.DataFrame:
+    # Columnas clave y numéricos exactos
+    int_cols = [
+        "c_proveedor", "c_articulo", "c_sucu_empr",
+        "u_prefijo_oc", "u_sufijo_oc", "c_comprador",
+        "q_bultos_kilos_diarco", "c_proveedor_primario"
+    ]
+    for col in int_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce").round().astype("Int64")
+
+    # Booleanos
+    if "m_publicado" in df.columns:
+        df["m_publicado"] = df["m_publicado"].fillna(False).astype(bool)
+
+    # Fechas (por si se degradaron)
+    for dcol in ["f_alta_sist", "f_genero_oc", "f_procesado"]:
+        if dcol in df.columns:
+            df[dcol] = pd.to_datetime(df[dcol], errors="coerce")
 
     return df
+
 
 def validar_longitudes(df):
     campos_texto = [
@@ -144,6 +178,8 @@ def consolidar_oc_precarga():
         if df_oc.empty:
             logging.warning("[WARNING] No hay registros pendientes de publicación")
             return
+        
+        df_oc = forzar_enteros(df_oc)  # <<--- NUEVO
 
         # Convertir a enteros antes de armar la cláusula IN
         lista_proveedores = (
@@ -168,6 +204,8 @@ def consolidar_oc_precarga():
         if df_prod.empty:
             logging.warning("[WARNING] No hay productos vigentes para los proveedores seleccionados")
             return
+        
+        df_prod = forzar_enteros(df_prod)  # <<--- NUEVO
 
         df_merged = df_oc.merge(
             df_prod,
@@ -176,6 +214,7 @@ def consolidar_oc_precarga():
             right_on=['c_sucu_empr', 'c_articulo', 'c_proveedor_primario']
         )
         
+        df_merged = forzar_enteros(df_merged)  # <<--- NUEVO
         df_merged.drop(columns=['c_proveedor_primario'], inplace=True)
 
         # Filtrar por cod_cd = '41CD'
@@ -239,6 +278,7 @@ def consolidar_oc_precarga():
             df_merged.drop(df_merged[df_merged['cod_cd'] == '82CD'].index, inplace=True)
             # Publicar en Destino
             df_merged = pd.concat([df_merged, df_grouped_82], ignore_index=True)
+            df_merged = forzar_enteros(df_merged)  # <<--- NUEVO
 
         
         # 1C. Traer Stock CENTROS DE DISTRIBUCIÓN
@@ -261,6 +301,8 @@ def consolidar_oc_precarga():
             """
 
         df_stock = pd.read_sql(querystock, conn_pg) # type: ignore
+        df_stock = forzar_enteros(df_stock)  # <<--- NUEVO
+
         if df_stock.empty:
             logging.warning("[WARNING] No hay stock disponible para los proveedores seleccionados")
         else:
@@ -322,6 +364,8 @@ def publicar_oc_precarga():
     if df_oc is None or df_oc.empty:
         logging.warning("[WARNING] No hay registros consolidados para publicar")
         return
+    
+    df_oc = forzar_enteros(df_oc)  # <<--- NUEVO
 
     # Abrir conexión a PostgreSQL SOLO para el update
     conn_pg = Open_Diarco_Data()
@@ -352,6 +396,24 @@ def publicar_oc_precarga():
 
         cursor_sql = conn_sql.cursor()
         cursor_sql.fast_executemany = True  # validar si es soportado por tu driver
+
+        # # Obtener claves ya existentes en destino para los proveedores/sucursales involucrados
+        # proveedores = tuple(sorted(df_oc['c_proveedor'].unique().tolist()))
+        # sucursales  = tuple(sorted(df_oc['c_sucu_empr'].unique().tolist()))
+        # qry_exist = f"""
+        #     SELECT C_PROVEEDOR, C_ARTICULO, C_SUCU_EMPR
+        #     FROM dbo.T080_OC_PRECARGA_KIKKER
+        #     WHERE C_PROVEEDOR IN {proveedores} AND C_SUCU_EMPR IN {sucursales}
+        # """
+        # cursor_sql.execute(qry_exist)
+        # existentes = {(r[0], r[1], r[2]) for r in cursor_sql.fetchall()}
+
+        # # Anti-join en memoria
+        # mask = ~df_oc.apply(lambda r: (r['c_proveedor'], r['c_articulo'], r['c_sucu_empr']) in existentes, axis=1)
+        # df_insert = df_oc[mask].copy()
+
+        # # Insertar sólo las nuevas (no explota la PK)
+
 
         insert_stmt = """
         INSERT INTO [dbo].[T080_OC_PRECARGA_KIKKER] (

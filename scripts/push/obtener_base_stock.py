@@ -64,6 +64,11 @@ ESQUEMA_BASE_STOCK = {
     "precio_venta": "DOUBLE PRECISION",
     "precio_costo": "DOUBLE PRECISION",
     "factor_venta": "INTEGER",
+
+    "q_ultimo_ingreso": "DOUBLE PRECISION",
+    "fecha_ultimo_ingreso": "TIMESTAMP",
+    "fecha_ultima_venta": "TIMESTAMP",
+
     "m_vende_por_peso": "VARCHAR",
     "venta_unidades_1q": "DOUBLE PRECISION",
     "venta_unidades_2q": "DOUBLE PRECISION",
