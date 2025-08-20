@@ -1,5 +1,5 @@
 
-# Rutina para obtener Base_Forecast_Oc_Demoradas por PROVEEDOR (Parámetros)
+# Rutina para obtener Base_Forecast_Oc_Demoradas SIN PARAMETROS
 
 import os
 import sys
@@ -70,8 +70,7 @@ def infer_postgres_types(df):
 
     
 @task(name="cargar_oc_demoradas_proveedores_pg")
-def cargar_oc_demoradas_proveedores_pg(lista_ids):
-    ids = ','.join(map(str, lista_ids))
+def cargar_oc_demoradas_proveedores_pg():
     print(f"-> Generando datos para ID: {ids}")
     # ----------------------------------------------------------------
     # FILTRA Ordenes de Compra Demoradas por Proveedor  (FULL DEMORADAS)
@@ -106,7 +105,7 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
     # Reemplazar en PostgreSQL la Base de Estimación para FORECAST
     conn = open_pg_conn()
     cur = conn.cursor()
-    table_name = f"src.Base_Forecast_Oc_Demoradas"
+    table_name = f"src.base_forecast_oc_demoradas"
     columns = ', '.join(df.columns)
     cur.execute(f"DROP TABLE IF EXISTS {table_name} CASCADE")
     create_sql = f"CREATE TABLE {table_name} ({infer_postgres_types(df)})"
@@ -122,15 +121,15 @@ def cargar_oc_demoradas_proveedores_pg(lista_ids):
 
 
 @flow(name="capturar_oc_demoradas_proveedores")
-def capturar_oc_demoradas_proveedores(lista_ids):
+def capturar_oc_demoradas_proveedores():
     log = get_run_logger()
     try:
-        filas_art = cargar_oc_demoradas_proveedores_pg.with_options(name="Carga Stock").submit(lista_ids).result()
+        filas_art = cargar_oc_demoradas_proveedores_pg.with_options(name="Carga Stock").submit().result()
         log.info(f"OC Demoradas: {filas_art} filas insertadas")
     except Exception as e:
         log.error(f"Error cargando registros: {e}")
 
 if __name__ == "__main__":
     ids = list(map(int, sys.argv[1:]))  # ← lee los proveedores como argumentos
-    capturar_oc_demoradas_proveedores(ids)
+    capturar_oc_demoradas_proveedores()
     logger.info("--------------->  Flujo de replicación FINALIZADO.")

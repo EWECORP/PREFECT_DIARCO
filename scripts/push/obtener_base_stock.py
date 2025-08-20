@@ -26,7 +26,7 @@ PG_DB = os.getenv("PG_DB")
 PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 
-SP_NAME = "[dbo].[SP_BASE_STOCK]"
+SP_NAME = "[dbo].[SP_BASE_STOCK_DMZ]"  # Cambiado a SP_BASE_STOCK_DMZ
 TABLE_DESTINO = "src.base_stock_sucursal"
 
 # Logging
@@ -65,7 +65,7 @@ ESQUEMA_BASE_STOCK = {
     "precio_costo": "DOUBLE PRECISION",
     "factor_venta": "INTEGER",
 
-    "q_ultimo_ingreso": "DOUBLE PRECISION",
+    "ultimo_ingreso": "DOUBLE PRECISION",
     "fecha_ultimo_ingreso": "TIMESTAMP",
     "fecha_ultima_venta": "TIMESTAMP",
 
@@ -131,9 +131,10 @@ def cargar_base_stock_sucursal_pg():
         if df.empty:
             logger.warning("⚠️ No se recuperaron registros desde el SP")
             return df
-        df["FUENTE_ORIGEN"] = "SP_BASE_STOCK"
-        df["FECHA_EXTRACCION"] = datetime.now()
-        df["ESTADO_SINCRONIZACION"] = 0
+        
+        df["fuente_origen"] = "SP_BASE_STOCK_DMZ"
+        df["fecha_extraccion"] = datetime.now()
+        df["estado_sincronizacion"] = 0
     
         # Adecuación de columnas numéricas
         df["Codigo_Articulo"] = pd.to_numeric(df["Codigo_Articulo"], errors="coerce").astype("Int64")
@@ -142,6 +143,9 @@ def cargar_base_stock_sucursal_pg():
         df["Precio_Venta"] = pd.to_numeric(df["Precio_Venta"], errors="coerce").astype("Float64")
         df["Precio_Costo"] = pd.to_numeric(df["Precio_Costo"], errors="coerce").astype("Float64")
         df["Factor_Venta"] = pd.to_numeric(df["Factor_Venta"], errors="coerce").astype("Int64") 
+        df["Ultimo_Ingreso"] = pd.to_numeric(df["Ultimo_Ingreso"], errors="coerce").astype("Float64")
+        df["Fecha_Ultimo_Ingreso"] = pd.to_datetime(df["Fecha_Ultimo_Ingreso"], errors="coerce")
+        df["Fecha_Ultima_Venta"] = pd.to_datetime(df["Fecha_Ultima_Venta"], errors="coerce")
         df["M_Vende_Por_Peso"] = df["M_Vende_Por_Peso"].astype("string")      
         df["Venta_Unidades_1Q"] = pd.to_numeric(df["Venta_Unidades_1Q"], errors="coerce").astype("Float64")
         df["Venta_Unidades_2Q"] = pd.to_numeric(df["Venta_Unidades_2Q"], errors="coerce").astype("Float64")
@@ -161,6 +165,7 @@ def cargar_base_stock_sucursal_pg():
         df["Q_DIAS_SOBRE_STOCK"] = pd.to_numeric(df["Q_DIAS_SOBRE_STOCK"], errors="coerce").astype("Int64")
         df["I_LISTA_CALCULADO"] = pd.to_numeric(df["I_LISTA_CALCULADO"], errors="coerce").astype("Float64") 
         df["Pedido_SGM"] = pd.to_numeric(df["Pedido_SGM"], errors="coerce").astype("Float64") 
+        df["fecha_extraccion"] = pd.to_datetime(df["fecha_extraccion"], errors="coerce")
 
 
         logger.info(f"✅ {len(df)} registros leídos desde SQL Server.")
