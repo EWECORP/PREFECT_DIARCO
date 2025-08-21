@@ -68,7 +68,7 @@ def vaciar_tabla(tabla_pg: str) -> None:
     try:
         conn = open_pg_conn()
         cursor = conn.cursor()
-        query = f"TRUNCATE TABLE src.{tabla_pg} RESTART IDENTITY CASCADE"
+        query = f"TRUNCATE TABLE src.{tabla_pg} "
         cursor.execute(query)
         conn.commit()
         logger.info(f"✅ Tabla 'src.{tabla_pg}' vaciada correctamente.")
@@ -115,7 +115,7 @@ def actualizar_tablas_maestras():
 
         try:
             logger.info(f"🔄 Procesando tabla {tabla_pg}...")
-            vaciar_tabla(tabla_pg).result()  # Forzar a que termine antes de seguir
+            vaciar_tabla(tabla_pg) # Forzar a que termine antes de seguir
             # vaciar_tabla.submit(tabla_pg)
             flujo_maestro(esquema=origen, tabla=tabla_sql, filtro_sql="1=1")  # no usar run_deployment aquí si no está controlado
             logger.info(f"✅ Tabla {tabla_pg} actualizada con éxito.")
