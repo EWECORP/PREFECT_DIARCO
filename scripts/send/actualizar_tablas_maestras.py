@@ -13,6 +13,9 @@ from dotenv import load_dotenv
 import logging
 from prefect import flow, task, get_run_logger
 from datetime import datetime
+import time
+from psycopg2 import sql
+from psycopg2 import errors as pg_errors
 
 from flujo_maestro_replica_datos import flujo_maestro, generar_nombre_archivo
 
@@ -30,7 +33,7 @@ PG_DB = os.getenv("PG_DB")
 PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 
-SP_NAME = "[dbo].[SP_BASE_PRODUCTOS_SUCURSAL]"
+SP_NAME = "[dbo].[SP_BASE_PRODUCTOS_DMZ]"
 TABLE_DESTINO = "src.base_productos_vigentes"
 
 # Logging
@@ -60,24 +63,180 @@ def open_pg_conn():
     )
 
 # ====================== FUNCIONES ======================
-    
+
+def log_blockers(conn, fq_table: str, logger):
+    """
+    Registra sesiones bloqueadas y bloqueadoras para fq_table (schema.table).
+    """
+    with conn.cursor() as cur:
+        # ¿Quién está bloqueado y por quién?
+        cur.execute("""
+            SELECT
+                a.pid                             AS blocked_pid,
+                a.usename                         AS blocked_user,
+                a.query                           AS blocked_query,
+                now() - a.query_start             AS blocked_for,
+                pg_blocking_pids(a.pid)           AS blocking_pids
+            FROM pg_stat_activity a
+            WHERE a.datname = current_database()
+                AND a.wait_event_type = 'Lock';
+        """)
+        rows = cur.fetchall()
+        if not rows:
+            logger.info("ℹ️ No hay sesiones esperando locks actualmente.")
+            return
+
+        logger.warning("🔎 Sesiones bloqueadas detectadas:")
+        for r in rows:
+            logger.warning(f" - blocked_pid={r[0]} user={r[1]} since={r[3]} blockers={r[4]}")
+
+        # Detalle de bloqueadores (si los hay)
+        blocker_pids = []
+        for r in rows:
+            if r[4]:
+                blocker_pids.extend(r[4])
+        if blocker_pids:
+            cur.execute("""
+                SELECT pid, usename, state, wait_event_type, wait_event,
+                        now() - query_start AS running_for, query
+                FROM pg_stat_activity
+                WHERE pid = ANY(%s)
+                ORDER BY query_start;
+            """, (blocker_pids,))
+            det = cur.fetchall()
+            logger.warning("🔎 Detalle de bloqueadores:")
+            for d in det:
+                logger.warning(
+                    f"   pid={d[0]} user={d[1]} state={d[2]} wait={d[3]}/{d[4]} "
+                    f"running_for={d[5]} query={d[6][:300]}"
+                )
+
+
+def log_relation_locks(conn, schema: str, table: str, logger):
+    """
+    Muestra locks CONCEDIDOS y en ESPERA sobre schema.table,
+    junto con la consulta, estado y cuánto hace que corren.
+    También detecta autovacuum en progreso sobre esa relación.
+    """
+    with conn.cursor() as cur:
+        # Locks concedidos/espera sobre la relación
+        cur.execute("""
+            WITH rel AS (
+                SELECT c.oid
+                FROM pg_class c
+                JOIN pg_namespace n ON n.oid = c.relnamespace
+            WHERE n.nspname = %s AND c.relname = %s
+            )
+            SELECT
+                l.granted, l.mode,
+                a.pid, a.usename, a.application_name, a.state,
+                a.wait_event_type, a.wait_event,
+                now() - a.query_start AS running_for,
+                regexp_replace(coalesce(a.query, ''), '\\s+', ' ', 'g') AS query
+            FROM pg_locks l
+            JOIN rel r ON l.relation = r.oid
+            LEFT JOIN pg_stat_activity a ON a.pid = l.pid
+            ORDER BY l.granted DESC, running_for DESC NULLS LAST;
+        """, (schema, table))
+        rows = cur.fetchall()
+        if rows:
+            logger.warning(f"🔎 Locks sobre {schema}.{table}:")
+            for (granted, mode, pid, user, app, state, wet, we, running_for, query) in rows:
+                logger.warning(
+                    f"  granted={granted} mode={mode} pid={pid} user={user} app={app} "
+                    f"state={state} wait={wet}/{we} running_for={running_for} "
+                    f"query={query[:300]}"
+                )
+        else:
+            logger.info(f"ℹ️ No se encontraron locks en {schema}.{table} (pg_locks).")
+
+        # ¿Autovacuum en progreso sobre la misma relación?
+        cur.execute("""
+            SELECT v.pid, v.phase,
+                    v.heap_blks_total, v.heap_blks_scanned, v.heap_blks_vacuumed,
+                    now() - a.query_start AS running_for
+            FROM pg_stat_progress_vacuum v
+            JOIN pg_stat_activity a ON a.pid = v.pid
+            WHERE v.relid = %s::regclass;
+        """, (f"{schema}.{table}",))
+        vac = cur.fetchall()
+        if vac:
+            logger.warning(f"🧹 autovacuum en progreso sobre {schema}.{table}:")
+            for (pid, phase, total, scanned, vacuumed, running_for) in vac:
+                logger.warning(
+                    f"  pid={pid} phase={phase} running_for={running_for} "
+                    f"heap_blks {scanned}/{vacuumed}/{total}"
+                )
+
+
+
 @task
-def vaciar_tabla(tabla_pg: str) -> None:
-    """Vacía la tabla especificada en el esquema src de PostgreSQL."""
+def vaciar_tabla(tabla_pg: str,
+                lock_timeout_ms_nowait: int = 0,       # no aplica, sólo por simetría
+                lock_timeout_ms_wait: int = 3000,      # 3s en intentos con espera
+                statement_timeout_ms: int = 10*60*1000,
+                max_retries: int = 5) -> None:
     logger = get_run_logger()
-    try:
-        conn = open_pg_conn()
-        cursor = conn.cursor()
-        query = f"TRUNCATE TABLE src.{tabla_pg} "
-        cursor.execute(query)
-        conn.commit()
-        logger.info(f"✅ Tabla 'src.{tabla_pg}' vaciada correctamente.")
-    except Exception as e:
-        logger.info(f"❌ Error al vaciar la tabla 'src.{tabla_pg}': {e}")
-        raise
-    finally:
-        cursor.close()
-        conn.close()
+    schema = "src"
+    fq_table = f"{schema}.{tabla_pg}"
+
+    for intento in range(1, max_retries + 1):
+        conn = open_pg_conn()  # autocommit=False por defecto
+        try:
+            with conn:  # transacción corta
+                with conn.cursor() as cur:
+                    # Siempre límite a la ejecución
+                    cur.execute("SET LOCAL statement_timeout = %s", (f"{statement_timeout_ms}ms",))
+
+                    use_nowait = (intento <= 2)  # primeros intentos: NOWAIT
+                    if use_nowait:
+                        # NOWAIT: falla inmediato si hay cualquier lock concedido
+                        cur.execute(
+                            sql.SQL("LOCK TABLE {} IN ACCESS EXCLUSIVE MODE NOWAIT")
+                                .format(sql.Identifier(schema, tabla_pg))
+                        )
+                    else:
+                        # Espera corta: lock_timeout 3s (ajustable)
+                        cur.execute("SET LOCAL lock_timeout = %s", (f"{lock_timeout_ms_wait}ms",))
+                        cur.execute(
+                            sql.SQL("LOCK TABLE {} IN ACCESS EXCLUSIVE MODE")
+                                .format(sql.Identifier(schema, tabla_pg))
+                        )
+
+                    # Con el lock tomado, TRUNCATE
+                    cur.execute(
+                        sql.SQL("TRUNCATE TABLE {}").format(sql.Identifier(schema, tabla_pg))
+                    )
+
+            logger.info(f"✅ Tabla '{fq_table}' vaciada correctamente (intento {intento}, "
+                        f"{'NOWAIT' if use_nowait else 'WAIT<=3s'}).")
+            return
+
+        except pg_errors.LockNotAvailable:
+            logger.warning(f"⏳ Lock NOWAIT rechazado sobre {fq_table} (intento {intento}/{max_retries}).")
+            try:
+                log_relation_locks(conn, schema, tabla_pg, logger)
+            except Exception:
+                pass
+            time.sleep(min(2 ** (intento - 1), 60))
+
+        except Exception as e:
+            # Incluye "canceling statement due to lock timeout" de los intentos con espera corta
+            logger.warning(f"⏳ Intento {intento}/{max_retries} sobre {fq_table} falló: {e}")
+            try:
+                log_relation_locks(conn, schema, tabla_pg, logger)
+            except Exception:
+                pass
+            time.sleep(min(2 ** (intento - 1), 60))
+
+        finally:
+            try:
+                conn.close()
+            except Exception:
+                pass
+
+    raise RuntimeError(f"No se pudo obtener ACCESS EXCLUSIVE para {fq_table} tras {max_retries} intentos.")
+
 
 @flow(name="actualizar_tablas_maestras")
 def actualizar_tablas_maestras():

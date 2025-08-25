@@ -4,6 +4,8 @@ import pandas as pd
 import psycopg2
 from sqlalchemy import create_engine, inspect, text
 from prefect import get_run_logger
+import csv
+import tempfile
 
 PG_CONN_STR = "postgresql+psycopg2://postgres:aladelta10$@186.158.182.54:5432/diarco_data"
 
@@ -14,6 +16,41 @@ PG_RAW_CONN = {
     "user": "postgres",
     "password": "aladelta10$"
 }
+
+def get_pg_column_types(schema: str, table: str) -> dict:
+    engine = create_engine(PG_CONN_STR)
+    insp = inspect(engine)
+    cols = insp.get_columns(table, schema=schema)
+    # {'col': 'integer', ...}
+    return {c['name'].lower(): str(c['type']).lower() for c in cols}
+
+def normalizar_booleanos_en_csv(csv_path: str, columnas_bool: list[str]):
+    tmp_fd, tmp_path = tempfile.mkstemp(suffix=".csv")
+    os.close(tmp_fd)
+    with open(csv_path, 'r', encoding='utf-8', newline='') as src, \
+        open(tmp_path, 'w', encoding='utf-8', newline='') as dst:
+        reader = csv.reader(src, delimiter='|', quotechar='"', escapechar='"')
+        writer = csv.writer(dst, delimiter='|', quotechar='"', escapechar='"', quoting=csv.QUOTE_MINIMAL)
+        header = next(reader)
+        header_lower = [h.lower() for h in header]
+        idx = [header_lower.index(col) for col in columnas_bool if col in header_lower]
+        writer.writerow(header)
+        for row in reader:
+            for i in idx:
+                v = row[i]
+                if v in ('', 'NULL'):
+                    # respetar NULL tal como está
+                    continue
+                lv = v.strip().lower()
+                if lv in ('true','t','1','sí','si','y','yes'):
+                    row[i] = '1'
+                elif lv in ('false','f','0','no','n'):
+                    row[i] = '0'
+                else:
+                    # valor inesperado -> dejarlo tal cual para detectar luego
+                    row[i] = v
+            writer.writerow(row)
+    os.replace(tmp_path, csv_path)
 
 def validar_o_crear_tabla(schema: str, tabla: str, archivo_csv: str):
     logger = get_run_logger()

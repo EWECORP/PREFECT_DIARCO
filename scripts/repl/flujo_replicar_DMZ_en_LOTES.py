@@ -68,6 +68,7 @@ def sync_dmz_optimizado():
     # === SPs críticos (con dependencias) en serie ===
     logger.info("⏳ Ejecutando SP Encadenados - Grupo 2/6 ")
     ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL")
+    ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL_BARRIO")
     ejecutar_sp("repl.usp_replicar_T052_ARTICULOS_PROVEEDOR")
     ejecutar_sp("repl.usp_replicar_T060_STOCK")
     ejecutar_sp("repl.usp_replicar_M_3_ARTICULOS")
@@ -93,6 +94,9 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T055_LEAD_TIME_B2_SUCURSALES",
         "repl.usp_replicar_T080_OC_CABE",
         "repl.usp_replicar_T081_OC_DETA",
+        "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_CABE",
+        "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+        "repl.usp_replicar_T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
         "repl.usp_replicar_T085_ARTICULOS_EAN_EDI"
     ]
     resultados_cond = [ejecutar_sp.submit(sp) for sp in grupo_condiciones]
@@ -107,6 +111,7 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT",
         "repl.usp_replicar_T079_SNC_CUOTAS_CABE",
         "repl.usp_replicar_T079_SNC_CUOTAS_DETA",
+        "repl.usp_replicar_T804_HIST_MARCA_LISTO_PARA_VENTA",
         "repl.usp_replicar_T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANT"
     ]
     resultados_tabs = [ejecutar_sp.submit(sp) for sp in grupo_tableros]
