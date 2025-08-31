@@ -61,6 +61,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 ETL_DIARCO\logs
+ETL_DIARCO\scripts\zvarios\logs
+ETL_DIARCO\logs
 
 # Flask stuff:
 instance/
