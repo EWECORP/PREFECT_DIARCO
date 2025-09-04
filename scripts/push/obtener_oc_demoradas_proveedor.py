@@ -91,7 +91,10 @@ def cargar_oc_demoradas_proveedores_pg():
             ,[F_ALTA_SIST]
             ,[F_EMISION]
             ,[F_ENTREGA]    
-            ,[C_USUARIO_OPERADOR]      
+            ,[C_USUARIO_OPERADOR]  
+            ,'Flujo Diario' AS [FUENTE_ORIGEN]
+            ,GETDATE() AS [FECHA_EXTRACCION]
+            ,0 AS [ESTADO_SINCRONIZACION]
             
         FROM [repl].[T080_OC_CABE]  
         WHERE [FECHA_LIMITE] < GETDATE()
