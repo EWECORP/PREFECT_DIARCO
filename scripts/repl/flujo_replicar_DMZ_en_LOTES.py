@@ -72,6 +72,9 @@ def sync_dmz_optimizado():
     ejecutar_sp("repl.usp_replicar_T052_ARTICULOS_PROVEEDOR")
     ejecutar_sp("repl.usp_replicar_T060_STOCK")
     ejecutar_sp("repl.usp_replicar_M_3_ARTICULOS")
+    ejecutar_sp("repl.usp_replicar_T080_OC_PENDIENTES")
+    ejecutar_sp("repl.usp_replicar_T080_OC_CABE")
+    ejecutar_sp("repl.usp_replicar_T081_OC_DETA")
 
     # === Largos y pesados ===
     logger.info("⏳ Ejecutando ESTADISTICAS PESADAS - Grupo 3/6 ")
@@ -91,9 +94,7 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T117_COMPRADORES",
         "repl.usp_replicar_T021_PROV_COMPROB",
         "repl.usp_replicar_T055_ARTICULOS_PARAM_STOCK",
-        "repl.usp_replicar_T055_LEAD_TIME_B2_SUCURSALES",
-        "repl.usp_replicar_T080_OC_CABE",
-        "repl.usp_replicar_T081_OC_DETA",
+        "repl.usp_replicar_T055_LEAD_TIME_B2_SUCURSALES",  
         "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_CABE",
         "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_DETA",
         "repl.usp_replicar_T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",

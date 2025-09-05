@@ -263,7 +263,8 @@ def actualizar_tablas_maestras():
         ("dbo", "m_94_alternativos", "M_94_ALTERNATIVOS"),
         ("dbo", "m_95_sensibles", "M_95_SENSIBLES"),
         ("dbo", "m_96_stock_seguridad", "M_96_STOCK_SEGURIDAD"),
-
+        
+        ("repl", "t080_oc_pendientes", "T080_OC_PENDIENTES"),  
         ("repl", "t080_oc_cabe", "T080_OC_CABE"),  
         ("repl", "t081_oc_deta", "T081_OC_DETA"),  
         ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
