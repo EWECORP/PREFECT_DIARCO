@@ -38,8 +38,8 @@ def forecast_flow():
     scripts = [
         "obtener_base_productos_vigentes.py",  ## Salida del SP_BASE_PRODUCTOS_SUCURSAL  
         "obtener_base_stock.py",  ## Salida del SP_BASE_PRODUCTOS_SUCURSAL 
-        "obtener_oc_demoradas_proveedor.py"                ##  Genera Base_Forecast_Oc_Demoradas
-        
+        "obtener_oc_demoradas_proveedor.py" ,               ##  Genera Base_Forecast_Oc_Demoradas
+        "obtener_base_transferencias_pendientes.py"        ##  Genera Base_Transferencias_Pendientes
     ]
     for script in scripts:
         ejecutar_script(script)
