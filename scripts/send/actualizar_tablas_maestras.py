@@ -250,6 +250,8 @@ def actualizar_tablas_maestras():
         ("repl", "t100_empresa_suc", "T100_EMPRESA_SUC"),
         ("repl", "t114_rubros", "T114_RUBROS"),
         ("repl", "t117_compradores", "T117_COMPRADORES"),
+        ("repl", "t020_proveedor_dias_entrega_cabe","T020_PROVEEDOR_DIAS_ENTREGA_CABE"),
+        ("repl", "t020_proveedor_dias_entrega_deta","T020_PROVEEDOR_DIAS_ENTREGA_DETA"),
 
         ("dbo", "m_1_categorias", "M_1_CATEGORIAS"),
         ("dbo", "m_10_proveedores", "M_10_PROVEEDORES"),

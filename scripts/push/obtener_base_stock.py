@@ -88,6 +88,9 @@ ESQUEMA_BASE_STOCK = {
     "q_dias_sobre_stock": "INTEGER",
     "i_lista_calculado": "DOUBLE PRECISION",
     "pedido_sgm": "DOUBLE PRECISION",
+    "importe_minimo": "DOUBLE PRECISION",
+	"bultos_minimo": "DOUBLE PRECISION",
+	"dias_preparacion": "INTEGER",
     "fuente_origen": "VARCHAR",
     "fecha_extraccion": "TIMESTAMP",
     "estado_sincronizacion": "INTEGER"
@@ -165,6 +168,9 @@ def cargar_base_stock_sucursal_pg():
         df["Q_DIAS_SOBRE_STOCK"] = pd.to_numeric(df["Q_DIAS_SOBRE_STOCK"], errors="coerce").astype("Int64")
         df["I_LISTA_CALCULADO"] = pd.to_numeric(df["I_LISTA_CALCULADO"], errors="coerce").astype("Float64") 
         df["Pedido_SGM"] = pd.to_numeric(df["Pedido_SGM"], errors="coerce").astype("Float64") 
+        df["Importe_Minimo"] = pd.to_numeric(df["Importe_Minimo"], errors="coerce").astype("Float64")
+        df["Bultos_Minimo"] = pd.to_numeric(df["Bultos_Minimo"], errors="coerce").astype("Float64")
+        df["Dias_Preparacion"] = pd.to_numeric(df["Dias_Preparacion"], errors="coerce").astype("Int64")
         df["fecha_extraccion"] = pd.to_datetime(df["fecha_extraccion"], errors="coerce")
 
 
