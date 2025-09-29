@@ -125,26 +125,39 @@ def validar_o_crear_tabla(schema: str, tabla: str, archivo_csv: str):
     logger = get_run_logger()
     engine = create_engine(PG_CONN_STR)
 
-    # Muestra para columnas (y tipos si se usa to_sql para crear)
+    # Muestra para columnas (y tipos si hubiera que crear)
     df_csv = pd.read_csv(archivo_csv, delimiter='|', nrows=100)
     tabla = tabla.lower()
     df_csv.columns = [col.lower() for col in df_csv.columns]
+    columnas_csv = df_csv.columns.tolist()
 
     with engine.begin() as conn:
-        inspector = inspect(engine)
-        if inspector.has_table(tabla, schema=schema):
-            columnas_pg  = [col['name'].lower() for col in inspector.get_columns(tabla, schema=schema)]
-            columnas_csv = df_csv.columns.tolist()
+        # MUY IMPORTANTE: inspeccionar con la MISMA conexión/tx
+        inspector = inspect(conn)
 
-            if columnas_pg != columnas_csv:
+        tabla_existe = inspector.has_table(tabla, schema=schema)
+        if tabla_existe:
+            columnas_pg = [c['name'].lower() for c in inspector.get_columns(tabla, schema=schema)]
+
+            # Si el conjunto de columnas es el mismo, la consideramos compatible,
+            # aunque el orden difiera (evitamos recrear y el error visto).
+            mismo_conjunto = set(columnas_pg) == set(columnas_csv)
+
+            if not mismo_conjunto:
                 logger.warning(f"Estructura incompatible: eliminando tabla {schema}.{tabla}")
                 conn.execute(text(f'DROP TABLE IF EXISTS "{schema}"."{tabla}" CASCADE'))
-                df_csv.iloc[0:0].to_sql(tabla, engine, schema=schema, index=False)
+
+                # Crear tabla vacía con la misma CONEXIÓN (misma tx)
+                df_csv.iloc[0:0].to_sql(tabla, con=conn, schema=schema, index=False)
+                logger.info(f"Tabla {schema}.{tabla} recreada a partir del CSV")
             else:
-                logger.info("Estructura de tabla válida, no se requiere recreación.")
+                logger.info("Estructura de tabla compatible (mismo conjunto de columnas). No se recrea.")
+                # Opcional: si quieren alinear orden físico, pueden recrear,
+                # pero NO es necesario para el COPY que ustedes hacen.
         else:
             logger.info(f"Creando tabla {schema}.{tabla}")
-            df_csv.iloc[0:0].to_sql(tabla, engine, schema=schema, index=False)
+            # Crear tabla vacía con la MISMA conexión
+            df_csv.iloc[0:0].to_sql(tabla, con=conn, schema=schema, index=False)
 
 @task
 def cargar_csv_postgres(csv_path: str, esquema: str, tabla: str):
@@ -211,14 +224,13 @@ def cargar_csv_postgres(csv_path: str, esquema: str, tabla: str):
 
 @flow(name="importar_csv_pg")
 def importar_csv_pg(esquema: str, tabla: str, nombre_zip: str):
-    # Acepta nombre o ruta absoluta
-    zip_path = nombre_zip if os.path.isabs(nombre_zip) else os.path.join(dir_archivos, nombre_zip)
+    logger = get_run_logger()
+    logger.info(f"[PARAMS] esquema={esquema} tabla={tabla} zip={nombre_zip}")
 
+    zip_path = nombre_zip if os.path.isabs(nombre_zip) else os.path.join(dir_archivos, nombre_zip)
     csv_file = descomprimir_archivo(zip_path)
     validar_o_crear_tabla(esquema, tabla, csv_file)
     cargar_csv_postgres(csv_file, esquema, tabla)
-
-    # Mover el ZIP original al backup (el CSV ya se borró)
     mover_archivo(zip_path, dir_procesado)
 
 if __name__ == "__main__":
