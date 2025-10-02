@@ -67,6 +67,7 @@ ESQUEMA_BASE_PRODUCTOS = {
     "habilitado": "INTEGER",
     "fecha_registro": "TIMESTAMP",
     "fecha_baja": "TIMESTAMP",
+    "m_vende_por_peso": "INTEGER",  # NUEVO CAMPO OJO REVISAR
     "unid_transferencia": "INTEGER",
     "q_unid_transferencia": "INTEGER",
     "pedido_min": "DOUBLE PRECISION",

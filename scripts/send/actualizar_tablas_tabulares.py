@@ -96,6 +96,7 @@ def actualizar_tablas_tabulares():
     
     tablas = [
         ("repl", "t710_estadis_stock", "T710_ESTADIS_STOCK"),
+        ("repl", "t710_estadis_precios", "T710_ESTADIS_PRECIOS"),
         ("repl", "t710_estadis_oferta_folder", "T710_ESTADIS_OFERTA_FOLDER")
     ]
 

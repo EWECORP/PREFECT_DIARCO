@@ -85,7 +85,8 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T710_ESTADIS_STOCK",
         "repl.usp_replicar_T710_ESTADIS_OFERTA_FOLDER",
         "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO",
-        "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO"
+        "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO",
+        "repl.usp_replicar_T710_ESTADIS_PRECIOS",
     ]:
         ejecutar_sp(sp)
 
