@@ -110,7 +110,7 @@ SELECT
     A.c_proveedor_primario::int                           AS c_proveedor_primario,
     TRIM(BOTH FROM REPLACE(REPLACE(REPLACE(A.n_articulo, CHR(9), ''), CHR(13), ''), CHR(10), ''))
                                                             AS nombre_articulo,
-    A.c_clasificacion_compra::text                        AS clasificacion,
+    A.c_clasificacion_compra::int                         AS clasificacion,
     CURRENT_TIMESTAMP                                     AS fecha_procesado,
     0                                                     AS marca_procesado
 FROM src.t702_est_vtas_por_articulo V
