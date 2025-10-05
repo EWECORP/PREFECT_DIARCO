@@ -85,8 +85,7 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T710_ESTADIS_STOCK",
         "repl.usp_replicar_T710_ESTADIS_OFERTA_FOLDER",
         "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO",
-        "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO",
-        "repl.usp_replicar_T710_ESTADIS_PRECIOS",
+        "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO"
     ]:
         ejecutar_sp(sp)
 
@@ -130,6 +129,10 @@ def sync_dmz_optimizado():
     ]:
         ejecutar_sp(sp)
 
+    logger.info("✅ Replicación Precios de Competencia")
+    
+    ejecutar_sp("repl.usp_replicar_T710_ESTADIS_PRECIOS")
+    
     logger.info("✅ Replicación DMZ Optimizada Finalizada")
 
 if __name__ == "__main__":
