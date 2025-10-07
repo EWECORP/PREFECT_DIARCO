@@ -245,9 +245,9 @@ def consolidar_oc_precarga():
             df_grouped_41['c_sucu_empr'] = 41
             df_grouped_41['m_publicado'] = False
             # Borrar en Origen
-            # df_merged.drop(df_merged[df_merged['cod_cd'] == '41CD'].index, inplace=True)
+            df_merged.drop(df_merged[df_merged['cod_cd'] == '41CD'].index, inplace=True)
             # Publicar en Destino
-            # df_merged = pd.concat([df_merged, df_grouped_41], ignore_index=True)
+            df_merged = pd.concat([df_merged, df_grouped_41], ignore_index=True)
 
         # Filtrar por cod_cd = '82CD'
         df_82= df_completo[df_completo['cod_cd'] == '82CD']
@@ -276,7 +276,7 @@ def consolidar_oc_precarga():
             df_grouped_82['c_sucu_empr'] = 82
             df_grouped_82['m_publicado'] = False
             # Borrar en Origen
-            #  df_merged.drop(df_merged[df_merged['cod_cd'] == '82CD'].index, inplace=True)
+            df_merged.drop(df_merged[df_merged['cod_cd'] == '82CD'].index, inplace=True)
             # Publicar en Destino
             df_merged = pd.concat([df_grouped_41, df_grouped_82], ignore_index=True)
             df_merged = forzar_enteros(df_merged)  # <<--- NUEVO

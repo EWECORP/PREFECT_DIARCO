@@ -74,8 +74,12 @@ def Close_Connection(conn):
     if conn is not None:
         conn.close()
     return True
-
+# -----------------------------------
+print(f"PREPARANDO LOGS : Directorio actual: {os.getcwd()}")
+print(f"[INFO] Cargando configuración desde: {ENV_PATH}")
+print(f"[INFO] Carpeta de datos: {folder}") 
 os.makedirs(folder_logs, exist_ok=True)
+
 log_file = os.path.join(folder_logs, "publicacion_oc_precarga.log")
 
 # Configurar logging
@@ -243,6 +247,7 @@ def consolidar_oc_precarga():
             df_grouped_41['c_sucu_empr'] = 41
             df_grouped_41['m_publicado'] = False
             partes.append(df_grouped_41)
+            logging.info(f"[INFO] Registros consolidados para 41CD: {len(df_grouped_41)}")
         else:
             logging.warning("[WARNING] No hay registros de cod_cd '41CD' para publicar")
 
@@ -267,6 +272,7 @@ def consolidar_oc_precarga():
             df_grouped_82['c_sucu_empr'] = 82
             df_grouped_82['m_publicado'] = False
             partes.append(df_grouped_82)
+            logging.info(f"[INFO] Registros consolidados para 82CD: {len(df_grouped_82)}")
         else:
             logging.warning("[WARNING] No hay registros de cod_cd '82CD' para publicar")
 
@@ -292,6 +298,7 @@ def consolidar_oc_precarga():
             df_passthrough['m_publicado'] = False
             df_passthrough = forzar_enteros(df_passthrough)
             partes.append(df_passthrough)
+            logging.info(f"[INFO] Registros de entrega directa (passthrough): {len(df_passthrough)}")
         else:
             logging.info("[INFO] No hay registros de entrega directa (passthrough) para publicar")
 
@@ -303,6 +310,7 @@ def consolidar_oc_precarga():
 
         # Concatenar partes
         df_merged = pd.concat(partes, ignore_index=True)
+        logging.info(f"[INFO] Total registros a publicar tras consolidación: {len(df_merged)}")
         df_merged = forzar_enteros(df_merged)
 
         # 1C. Traer Stock CENTROS DE DISTRIBUCIÓN (solo afecta 41/82)
