@@ -308,10 +308,50 @@ def consolidar_oc_precarga():
             conn_pg.close()
             return pd.DataFrame()
 
-        # Concatenar partes
-        df_merged = pd.concat(partes, ignore_index=True)
-        logging.info(f"[INFO] Total registros a publicar tras consolidación: {len(df_merged)}")
+        # -----------------------------------
+        # CONCATENACIÓN EXPLÍCITA (grouped + passthrough)
+        # -----------------------------------
+        frames = []
+
+        # Aseguramos variables y tamaños (0 si no existen o están vacías)
+        n_g41 = len(df_grouped_41) if 'df_grouped_41' in locals() and isinstance(df_grouped_41, pd.DataFrame) and not df_grouped_41.empty else 0
+        n_g82 = len(df_grouped_82) if 'df_grouped_82' in locals() and isinstance(df_grouped_82, pd.DataFrame) and not df_grouped_82.empty else 0
+        n_dir = len(df_passthrough) if 'df_passthrough' in locals() and isinstance(df_passthrough, pd.DataFrame) and not df_passthrough.empty else 0
+
+        if n_g41 > 0:
+            frames.append(df_grouped_41)
+        if n_g82 > 0:
+            frames.append(df_grouped_82)
+        if n_dir > 0:
+            frames.append(df_passthrough)
+
+        if not frames:
+            logging.warning("[WARNING] No hay partes para concatenar (41CD agrupado, 82CD agrupado ni directos)")
+            conn_pg.close()
+            return pd.DataFrame()
+
+        # Concatenar uno debajo del otro en orden: 41 → 82 → directos
+        df_merged = pd.concat(frames, axis=0, ignore_index=True)
+
+        logging.info(
+            f"[INFO] Total registros concatenados: {len(df_merged)} "
+            f"(41CD_agrupados={n_g41}, 82CD_agrupados={n_g82}, Directos={n_dir})"
+        )
+    
+        # Normalización final de tipos enteros/fechas/booleanos
         df_merged = forzar_enteros(df_merged)
+        
+        # Paso 1: Agrupar y sumar la cantidad
+        df_sumado = df_merged.groupby(['c_proveedor', 'c_articulo', 'c_sucu_empr'], as_index=False)['q_bultos_kilos_diarco'].sum()
+
+        # Paso 2: Eliminar duplicados del original (conservando la primera ocurrencia)
+        df_sin_duplicados = df_merged.drop_duplicates(subset=['c_proveedor', 'c_articulo', 'c_sucu_empr'], keep='first')
+
+        # Paso 3: Eliminar la columna original de cantidad para evitar conflicto
+        df_sin_duplicados = df_sin_duplicados.drop(columns=['q_bultos_kilos_diarco'])
+
+        # Paso 4: Reincorporar la cantidad sumada
+        df_final = df_sin_duplicados.merge(df_sumado, on=['c_proveedor', 'c_articulo', 'c_sucu_empr'], how='left')  
 
         # 1C. Traer Stock CENTROS DE DISTRIBUCIÓN (solo afecta 41/82)
         querystock = f"""
@@ -352,53 +392,64 @@ def consolidar_oc_precarga():
                 pass
 
             # Merge con stock por clave (sucursal, articulo)
-            df_merged = df_merged.merge(
+            df_final = df_final.merge(
                 df_stock[['c_sucu_empr_stock', 'c_articulo_stock', 'stock']],
                 how='left',
                 left_on=['c_sucu_empr', 'c_articulo'],
                 right_on=['c_sucu_empr_stock', 'c_articulo_stock']
             )
-            df_merged.drop(columns=['c_sucu_empr_stock', 'c_articulo_stock'], inplace=True)
+            df_final.drop(columns=['c_sucu_empr_stock', 'c_articulo_stock'], inplace=True)
 
             # Ajuste de cantidad por stock (solo afectará a 41/82; directas no matchean y quedan sin descuento)
-            if 'stock' in df_merged.columns:
-                df_merged['q_bultos_kilos_diarco'] = (
-                    df_merged['q_bultos_kilos_diarco'].fillna(0) - df_merged['stock'].fillna(0)
+            if 'stock' in df_final.columns:
+                df_final['q_bultos_kilos_diarco'] = (
+                    df_final['q_bultos_kilos_diarco'].fillna(0) - df_final['stock'].fillna(0)
                 ).clip(lower=0).astype(int)
 
         # Limpieza de columnas si existen
         for col in ['abastecimiento', 'cod_cd', 'stock']:
-            if col in df_merged.columns:
-                df_merged.drop(columns=[col], inplace=True)
+            if col in df_final.columns:
+                df_final.drop(columns=[col], inplace=True)
 
         # Filtrar cantidades > 0
-        if 'q_bultos_kilos_diarco' in df_merged.columns:
-            df_merged = df_merged[df_merged['q_bultos_kilos_diarco'] > 0].reset_index(drop=True)
+        if 'q_bultos_kilos_diarco' in df_final.columns:
+            df_final = df_final[df_final['q_bultos_kilos_diarco'] > 0].reset_index(drop=True)
 
         # Unicidad intra-lote por PK destino
         pk_cols = ['c_proveedor', 'c_articulo', 'c_sucu_empr']
-        total = len(df_merged)
-        unicas = len(df_merged.drop_duplicates(subset=pk_cols))
+        total = len(df_final)
+        unicas = len(df_final.drop_duplicates(subset=pk_cols))
         if total != unicas:
             logging.warning(f"[WARN] Duplicados intra-batch detectados: {total - unicas}")
             try:
-                df_merged[df_merged.duplicated(subset=pk_cols, keep=False)].to_csv(
+                df_final[df_final.duplicated(subset=pk_cols, keep=False)].to_csv(
                     os.path.join(folder_logs, f"{timestamp}_duplicados_intra_batch.csv"),
                     index=False, encoding='utf-8-sig'
                 )
             except Exception:
                 pass
-            df_merged = df_merged.drop_duplicates(subset=pk_cols, keep='last').reset_index(drop=True)
+            df_final = df_final.drop_duplicates(subset=pk_cols, keep='last').reset_index(drop=True)
+
+        # Definir el orden deseado de columnas
+        orden_columnas = [
+            'c_proveedor', 'c_articulo', 'c_sucu_empr', 'q_bultos_kilos_diarco',
+            'f_alta_sist', 'c_usuario_genero_oc', 'c_terminal_genero_oc', 'f_genero_oc',
+            'c_usuario_bloqueo', 'm_procesado', 'f_procesado',
+            'u_prefijo_oc', 'u_sufijo_oc', 'c_compra_kikker', 'c_usuario_modif',
+            'c_comprador'
+        ]
+        # Reordenar el DataFrame
+        df_final = df_final[orden_columnas]
 
         # Guardar pedido consolidado
         try:
-            df_merged.to_csv(os.path.join(folder_logs, f"{timestamp}_pedido_consolidado.csv"),
+            df_final.to_csv(os.path.join(folder_logs, f"{timestamp}_pedido_consolidado.csv"),
                              index=False, encoding='utf-8-sig')
         except Exception:
             pass
 
         conn_pg.close()
-        return df_merged
+        return df_final
 
     except Exception as e:
         logging.error("[ERROR] Error durante la CONSOLIDACIÓN de OC Precarga")
