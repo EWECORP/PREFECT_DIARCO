@@ -1,4 +1,4 @@
-40# actualizar_tablas_tabulares.py
+# actualizar_tablas_tabulares.py
 # OBJETIVO: Actualizar las tablas tabulares de stock y ofertas en PostgreSQL desde SQL Server.
 # OBSERVACIÓN: Las tablas tienen estructura por AÑO/MES y múltiples columnas por día.
 #              El reemplazo de datos incompletos se hace por DELETE e INSERT.
@@ -65,14 +65,15 @@ def vaciar_registros_tabla(tabla_pg: str, valor_filtro: int) -> None:
     Protege contra SQL Injection y garantiza cierre de recursos.
     """
     logger = get_run_logger()
-    whitelist = {"t710_estadis_stock", "t710_estadis_oferta_folder"}
+    whitelist = {"t710_estadis_stock", "t710_estadis_precios", "t710_estadis_oferta_folder"}
     if tabla_pg not in whitelist:
         raise ValueError(f"Tabla no permitida: {tabla_pg}")
 
     try:
         conn = open_pg_conn()
         cursor = conn.cursor()
-        query = f"DELETE FROM src.{tabla_pg} WHERE (C_ANIO * 100 + C_MES) >= %s"
+        #query = f"DELETE FROM src.{tabla_pg} WHERE (C_ANIO * 100 + C_MES) >= %s"  # Evitar f-string para SQL Injection
+        query = "DELETE FROM src.{tabla} WHERE (C_ANIO * 100 + C_MES) >= %s".format(tabla=tabla_pg)
         logger.info(f"🗑️ Borrando datos de 'src.{tabla_pg}' desde periodo: {valor_filtro}")
         cursor.execute(query, (valor_filtro,))
         conn.commit()
