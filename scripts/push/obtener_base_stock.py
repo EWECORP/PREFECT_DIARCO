@@ -1,4 +1,6 @@
 # obtener_base_stock.py
+# Se agregó rutina para ajustar transferencias pendientes por CD.
+# Podría reemplazarse en el modelo de microservicios y la consolidacion explícita
 
 import os
 import sys
@@ -89,13 +91,12 @@ ESQUEMA_BASE_STOCK = {
     "i_lista_calculado": "DOUBLE PRECISION",
     "pedido_sgm": "DOUBLE PRECISION",
     "importe_minimo": "DOUBLE PRECISION",
-	"bultos_minimo": "DOUBLE PRECISION",
-	"dias_preparacion": "INTEGER",
+    "bultos_minimo": "DOUBLE PRECISION",
+    "dias_preparacion": "INTEGER",
     "fuente_origen": "VARCHAR",
     "fecha_extraccion": "TIMESTAMP",
     "estado_sincronizacion": "INTEGER"
 }
-
 
 def crear_sentencia_create(schema_dict: dict, table_name: str) -> str:
     columnas_sql = ", ".join([f'"{col}" {tipo}' for col, tipo in schema_dict.items()])
@@ -103,11 +104,9 @@ def crear_sentencia_create(schema_dict: dict, table_name: str) -> str:
 
 def insert_dataframe_postgres(df: pd.DataFrame, table_fullname: str):
     df.columns = [col.lower() for col in df.columns]
-    
     # Conversión completa a tipos nativos y manejo de NAs
     df = df.astype(object).where(pd.notnull(df), None)
     df.rename(columns={col: col.lower() for col in df.columns}, inplace=True)
-
 
     with open_pg_conn() as conn:
         with conn.cursor() as cur:
@@ -121,8 +120,8 @@ def insert_dataframe_postgres(df: pd.DataFrame, table_fullname: str):
             execute_values(cur, insert_sql, values, page_size=5000)
         conn.commit()
 
-
 # ====================== TAREAS PREFECT ======================
+
 @task(name="cargar_base_stock_sucursal_pg")
 def cargar_base_stock_sucursal_pg():
     logger = get_run_logger()
@@ -134,22 +133,22 @@ def cargar_base_stock_sucursal_pg():
         if df.empty:
             logger.warning("⚠️ No se recuperaron registros desde el SP")
             return df
-        
+
         df["fuente_origen"] = "SP_BASE_STOCK_DMZ"
         df["fecha_extraccion"] = datetime.now()
         df["estado_sincronizacion"] = 0
-    
+
         # Adecuación de columnas numéricas
         df["Codigo_Articulo"] = pd.to_numeric(df["Codigo_Articulo"], errors="coerce").astype("Int64")
         df["Codigo_Sucursal"] = pd.to_numeric(df["Codigo_Sucursal"], errors="coerce").astype("Int64")
         df["Codigo_Proveedor"] = pd.to_numeric(df["Codigo_Proveedor"], errors="coerce").astype("Int64")
         df["Precio_Venta"] = pd.to_numeric(df["Precio_Venta"], errors="coerce").astype("Float64")
         df["Precio_Costo"] = pd.to_numeric(df["Precio_Costo"], errors="coerce").astype("Float64")
-        df["Factor_Venta"] = pd.to_numeric(df["Factor_Venta"], errors="coerce").astype("Int64") 
+        df["Factor_Venta"] = pd.to_numeric(df["Factor_Venta"], errors="coerce").astype("Int64")
         df["Ultimo_Ingreso"] = pd.to_numeric(df["Ultimo_Ingreso"], errors="coerce").astype("Float64")
         df["Fecha_Ultimo_Ingreso"] = pd.to_datetime(df["Fecha_Ultimo_Ingreso"], errors="coerce")
         df["Fecha_Ultima_Venta"] = pd.to_datetime(df["Fecha_Ultima_Venta"], errors="coerce")
-        df["M_Vende_Por_Peso"] = df["M_Vende_Por_Peso"].astype("string")      
+        df["M_Vende_Por_Peso"] = df["M_Vende_Por_Peso"].astype("string")
         df["Venta_Unidades_1Q"] = pd.to_numeric(df["Venta_Unidades_1Q"], errors="coerce").astype("Float64")
         df["Venta_Unidades_2Q"] = pd.to_numeric(df["Venta_Unidades_2Q"], errors="coerce").astype("Float64")
         df["Venta_Mes_Unidades"] = pd.to_numeric(df["Venta_Mes_Unidades"], errors="coerce").astype("Float64")
@@ -159,20 +158,19 @@ def cargar_base_stock_sucursal_pg():
         df["Stock"] = pd.to_numeric(df["Stock"], errors="coerce").astype("Float64")
         df["Transfer_Pendiente"] = pd.to_numeric(df["Transfer_Pendiente"], errors="coerce").astype("Float64")
         df["Pedido_Pendiente"] = pd.to_numeric(df["Pedido_Pendiente"], errors="coerce").astype("Float64")
-        df["Promocion"] = pd.to_numeric(df["Promocion"], errors="coerce").astype("Int64") 
+        df["Promocion"] = pd.to_numeric(df["Promocion"], errors="coerce").astype("Int64")
         df["Lote"] = df["Lote"].astype("string").str.strip()
         df["Validez_Lote"] = pd.to_datetime(df["Validez_Lote"], errors="coerce")
-        df["Stock_Reserva"] = pd.to_numeric(df["Stock_Reserva"], errors="coerce").astype("Float64")       
+        df["Stock_Reserva"] = pd.to_numeric(df["Stock_Reserva"], errors="coerce").astype("Float64")
         df["Validez_Promocion"] = pd.to_numeric(df["Validez_Promocion"], errors="coerce").astype("Int64")
         df["Q_DIAS_STOCK"] = pd.to_numeric(df["Q_DIAS_STOCK"], errors="coerce").astype("Int64")
         df["Q_DIAS_SOBRE_STOCK"] = pd.to_numeric(df["Q_DIAS_SOBRE_STOCK"], errors="coerce").astype("Int64")
-        df["I_LISTA_CALCULADO"] = pd.to_numeric(df["I_LISTA_CALCULADO"], errors="coerce").astype("Float64") 
-        df["Pedido_SGM"] = pd.to_numeric(df["Pedido_SGM"], errors="coerce").astype("Float64") 
+        df["I_LISTA_CALCULADO"] = pd.to_numeric(df["I_LISTA_CALCULADO"], errors="coerce").astype("Float64")
+        df["Pedido_SGM"] = pd.to_numeric(df["Pedido_SGM"], errors="coerce").astype("Float64")
         df["Importe_Minimo"] = pd.to_numeric(df["Importe_Minimo"], errors="coerce").astype("Float64")
         df["Bultos_Minimo"] = pd.to_numeric(df["Bultos_Minimo"], errors="coerce").astype("Float64")
         df["Dias_Preparacion"] = pd.to_numeric(df["Dias_Preparacion"], errors="coerce").astype("Int64")
         df["fecha_extraccion"] = pd.to_datetime(df["fecha_extraccion"], errors="coerce")
-
 
         logger.info(f"✅ {len(df)} registros leídos desde SQL Server.")
     except Exception as e:
@@ -188,16 +186,103 @@ def cargar_base_stock_sucursal_pg():
 
     return df
 
+@task(name="asegurar_indices_base_stock")
+def asegurar_indices_base_stock():
+    """
+    Re-crea índices necesarios tras el DROP/CREATE de src.base_stock_sucursal
+    y asegura índices en base_productos_vigentes para el JOIN y el filtro por cod_cd.
+    """
+    log = get_run_logger()
+    ddl = """
+    -- Índices sobre la tabla recién recreada
+    CREATE INDEX IF NOT EXISTS idx_bss_sucu_art
+        ON src.base_stock_sucursal (codigo_sucursal, codigo_articulo);
+    CREATE INDEX IF NOT EXISTS idx_bss_art
+        ON src.base_stock_sucursal (codigo_articulo);
+
+    -- Índices de apoyo en productos vigentes
+    CREATE INDEX IF NOT EXISTS idx_bpv_sucu_art
+        ON src.base_productos_vigentes (c_sucu_empr, c_articulo);
+    CREATE INDEX IF NOT EXISTS idx_bpv_codcd_art
+        ON src.base_productos_vigentes (cod_cd, c_articulo);
+    """
+    try:
+        with open_pg_conn() as conn, conn.cursor() as cur:
+            cur.execute(ddl)
+            conn.commit()
+            log.info("🧱 Índices verificados/creados correctamente.")
+    except Exception as e:
+        log.error(f"❌ Error creando índices: {e}")
+        raise
+
+AJUSTE_SQL = """
+WITH despachos_cd AS (
+    SELECT
+        P.cod_cd,
+        S.codigo_articulo,
+        SUM(S.transfer_pendiente) * -1 AS despachos
+    FROM src.base_stock_sucursal AS S
+    JOIN src.base_productos_vigentes AS P
+      ON S.codigo_sucursal = P.c_sucu_empr
+     AND S.codigo_articulo = P.c_articulo
+    WHERE P.cod_cd = %s
+    GROUP BY P.cod_cd, S.codigo_articulo
+    HAVING SUM(S.transfer_pendiente) > 0
+)
+UPDATE src.base_stock_sucursal AS S
+SET transfer_pendiente = S.transfer_pendiente + D.despachos
+FROM despachos_cd AS D
+WHERE S.codigo_articulo = D.codigo_articulo
+  AND S.codigo_sucursal = %s;
+"""
+
+@task(name="ajustar_transferencias_cd")
+def ajustar_transferencias_cd(mapeo_cd = (("41CD", 41), ("82CD", 82))):
+    """
+    Aplica el ajuste de transferencias pendientes por CD, restando de la sucursal CD
+    el total de transferencias pendientes que tiene en tránsito hacia tiendas (signo -).
+    """
+    log = get_run_logger()
+    total_afectadas = 0
+    try:
+        with open_pg_conn() as conn, conn.cursor() as cur:
+            for cod_cd, sucu_cd in mapeo_cd:
+                cur.execute(AJUSTE_SQL, (cod_cd, sucu_cd))
+                afectadas = cur.rowcount if cur.rowcount is not None else 0
+                total_afectadas += afectadas
+                log.info(f"🔧 Ajuste {cod_cd} / sucursal {sucu_cd}: {afectadas} filas actualizadas.")
+            conn.commit()
+        log.info(f"✅ Ajuste de transferencias completado. Total filas impactadas: {total_afectadas}.")
+    except Exception as e:
+        log.error(f"❌ Error ajustando transferencias por CD: {e}")
+        raise
+    return total_afectadas
+
+# ====================== FLUJO PREFECT ======================
 from typing import Optional
 
 @flow(name="obtener_base_stock_sucursal")
 def capturar_base_stock(lista_ids: Optional[list] = None):
     log = get_run_logger()
     try:
-        df_resultado = cargar_base_stock_sucursal_pg.with_options(name="Carga Base Stock Sucursal").submit().result()
-        log.info(f"✅ Proceso completado: {len(df_resultado)} filas cargadas")
+        df_resultado = cargar_base_stock_sucursal_pg.with_options(
+            name="Carga Base Stock Sucursal"
+        ).submit().result()
+
+        # Re-crear índices (se perdió todo al DROP/CREATE)
+        asegurar_indices_base_stock.with_options(
+            name="Asegurar Índices Base Stock"
+        ).submit().result()
+
+        # Ajuste de transferencias pendientes por CD
+        filas_ajustadas = ajustar_transferencias_cd.with_options(
+            name="Ajustar Transferencias Pendientes CD"
+        ).submit().result()
+
+        log.info(f"✅ Proceso completado: {len(df_resultado)} filas cargadas; {filas_ajustadas} filas ajustadas por CDs.")
     except Exception as e:
         log.error(f"🔥 Error general en el flujo: {e}")
+        raise
 
 # ====================== EJECUCIÓN MANUAL ======================
 if __name__ == "__main__":
