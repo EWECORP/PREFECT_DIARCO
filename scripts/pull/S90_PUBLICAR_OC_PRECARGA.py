@@ -159,6 +159,156 @@ def validar_longitudes(df: pd.DataFrame):
             max_len = df[col].astype(str).map(len).max()
             print(f"{col}: longitud máxima = {max_len}")
 
+
+# BLOQUE BIANCULLI EN PROCESO DE CONSOLIDACIÓN
+# -----------------------------------------------
+# from logging.handlers import RotatingFileHandler
+# import platform
+
+# import psycopg2
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+    # load_dotenv()  # Esto busca un archivo .env en el mismo directorio
+
+    # # variables de conexion
+    # pass_connexa = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_PASS_CONNEXA')
+    # user_connexa = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_USER_CONNEXA')
+    # db_connexa = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_DB_CONNEXA')
+    # host_connexa = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_HOST_CONNEXA')
+
+    # pass_diarco = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_PASS_DIARCO')
+    # user_diarco = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_USER_DIARCO')
+    # db_diarco = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_DB_DIARCO')
+    # host_diarco = os.getenv('CONNEXA_PLATFORM_POSTGRESQL_HOST_DIARCO')
+
+    # db_origen = f"dbname='{db_connexa}' user='{user_connexa}' password='{pass_connexa}' host='{host_connexa}'"
+    # db_destino = f"dbname='{db_diarco}' user='{user_diarco}' password='{pass_diarco}' host='{host_diarco}'"
+
+    # conn_origen = psycopg2.connect(db_origen)
+    # cursor_origen = conn_origen.cursor()
+
+    # conn_destino = psycopg2.connect(db_destino)
+    # cursor_destino = conn_destino.cursor()
+
+    # query para recuperar los proposal en estado 'aprobado'
+    qry = """
+        select 	p.id proposal_id,
+                p.supply_forecast_execution_execute_id execute_id,
+                s.ext_code::numeric as c_proveedor,
+                product_code::numeric as c_articulo,
+                site_code::numeric as c_sucu_empr,
+                proposal_number as c_compra_kikker,
+                quantity_purchase q_bultos_kilos_diarco,
+                b.ext_code::numeric as c_comprador,
+                case when coalesce(ps.proposed_quantity,0) != coalesce(ps.quantity_confirmed,0) then  b.ext_user_login 
+                else null end as c_usuario_modif,
+                now() as f_alta_sist
+        from spl_supply_purchase_proposal p
+        left join fnd_supplier s on s.id = p.supplier_id
+        left join spl_supply_purchase_proposal_supplier_product_site ps 
+                                on ps.supply_purchase_proposal_id = p.id
+        left join fnd_site si on si.id = site_id
+        left join prc_buyer b on b.user_id = p.user_id
+        where status = 'aprobado'
+          and quantity_purchase != 0
+    """
+
+    # genero las tuplas
+    cursor_origen.execute(qry)
+    resultado = cursor_origen.fetchall()
+    logger.info(f"Total de lineas recuperadas: {len(resultado)}")
+
+    # recupero los id proposal que tiene estado 'aprobado'
+    # estos id se usaran para actualizar el estado de la proposal
+    id_proposals = set(row[0] for row in resultado)
+    logger.info(f"Total de propuestas: {len(id_proposals)}")
+
+    # recupero los id execution execute procesados 
+    # estos id se usaran despues para cambiar el estado a 90
+    id_executes = set(row[1] for row in resultado)
+
+
+    # Convertir a DataFrame
+    column_names = [desc[0] for desc in cursor_origen.description]
+    df_origen = pd.DataFrame(resultado, columns=column_names)    
+    # Eliminar columnas
+    df_origen.drop(columns=['proposal_id'], inplace=True)
+    df_origen.drop(columns=['execute_id'], inplace=True)
+    # Volver a tuplas
+    tuplas_limpias = list(df_origen.itertuples(index=False, name=None))
+
+
+    # insert masivo en la tabla de Kikker
+    qry_insert = """
+        insert into T080_OC_PRECARGA_KIKKER (c_proveedor, c_articulo, c_sucu_empr, c_compra_kikker, 
+                                            q_bultos_kilos_diarco, c_comprador, c_usuario_modif, f_alta_sist)
+        values %s
+    """
+    execute_values(cursor_destino, qry_insert, tuplas_limpias)
+    conn_destino.commit() 
+
+
+    #
+    # actualizar el estado en spl_supply_purchase_proposal
+    #
+
+    # se recuperan los id de los proposals procesados
+    ids = list(id_proposals)
+    cantidad = len(ids)
+    if cantidad != 0:
+        logger.info('Id spl_supply_purchase_proposal:')
+        logger.info(ids)
+
+
+    # se actualiza la tabla proposal
+    upd_proposal = f"""
+        UPDATE spl_supply_purchase_proposal
+        SET status = 'finalizado'
+        WHERE id = ANY(%s::uuid[])
+    """
+    cursor_origen.execute(upd_proposal, (ids,))
+    filas_afectadas = cursor_origen.rowcount  # Número de filas actualizadas
+
+    if filas_afectadas > 0:
+        print(f"Se actualizaron a estado 'finalizado' {filas_afectadas} registros en la spl_supply_purchase_proposal.")
+    else:
+        print("No se actualizó a estado 'finalizado' ningún registro en la spl_supply_purchase_proposal.")
+    
+    conn_origen.commit() 
+
+
+    #
+    # actualizar el estado en spl_supply_forecast_execution_execute
+    #
+
+    # se recuperan los id de los execution execute
+    idsx = list(id_executes)
+    cantidad = len(idsx)
+    if cantidad != 0:
+        logger.info('Id spl_supply_forecast_execution_execute:')
+        logger.info(idsx)
+
+    # se actualiza la tabla spl_supply_forecast_execution_execute
+    upd_execute = f"""
+        UPDATE spl_supply_forecast_execution_execute
+        SET supply_forecast_execution_status_id = 90, last_execution=false
+        WHERE id = ANY(%s::uuid[])
+    """
+    cursor_origen.execute(upd_execute, (idsx,))
+
+    filas_afectadas = cursor_origen.rowcount  # Número de filas actualizadas
+
+    if filas_afectadas > 0:
+        print(f"Se actualizaron {filas_afectadas} registros en la tabla spl_supply_forecast_execution_execute.")
+    else:
+        print("No se actualizó ningún registro en la tabla spl_supply_forecast_execution_execute.")
+
+    conn_origen.commit() 
+
+# --------------------------------------------------
+
+
+
 # Función para consolidar OC Precarga
 def consolidar_oc_precarga():
     logging.info("[INFO] Iniciando consolidación por abastecimiento")
