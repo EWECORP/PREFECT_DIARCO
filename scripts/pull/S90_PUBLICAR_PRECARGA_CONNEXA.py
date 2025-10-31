@@ -44,6 +44,7 @@ if not os.path.exists(ENV_PATH):
 secrets = dotenv_values(ENV_PATH)
 folder = f"{secrets['BASE_DIR']}/{secrets['FOLDER_DATOS']}"
 folder_logs = f"{secrets['BASE_DIR']}/{secrets['FOLDER_LOG']}"
+timestamp = time.strftime("%Y%m%d_%H%M%S")
 
 # Funciones Locales
 def Open_Connection():
@@ -79,6 +80,7 @@ print(f"PREPARANDO LOGS : Directorio actual: {os.getcwd()}")
 print(f"[INFO] Cargando configuración desde: {ENV_PATH}")
 print(f"[INFO] Carpeta de datos: {folder}") 
 os.makedirs(folder_logs, exist_ok=True)
+
 log_file = os.path.join(folder_logs, "publicacion_oc_precarga.log")
 
 # Configurar logging
