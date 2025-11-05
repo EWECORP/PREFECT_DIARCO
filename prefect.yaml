@@ -120,6 +120,18 @@ deployments:
       cron: "15 6 * * *"   # todos los días 06:15 América/Buenos_Aires
       timezone: "America/Argentina/Buenos_Aires"
 
+  - name: Refrescar_Tablas_Maestras_Postgres
+    entrypoint: scripts/send/refresh_tablas_maestras.py:main_flow
+    description: "Flujo maestro orquestador para REFreSCAR tablas entre SQL Server y PostgreSQL"
+    tags: ["orquestador", "replicacion", "pipeline", "etl"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron:  "05 13 * * *"   # Todos los días a las 13:05 PM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
+
   # - name: Actualizar_Bases_Ventas_Postgres
   #   entrypoint: scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas
   #   description: "Flujo maestro orquestador para subir tablas Ventas DIARDO + BARRIO entre SQL Server y PostgreSQL"
