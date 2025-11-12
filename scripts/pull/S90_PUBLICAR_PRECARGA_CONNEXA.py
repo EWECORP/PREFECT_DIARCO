@@ -6,6 +6,7 @@ Proceso PULL que publica OCs desde diarco_data (PostgreSQL) hacia SGM (SQL Serve
 - Trunca las columnas de texto según el DDL real de destino (INFORMATION_SCHEMA) para evitar HY000 truncation.
 - Marca como publicadas en PG sólo las compras efectivamente insertadas
   (o también las ya existentes si activan idempotencia=True).
+- MANEJAR Estados Intermedios de Publicación en caso de fallos.
 """
 import os
 import sys
@@ -109,6 +110,132 @@ def open_pg_psycopg2():
             time.sleep(5)
     return None
 
+def Open_Conn_Postgres():
+    conn_str = f"dbname={secrets['PGP_DB']} user={secrets['PGP_USER']} password={secrets['PGP_PASSWORD']} host={secrets['PGP_HOST']} port={secrets['PGP_PORT']}"
+    for i in range(5):
+        try:
+            conn = pg2.connect(conn_str)
+            return conn 
+        except Exception as e:
+            print(f"Error en la conexión, intento {i+1}/{5}: {e}")
+            time.sleep(5)
+    return None  # Retorna None si todos los intentos fallan
+
+def Close_Connection(conn): 
+    if conn is not None:
+        conn.close()
+        # print("✅ Conexión cerrada.")    
+    return True
+
+# ------------------------------
+# Actualizar Estados CONNEXA
+# ------------------------------
+# SQLAlchemy Engine genérico con prefico variable
+def open_pg_engine_from(prefix: str = "PG"):
+    uri = (
+        f"postgresql+psycopg2://{secrets[f'{prefix}_USER']}:{secrets[f'{prefix}_PASSWORD']}"
+        f"@{secrets[f'{prefix}_HOST']}:{secrets[f'{prefix}_PORT']}/{secrets[f'{prefix}_DB']}"
+    )
+    return create_engine(uri, pool_pre_ping=True)
+
+def get_execution_execute_by_status(status: int):
+    if not status:
+        print("No hay estados para filtrar")
+        return None
+
+    eng = open_pg_engine_from("PGP")  # Usa PGP_* (Connexa)
+    try:
+        query = text("""
+            SELECT e.name,
+                   m.method,
+                   fee.ext_supplier_code,
+                   fee.last_execution,
+                   fee.supply_forecast_execution_status_id AS fee_status_id,
+                   fee.timestamp,
+                   e.supply_forecast_model_id AS forecast_model_id,
+                   fee.supply_forecast_execution_id AS forecast_execution_id,
+                   fee.id AS forecast_execution_execute_id,
+                   fee.supply_forecast_execution_schedule_id AS forecast_execution_schedule_id,
+                   e.supplier_id
+            FROM supply_planning.spl_supply_forecast_execution_execute AS fee
+            LEFT JOIN supply_planning.spl_supply_forecast_execution AS e
+                   ON fee.supply_forecast_execution_id = e.id
+            LEFT JOIN supply_planning.spl_supply_forecast_model AS m
+                   ON e.supply_forecast_model_id = m.id
+            WHERE fee.supply_forecast_execution_status_id = :status
+              AND fee.last_execution = TRUE
+        """)
+        with eng.connect() as cx:
+            return pd.read_sql(query, cx, params={"status": status})
+    except Exception as e:
+        print(f"Error en get_execution_execute_by_status: {e}")
+        return None
+
+def get_execution_execute(exec_id):
+    conn = Open_Conn_Postgres()
+    if conn is None:
+        return None
+
+    eng = open_pg_engine_from("PG")  # Usa PGP_* (Connexa)
+    
+    try:
+        cur = conn.cursor()
+
+        columns = [
+            "id", "end_execution", "last_execution", "start_execution", "timestamp",
+            "supply_forecast_execution_id", "supply_forecast_execution_schedule_id",
+            "ext_supplier_code", "graphic", "monthly_net_margin_in_millions",
+            "monthly_purchases_in_millions", "monthly_sales_in_millions", "sotck_days",
+            "sotck_days_colors", "supplier_id", "supply_forecast_execution_status_id",
+            "contains_breaks", "maximum_backorder_days", "otif", "total_products", "total_units"
+        ]
+
+        select_query = f"""
+            SELECT {', '.join(columns)}
+            FROM supply_planning.spl_supply_forecast_execution_execute
+            WHERE id = %s
+        """
+
+        cur.execute(select_query, (exec_id,))
+        row = cur.fetchone()
+        cur.close()
+
+        if row:
+            return dict(zip(columns, row))
+        return None
+
+    except Exception as e:
+        print(f"Error en get_execution_execute: {e}")
+        return None
+
+    finally:
+        Close_Connection(conn)
+
+def update_execution_execute(exec_id, **kwargs):
+    conn = Open_Conn_Postgres()
+    if conn is None:
+        return None
+    try:
+        cur = conn.cursor()
+        set_clause = ", ".join([f"{key} = %s" for key in kwargs.keys()])
+        values = list(kwargs.values())
+        values.append(exec_id)
+        query = f"""
+            UPDATE supply_planning.spl_supply_forecast_execution_execute
+            SET {set_clause}
+            WHERE id = %s
+        """
+        cur.execute(query, tuple(values))
+        conn.commit()
+        cur.close()
+        return get_execution_execute(exec_id)
+    except Exception as e:
+        print(f"Error en update_execution_execute: {e}")
+        conn.rollback()
+        return None
+    finally:
+        Close_Connection(conn)
+        
 # ------------------------------
 # Normalización / Validaciones
 # ------------------------------
@@ -492,8 +619,39 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
             pass
 
 if __name__ == "__main__":
-    # Activar True si desean marcar como publicadas también las filas que ya existen en SGM
-    # con la MISMA compra (reintentos).
-    publicar_oc_precarga(idempotente_marcar_existentes=False)
+    
+    fes = get_execution_execute_by_status(80)
+        
+    if fes is None or fes.empty:
+        print("No hay ejecuciones con estado 80 (APROBADO) para procesar.")
+        sys.exit(0)
+
+    # Filtrar registros con supply_forecast_execution_status_id = 20  # FORECAST OK
+    for index, row in fes[fes["fee_status_id"] == 80].iterrows(): # type: ignore
+        algoritmo = row["name"]
+        name = algoritmo.split('_ALGO')[0]
+        execution_id = row["forecast_execution_id"]
+        id_proveedor = row["ext_supplier_code"]
+        forecast_execution_execute_id = row["forecast_execution_execute_id"]
+
+        print(f"Algoritmo: {algoritmo}  - Name: {name} exce_id: {execution_id} id: Proveedor {id_proveedor}")
+
+        try:
+            # Actualizar el estado a 30 sólo si no hubo errores
+            update_execution_execute(forecast_execution_execute_id, supply_forecast_execution_status_id=85)
+            print(f"✅ Estado actualizado a 85 para {execution_id}")
+            
+            # Activar True si desean marcar como publicadas también las filas que ya existen en SGM
+            # con la MISMA compra (reintentos).
+            publicar_oc_precarga(idempotente_marcar_existentes=True)
+
+            # Actualizar el estado a 30 sólo si no hubo errores
+            update_execution_execute(forecast_execution_execute_id, supply_forecast_execution_status_id=90)
+            print(f"✅ Estado actualizado a 90 para {execution_id}")
+    
+        except Exception as e:
+            print(f"❌ Error al actualizar el estado para {execution_id}: {e}")
+            continue    
+        
     print(f"[INFO] Proceso finalizado. Ver log en: {log_file}")
     logging.info("[END] Proceso de publicación finalizado.")
