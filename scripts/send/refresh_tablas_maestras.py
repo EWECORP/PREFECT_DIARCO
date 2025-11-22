@@ -339,7 +339,7 @@ def actualizar_tablas_maestras():
         ("repl", "t080_oc_pendientes", "T080_OC_PENDIENTES"),  
         ("repl", "t080_oc_cabe", "T080_OC_CABE"),  
         ("repl", "t081_oc_deta", "T081_OC_DETA"),  
-        ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL")
+     #   ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL")
     ]
 
     for origen, tabla_pg, tabla_sql in tablas:

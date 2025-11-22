@@ -24,14 +24,6 @@ SQLSERVER_CONN_STR = (
     "PWD=aladelta10$"
 )
 
-PG_CONN = {
-    'host': 'localhost',
-    'port': '5432',
-    'dbname': 'diarco_data',
-    'user': 'postgres',
-    'password': 'your_password'
-}
-
 SFTP_CONFIG = {
     'host': '186.158.182.54',
     'port': 22,
@@ -56,19 +48,55 @@ def obtener_dataframe(esquema, tabla, filtro_sql):
         df = pd.read_sql(query, conn) # type: ignore
     return df
 
+# @task
+# def exportar_y_comprimir(esquema, tabla, filtro_sql, nombre_zip):
+#     df = obtener_dataframe.fn(esquema, tabla, filtro_sql)
+#     nombre_csv = os.path.join(OUTPUT_DIR, nombre_zip.replace(".zip", ".csv"))
+#     logger = get_run_logger()
+#     logger.info(f"Exportando datos a {nombre_csv}")
+#     df.to_csv(nombre_csv, index=False, sep="|", na_rep="NULL")
+
+#     zip_path = os.path.join(OUTPUT_DIR, nombre_zip)
+#     with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
+#         zipf.write(nombre_csv, arcname=os.path.basename(nombre_csv))
+#     os.remove(nombre_csv)
+#     return zip_path
+
 @task
 def exportar_y_comprimir(esquema, tabla, filtro_sql, nombre_zip):
-    df = obtener_dataframe.fn(esquema, tabla, filtro_sql)
-    nombre_csv = os.path.join(OUTPUT_DIR, nombre_zip.replace(".zip", ".csv"))
     logger = get_run_logger()
-    logger.info(f"Exportando datos a {nombre_csv}")
-    df.to_csv(nombre_csv, index=False, sep="|", na_rep="NULL")
+    query = f"SELECT * FROM {esquema}.{tabla}"
+    if filtro_sql:
+        query += f" WHERE {filtro_sql}"
 
+    nombre_csv = os.path.join(OUTPUT_DIR, nombre_zip.replace(".zip", ".csv"))
     zip_path = os.path.join(OUTPUT_DIR, nombre_zip)
+
+    logger.info(f"Exportando datos en streaming a {nombre_csv}")
+
+    first_chunk = True
+    chunksize = 50000  # pueden ajustar esto según memoria/rendimiento
+
+    with pyodbc.connect(SQLSERVER_CONN_STR) as conn, \
+         open(nombre_csv, "w", newline="", encoding="utf-8") as f_out:
+
+        for chunk in pd.read_sql_query(query, conn, chunksize=chunksize):
+            chunk.to_csv(
+                f_out,
+                index=False,
+                sep="|",
+                na_rep="NULL",
+                header=first_chunk
+            )
+            first_chunk = False
+
+    logger.info(f"Comprimiendo {nombre_csv} en {zip_path}")
     with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
         zipf.write(nombre_csv, arcname=os.path.basename(nombre_csv))
+
     os.remove(nombre_csv)
     return zip_path
+
 
 @task
 def enviar_por_sftp(zip_path):
@@ -83,6 +111,6 @@ def exportar_tabla_sql_sftp(esquema: str, tabla: str, filtro_sql: str, nombre_zi
     enviar_por_sftp(zip_generado)
 
 if __name__ == "__main__":
-    exportar_tabla_sql_sftp("repl", "T055_ARTICULOS_PARAM_STOCK", "", "test.zip")
+    exportar_tabla_sql_sftp("repl", "T051_ARTICULOS_SUCURSAL", "", "test.zip")
 
 
