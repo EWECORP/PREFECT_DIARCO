@@ -270,7 +270,8 @@ def actualizar_tablas_maestras():
         ("repl", "t080_oc_cabe", "T080_OC_CABE"),  
         ("repl", "t081_oc_deta", "T081_OC_DETA"),  
         ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
-        ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION")
+        ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION"),
+        ("repl", "t874_precarga_connexa_hist", "T874_PRECARGA_CONNEXA_HIST")
     ]
 
     for origen, tabla_pg, tabla_sql in tablas:
