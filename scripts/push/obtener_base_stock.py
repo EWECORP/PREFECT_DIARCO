@@ -28,7 +28,7 @@ PG_DB = os.getenv("PG_DB")
 PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 
-SP_NAME = "[dbo].[SP_BASE_STOCK_DMZ]"  # Cambiado a SP_BASE_STOCK_DMZ
+SP_NAME = "[dbo].[SP_BASE_STOCK_EXTEND]"  # Cambiado a SP_BASE_STOCK_DMZ
 TABLE_DESTINO = "src.base_stock_sucursal"
 
 # Logging
@@ -81,6 +81,12 @@ ESQUEMA_BASE_STOCK = {
     "stock": "DOUBLE PRECISION",
     "transfer_pendiente": "DOUBLE PRECISION",
     "pedido_pendiente": "DOUBLE PRECISION",
+    
+    "transito_pendiente": "DOUBLE PRECISION",   # Agregado EWE
+    "transfer_pendiente_fecha": "TIMESTAMP",
+    "pedido_pendiente_fecha": "TIMESTAMP",    
+    "transito_pendiente_fecha": "TIMESTAMP",
+    
     "promocion": "INTEGER",
     "lote": "VARCHAR",
     "validez_lote": "TIMESTAMP",
@@ -105,7 +111,7 @@ def crear_sentencia_create(schema_dict: dict, table_name: str) -> str:
 def insert_dataframe_postgres(df: pd.DataFrame, table_fullname: str):
     df.columns = [col.lower() for col in df.columns]
     # Conversión completa a tipos nativos y manejo de NAs
-    df = df.astype(object).where(pd.notnull(df), None)
+    df = df.astype(object).where(pd.notnull(df), None) # type: ignore
     df.rename(columns={col: col.lower() for col in df.columns}, inplace=True)
 
     with open_pg_conn() as conn:
@@ -136,6 +142,7 @@ def cargar_base_stock_sucursal_pg():
 
         df["fuente_origen"] = "SP_BASE_STOCK_DMZ"
         df["fecha_extraccion"] = datetime.now()
+        df["fecha_extraccion"] = pd.to_datetime(df["fecha_extraccion"], errors="coerce")
         df["estado_sincronizacion"] = 0
 
         # Adecuación de columnas numéricas
@@ -157,7 +164,12 @@ def cargar_base_stock_sucursal_pg():
         df["Fecha_Stock"] = pd.to_datetime(df["Fecha_Stock"], errors="coerce")
         df["Stock"] = pd.to_numeric(df["Stock"], errors="coerce").astype("Float64")
         df["Transfer_Pendiente"] = pd.to_numeric(df["Transfer_Pendiente"], errors="coerce").astype("Float64")
-        df["Pedido_Pendiente"] = pd.to_numeric(df["Pedido_Pendiente"], errors="coerce").astype("Float64")
+        df["Pedido_Pendiente"] = pd.to_numeric(df["Pedido_Pendiente"], errors="coerce").astype("Float64")        
+        df["Transito_Pendiente"] = pd.to_numeric(df["Transito_Pendiente"], errors="coerce").astype("Float64")   # Nuevos Campos
+        df["Transfer_Pendiente_fecha"] = pd.to_datetime(df["Transfer_Pendiente_fecha"], errors="coerce")
+        df["Pedido_Pendiente_fecha"] = pd.to_datetime(df["Pedido_Pendiente_fecha"], errors="coerce")
+        df["Transito_Pendiente_fecha"] = pd.to_datetime(df["Transito_Pendiente_fecha"], errors="coerce")
+        
         df["Promocion"] = pd.to_numeric(df["Promocion"], errors="coerce").astype("Int64")
         df["Lote"] = df["Lote"].astype("string").str.strip()
         df["Validez_Lote"] = pd.to_datetime(df["Validez_Lote"], errors="coerce")
@@ -170,8 +182,7 @@ def cargar_base_stock_sucursal_pg():
         df["Importe_Minimo"] = pd.to_numeric(df["Importe_Minimo"], errors="coerce").astype("Float64")
         df["Bultos_Minimo"] = pd.to_numeric(df["Bultos_Minimo"], errors="coerce").astype("Float64")
         df["Dias_Preparacion"] = pd.to_numeric(df["Dias_Preparacion"], errors="coerce").astype("Int64")
-        df["fecha_extraccion"] = pd.to_datetime(df["fecha_extraccion"], errors="coerce")
-
+        
         logger.info(f"✅ {len(df)} registros leídos desde SQL Server.")
     except Exception as e:
         logger.error(f"❌ Error durante la lectura: {e}")

@@ -54,6 +54,18 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
+  - name: Refrecar_datos_Diarios_para_FORECAST
+    entrypoint: scripts/push/flujo_refresh_datos_forecast.py:forecast_flow
+    description: "Actualización de Datos al mediodia de proveedores habilitados"
+    tags: ["push", "forecast", "datos"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: push-forecast
+    schedule:
+      cron:  "05 13 * * 1-5"   # Todos los días hábiles a las 13:05 PM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}
+
   - name: Push_datos_Ventas_Stock_Diarios
     entrypoint: scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas
     description: "Carga Diaria de Datos de Ventas y Stock"

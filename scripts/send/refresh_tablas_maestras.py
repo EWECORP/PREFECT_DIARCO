@@ -375,8 +375,8 @@ def main_flow():
     sync_dmz_optimizado()
     logger.info("Iniciando flujo de actualización de tablas maestras...")
     actualizar_tablas_maestras()
-    logger.info("Iniciando flujo de refresh para FORECAST...")
-    refresh_flow()
+    # logger.info("Iniciando flujo de refresh para FORECAST...")
+    # refresh_flow()
     logger.info("Flujo de refresh para FORECAST finalizado.")
 
 if __name__ == "__main__":
