@@ -132,6 +132,19 @@ deployments:
       cron: "15 6 * * *"   # todos los días 06:15 América/Buenos_Aires
       timezone: "America/Argentina/Buenos_Aires"
 
+  - name: actualizar_base_ventas_extendida_BARRIO
+    entrypoint: scripts/push/actualizar_base_ventas_extendida_barrio.py:actualizar_base_ventas_extendida_barrio
+    description: "Carga incremental con ventana y upsert"
+    tags: ["bve","etl","diario"]
+    version: "1.0.1"
+    parameters:
+      window_days: 14
+      analyze: true
+    schedule:
+      cron: "45 6 * * *"   # todos los días 06:15 América/Buenos_Aires
+      timezone: "America/Argentina/Buenos_Aires"
+
+
   - name: Refrescar_Tablas_Maestras_Postgres
     entrypoint: scripts/send/refresh_tablas_maestras.py:main_flow
     description: "Flujo maestro orquestador para REFreSCAR tablas entre SQL Server y PostgreSQL"
