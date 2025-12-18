@@ -67,6 +67,7 @@ ESQUEMA_BASE_PRODUCTOS = {
     "habilitado": "INTEGER",
     "fecha_registro": "TIMESTAMP",
     "fecha_baja": "TIMESTAMP",
+    "q_peso_unit_art": "DOUBLE PRECISION",  # NUEVO CAMPO OJO REVISAR
     "m_vende_por_peso": "INTEGER",  # NUEVO CAMPO OJO REVISAR
     "unid_transferencia": "INTEGER",
     "q_unid_transferencia": "INTEGER",
@@ -97,7 +98,7 @@ def crear_sentencia_create(schema_dict: dict, table_name: str) -> str:
 
 def insert_dataframe_postgres(df: pd.DataFrame, table_fullname: str):
     df.columns = [col.lower() for col in df.columns]          # Minúsculas
-    df = df.where(pd.notnull(df), None)                       # Nulos
+    df = df.where(pd.notnull(df), None)                       # type: ignore # Nulos
     df = df.astype(object)                                    # Tipos Python nativos
 
     with open_pg_conn() as conn:
@@ -176,6 +177,9 @@ def cargar_base_productos():
         df["NUMBER_OF_BOXES_PER_LAYER"] = pd.to_numeric(df["NUMBER_OF_BOXES_PER_LAYER"], errors="coerce").astype("Float64")
         df["COD_COMPRADOR"] = pd.to_numeric(df["COD_COMPRADOR"], errors="coerce").astype("Int64")
         df["Q_FACTOR_COMPRA"] = pd.to_numeric(df["Q_FACTOR_COMPRA"], errors="coerce").astype("Int64")
+        
+        df["Q_PESO_UNIT_ART"] = pd.to_numeric(df["Q_PESO_UNIT_ART"], errors="coerce").astype("Float64")  # NUEVO CAMPO OJO REVISAR
+        df["M_VENDE_POR_PESO"] = pd.to_numeric(df["M_VENDE_POR_PESO"], errors="coerce").astype("Int64")  # NUEVO CAMPO OJO REVISAR
 
         # Adecuación de fechas
         df["FECHA_REGISTRO"] = pd.to_datetime(df["FECHA_REGISTRO"], errors="coerce")
