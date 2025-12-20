@@ -63,9 +63,10 @@ def ejecutar_script(nombre):
 @flow(name="Pull Datos OC PRECARGA desde CONNEXA")
 def precargar_OC_connexa():
     scripts = [
-        "S90_PUBLICAR_OC_PRECARGA.py",
+        # "S90_PUBLICAR_OC_PRECARGA.py",  # Deshabilitado Luego de que THOMAS escribiera directamente en la tabla de PRECARGA_OC
         "S90_PUBLICAR_PRECARGA_CONNEXA.py",
-        "S90_PUBLICAR_COMPRAS_DIRECTAS.py"
+        "S90_PUBLICAR_COMPRAS_DIRECTAS.py",
+        "publicar_transferencias_sgm.py"
     ]
     for script in scripts:
         ejecutar_script(script)
