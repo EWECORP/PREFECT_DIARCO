@@ -195,7 +195,8 @@ def cargar_base_stock_sucursal_pg():
         logger.error(f"❌ Error al insertar en PostgreSQL: {e}")
         raise
 
-    return df
+    # ✅ devolver sólo métricas
+    return {"rows": int(len(df))}
 
 @task(name="asegurar_indices_base_stock")
 def asegurar_indices_base_stock():
@@ -272,25 +273,26 @@ def ajustar_transferencias_cd(mapeo_cd = (("41CD", 41), ("82CD", 82))):
 # ====================== FLUJO PREFECT ======================
 from typing import Optional
 
-@flow(name="obtener_base_stock_sucursal")
+@flow(name="obtener_base_stock_sucursal", persist_result=False)
 def capturar_base_stock(lista_ids: Optional[list] = None):
     log = get_run_logger()
     try:
-        df_resultado = cargar_base_stock_sucursal_pg.with_options(
+        res = cargar_base_stock_sucursal_pg.with_options(
             name="Carga Base Stock Sucursal"
         ).submit().result()
 
-        # Re-crear índices (se perdió todo al DROP/CREATE)
         asegurar_indices_base_stock.with_options(
             name="Asegurar Índices Base Stock"
         ).submit().result()
 
-        # Ajuste de transferencias pendientes por CD
         filas_ajustadas = ajustar_transferencias_cd.with_options(
             name="Ajustar Transferencias Pendientes CD"
         ).submit().result()
 
-        log.info(f"✅ Proceso completado: {len(df_resultado)} filas cargadas; {filas_ajustadas} filas ajustadas por CDs.")
+        log.info(
+            f"✅ Proceso completado: {res['rows']} filas cargadas; "
+            f"{filas_ajustadas} filas ajustadas por CDs."
+        )
     except Exception as e:
         log.error(f"🔥 Error general en el flujo: {e}")
         raise

@@ -197,19 +197,23 @@ def cargar_base_productos():
         logger.error(f"❌ Error al insertar en PostgreSQL: {e}")
         raise
 
-    return df
+    # ✅ NO devolver el DF gigante
+    return {"rows": int(len(df))}
 
-@flow(name="obtener_base_productos_vigentes")
+@flow(name="obtener_base_productos_vigentes", persist_result=False)
 def capturar_base_articulos():
     log = get_run_logger()
     try:
-        df_resultado = cargar_base_productos.with_options(name="Carga Base Productos Vigentes").submit().result()
-        log.info(f"✅ Proceso completado: {len(df_resultado)} filas cargadas")
+        res = cargar_base_productos.with_options(name="Carga Base Productos Vigentes").submit().result()
+        log.info(f"✅ Proceso completado: {res['rows']} filas cargadas")
 
-        registros_eliminados = eliminar_duplicados()
-        log.info(f"✅ Proceso de eliminación de duplicados completado. Registros eliminados: {registros_eliminados}")
+        # Si quieren que eliminar_duplicados sea realmente task-run:
+        elim = eliminar_duplicados.submit().result()
+        log.info(f"✅ Eliminación de duplicados completada. Registros eliminados: {elim}")
     except Exception as e:
         log.error(f"🔥 Error general en el flujo: {e}")
+        raise
+
 
 # ====================== EJECUCIÓN MANUAL ======================
 if __name__ == "__main__":
