@@ -233,7 +233,7 @@ def actualizar_estados_connexa(
 # FLOW
 # =============================================================================
 
-@flow(name="Publicar transferencias Connexa -> SGM + Valkimia + Retorno")
+@flow(name="Publicar transferencias Connexa SGM Valkimia Retorno")
 def publicar_transferencias_sgm_vk(cfg: Optional[FlowConfig] = None) -> Dict[str, object]:
     """
     Orquesta:

@@ -1,36 +1,16 @@
 # scripts/pull/publicar_transferencias_sgm.py
-#
-# Publica transferencias desde CONNEXA (PostgreSQL) hacia staging en SQL Server DMZ:
-#   [data-sync].[repl].[TRANSF_CONNEXA_IN]
-#
-# Reglas confirmadas:
-# - qty_requested en Connexa YA está en BULTOS (formato esperado por SGM).
-# - units_per_package = unidades por bulto (q_factor).
-# - q_requerida = q_bultos * q_factor (derivado en unidades; auditoría).
-# - origin_cd puede venir como "41CD" / "82CD" y debe grabarse como 41 / 82.
-# - Luego de insertar en staging, se actualiza el status de la cabecera en Connexa a 80 (SINCRONIZANDO).
-#
-# Requisitos:
-# - Variables .env para PG (PGP_*) y SQL Server (SQL_*)
-# - Tabla destino ya creada:
-#   repl.TRANSF_CONNEXA_IN con columnas incluidas UUID (uniqueidentifier)
-#
-# Notas:
-# - Este script NO ejecuta el SP publicador SGM; solo carga staging + marca cabeceras en 80.
-# - Para evitar duplicados por reintento, se recomienda crear un índice único filtrado por connexa_detail_uuid.
 
 import os
 import sys
 import urllib.parse
+from math import ceil  # ya no lo usamos directamente, pero se deja por si luego se quiere volver a usar
 from datetime import datetime
-from typing import List
 
-import numpy as np
 import pandas as pd
-from dotenv import dotenv_values, load_dotenv
+import numpy as np
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
-
+from dotenv import dotenv_values, load_dotenv
 
 # =========================
 # 1) CONFIGURACIÓN Y ENTORNO
@@ -44,16 +24,15 @@ if not os.path.exists(ENV_PATH):
 secrets = dotenv_values(ENV_PATH)
 load_dotenv(ENV_PATH)  # Carga en os.environ para que os.getenv() funcione
 
-print(
-    f"[INFO] PGP_DB:{secrets.get('PGP_DB')} - PGP_HOST:{secrets.get('PGP_HOST')} - PGP_USER:{secrets.get('PGP_USER')}"
-)
+# Confirmación de variables de PG (Connexa)
+print(f"[INFO] PGP_DB:{secrets.get('PGP_DB')} - PGP_HOST:{secrets.get('PGP_HOST')} - PGP_USER:{secrets.get('PGP_USER')}")
 
 
 # =========================
 # 2) CONEXIONES A BASES DE DATOS
 # =========================
 def get_pg_engine() -> Engine:
-    """Devuelve un engine de SQLAlchemy para PostgreSQL (Connexa)."""
+    """ Devuelve un engine de SQLAlchemy para PostgreSQL (Connexa). """
     host = os.getenv("PGP_HOST")
     port = os.getenv("PGP_PORT", "5432")
     db = os.getenv("PGP_DB")
@@ -71,8 +50,8 @@ def get_pg_engine() -> Engine:
 
 def get_sqlserver_engine() -> Engine:
     """
-    Devuelve un engine para SQL Server (data-sync) usando pyodbc.
-    Se utiliza 'Connect Timeout' de 30 segundos.
+    Devuelve un engine para SQL Server (data-sync) usando pyodbc/ODBC Driver 17.
+    Se utiliza un 'Connect Timeout' de 30 segundos.
     """
     host = os.getenv("SQL_SERVER")
     port = os.getenv("SQL_PORT", "1433")
@@ -104,8 +83,7 @@ def get_sqlserver_engine() -> Engine:
 # =========================
 def obtener_transferencias_precarga(pg_engine: Engine) -> pd.DataFrame:
     """
-    Obtiene todas las transferencias en estado PRECARGA_CONNEXA (detalle),
-    incluyendo UUIDs de cabecera/detalle.
+    Obtiene todas las transferencias en estado PRECARGA_CONNEXA a nivel detalle.
     """
     sql = """
     SELECT
@@ -125,7 +103,6 @@ def obtener_transferencias_precarga(pg_engine: Engine) -> pd.DataFrame:
         d.qty_planned,
         d.qty_shipped,
         d.qty_received,
-        d.uom_id,
         d.units_per_package,
         d.packages_per_layer,
         d.layers_per_pallet
@@ -138,90 +115,88 @@ def obtener_transferencias_precarga(pg_engine: Engine) -> pd.DataFrame:
     """
     return pd.read_sql(sql, pg_engine, parse_dates=["requested_at", "created_at"])
 
-
 def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
     """
-    Transforma el DataFrame de Connexa al formato esperado por:
-      [data-sync].[repl].[TRANSF_CONNEXA_IN]
+    Transforma el DataFrame de Connexa al formato esperado
+    por [data-sync].[repl].[TRANSF_CONNEXA_IN].
 
-    Reglas:
-      - qty_requested ya está en BULTOS => q_bultos = qty_requested (DECIMAL(13,3))
-      - q_factor = units_per_package (unidades por bulto; entero DECIMAL(6,0))
-      - q_requerida = q_bultos * q_factor (unidades; DECIMAL(13,3))
-      - origin_cd '41CD' => c_sucu_orig = 41
-      - destination_store_code => c_sucu_dest (decimal(3,0))
-      - item_code => c_articulo (decimal(6,0))
-      - estado inicial = PENDIENTE
+    Ajustes correctos:
+      - item_code → entero
+      - destination_store_code → entero
+      - origin_cd '41CD' → 41
+      - Cálculo de bultos y factor vectorizado
+      - Fechas normalizadas
     """
-    base_cols = [
-        "c_articulo",
-        "c_sucu_dest",
-        "c_sucu_orig",
-        "q_requerida",
-        "q_bultos",
-        "q_factor",
-        "f_alta",
-        "m_alta_prioridad",
-        "vchUsuario",
-        "vchTerminal",
-        "forzarTransf",
-        "estado",
-        "mensaje_error",
-        "connexa_header_uuid",
-        "connexa_detail_uuid",
-    ]
 
     if df_src.empty:
-        return pd.DataFrame(columns=base_cols)
+        return pd.DataFrame(
+            columns=[
+                "c_articulo",
+                "c_sucu_dest",
+                "c_sucu_orig",
+                "q_requerida",
+                "q_bultos",
+                "q_factor",
+                "f_alta",
+                "m_alta_prioridad",
+                "vchUsuario",
+                "vchTerminal",
+                "forzarTransf",
+                "estado",
+                "mensaje_error",
+            ]
+        )
 
     df = df_src.copy()
 
     # -----------------------------
-    # 1) Normalización de códigos
+    # 1. Normalización CÓDIGOS
     # -----------------------------
-    # Artículo -> int (decimal(6,0))
+
+    # Artículo → entero
     df["item_code_num"] = pd.to_numeric(df["item_code"], errors="coerce").fillna(0).astype(int)
 
-    # Sucursal destino -> int (decimal(3,0))
+    # Sucursal destino → entero
     df["dest_store_num"] = pd.to_numeric(df["destination_store_code"], errors="coerce").fillna(0).astype(int)
-
-    # UUIDs (guardar como string canónico para pyodbc -> uniqueidentifier)
+    
+    # Identificadores UUID en minúsculas
     df["connexa_header_uuid"] = df["connexa_header_uuid"].astype(str).str.lower()
     df["connexa_detail_uuid"] = df["connexa_detail_uuid"].astype(str).str.lower()
 
     # Sucursal origen: extraer números al inicio (41CD → 41)
     origin_str = df["origin_cd"].astype(str)
     df["origin_cd_num"] = (
-        origin_str.str.extract(r"^(\d+)", expand=False)
-        .fillna("0")
-        .astype(int)
+        origin_str.str.extract(r"^(\d+)", expand=False)  # toma solo la parte numérica inicial
+                 .fillna("0")
+                 .astype(int)
     )
 
     # -----------------------------
-    # 2) Cantidades (qty_requested = BULTOS)
+    # 2. Cantidades (vectorizado)
     # -----------------------------
-    df["units_per_package"] = pd.to_numeric(df["units_per_package"], errors="coerce").fillna(1.0)
+    df["units_per_package"] = df["units_per_package"].fillna(1.0)
     df.loc[df["units_per_package"] <= 0, "units_per_package"] = 1.0
 
-    df["qty_requested"] = pd.to_numeric(df["qty_requested"], errors="coerce").fillna(0.0)
+    df["qty_planned"] = df["qty_planned"].fillna(0.0)
 
-    # factor entero (unidades por bulto)
-    df["q_factor"] = df["units_per_package"].round(0).astype(int)
+    df["q_factor"] = df["units_per_package"].astype(int)
+    
+    df["q_requerida"] = (df["units_per_package"] * df["qty_requested"]).astype(int)  # Los Paso a Unidades de Venta
 
-    # bultos (puede ser decimal(13,3))
-    df["q_bultos"] = df["qty_requested"].round(3)
-
-    # unidades requeridas (derivado)
-    df["q_requerida"] = (df["q_bultos"] * df["q_factor"]).round(3)
+    df["q_bultos"] = df["qty_requested"].astype(int)
 
     # -----------------------------
-    # 3) Fecha de alta
+    # 3. Fecha de alta
     # -----------------------------
     now = datetime.now()
-    df["f_alta"] = df["requested_at"].fillna(df["created_at"]).fillna(now)
+    df["f_alta"] = (
+        df["requested_at"]
+        .fillna(df["created_at"])
+        .fillna(now)
+    )
 
     # -----------------------------
-    # 4) Campos fijos
+    # 4. Campos fijos
     # -----------------------------
     df["m_alta_prioridad"] = "N"
     df["vchUsuario"] = "CONNEXA"
@@ -231,54 +206,46 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
     df["mensaje_error"] = ""
 
     # -----------------------------
-    # 5) Mapeo final
+    # 5. Mapeo final
     # -----------------------------
-    df_stg = pd.DataFrame(
-        {
-            "c_articulo": df["item_code_num"],
-            "c_sucu_dest": df["dest_store_num"],
-            "c_sucu_orig": df["origin_cd_num"],
-            "q_requerida": df["q_requerida"],
-            "q_bultos": df["q_bultos"],
-            "q_factor": df["q_factor"],
-            "f_alta": pd.to_datetime(df["f_alta"]),
-            "m_alta_prioridad": df["m_alta_prioridad"],
-            "vchUsuario": df["vchUsuario"],
-            "vchTerminal": df["vchTerminal"],
-            "forzarTransf": df["forzarTransf"],
-            "estado": df["estado"],
-            "mensaje_error": df["mensaje_error"],
-            "connexa_header_uuid": df["connexa_header_uuid"],
-            "connexa_detail_uuid": df["connexa_detail_uuid"],
-        }
-    )
-
-    # Limpieza defensiva: descartar filas "inválidas" que romperían SGM
-    # (si prefieren mantenerlas y que el SP las marque error, comenten este filtro)
-    df_stg = df_stg[
-        (df_stg["c_articulo"] > 0)
-        & (df_stg["c_sucu_dest"] > 0)
-        & (df_stg["c_sucu_orig"] > 0)
-        & (df_stg["q_bultos"] >= 0)
-        & (df_stg["q_factor"] > 0)
-    ].copy()
+    df_stg = pd.DataFrame({
+        "c_articulo": df["item_code_num"],
+        "c_sucu_dest": df["dest_store_num"],
+        "c_sucu_orig": df["origin_cd_num"],
+        "q_requerida": df["q_requerida"],
+        "q_bultos": df["q_bultos"],
+        "q_factor": df["q_factor"],
+        "f_alta": pd.to_datetime(df["f_alta"]),
+        "m_alta_prioridad": df["m_alta_prioridad"],
+        "vchUsuario": df["vchUsuario"],
+        "vchTerminal": df["vchTerminal"],
+        "forzarTransf": df["forzarTransf"],
+        "estado": df["estado"],
+        "mensaje_error": df["mensaje_error"],
+        "connexa_header_uuid": df["connexa_header_uuid"],
+        "connexa_detail_uuid": df["connexa_detail_uuid"],
+    })
 
     return df_stg
-
 
 # =========================
 # 4) INSERCIÓN Y ACTUALIZACIÓN
 # =========================
 def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> int:
-    """Inserta filas en [data-sync].[repl].[TRANSF_CONNEXA_IN] usando to_sql."""
+    """
+    Inserta las filas en [data-sync].[repl].[TRANSF_CONNEXA_IN] usando to_sql.
+    """
     if df_stg.empty:
         return 0
 
+    table_name = "TRANSF_CONNEXA_IN"
+    schema_name = "repl"
+
     try:
         df_stg.to_sql(
-            name="TRANSF_CONNEXA_IN",
+            name=table_name,
             con=sql_engine,
-            schema="repl",
+            schema=schema_name,
             if_exists="append",
             index=False,
         )
@@ -288,25 +255,27 @@ def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> i
         raise
 
 
-def actualizar_estado_cabeceras(pg_engine: Engine, header_uuids: List[str], nuevo_estado_id: int = 80) -> int:
+def actualizar_estado_cabeceras(pg_engine: Engine, header_ids: list[int], nuevo_estado_id: int = 80) -> int:
     """
-    Actualiza el estado de las cabeceras de transferencia en Connexa a SINCRONIZANDO (80).
-    header_uuids: lista de UUID (strings).
+    Actualiza el estado de las cabeceras de transferencia en Connexa
+    al estado SINCRONIZANDO (80). Devuelve cuántas filas fueron actualizadas.
     """
-    if not header_uuids:
+    if not header_ids:
         return 0
 
     sql = """
         UPDATE supply_planning.spl_distribution_transfer
-           SET status_id = :nuevo_estado,
-               updated_at = NOW()
-         WHERE id = ANY(:lista_ids)
+        SET status_id = :nuevo_estado
+        WHERE id = ANY(:lista_ids)
     """
 
     with pg_engine.begin() as conn:
         result = conn.execute(
             text(sql),
-            {"nuevo_estado": nuevo_estado_id, "lista_ids": header_uuids},
+            {
+                "nuevo_estado": nuevo_estado_id,
+                "lista_ids": header_ids,
+            },
         )
 
     return result.rowcount
@@ -320,7 +289,7 @@ def main() -> int:
         pg_engine = get_pg_engine()
         sql_engine = get_sqlserver_engine()
 
-        # 1) Leer transferencias desde Connexa
+        # 1. Leer transferencias desde Connexa (PostgreSQL)
         print("\n[INFO] Leyendo transferencias en estado PRECARGA_CONNEXA desde Connexa...")
         df_src = obtener_transferencias_precarga(pg_engine)
         print(f"[INFO] Registros origen (detalle): {len(df_src)}")
@@ -329,31 +298,31 @@ def main() -> int:
             print("[INFO] No hay transferencias en PRECARGA_CONNEXA para publicar.")
             return 0
 
-        # 2) Cabeceras UUID únicas
-        header_uuids = sorted(df_src["connexa_header_uuid"].astype(str).str.lower().unique().tolist())
-        print(f"[INFO] Cabeceras a actualizar a SINCRONIZANDO (80): {len(header_uuids)}")
+        # Cabeceras únicas
+        header_ids = sorted(df_src["header_id"].unique().tolist())
+        print(f"[INFO] Cabeceras a actualizar después de publicar: {len(header_ids)}")
 
-        # 3) Transformar
+        # 2. Transformar datos
         print("\n[INFO] Transformando datos a formato TRANSF_CONNEXA_IN...")
         df_stg = transformar_a_staging(df_src)
         print(f"[INFO] Registros a insertar en staging: {len(df_stg)}")
 
         if df_stg.empty:
-            print("[WARN] Después de la transformación no hay filas válidas para insertar.")
+            print("[WARN] Después de la transformación no hay filas válidas para publicar.")
             return 0
 
-        # 4) Insertar staging SQL Server
+        # 3. Insertar en SQL Server
         print("\n[INFO] Insertando en SQL Server [data-sync].[repl].[TRANSF_CONNEXA_IN]...")
         n = insertar_en_staging_sqlserver(df_stg, sql_engine)
         print(f"[INFO] Filas insertadas en TRANSF_CONNEXA_IN: {n}")
 
         if n == 0:
-            print("[WARN] No se insertaron filas. No se actualizan estados en Connexa.")
+            print("[WARN] No se insertaron filas en TRANSF_CONNEXA_IN. No se actualizan estados.")
             return 0
 
-        # 5) Actualizar estado cabeceras en Connexa
+        # 4. Actualizar estado en Connexa
         print("\n[INFO] Actualizando estado de cabeceras a SINCRONIZANDO (80)...")
-        filas_actualizadas = actualizar_estado_cabeceras(pg_engine, header_uuids, nuevo_estado_id=80)
+        filas_actualizadas = actualizar_estado_cabeceras(pg_engine, header_ids, nuevo_estado_id=80)
         print(f"[INFO] Cabeceras actualizadas: {filas_actualizadas}")
 
         return 0
