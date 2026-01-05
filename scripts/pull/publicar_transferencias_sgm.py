@@ -10,11 +10,6 @@
 # - origin_cd puede venir como "41CD" / "82CD" y debe grabarse como 41 / 82.
 # - Luego de insertar en staging, se actualiza el status de la cabecera en Connexa a 80 (SINCRONIZANDO).
 #
-# Requisitos:
-# - Variables .env para PG (PGP_*) y SQL Server (SQL_*)
-# - Tabla destino ya creada:
-#   repl.TRANSF_CONNEXA_IN con columnas incluidas UUID (uniqueidentifier)
-#
 # Notas:
 # - Este script NO ejecuta el SP publicador SGM; solo carga staging + marca cabeceras en 80.
 # - Para evitar duplicados por reintento, se recomienda crear un índice único filtrado por connexa_detail_uuid.
@@ -24,6 +19,7 @@ import sys
 import urllib.parse
 from datetime import datetime
 from typing import List
+import uuid
 
 import numpy as np
 import pandas as pd
@@ -179,23 +175,15 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
     # -----------------------------
     # 1) Normalización de códigos
     # -----------------------------
-    # Artículo -> int (decimal(6,0))
     df["item_code_num"] = pd.to_numeric(df["item_code"], errors="coerce").fillna(0).astype(int)
-
-    # Sucursal destino -> int (decimal(3,0))
     df["dest_store_num"] = pd.to_numeric(df["destination_store_code"], errors="coerce").fillna(0).astype(int)
 
-    # UUIDs (guardar como string canónico para pyodbc -> uniqueidentifier)
+    # UUIDs (guardar como string canónico)
     df["connexa_header_uuid"] = df["connexa_header_uuid"].astype(str).str.lower()
     df["connexa_detail_uuid"] = df["connexa_detail_uuid"].astype(str).str.lower()
 
-    # Sucursal origen: extraer números al inicio (41CD → 41)
     origin_str = df["origin_cd"].astype(str)
-    df["origin_cd_num"] = (
-        origin_str.str.extract(r"^(\d+)", expand=False)
-        .fillna("0")
-        .astype(int)
-    )
+    df["origin_cd_num"] = origin_str.str.extract(r"^(\d+)", expand=False).fillna("0").astype(int)
 
     # -----------------------------
     # 2) Cantidades (qty_requested = BULTOS)
@@ -205,13 +193,8 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
 
     df["qty_requested"] = pd.to_numeric(df["qty_requested"], errors="coerce").fillna(0.0)
 
-    # factor entero (unidades por bulto)
     df["q_factor"] = df["units_per_package"].round(0).astype(int)
-
-    # bultos (puede ser decimal(13,3))
     df["q_bultos"] = df["qty_requested"].round(3)
-
-    # unidades requeridas (derivado)
     df["q_requerida"] = (df["q_bultos"] * df["q_factor"]).round(3)
 
     # -----------------------------
@@ -253,8 +236,6 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
         }
     )
 
-    # Limpieza defensiva: descartar filas "inválidas" que romperían SGM
-    # (si prefieren mantenerlas y que el SP las marque error, comenten este filtro)
     df_stg = df_stg[
         (df_stg["c_articulo"] > 0)
         & (df_stg["c_sucu_dest"] > 0)
@@ -288,25 +269,44 @@ def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> i
         raise
 
 
+def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
+    """Convierte strings UUID a uuid.UUID; descarta los inválidos de forma defensiva."""
+    uuids: List[uuid.UUID] = []
+    for v in values:
+        if v is None:
+            continue
+        s = str(v).strip().lower()
+        if not s:
+            continue
+        try:
+            uuids.append(uuid.UUID(s))
+        except Exception:
+            # Si aparece un valor inválido, se lo ignora para no romper el update masivo.
+            # Alternativa: levantar excepción y fallar el job.
+            pass
+    return uuids
+
 def actualizar_estado_cabeceras(pg_engine: Engine, header_uuids: List[str], nuevo_estado_id: int = 80) -> int:
-    """
-    Actualiza el estado de las cabeceras de transferencia en Connexa a SINCRONIZANDO (80).
-    header_uuids: lista de UUID (strings).
-    """
     if not header_uuids:
         return 0
 
+    header_uuid_objs = _to_uuid_list(header_uuids)
+    if not header_uuid_objs:
+        print("[WARN] No quedaron UUIDs válidos para actualizar cabeceras en Connexa.")
+        return 0
+
+    # ✅ Importante: CAST() en vez de :param::uuid[] para que SQLAlchemy lo parametrice bien
     sql = """
         UPDATE supply_planning.spl_distribution_transfer
            SET status_id = :nuevo_estado,
                updated_at = NOW()
-         WHERE id = ANY(:lista_ids)
+         WHERE id = ANY(CAST(:lista_ids AS uuid[]))
     """
 
     with pg_engine.begin() as conn:
         result = conn.execute(
             text(sql),
-            {"nuevo_estado": nuevo_estado_id, "lista_ids": header_uuids},
+            {"nuevo_estado": nuevo_estado_id, "lista_ids": header_uuid_objs},
         )
 
     return result.rowcount
@@ -320,7 +320,6 @@ def main() -> int:
         pg_engine = get_pg_engine()
         sql_engine = get_sqlserver_engine()
 
-        # 1) Leer transferencias desde Connexa
         print("\n[INFO] Leyendo transferencias en estado PRECARGA_CONNEXA desde Connexa...")
         df_src = obtener_transferencias_precarga(pg_engine)
         print(f"[INFO] Registros origen (detalle): {len(df_src)}")
@@ -329,11 +328,10 @@ def main() -> int:
             print("[INFO] No hay transferencias en PRECARGA_CONNEXA para publicar.")
             return 0
 
-        # 2) Cabeceras UUID únicas
+        # Cabeceras UUID únicas (strings)
         header_uuids = sorted(df_src["connexa_header_uuid"].astype(str).str.lower().unique().tolist())
         print(f"[INFO] Cabeceras a actualizar a SINCRONIZANDO (80): {len(header_uuids)}")
 
-        # 3) Transformar
         print("\n[INFO] Transformando datos a formato TRANSF_CONNEXA_IN...")
         df_stg = transformar_a_staging(df_src)
         print(f"[INFO] Registros a insertar en staging: {len(df_stg)}")
@@ -342,7 +340,6 @@ def main() -> int:
             print("[WARN] Después de la transformación no hay filas válidas para insertar.")
             return 0
 
-        # 4) Insertar staging SQL Server
         print("\n[INFO] Insertando en SQL Server [data-sync].[repl].[TRANSF_CONNEXA_IN]...")
         n = insertar_en_staging_sqlserver(df_stg, sql_engine)
         print(f"[INFO] Filas insertadas en TRANSF_CONNEXA_IN: {n}")
@@ -351,7 +348,6 @@ def main() -> int:
             print("[WARN] No se insertaron filas. No se actualizan estados en Connexa.")
             return 0
 
-        # 5) Actualizar estado cabeceras en Connexa
         print("\n[INFO] Actualizando estado de cabeceras a SINCRONIZANDO (80)...")
         filas_actualizadas = actualizar_estado_cabeceras(pg_engine, header_uuids, nuevo_estado_id=80)
         print(f"[INFO] Cabeceras actualizadas: {filas_actualizadas}")
@@ -368,3 +364,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
