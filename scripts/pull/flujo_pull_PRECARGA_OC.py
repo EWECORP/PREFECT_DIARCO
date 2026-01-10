@@ -65,8 +65,7 @@ def precargar_OC_connexa():
     scripts = [
         # "S90_PUBLICAR_OC_PRECARGA.py",  # Deshabilitado Luego de que THOMAS escribiera directamente en la tabla de PRECARGA_OC
         "S90_PUBLICAR_PRECARGA_CONNEXA.py",
-        "S90_PUBLICAR_COMPRAS_DIRECTAS.py",
-        "publicar_transferencias_sgm.py"
+        "S90_PUBLICAR_COMPRAS_DIRECTAS.py"
     ]
     for script in scripts:
         ejecutar_script(script)
