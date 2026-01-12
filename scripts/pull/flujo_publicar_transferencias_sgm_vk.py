@@ -1,23 +1,22 @@
 # scripts/pull/flujo_publicar_transferencias_sgm_vk.py
 from __future__ import annotations
 
+import importlib.util
 import os
 import sys
 import time
 import urllib.parse
+import uuid
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Optional, Tuple, List
-import importlib.util
-import uuid
+from typing import Dict, List, Optional, Tuple
 
 import pandas as pd
 from dotenv import load_dotenv
+from prefect import flow, get_run_logger, task
+from prefect.cache_policies import NO_CACHE
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
-
-from prefect import flow, task, get_run_logger
-
 
 # =============================================================================
 # CONFIG
@@ -28,24 +27,29 @@ ENV_PATH = os.environ.get("ETL_ENV_PATH", r"E:\ETL\ETL_DIARCO\.env")
 
 @dataclass(frozen=True)
 class FlowConfig:
+    # Lotes / SP
     batch_size: int = 500
     max_seconds_sp: int = 120
 
+    # Looping
     max_loops: int = 200
     sleep_seconds_between_loops: float = 0.25
 
+    # Estados Connexa
     status_id_ok: int = 10
     status_id_error: int = 85
     status_id_syncing: int = 80
 
+    # Stored Procedures (SQL Server - data-sync / repl)
     sp_publicar_sgm: str = "repl.SP_PUBLICAR_TRANSF_CONNEXA_SGM"
     sp_publicar_vk: str = "repl.SP_PUBLICAR_TRANSF_CONNEXA_VK"
     sp_retorno_cabeceras: str = "repl.SP_TRANSF_CONNEXA_RETORNO_CABECERAS"
 
 
 # =============================================================================
-# ENGINES
+# ENV + ENGINES
 # =============================================================================
+
 
 def _require_env_file() -> None:
     if not os.path.exists(ENV_PATH):
@@ -97,6 +101,7 @@ def get_sqlserver_engine() -> Engine:
 # HELPERS
 # =============================================================================
 
+
 def _load_module_from_path(module_name: str, file_path: Path):
     spec = importlib.util.spec_from_file_location(module_name, str(file_path))
     if spec is None or spec.loader is None:
@@ -117,6 +122,7 @@ def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
         try:
             out.append(uuid.UUID(s))
         except Exception:
+            # si llega basura, simplemente se ignora
             pass
     return out
 
@@ -125,11 +131,12 @@ def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
 # TASKS
 # =============================================================================
 
-@task(name="Pre-publicar transferencias (Connexa -> Staging SQL Server)", retries=0)
+
+@task(name="Pre-publicar transferencias (Connexa -> Staging SQL Server)", retries=0, cache_policy=NO_CACHE)
 def ejecutar_pre_publicacion_staging() -> int:
     """
     Ejecuta scripts/pull/publicar_transferencias_sgm.py (versión original),
-    de forma SINCRÓNICA (bloqueante), y devuelve su exit code.
+    de forma sincrónica (bloqueante), y devuelve su exit code.
     """
     logger = get_run_logger()
 
@@ -141,7 +148,6 @@ def ejecutar_pre_publicacion_staging() -> int:
 
     logger.info(f"Ejecutando pre-publicación: {script_path}")
 
-    # Cargar como módulo y ejecutar main()
     mod = _load_module_from_path("publicar_transferencias_sgm_mod", script_path)
 
     if not hasattr(mod, "main"):
@@ -155,12 +161,20 @@ def ejecutar_pre_publicacion_staging() -> int:
     return rc
 
 
-@task(name="Ejecutar SP por lote (SQL Server)", retries=0)
-def ejecutar_sp_batch(sql_engine: Engine, sp_fullname: str, batch_size: int, max_seconds_sp: int) -> Dict[str, int]:
+@task(name="Ejecutar SP por lote (SQL Server)", retries=0, cache_policy=NO_CACHE)
+def ejecutar_sp_batch(sp_fullname: str, batch_size: int, max_seconds_sp: int) -> Dict[str, int]:
+    """
+    Ejecuta un SP (SQL Server) que devuelve un dataset con columnas:
+    claimed, processed, elapsed_s.
+    IMPORTANTE: se ejecuta en AUTOCOMMIT para evitar promoción a transacciones distribuidas
+    (MSDTC) cuando el SP toca linked servers.
+    """
     logger = get_run_logger()
+    sql_engine = get_sqlserver_engine()
+
     sql = text(f"EXEC {sp_fullname} @BatchSize=:bs, @MaxSeconds=:ms;")
 
-    with sql_engine.begin() as conn:
+    with sql_engine.connect().execution_options(isolation_level="AUTOCOMMIT") as conn:
         df = pd.read_sql(sql, conn, params={"bs": batch_size, "ms": max_seconds_sp})
 
     if df.empty:
@@ -176,9 +190,8 @@ def ejecutar_sp_batch(sql_engine: Engine, sp_fullname: str, batch_size: int, max
     return {"claimed": claimed, "processed": processed, "elapsed_s": elapsed_s}
 
 
-@task(name="Loop SP hasta agotar pendientes", retries=0)
+@task(name="Loop SP hasta agotar pendientes", retries=0, cache_policy=NO_CACHE)
 def loop_sp_hasta_agotar(
-    sql_engine: Engine,
     sp_fullname: str,
     batch_size: int,
     max_seconds_sp: int,
@@ -189,10 +202,13 @@ def loop_sp_hasta_agotar(
     total_claimed = 0
     total_processed = 0
     loops = 0
+    
+    stalled_count = 0
+    max_stalled = 5
 
     while loops < max_loops:
         loops += 1
-        res = ejecutar_sp_batch(sql_engine, sp_fullname, batch_size, max_seconds_sp)
+        res = ejecutar_sp_batch(sp_fullname=sp_fullname, batch_size=batch_size, max_seconds_sp=max_seconds_sp)
         total_claimed += res["claimed"]
         total_processed += res["processed"]
 
@@ -202,8 +218,20 @@ def loop_sp_hasta_agotar(
                 f"total_claimed={total_claimed}, total_processed={total_processed}"
             )
             break
+        
+        if res["claimed"] > 0 and res["processed"] == 0:
+            stalled_count += 1
+        else:
+            stalled_count = 0
 
-        if sleep_s > 0:
+        if stalled_count >= max_stalled:
+            logger.error(
+                f"SP {sp_fullname} estancado: claimed>0 pero processed=0 "
+                f"por {stalled_count} iteraciones. Se corta para evitar loop infinito."
+            )
+            break
+
+        if sleep_s and sleep_s > 0:
             time.sleep(sleep_s)
 
     if loops >= max_loops:
@@ -215,28 +243,46 @@ def loop_sp_hasta_agotar(
     return {"loops": loops, "total_claimed": total_claimed, "total_processed": total_processed}
 
 
-@task(name="Leer retorno por cabeceras (SQL Server)", retries=0)
-def leer_retorno_cabeceras(sql_engine: Engine) -> pd.DataFrame:
-    sql = text("EXEC repl.SP_TRANSF_CONNEXA_RETORNO_CABECERAS @SoloCerrables=1;")
-    with sql_engine.begin() as conn:
+@task(name="Leer retorno por cabeceras (SQL Server)", retries=0, cache_policy=NO_CACHE)
+def leer_retorno_cabeceras(sp_retorno_cabeceras: str) -> pd.DataFrame:
+    """
+    Lee cabeceras cerrables desde SQL Server.
+    Se usa AUTOCOMMIT para evitar efectos colaterales si el SP toca linked servers o registra eventos.
+    """
+    sql_engine = get_sqlserver_engine()
+    sql = text(f"EXEC {sp_retorno_cabeceras} @SoloCerrables=1;")
+
+    with sql_engine.connect().execution_options(isolation_level="AUTOCOMMIT") as conn:
         df = pd.read_sql(sql, conn)
+
     return df
 
 
-@task(name="Actualizar estados en Connexa (PostgreSQL)", retries=0)
+@task(name="Actualizar estados en Connexa (PostgreSQL)", retries=0, cache_policy=NO_CACHE)
 def actualizar_estados_connexa(
-    pg_engine: Engine,
     df_retorno: pd.DataFrame,
     status_ok: int,
     status_error: int,
 ) -> Tuple[int, int]:
+    """
+    Actualiza supply_planning.spl_distribution_transfer según retorno de SQL Server.
+    Espera columnas: connexa_header_uuid, resultado (OK/ERROR)
+    """
     logger = get_run_logger()
+    pg_engine = get_pg_engine()
 
     if df_retorno is None or df_retorno.empty:
         logger.info("No hay cabeceras cerrables para actualizar en Connexa.")
         return (0, 0)
 
     df = df_retorno.copy()
+
+    if "connexa_header_uuid" not in df.columns or "resultado" not in df.columns:
+        raise KeyError(
+            "El retorno de cabeceras no trae columnas esperadas: connexa_header_uuid, resultado. "
+            f"Columnas recibidas: {list(df.columns)}"
+        )
+
     df["connexa_header_uuid"] = df["connexa_header_uuid"].astype(str).str.lower()
     df["resultado"] = df["resultado"].astype(str).str.upper()
 
@@ -249,12 +295,14 @@ def actualizar_estados_connexa(
     ok_count = 0
     err_count = 0
 
-    q = text("""
+    q = text(
+        """
         UPDATE supply_planning.spl_distribution_transfer
            SET status_id = :status_id,
                updated_at = NOW()
          WHERE id = ANY(CAST(:uuids AS uuid[]))
-    """)
+        """
+    )
 
     with pg_engine.begin() as conn:
         if ok_uuids:
@@ -273,47 +321,44 @@ def actualizar_estados_connexa(
 # FLOW
 # =============================================================================
 
+
 @flow(name="Publicar transferencias Connexa SGM Valkimia Retorno")
 def publicar_transferencias_sgm_vk(cfg: Optional[FlowConfig] = None) -> Dict[str, object]:
     logger = get_run_logger()
     _require_env_file()
     cfg = cfg or FlowConfig()
 
-    # 0) PRE-ETAPA: cargar staging + pasar cabeceras a 80
+    # 0) PRE-ETAPA: cargar staging + pasar cabeceras a 80 (lo hace el script previo)
     ejecutar_pre_publicacion_staging()
 
-    # 1) SPs
-    sql_engine = get_sqlserver_engine()
-    pg_engine = get_pg_engine()
-
+    # 1) Publicación en SQL Server (SPs por lote)
     logger.info("Iniciando publicación de transferencias: etapa SGM...")
     sgm_tot = loop_sp_hasta_agotar(
-        sql_engine,
-        cfg.sp_publicar_sgm,
-        cfg.batch_size,
-        cfg.max_seconds_sp,
-        cfg.max_loops,
-        cfg.sleep_seconds_between_loops,
+        sp_fullname=cfg.sp_publicar_sgm,
+        batch_size=cfg.batch_size,
+        max_seconds_sp=cfg.max_seconds_sp,
+        max_loops=cfg.max_loops,
+        sleep_s=cfg.sleep_seconds_between_loops,
     )
 
     logger.info("Iniciando publicación de transferencias: etapa VALKIMIA...")
     vk_tot = loop_sp_hasta_agotar(
-        sql_engine,
-        cfg.sp_publicar_vk,
-        cfg.batch_size,
-        cfg.max_seconds_sp,
-        cfg.max_loops,
-        cfg.sleep_seconds_between_loops,
+        sp_fullname=cfg.sp_publicar_vk,
+        batch_size=cfg.batch_size,
+        max_seconds_sp=cfg.max_seconds_sp,
+        max_loops=cfg.max_loops,
+        sleep_s=cfg.sleep_seconds_between_loops,
     )
 
+    # 2) Retorno por cabeceras
     logger.info("Leyendo retorno por cabeceras (considerando SGM+VK)...")
-    df_ret = leer_retorno_cabeceras(sql_engine)
+    df_ret = leer_retorno_cabeceras(sp_retorno_cabeceras=cfg.sp_retorno_cabeceras)
     logger.info(f"Cabeceras cerrables devueltas por retorno: {len(df_ret)}")
 
+    # 3) Update estados en Connexa
     logger.info("Actualizando estados de cabecera en Connexa según retorno...")
     ok_count, err_count = actualizar_estados_connexa(
-        pg_engine,
-        df_ret,
+        df_retorno=df_ret,
         status_ok=cfg.status_id_ok,
         status_error=cfg.status_id_error,
     )
