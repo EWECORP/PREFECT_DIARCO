@@ -6,7 +6,7 @@ pull:
     directory: E:/ETL/ETL_DIARCO
 
 deployments:
-  - name: publicar_oc_precarga
+  - name: OC_PUBLISH_PRECARGA_PROD
     entrypoint: scripts/pull/flujo_pull_PRECARGA_OC.py:precargar_OC_connexa
     description: "Publica las OC en estado 90 desde PostgreSQL hacia SQL Server"
     tags: ["pull", "oc", "precarga"]
@@ -18,7 +18,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: replicar_dmz_lotes
+  - name: REPL_SYNC_CDC_LOTES_PROD
     entrypoint: scripts/repl/flujo_replicar_DMZ_en_LOTES.py:sync_dmz_optimizado
     description: "Obtiene actualizaciones de los datos LEGACY en la DMZ (CDC)"
     tags: ["repl", "dmz", "datos"]
@@ -30,7 +30,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: replicar_OC_dmz
+  - name: REPL_SYNC_OC_CDC_PROD
     entrypoint: scripts/repl/flujo_replicar_OC_en_dmz.py:flujo_replicacion_oc
     description: "Actualizar dasot de las OC en la DMZ (CDC)"
     tags: ["repl", "dmz", "datos"]
@@ -42,7 +42,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: Push_datos_Diarios_para_FORECAST
+  - name: FORECAST_PUSH_INPUT_PROVEEDORES_DIARIO_PROD
     entrypoint: scripts/push/flujo_push_datos_forecast.py:forecast_flow
     description: "Carga Diaria de Datos de proveedores habilitados"
     tags: ["push", "forecast", "datos"]
@@ -54,7 +54,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: Refrecar_datos_Diarios_para_FORECAST
+  - name: FORECAST_REFRESH_INPUT_PROVEEDORES_MEDIODIA_PROD
     entrypoint: scripts/push/flujo_refresh_datos_forecast.py:forecast_flow
     description: "Actualización de Datos al mediodia de proveedores habilitados"
     tags: ["push", "forecast", "datos"]
@@ -66,7 +66,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: Push_datos_Ventas_Stock_Diarios
+  - name: FORECAST_PUSH_VENTAS_STOCK_DIARIO_PROD
     entrypoint: scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas
     description: "Carga Diaria de Datos de Ventas y Stock"
     tags: ["send", "forecast", "datos"]
@@ -87,7 +87,7 @@ deployments:
       work_queue_name: default
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: Push_tablas_DMZ_a_Postgres
+  - name: REPL_ORCH_DMZ_TO_POSTGRES_PROD
     entrypoint: scripts/send/flujo_maestro_replica_datos.py:flujo_maestro
     description: "Flujo maestro orquestador para exportar, transferir e importar tablas entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
@@ -96,7 +96,7 @@ deployments:
       work_queue_name: default
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: Actualizar_tablas_maestras_Postgres
+  - name: MASTER_SYNC_MAESTROS_POSTGRES_PROD
     entrypoint: scripts/send/actualizar_tablas_maestras.py:actualizar_tablas_maestras
     description: "Flujo maestro orquestador para subir tablas maestras entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
@@ -108,7 +108,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: Actualizar_tablas_Tabulares_Postgres
+  - name: MASTER_SYNC_TABULARES_POSTGRES_PROD
     entrypoint: scripts/send/actualizar_tablas_tabulares.py:actualizar_tablas_tabulares
     description: "Flujo maestro orquestador para subir tablas Tabulares entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
@@ -120,7 +120,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: actualizar_base_ventas_extendida_diario
+  - name: ETL_REFRESH_BVE_DIARIO_PROD
     entrypoint: scripts/push/actualizar_base_ventas_extendida.py:actualizar_base_ventas_extendida
     description: "Carga incremental con ventana y upsert"
     tags: ["bve","etl","diario"]
@@ -132,7 +132,7 @@ deployments:
       cron: "15 6 * * *"   # todos los días 06:15 América/Buenos_Aires
       timezone: "America/Argentina/Buenos_Aires"
 
-  - name: actualizar_base_ventas_extendida_BARRIO
+  - name: ETL_REFRESH_BVE_BARRIO_DIARIO_PROD
     entrypoint: scripts/push/actualizar_base_ventas_extendida_barrio.py:actualizar_base_ventas_extendida_barrio
     description: "Carga incremental con ventana y upsert"
     tags: ["bve","etl","diario"]
@@ -144,7 +144,7 @@ deployments:
       cron: "45 6 * * *"   # todos los días 06:15 América/Buenos_Aires
       timezone: "America/Argentina/Buenos_Aires"
 
-  - name: Refrescar_Tablas_Maestras_Postgres
+  - name: MASTER_SYNC_MAESTROS_POSTGRES_PROD
     entrypoint: scripts/send/refresh_tablas_maestras.py:main_flow
     description: "Flujo maestro orquestador para REFreSCAR tablas entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
@@ -156,7 +156,7 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: Publicar_Transferencias_VKM
+  - name: TRANSFER_PUBLISH_VKM_PROD
     entrypoint: scripts/pull/flujo_publicar_transferencias_sgm_vk.py:publicar_transferencias_sgm_vk
     description: "Flujo Publicar y Actualizar estado Transferencias SGM_VKM"
     tags: ["Transferencias", "replicacion", "pipeline", "etl"]
