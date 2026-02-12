@@ -44,6 +44,12 @@ class FlowConfig:
     sp_publicar_sgm: str = "repl.SP_PUBLICAR_TRANSF_CONNEXA_SGM"
     sp_publicar_vk: str = "repl.SP_PUBLICAR_TRANSF_CONNEXA_VK"
     sp_retorno_cabeceras: str = "repl.SP_TRANSF_CONNEXA_RETORNO_CABECERAS"
+    
+    
+    ## El que envia es el [dbo].[SD03_GERENCIA_SINCRO_IDA_VK] 
+    # Toma lo que está en T058_ARTICULOS_TRANSF_PEND WHERE M_ENVIADO = 'N' y lo publica en Valkimia
+    # en la tabla INTO [Diarco-vkmsql\sql2008r2].Valkimia.dbo.IntNecIN 
+    # y luego marca T058_ARTICULOS_TRANSF_PEND  	SET M_ENVIADO = 'S'
 
 
 # =============================================================================
