@@ -36,12 +36,13 @@ class FlowConfig:
     sleep_seconds_between_loops: float = 0.25
 
     # Estados Connexa
-    status_id_ok: int = 10
+    status_id_ok: int = 60
     status_id_error: int = 85
-    status_id_syncing: int = 80
+    status_id_syncing: int = 10
 
     # Stored Procedures (SQL Server - data-sync / repl)
-    sp_publicar_sgm: str = "repl.SP_PUBLICAR_TRANSF_CONNEXA_SGM"
+    sp_publicar_sgm: str = "repl.SP_PUBLICAR_TRANSF_CONNEXA_SGM"    # el que publica desde staging TRANSF_CONNEXA_IN con SP (SD03_TRANSF_ALTA_DETALLE) Parametro: 'A' Alta de Registros
+    sp_publicar_dup: str = "repl.SP_PUBLICAR_TRANSF_DUPLICADAS_SGM" # el que publica desde staging TRANSF_CONNEXA_IN con SP (SD03_TRANSF_ALTA_DETALLE) Parametro: 'M' Modificación de Registros
     sp_publicar_vk: str = "repl.SP_PUBLICAR_TRANSF_CONNEXA_VK"
     sp_retorno_cabeceras: str = "repl.SP_TRANSF_CONNEXA_RETORNO_CABECERAS"
     
