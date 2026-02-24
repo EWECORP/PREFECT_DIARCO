@@ -273,10 +273,10 @@ def actualizar_tablas_maestras():
         ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION"),
         ("repl", "t874_precarga_connexa_hist", "T874_PRECARGA_CONNEXA_HIST"),
         
-        ("repl", "MV_USO_MENSUAL_COMPRADOR", "MV_USO_MENSUAL_COMPRADOR"),
-        ("repl", "MV_USO_MENSUAL_PROVEEDOR", "MV_USO_MENSUAL_PROVEEDOR"),
-        ("repl", "MV_USO_SEMANAL_COMPRADOR", "MV_USO_SEMANAL_COMPRADOR"),
-        ("repl", "MV_USO_SEMANAL_PROVEEDOR", "MV_USO_SEMANAL_PROVEEDOR")
+        ("repl", "mv_uso_mensual_comprador", "MV_USO_MENSUAL_COMPRADOR"),
+        ("repl", "mv_uso_mensual_proveedor", "MV_USO_MENSUAL_PROVEEDOR"),
+        ("repl", "mv_uso_semanal_comprador", "MV_USO_SEMANAL_COMPRADOR"),
+        ("repl", "mv_uso_semanal_proveedor", "MV_USO_SEMANAL_PROVEEDOR")
     ]
 
     for origen, tabla_pg, tabla_sql in tablas:

@@ -242,7 +242,7 @@ def vaciar_tabla(tabla_pg: str,
 def actualizar_tablas_maestras():
     logger = get_run_logger()
     tablas = [
-        ("repl","t050_articulos", "T050_ARTICULOS"),
+        #("repl","t050_articulos", "T050_ARTICULOS"),
         # ("repl", "t020_proveedor", "T020_PROVEEDOR"),
         # ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
         # ("repl", "t060_stock", "T060_STOCK"),
@@ -250,8 +250,8 @@ def actualizar_tablas_maestras():
         # ("repl", "t100_empresa_suc", "T100_EMPRESA_SUC"),
         # ("repl", "t114_rubros", "T114_RUBROS"),
         # ("repl", "t117_compradores", "T117_COMPRADORES"),
-        #("repl", "t020_proveedor_dias_entrega_cabe","T020_PROVEEDOR_DIAS_ENTREGA_CABE"),
-         ("repl", "t020_proveedor_dias_entrega_deta","T020_PROVEEDOR_DIAS_ENTREGA_DETA"),
+        # ("repl", "t020_proveedor_dias_entrega_cabe","T020_PROVEEDOR_DIAS_ENTREGA_CABE"),
+        # ("repl", "t020_proveedor_dias_entrega_deta","T020_PROVEEDOR_DIAS_ENTREGA_DETA"),
 
         # ("dbo", "m_1_categorias", "M_1_CATEGORIAS"),
         # ("dbo", "m_10_proveedores", "M_10_PROVEEDORES"),
@@ -272,6 +272,11 @@ def actualizar_tablas_maestras():
         # ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
         # ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION"),
         # ("repl", "t874_precarga_connexa_hist", "T874_PRECARGA_CONNEXA_HIST")
+        
+        ("repl", "mv_uso_mensual_comprador", "MV_USO_MENSUAL_COMPRADOR"),
+        ("repl", "mv_uso_mensual_proveedor", "MV_USO_MENSUAL_PROVEEDOR"),
+        ("repl", "mv_uso_semanal_comprador", "MV_USO_SEMANAL_COMPRADOR"),
+        ("repl", "mv_uso_semanal_proveedor", "MV_USO_SEMANAL_PROVEEDOR")
     ]
 
     for origen, tabla_pg, tabla_sql in tablas:
