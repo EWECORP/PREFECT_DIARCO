@@ -116,7 +116,8 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T079_SNC_CUOTAS_CABE",
         "repl.usp_replicar_T079_SNC_CUOTAS_DETA",
         "repl.usp_replicar_T804_HIST_MARCA_LISTO_PARA_VENTA",
-        "repl.usp_replicar_T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANT"
+        "repl.usp_replicar_T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANT",
+        "repl.usp_replicar_USO_CONNEXA",
     ]
     resultados_tabs = [ejecutar_sp.submit(sp) for sp in grupo_tableros]
     [r.result() for r in resultados_tabs]

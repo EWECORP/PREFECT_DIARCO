@@ -271,7 +271,12 @@ def actualizar_tablas_maestras():
         ("repl", "t081_oc_deta", "T081_OC_DETA"),  
         ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
         ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION"),
-        ("repl", "t874_precarga_connexa_hist", "T874_PRECARGA_CONNEXA_HIST")
+        ("repl", "t874_precarga_connexa_hist", "T874_PRECARGA_CONNEXA_HIST"),
+        
+        ("repl", "MV_USO_MENSUAL_COMPRADOR", "MV_USO_MENSUAL_COMPRADOR"),
+        ("repl", "MV_USO_MENSUAL_PROVEEDOR", "MV_USO_MENSUAL_PROVEEDOR"),
+        ("repl", "MV_USO_SEMANAL_COMPRADOR", "MV_USO_SEMANAL_COMPRADOR"),
+        ("repl", "MV_USO_SEMANAL_PROVEEDOR", "MV_USO_SEMANAL_PROVEEDOR")
     ]
 
     for origen, tabla_pg, tabla_sql in tablas:
