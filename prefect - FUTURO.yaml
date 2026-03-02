@@ -1,5 +1,5 @@
 name: dmz_diarco_flows
-prefect-version: 3.4.0
+prefect-version: 3.8.0
 
 pull:
 - prefect.deployments.steps.set_working_directory:

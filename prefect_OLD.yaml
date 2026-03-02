@@ -1,12 +1,12 @@
 name: dmz_diarco_flows
-prefect-version: 3.4.1
+prefect-version: 3.4.0
 
 pull:
 - prefect.deployments.steps.set_working_directory:
     directory: E:/ETL/ETL_DIARCO
 
 deployments:
-  - name: OC_PUBLISH_PRECARGA_PROD
+  - name: publicar_oc_precarga
     entrypoint: scripts/pull/flujo_pull_PRECARGA_OC.py:precargar_OC_connexa
     description: "Publica las OC en estado 90 desde PostgreSQL hacia SQL Server"
     tags: ["pull", "oc", "precarga"]
@@ -14,11 +14,11 @@ deployments:
       name: dmz-diarco
       work_queue_name: pull-connexa
     schedule:
-      cron: "*/10 8-17 * * 1-5"  # Cada 10 minutos entre las 8:00 AM y las 5:59 PM de lunes a viernes (REV)
+      cron: "*/10 8-17 * * 1-5"
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: REPL_SYNC_CDC_LOTES_PROD
+  - name: replicar_dmz_lotes
     entrypoint: scripts/repl/flujo_replicar_DMZ_en_LOTES.py:sync_dmz_optimizado
     description: "Obtiene actualizaciones de los datos LEGACY en la DMZ (CDC)"
     tags: ["repl", "dmz", "datos"]
@@ -26,11 +26,23 @@ deployments:
       name: dmz-diarco
       work_queue_name: replicas-dmz
     schedule:
-      cron:  "0 5 * * *"  # Todos los días a las 5 AM  (REV)
+      cron:  "0 6 * * *"  # Todos los días a las 6 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: FORECAST_PUSH_INPUT_DATA_PROD
+  - name: replicar_OC_dmz
+    entrypoint: scripts/repl/flujo_replicar_OC_en_dmz.py:flujo_replicacion_oc
+    description: "Actualizar dasot de las OC en la DMZ (CDC)"
+    tags: ["repl", "dmz", "datos"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    schedule:
+      cron:  "0 6 * * *"  # Todos los días a las 6 AM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}
+
+  - name: Push_datos_Diarios_para_FORECAST
     entrypoint: scripts/push/flujo_push_datos_forecast.py:forecast_flow
     description: "Carga Diaria de Datos de proveedores habilitados"
     tags: ["push", "forecast", "datos"]
@@ -38,11 +50,11 @@ deployments:
       name: dmz-diarco
       work_queue_name: push-forecast
     schedule:
-      cron:  "50 6 * * 1-5"   # Todos los días hábiles a las 6:50 AM  (REV)
+      cron:  "30 6 * * 1-5"   # Todos los días hábiles a las 6:30 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: FORECAST_REFRESH_INPUT_DATA_PROD
+  - name: Refrecar_datos_Diarios_para_FORECAST
     entrypoint: scripts/push/flujo_refresh_datos_forecast.py:forecast_flow
     description: "Actualización de Datos al mediodia de proveedores habilitados"
     tags: ["push", "forecast", "datos"]
@@ -50,11 +62,11 @@ deployments:
       name: dmz-diarco
       work_queue_name: push-forecast
     schedule:
-      cron:  "35 13 * * 1-5"   # Todos los días hábiles a las 13:35 PM  (REV)
+      cron:  "05 13 * * 1-5"   # Todos los días hábiles a las 13:05 PM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
-  - name: FORECAST_PUSH_VENTAS_STOCK_DIARIO_PROD
+  - name: Push_datos_Ventas_Stock_Diarios
     entrypoint: scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas
     description: "Carga Diaria de Datos de Ventas y Stock"
     tags: ["send", "forecast", "datos"]
@@ -62,7 +74,7 @@ deployments:
       name: dmz-diarco
       work_queue_name: push-forecast
     schedule:
-      cron:  "45 5 * * *"   # Todos los días a las 5:45 AM  (REV)
+      cron:  "0 7 * * *"   # Todos los días a las 7:00 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
@@ -75,7 +87,7 @@ deployments:
       work_queue_name: default
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: push_tablas_dmz_a_postgres
+  - name: Push_tablas_DMZ_a_Postgres
     entrypoint: scripts/send/flujo_maestro_replica_datos.py:flujo_maestro
     description: "Flujo maestro orquestador para exportar, transferir e importar tablas entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
@@ -84,7 +96,7 @@ deployments:
       work_queue_name: default
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: MASTER_SYNC_MAESTROS_POSTGRES_PROD
+  - name: Actualizar_tablas_maestras_Postgres
     entrypoint: scripts/send/actualizar_tablas_maestras.py:actualizar_tablas_maestras
     description: "Flujo maestro orquestador para subir tablas maestras entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
@@ -92,23 +104,11 @@ deployments:
       name: dmz-diarco
       work_queue_name: default
     schedule:
-      cron:  "50 5 * * *"   # Todos los días  a las 5:50 AM  (REV)
+      cron:  "30 6 * * *"   # Todos los días  a las 6:30 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: MASTER_REFRESH_MAESTROS_POSTGRES_PROD
-    entrypoint: scripts/send/refresh_tablas_maestras.py:main_flow
-    description: "Flujo maestro orquestador para REFRESCAR tablas entre SQL Server y PostgreSQL"
-    tags: ["orquestador", "replicacion", "pipeline", "etl"]
-    work_pool:
-      name: dmz-diarco
-      work_queue_name: default
-    schedule:
-      cron:  "05 13 * * *"   # Todos los días a las 13:05 PM  (REV)
-      timezone: "America/Argentina/Buenos_Aires"
-    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
-
-  - name: MASTER_SYNC_TABULARES_POSTGRES_PROD
+  - name: Actualizar_tablas_Tabulares_Postgres
     entrypoint: scripts/send/actualizar_tablas_tabulares.py:actualizar_tablas_tabulares
     description: "Flujo maestro orquestador para subir tablas Tabulares entre SQL Server y PostgreSQL"
     tags: ["orquestador", "replicacion", "pipeline", "etl"]
@@ -116,33 +116,27 @@ deployments:
       name: dmz-diarco
       work_queue_name: default
     schedule:
-      cron:  "30 5 * * *"   # Todos los días a las 5:30 AM  (REV)
+      cron:  "50 6 * * *"   # Todos los días a las 6:30 AM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-  - name: ETL_REFRESH_BVE_DIARIO_PROD
+  - name: actualizar_base_ventas_extendida_diario
     entrypoint: scripts/push/actualizar_base_ventas_extendida.py:actualizar_base_ventas_extendida
     description: "Carga incremental con ventana y upsert"
     tags: ["bve","etl","diario"]
     version: "1.0.1"
-    work_pool:
-      name: dmz-diarco
-      work_queue_name: default
     parameters:
       window_days: 14
       analyze: true
     schedule:
-      cron: "05 7 * * *"   # todos los días 07:05 AM (REV)
+      cron: "15 6 * * *"   # todos los días 06:15 América/Buenos_Aires
       timezone: "America/Argentina/Buenos_Aires"
 
-  - name: ETL_REFRESH_BVE_BARRIO_DIARIO_PROD
+  - name: actualizar_base_ventas_extendida_BARRIO
     entrypoint: scripts/push/actualizar_base_ventas_extendida_barrio.py:actualizar_base_ventas_extendida_barrio
     description: "Carga incremental con ventana y upsert"
     tags: ["bve","etl","diario"]
     version: "1.0.1"
-    work_pool:
-      name: dmz-diarco
-      work_queue_name: default
     parameters:
       window_days: 14
       analyze: true
@@ -150,9 +144,19 @@ deployments:
       cron: "45 6 * * *"   # todos los días 06:15 América/Buenos_Aires
       timezone: "America/Argentina/Buenos_Aires"
 
+  - name: Refrescar_Tablas_Maestras_Postgres
+    entrypoint: scripts/send/refresh_tablas_maestras.py:main_flow
+    description: "Flujo maestro orquestador para REFreSCAR tablas entre SQL Server y PostgreSQL"
+    tags: ["orquestador", "replicacion", "pipeline", "etl"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron:  "05 13 * * *"   # Todos los días a las 13:05 PM  
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
-
-  - name: TRANSFER_PUBLISH_VKM_PROD
+  - name: Publicar_Transferencias_VKM
     entrypoint: scripts/pull/flujo_publicar_transferencias_sgm_vk.py:publicar_transferencias_sgm_vk
     description: "Flujo Publicar y Actualizar estado Transferencias SGM_VKM"
     tags: ["Transferencias", "replicacion", "pipeline", "etl"]
@@ -160,7 +164,7 @@ deployments:
       name: dmz-diarco
       work_queue_name: pull-connexa
     schedule:
-      cron:  "35 17 * * *"   # Todos los días a las 17:35 PM  (REV)
+      cron:  "08 10 * * *"   # Todos los días a las 13:05 PM  
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
 
