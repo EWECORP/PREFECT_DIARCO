@@ -1,9 +1,9 @@
 # scripts/pull/publicar_transferencias_sgm.py
 #
-# Publica transferencias desde CONNEXA (PostgreSQL Microservicios) hacia staging en SQL Server DMZ:
+# Publica transferencias desde CONNEXA (PostgreSQL) hacia staging en SQL Server DMZ:
 #   [data-sync].[repl].[TRANSF_CONNEXA_IN]
 #
-# Regla implementada:
+# Reglas implementadas:
 # - Solo se publican detalles con stock disponible suficiente, bajo lógica
 #   "todo o nada", descontando saldo en memoria por (sucursal origen, artículo).
 # - Si no alcanza el saldo completo para una línea, esa línea NO se publica.
@@ -11,19 +11,19 @@
 # - La cabecera se actualiza a 80 (SINCRONIZANDO) solo cuando TODOS sus detalles
 #   ya fueron publicados (previamente o en esta corrida).
 #
-# Fuentes / destinos:
-# - Connexa MS (PGP_*): lectura de transferencias + update de estado cabeceras
-# - diarco_data (PG_*): lectura de src.base_stock_sucursal + auditoría en audit.*
-# - SQL Server DMZ: inserción en repl.TRANSF_CONNEXA_IN
-#
 # Capacidades operativas:
 # - Logging estructurado a consola + archivo
 # - Export de rechazadas a CSV
-# - Auditoría persistente en PostgreSQL diarco_data / schema audit
+# - Resumen de ejecución y métricas
+# - Validación temprana de objeto fuente de stock
 #
 # Notas:
 # - Este script NO ejecuta el SP publicador SGM; solo carga staging + marca cabeceras en 80.
 # - Para evitar duplicados por reintento, se filtran connexa_detail_uuid ya presentes en staging.
+# - qty_requested en Connexa se interpreta como BULTOS.
+# - units_per_package = unidades por bulto (q_factor).
+# - q_requerida = q_bultos * q_factor.
+# - origin_cd puede venir como "41CD" / "82CD" y debe persistirse como 41 / 82.
 
 import os
 import sys
@@ -31,41 +31,38 @@ import uuid
 import logging
 import traceback
 import urllib.parse
-from pathlib import Path
 from datetime import datetime
-from typing import List
+from pathlib import Path
+from typing import Iterable, List
 
 import pandas as pd
 from dotenv import dotenv_values, load_dotenv
-from sqlalchemy import create_engine, text, bindparam
+from sqlalchemy import bindparam, create_engine, text
 from sqlalchemy.engine import Engine
 
 
 # =========================
-# 1) CONFIGURACIÓN GENERAL
+# 1) CONFIGURACIÓN Y ENTORNO
 # =========================
-PROCESS_NAME = "publicar_transferencias_sgm"
-
 ENV_PATH = os.environ.get("ETL_ENV_PATH", r"E:\ETL\ETL_DIARCO\.env")
 DEFAULT_LOG_DIR = os.environ.get("TRANSFER_LOG_DIR", r"E:\ETL\ETL_DIARCO\logs")
 DEFAULT_REJECT_DIR = os.environ.get("TRANSFER_REJECT_DIR", r"E:\ETL\ETL_DIARCO\salidas\rechazadas")
 
 RUN_ID = datetime.now().strftime("%Y%m%d_%H%M%S")
-
 LOG_DIR = Path(DEFAULT_LOG_DIR)
 REJECT_DIR = Path(DEFAULT_REJECT_DIR)
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 REJECT_DIR.mkdir(parents=True, exist_ok=True)
 
-LOG_FILE = LOG_DIR / f"{PROCESS_NAME}_{RUN_ID}.log"
+LOG_FILE = LOG_DIR / f"publicar_transferencias_sgm_{RUN_ID}.log"
 REJECT_FILE = REJECT_DIR / f"transferencias_rechazadas_{RUN_ID}.csv"
 
+STATUS_CODE_PRECARGA = "PRECARGA_CONNEXA"
+STATUS_ID_SINCRONIZANDO = 80
 
-# =========================
-# 2) LOGGING
-# =========================
+
 def setup_logger() -> logging.Logger:
-    logger = logging.getLogger(PROCESS_NAME)
+    logger = logging.getLogger("publicar_transferencias_sgm")
     logger.setLevel(logging.INFO)
     logger.handlers.clear()
 
@@ -98,9 +95,6 @@ def log_kv(evento: str, **kwargs) -> None:
     logger.info(" | ".join(partes))
 
 
-# =========================
-# 3) CARGA DE ENTORNO
-# =========================
 if not os.path.exists(ENV_PATH):
     logger.error(f"No existe el archivo .env en: {ENV_PATH}")
     logger.error(f"Directorio actual: {os.getcwd()}")
@@ -112,12 +106,12 @@ load_dotenv(ENV_PATH)
 log_kv(
     "inicio_configuracion",
     env_path=ENV_PATH,
-    pgp_db=secrets.get("PGP_DB"),
-    pgp_host=secrets.get("PGP_HOST"),
-    pgp_user=secrets.get("PGP_USER"),
-    pg_db=secrets.get("PG_DB"),
-    pg_host=secrets.get("PG_HOST"),
-    pg_user=secrets.get("PG_USER"),
+    pg_connexa_db=secrets.get("PGP_DB"),
+    pg_connexa_host=secrets.get("PGP_HOST"),
+    pg_connexa_user=secrets.get("PGP_USER"),
+    pg_diarco_data_db=secrets.get("PG_DB"),
+    pg_diarco_data_host=secrets.get("PG_HOST"),
+    pg_diarco_data_user=secrets.get("PG_USER"),
     sql_server=secrets.get("SQL_SERVER"),
     sql_database=secrets.get("SQL_DATABASE", "data-sync"),
     log_file=str(LOG_FILE),
@@ -126,13 +120,14 @@ log_kv(
 
 
 # =========================
-# 4) CONEXIONES A BASES
+# 2) CONEXIONES A BASES DE DATOS
 # =========================
+def build_pg_engine(host: str, port: str, db: str, user: str, pwd: str) -> Engine:
+    url = f"postgresql+psycopg2://{user}:{pwd}@{host}:{port}/{db}"
+    return create_engine(url, pool_pre_ping=True)
+
+
 def get_pg_connexa_engine() -> Engine:
-    """
-    PostgreSQL Connexa Microservicios.
-    Usa variables PGP_*.
-    """
     host = os.getenv("PGP_HOST")
     port = os.getenv("PGP_PORT", "5432")
     db = os.getenv("PGP_DB")
@@ -141,18 +136,13 @@ def get_pg_connexa_engine() -> Engine:
 
     log_kv("conexion_pg_connexa_intento", host=host, port=port, db=db, user=user)
 
-    if not all([host, db, user, pwd, port]):
-        raise RuntimeError("Faltan variables de entorno PGP_* para conectarse a PostgreSQL Connexa")
+    if not all([host, port, db, user, pwd]):
+        raise RuntimeError("Faltan variables de entorno PGP_* para conectarse a PostgreSQL connexa_platform_ms")
 
-    url = f"postgresql+psycopg2://{user}:{pwd}@{host}:{port}/{db}"
-    return create_engine(url, pool_pre_ping=True)
+    return build_pg_engine(host, port, db, user, pwd)
 
 
 def get_pg_diarco_data_engine() -> Engine:
-    """
-    PostgreSQL diarco_data.
-    Usa variables PG_*.
-    """
     host = os.getenv("PG_HOST")
     port = os.getenv("PG_PORT", "5432")
     db = os.getenv("PG_DB")
@@ -164,14 +154,10 @@ def get_pg_diarco_data_engine() -> Engine:
     if not all([host, port, db, user, pwd]):
         raise RuntimeError("Faltan variables de entorno PG_* para conectarse a PostgreSQL diarco_data")
 
-    url = f"postgresql+psycopg2://{user}:{pwd}@{host}:{port}/{db}"
-    return create_engine(url, pool_pre_ping=True)
+    return build_pg_engine(host, port, db, user, pwd)
 
 
 def get_sqlserver_engine() -> Engine:
-    """
-    SQL Server DMZ / data-sync.
-    """
     host = os.getenv("SQL_SERVER")
     port = os.getenv("SQL_PORT", "1433")
     db = os.getenv("SQL_DATABASE", "data-sync")
@@ -195,219 +181,59 @@ def get_sqlserver_engine() -> Engine:
         f"Connect Timeout={timeout_seconds};"
     )
     url = f"mssql+pyodbc:///?odbc_connect={params}"
+
     return create_engine(url, pool_pre_ping=True, fast_executemany=True)
 
 
 # =========================
-# 5) AUDITORÍA EN DIARCO_DATA
+# 3) VALIDACIONES TEMPRANAS
 # =========================
-def audit_insert_run_start(pg_diarco_data_engine: Engine, run_id: str, started_at: datetime) -> None:
+def validar_tabla_stock(pg_diarco_data_engine: Engine) -> None:
     sql = """
-    INSERT INTO audit.transfer_publication_run (
-        run_id,
-        process_name,
-        started_at,
-        status,
-        log_file,
-        reject_file
-    )
-    VALUES (
-        :run_id,
-        :process_name,
-        :started_at,
-        'RUNNING',
-        :log_file,
-        :reject_file
-    )
-    ON CONFLICT (run_id) DO UPDATE
-       SET process_name = EXCLUDED.process_name,
-           started_at   = EXCLUDED.started_at,
-           status       = EXCLUDED.status,
-           log_file     = EXCLUDED.log_file,
-           reject_file  = EXCLUDED.reject_file
+    SELECT EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = 'src'
+          AND table_name = 'base_stock_sucursal'
+    ) AS existe
     """
 
-    with pg_diarco_data_engine.begin() as conn:
-        conn.execute(
-            text(sql),
-            {
-                "run_id": run_id,
-                "process_name": PROCESS_NAME,
-                "started_at": started_at,
-                "log_file": str(LOG_FILE),
-                "reject_file": str(REJECT_FILE),
-            },
+    with pg_diarco_data_engine.connect() as conn:
+        existe = conn.execute(text(sql)).scalar()
+
+    if not bool(existe):
+        raise RuntimeError(
+            "No existe src.base_stock_sucursal en la base PostgreSQL configurada para diarco_data"
         )
 
+    log_kv("validacion_tabla_stock_ok", tabla="src.base_stock_sucursal")
 
-def audit_update_run_end(
-    pg_diarco_data_engine: Engine,
-    run_id: str,
-    finished_at: datetime,
-    status: str,
-    total_source_rows: int = 0,
-    total_already_published: int = 0,
-    total_publishable_now: int = 0,
-    total_not_publishable: int = 0,
-    total_inserted: int = 0,
-    total_headers_updated: int = 0,
-    total_rejected_exported: int = 0,
-    error_message: str = "",
-) -> None:
+
+def obtener_status_id_precarga(pg_connexa_engine: Engine, status_code: str = STATUS_CODE_PRECARGA) -> int:
     sql = """
-    UPDATE audit.transfer_publication_run
-       SET finished_at = :finished_at,
-           status = :status,
-           total_source_rows = :total_source_rows,
-           total_already_published = :total_already_published,
-           total_publishable_now = :total_publishable_now,
-           total_not_publishable = :total_not_publishable,
-           total_inserted = :total_inserted,
-           total_headers_updated = :total_headers_updated,
-           total_rejected_exported = :total_rejected_exported,
-           error_message = :error_message
-     WHERE run_id = :run_id
+    SELECT id
+    FROM supply_planning.spl_distribution_transfer_status
+    WHERE code = :status_code
+    LIMIT 1
     """
 
-    with pg_diarco_data_engine.begin() as conn:
-        conn.execute(
-            text(sql),
-            {
-                "run_id": run_id,
-                "finished_at": finished_at,
-                "status": status,
-                "total_source_rows": total_source_rows,
-                "total_already_published": total_already_published,
-                "total_publishable_now": total_publishable_now,
-                "total_not_publishable": total_not_publishable,
-                "total_inserted": total_inserted,
-                "total_headers_updated": total_headers_updated,
-                "total_rejected_exported": total_rejected_exported,
-                "error_message": error_message[:4000] if error_message else "",
-            },
+    with pg_connexa_engine.connect() as conn:
+        result = conn.execute(text(sql), {"status_code": status_code}).scalar()
+
+    if result is None:
+        raise RuntimeError(
+            f"No se encontró status_id para code='{status_code}' en supply_planning.spl_distribution_transfer_status"
         )
 
-
-def audit_insert_detail_rows(pg_diarco_data_engine: Engine, df_asignado: pd.DataFrame, run_id: str) -> int:
-    if df_asignado.empty:
-        return 0
-
-    df = df_asignado.copy()
-
-    def to_uuid_or_none(v):
-        try:
-            return str(uuid.UUID(str(v))) if pd.notna(v) and str(v).strip() else None
-        except Exception:
-            return None
-
-    rows = []
-    for _, r in df.iterrows():
-        rows.append(
-            {
-                "run_id": run_id,
-                "process_name": PROCESS_NAME,
-                "connexa_header_uuid": to_uuid_or_none(r.get("connexa_header_uuid")),
-                "connexa_detail_uuid": to_uuid_or_none(r.get("connexa_detail_uuid")),
-                "connexa_purchase_code": r.get("connexa_purchase_code"),
-                "created_by": r.get("created_by"),
-                "origin_cd_raw": str(r.get("origin_cd")) if pd.notna(r.get("origin_cd")) else None,
-                "origin_cd_num": int(r["origin_cd_num"]) if pd.notna(r.get("origin_cd_num")) else None,
-                "destination_store_code_raw": str(r.get("destination_store_code")) if pd.notna(r.get("destination_store_code")) else None,
-                "dest_store_num": int(r["dest_store_num"]) if pd.notna(r.get("dest_store_num")) else None,
-                "item_code_raw": str(r.get("item_code")) if pd.notna(r.get("item_code")) else None,
-                "item_code_num": int(r["item_code_num"]) if pd.notna(r.get("item_code_num")) else None,
-                "item_description": r.get("item_description"),
-                "qty_requested_raw": float(r["qty_requested"]) if pd.notna(r.get("qty_requested")) else None,
-                "qty_requested_num": float(r["qty_requested_num"]) if pd.notna(r.get("qty_requested_num")) else None,
-                "units_per_package": float(r["units_per_package"]) if pd.notna(r.get("units_per_package")) else None,
-                "q_bultos_disponible": float(r["q_bultos_disponible"]) if pd.notna(r.get("q_bultos_disponible")) else None,
-                "saldo_inicial_grupo": float(r["saldo_inicial_grupo"]) if pd.notna(r.get("saldo_inicial_grupo")) else None,
-                "saldo_antes": float(r["saldo_antes"]) if pd.notna(r.get("saldo_antes")) else None,
-                "saldo_despues": float(r["saldo_despues"]) if pd.notna(r.get("saldo_despues")) else None,
-                "q_bultos_asignado": float(r["q_bultos_asignado"]) if pd.notna(r.get("q_bultos_asignado")) else None,
-                "ya_publicado": bool(r.get("ya_publicado", False)),
-                "publicable": bool(r.get("publicable", False)),
-                "publicable_ahora": bool(r.get("publicable_ahora", False)),
-                "motivo_no_publicado": r.get("motivo_no_publicado"),
-                "requested_at": r.get("requested_at").to_pydatetime() if pd.notna(r.get("requested_at")) else None,
-                "created_at": r.get("created_at").to_pydatetime() if pd.notna(r.get("created_at")) else None,
-            }
-        )
-
-    sql = text("""
-    INSERT INTO audit.transfer_publication_detail (
-        run_id,
-        process_name,
-        connexa_header_uuid,
-        connexa_detail_uuid,
-        connexa_purchase_code,
-        created_by,
-        origin_cd_raw,
-        origin_cd_num,
-        destination_store_code_raw,
-        dest_store_num,
-        item_code_raw,
-        item_code_num,
-        item_description,
-        qty_requested_raw,
-        qty_requested_num,
-        units_per_package,
-        q_bultos_disponible,
-        saldo_inicial_grupo,
-        saldo_antes,
-        saldo_despues,
-        q_bultos_asignado,
-        ya_publicado,
-        publicable,
-        publicable_ahora,
-        motivo_no_publicado,
-        requested_at,
-        created_at
-    )
-    VALUES (
-        :run_id,
-        :process_name,
-        CAST(:connexa_header_uuid AS uuid),
-        CAST(:connexa_detail_uuid AS uuid),
-        :connexa_purchase_code,
-        :created_by,
-        :origin_cd_raw,
-        :origin_cd_num,
-        :destination_store_code_raw,
-        :dest_store_num,
-        :item_code_raw,
-        :item_code_num,
-        :item_description,
-        :qty_requested_raw,
-        :qty_requested_num,
-        :units_per_package,
-        :q_bultos_disponible,
-        :saldo_inicial_grupo,
-        :saldo_antes,
-        :saldo_despues,
-        :q_bultos_asignado,
-        :ya_publicado,
-        :publicable,
-        :publicable_ahora,
-        :motivo_no_publicado,
-        :requested_at,
-        :created_at
-    )
-    """)
-
-    with pg_diarco_data_engine.begin() as conn:
-        conn.execute(sql, rows)
-
-    return len(rows)
+    status_id = int(result)
+    log_kv("status_precarga_resuelto", status_code=status_code, status_id=status_id)
+    return status_id
 
 
 # =========================
-# 6) LECTURA DESDE CONNEXA
+# 4) LECTURA Y NORMALIZACIÓN
 # =========================
 def obtener_transferencias_precarga(pg_connexa_engine: Engine) -> pd.DataFrame:
-    """
-    Obtiene los detalles de transferencias en estado PRECARGA_CONNEXA desde Connexa MS.
-    """
     sql = """
     SELECT
         d.id                          AS connexa_detail_uuid,
@@ -435,17 +261,20 @@ def obtener_transferencias_precarga(pg_connexa_engine: Engine) -> pd.DataFrame:
       ON d.distribution_transfer_id = h.id
     JOIN supply_planning.spl_distribution_transfer_status s
       ON h.status_id = s.id
-    WHERE s.code = 'PRECARGA_CONNEXA';
+    WHERE s.code = :status_code;
     """
 
-    df = pd.read_sql(sql, pg_connexa_engine, parse_dates=["requested_at", "created_at"])
+    df = pd.read_sql(
+        text(sql),
+        pg_connexa_engine,
+        params={"status_code": STATUS_CODE_PRECARGA},
+        parse_dates=["requested_at", "created_at"],
+    )
+
     log_kv("transferencias_precarga_leidas", cantidad=len(df))
     return df
 
 
-# =========================
-# 7) NORMALIZACIÓN
-# =========================
 def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
     if df_src.empty:
         return df_src.copy()
@@ -454,6 +283,7 @@ def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
 
     df["item_code_num"] = pd.to_numeric(df["item_code"], errors="coerce").fillna(0).astype(int)
     df["dest_store_num"] = pd.to_numeric(df["destination_store_code"], errors="coerce").fillna(0).astype(int)
+
     # qty_requested en Connexa ya viene expresado en BULTOS
     df["qty_requested_num"] = pd.to_numeric(df["qty_requested"], errors="coerce").fillna(0.0).round(3)
 
@@ -472,21 +302,23 @@ def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 8) STOCK DESDE DIARCO_DATA
+# 5) STOCK DISPONIBLE
 # =========================
 def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFrame) -> pd.DataFrame:
-    """
-    Obtiene q_bultos_disponible desde src.base_stock_sucursal en diarco_data.
-    """
-    cols = ["item_code_num", "origin_cd_num"]
-    if df_norm.empty or not set(cols).issubset(df_norm.columns):
-        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible"])
+    columnas_resultado = ["item_code_num", "origin_cd_num", "q_bultos_disponible"]
 
-    articulos = sorted([int(x) for x in df_norm["item_code_num"].dropna().unique().tolist() if int(x) > 0])
-    sucursales = sorted([int(x) for x in df_norm["origin_cd_num"].dropna().unique().tolist() if int(x) > 0])
+    if df_norm.empty or not {"item_code_num", "origin_cd_num"}.issubset(df_norm.columns):
+        return pd.DataFrame(columns=columnas_resultado)
+
+    articulos = sorted(
+        [int(x) for x in df_norm["item_code_num"].dropna().unique().tolist() if int(x) > 0]
+    )
+    sucursales = sorted(
+        [int(x) for x in df_norm["origin_cd_num"].dropna().unique().tolist() if int(x) > 0]
+    )
 
     if not articulos or not sucursales:
-        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible"])
+        return pd.DataFrame(columns=columnas_resultado)
 
     sql = """
         SELECT
@@ -522,14 +354,24 @@ def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFram
         )
 
     if df_stock.empty:
-        log_kv("stock_disponible_leido", cantidad=0)
-        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible"])
+        log_kv(
+            "stock_disponible_leido",
+            cantidad=0,
+            cantidad_articulos=len(articulos),
+            cantidad_sucursales=len(sucursales),
+        )
+        return pd.DataFrame(columns=columnas_resultado)
 
     df_stock["item_code_num"] = pd.to_numeric(df_stock["item_code_num"], errors="coerce").fillna(0).astype(int)
     df_stock["origin_cd_num"] = pd.to_numeric(df_stock["origin_cd_num"], errors="coerce").fillna(0).astype(int)
     df_stock["q_bultos_disponible"] = pd.to_numeric(df_stock["q_bultos_disponible"], errors="coerce").fillna(0.0)
 
-    log_kv("stock_disponible_leido", cantidad=len(df_stock))
+    log_kv(
+        "stock_disponible_leido",
+        cantidad=len(df_stock),
+        cantidad_articulos=len(articulos),
+        cantidad_sucursales=len(sucursales),
+    )
     return df_stock
 
 
@@ -546,14 +388,23 @@ def enriquecer_con_stock(df_norm: pd.DataFrame, df_stock: pd.DataFrame) -> pd.Da
     )
 
     df["q_bultos_disponible"] = pd.to_numeric(df["q_bultos_disponible"], errors="coerce").fillna(0.0)
-    log_kv("transferencias_enriquecidas_con_stock", cantidad=len(df))
+
+    lineas_con_stock = int((df["q_bultos_disponible"] > 0).sum())
+    lineas_sin_stock = int((df["q_bultos_disponible"] <= 0).sum())
+
+    log_kv(
+        "transferencias_enriquecidas_con_stock",
+        cantidad=len(df),
+        lineas_con_stock=lineas_con_stock,
+        lineas_sin_stock=lineas_sin_stock,
+    )
     return df
 
 
 # =========================
-# 9) DETALLES YA PUBLICADOS EN DMZ
+# 6) DETALLES YA PUBLICADOS
 # =========================
-def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str]) -> set[str]:
+def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: Iterable[str]) -> set[str]:
     ids = sorted({str(x).strip().lower() for x in detail_uuids if str(x).strip()})
     if not ids:
         return set()
@@ -583,12 +434,9 @@ def marcar_detalles_ya_publicados(df: pd.DataFrame, ya_publicados: set[str]) -> 
 
 
 # =========================
-# 10) ASIGNACIÓN EN MEMORIA
+# 7) ASIGNACIÓN EN MEMORIA (TODO O NADA)
 # =========================
 def asignar_stock_en_memoria_todo_o_nada(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Asigna stock en memoria por (origin_cd_num, item_code_num), bajo criterio FIFO y todo o nada.
-    """
     if df.empty:
         out = df.copy()
         out["saldo_inicial_grupo"] = pd.Series(dtype="float")
@@ -686,7 +534,7 @@ def asignar_stock_en_memoria_todo_o_nada(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 11) TRANSFORMACIÓN A STAGING
+# 8) TRANSFORMACIÓN A STAGING
 # =========================
 def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
     base_cols = [
@@ -711,6 +559,7 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame(columns=base_cols)
 
     df = df_src.copy()
+    cantidad_entrada = len(df)
 
     df["units_per_package"] = pd.to_numeric(df["units_per_package"], errors="coerce").fillna(1.0)
     df.loc[df["units_per_package"] <= 0, "units_per_package"] = 1.0
@@ -757,12 +606,20 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
         & (df_stg["q_factor"] > 0)
     ].copy()
 
-    log_kv("transformacion_staging", cantidad=len(df_stg))
+    cantidad_salida = len(df_stg)
+    cantidad_descartada = cantidad_entrada - cantidad_salida
+
+    log_kv(
+        "transformacion_staging",
+        cantidad_entrada=cantidad_entrada,
+        cantidad_salida=cantidad_salida,
+        cantidad_descartada=cantidad_descartada,
+    )
     return df_stg
 
 
 # =========================
-# 12) INSERCIÓN EN SQL SERVER
+# 9) INSERCIÓN Y UPDATE
 # =========================
 def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> int:
     if df_stg.empty:
@@ -783,11 +640,8 @@ def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> i
         raise
 
 
-# =========================
-# 13) UPDATE DE CABECERAS EN CONNEXA
-# =========================
-def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
-    uuids: List[uuid.UUID] = []
+def _to_uuid_list(values: Iterable[str]) -> List[str]:
+    uuids: List[str] = []
     for v in values:
         if v is None:
             continue
@@ -795,18 +649,23 @@ def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
         if not s:
             continue
         try:
-            uuids.append(uuid.UUID(s))
+            uuids.append(str(uuid.UUID(s)))
         except Exception:
-            pass
-    return uuids
+            continue
+    return sorted(set(uuids))
 
 
-def actualizar_estado_cabeceras(pg_connexa_engine: Engine, header_uuids: List[str], nuevo_estado_id: int = 80) -> int:
+def actualizar_estado_cabeceras(
+    pg_connexa_engine: Engine,
+    header_uuids: List[str],
+    status_id_precarga: int,
+    nuevo_estado_id: int = STATUS_ID_SINCRONIZANDO,
+) -> int:
     if not header_uuids:
         return 0
 
-    header_uuid_objs = _to_uuid_list(header_uuids)
-    if not header_uuid_objs:
+    header_uuid_list = _to_uuid_list(header_uuids)
+    if not header_uuid_list:
         logger.warning("No quedaron UUIDs válidos para actualizar cabeceras en Connexa.")
         return 0
 
@@ -815,20 +674,31 @@ def actualizar_estado_cabeceras(pg_connexa_engine: Engine, header_uuids: List[st
            SET status_id = :nuevo_estado,
                updated_at = NOW()
          WHERE id = ANY(CAST(:lista_ids AS uuid[]))
+           AND status_id = :status_id_precarga
     """
 
     with pg_connexa_engine.begin() as conn:
         result = conn.execute(
             text(sql),
-            {"nuevo_estado": nuevo_estado_id, "lista_ids": header_uuid_objs},
+            {
+                "nuevo_estado": nuevo_estado_id,
+                "lista_ids": header_uuid_list,
+                "status_id_precarga": status_id_precarga,
+            },
         )
 
-    log_kv("actualizacion_cabeceras_ok", cantidad=result.rowcount, nuevo_estado_id=nuevo_estado_id)
-    return result.rowcount
+    rowcount = int(result.rowcount) if result.rowcount is not None else 0
+    log_kv(
+        "actualizacion_cabeceras_ok",
+        cantidad=rowcount,
+        status_id_origen=status_id_precarga,
+        nuevo_estado_id=nuevo_estado_id,
+    )
+    return rowcount
 
 
 # =========================
-# 14) CABECERAS COMPLETAMENTE PUBLICABLES
+# 10) CABECERAS COMPLETAS
 # =========================
 def obtener_headers_completamente_publicables(df_all: pd.DataFrame) -> List[str]:
     if df_all.empty:
@@ -845,10 +715,15 @@ def obtener_headers_completamente_publicables(df_all: pd.DataFrame) -> List[str]
         )
     )
 
-    headers = resumen.loc[
-        resumen["total_detalles"] == resumen["total_publicables"],
-        "connexa_header_uuid"
-    ].astype(str).str.lower().tolist()
+    headers = (
+        resumen.loc[
+            resumen["total_detalles"] == resumen["total_publicables"],
+            "connexa_header_uuid",
+        ]
+        .astype(str)
+        .str.lower()
+        .tolist()
+    )
 
     headers = sorted(set(headers))
     log_kv("cabeceras_completamente_publicables", cantidad=len(headers))
@@ -856,7 +731,7 @@ def obtener_headers_completamente_publicables(df_all: pd.DataFrame) -> List[str]
 
 
 # =========================
-# 15) EXPORT DE RECHAZADAS
+# 11) EXPORT DE RECHAZADAS
 # =========================
 def exportar_rechazadas(df_asignado: pd.DataFrame, output_file: Path) -> int:
     if df_asignado.empty:
@@ -931,116 +806,72 @@ def log_resumen_rechazadas(df_asignado: pd.DataFrame) -> None:
 
 
 # =========================
-# 16) MAIN
+# 12) MAIN
 # =========================
 def main() -> int:
     inicio = datetime.now()
-    pg_connexa_engine = None
-    pg_diarco_data_engine = None
+    log_kv("inicio_ejecucion", run_id=RUN_ID)
 
     try:
         pg_connexa_engine = get_pg_connexa_engine()
         pg_diarco_data_engine = get_pg_diarco_data_engine()
         sql_engine = get_sqlserver_engine()
 
-        audit_insert_run_start(pg_diarco_data_engine, RUN_ID, inicio)
-        log_kv("inicio_ejecucion", run_id=RUN_ID)
+        validar_tabla_stock(pg_diarco_data_engine)
+        status_id_precarga = obtener_status_id_precarga(pg_connexa_engine, STATUS_CODE_PRECARGA)
 
-        # 1. Leer transferencias desde Connexa
         df_src = obtener_transferencias_precarga(pg_connexa_engine)
-
         if df_src.empty:
-            audit_update_run_end(
-                pg_diarco_data_engine=pg_diarco_data_engine,
-                run_id=RUN_ID,
-                finished_at=datetime.now(),
-                status="SUCCESS",
-                total_source_rows=0,
-                total_already_published=0,
-                total_publishable_now=0,
-                total_not_publishable=0,
-                total_inserted=0,
-                total_headers_updated=0,
-                total_rejected_exported=0,
-                error_message="",
-            )
             log_kv("sin_datos_precarga", mensaje="No hay transferencias en PRECARGA_CONNEXA para publicar.")
             return 0
 
-        # 2. Normalizar
         df_norm = normalizar_transferencias(df_src)
 
-        # 3. Detectar detalles ya publicados en staging DMZ
         ya_publicados = obtener_detalles_ya_publicados(
             sql_engine,
-            df_norm["connexa_detail_uuid"].astype(str).tolist()
+            df_norm["connexa_detail_uuid"].astype(str).tolist(),
         )
 
-        # 4. Leer stock desde diarco_data
         df_stock = obtener_stock_disponible(pg_diarco_data_engine, df_norm)
-
-        # 5. Enriquecer + marcar publicados
         df_work = enriquecer_con_stock(df_norm, df_stock)
         df_work = marcar_detalles_ya_publicados(df_work, ya_publicados)
 
-        # 6. Asignar stock en memoria (todo o nada)
         df_asignado = asignar_stock_en_memoria_todo_o_nada(df_work)
-
-        # 7. Filtrar líneas que se publican ahora
         df_a_insertar = df_asignado[df_asignado["publicable_ahora"]].copy()
 
-        # 8. Transformar staging
         df_stg = transformar_a_staging(df_a_insertar)
 
-        # 9. Insertar en SQL Server
         if not df_stg.empty:
             n_insertadas = insertar_en_staging_sqlserver(df_stg, sql_engine)
         else:
             n_insertadas = 0
             log_kv("sin_filas_para_insertar", mensaje="No hay filas nuevas para insertar en staging.")
 
-        # 10. Determinar cabeceras completas y actualizarlas en Connexa
         header_uuids_actualizables = obtener_headers_completamente_publicables(df_asignado)
+
         if header_uuids_actualizables:
             n_headers_actualizadas = actualizar_estado_cabeceras(
-                pg_connexa_engine,
-                header_uuids_actualizables,
-                nuevo_estado_id=80
+                pg_connexa_engine=pg_connexa_engine,
+                header_uuids=header_uuids_actualizables,
+                status_id_precarga=status_id_precarga,
+                nuevo_estado_id=STATUS_ID_SINCRONIZANDO,
             )
         else:
             n_headers_actualizadas = 0
             log_kv("sin_cabeceras_para_actualizar", mensaje="No hay cabeceras completas para actualizar a 80.")
 
-        # 11. Exportar rechazadas
         n_rechazadas = exportar_rechazadas(df_asignado, REJECT_FILE)
         log_resumen_rechazadas(df_asignado)
 
-        # 12. Persistir auditoría detalle en diarco_data
-        n_audit_detail = audit_insert_detail_rows(pg_diarco_data_engine, df_asignado, RUN_ID)
-        log_kv("auditoria_detalle_insertada", cantidad=n_audit_detail)
-
-        # 13. Métricas finales
         total_origen = len(df_asignado)
         total_ya_publicado = int(df_asignado["ya_publicado"].sum()) if not df_asignado.empty else 0
         total_publicable_ahora = int(df_asignado["publicable_ahora"].sum()) if not df_asignado.empty else 0
-        total_no_publicable = int((~df_asignado["publicable"] & ~df_asignado["ya_publicado"]).sum()) if not df_asignado.empty else 0
+        total_no_publicable = int(
+            (~df_asignado["publicable"] & ~df_asignado["ya_publicado"]).sum()
+        ) if not df_asignado.empty else 0
 
         fin = datetime.now()
-
-        audit_update_run_end(
-            pg_diarco_data_engine=pg_diarco_data_engine,
-            run_id=RUN_ID,
-            finished_at=fin,
-            status="SUCCESS",
-            total_source_rows=total_origen,
-            total_already_published=total_ya_publicado,
-            total_publishable_now=total_publicable_ahora,
-            total_not_publishable=total_no_publicable,
-            total_inserted=n_insertadas,
-            total_headers_updated=n_headers_actualizadas,
-            total_rejected_exported=n_rechazadas,
-            error_message="",
-        )
+        duracion_seg = round((fin - inicio).total_seconds(), 2)
 
         log_kv(
             "fin_ejecucion",
@@ -1052,6 +883,7 @@ def main() -> int:
             total_insertadas=n_insertadas,
             total_headers_actualizadas=n_headers_actualizadas,
             total_rechazadas_exportadas=n_rechazadas,
+            duracion_segundos=duracion_seg,
             log_file=str(LOG_FILE),
             reject_file=str(REJECT_FILE) if n_rechazadas > 0 else "",
         )
@@ -1059,40 +891,11 @@ def main() -> int:
         return 0
 
     except RuntimeError as e:
-        err = str(e)
-        logger.error(f"Error de configuración de entorno: {err}")
+        logger.error(f"Error de configuración o validación: {e}")
         logger.error(traceback.format_exc())
-
-        if pg_diarco_data_engine is not None:
-            try:
-                audit_update_run_end(
-                    pg_diarco_data_engine=pg_diarco_data_engine,
-                    run_id=RUN_ID,
-                    finished_at=datetime.now(),
-                    status="ERROR",
-                    error_message=err,
-                )
-            except Exception:
-                logger.exception("No se pudo actualizar auditoría RUN en manejo de RuntimeError")
-
         return 1
-
     except Exception as e:
-        err = f"{type(e).__name__}: {e}"
-        logger.exception(f"Ocurrió un error inesperado: {err}")
-
-        if pg_diarco_data_engine is not None:
-            try:
-                audit_update_run_end(
-                    pg_diarco_data_engine=pg_diarco_data_engine,
-                    run_id=RUN_ID,
-                    finished_at=datetime.now(),
-                    status="ERROR",
-                    error_message=err,
-                )
-            except Exception:
-                logger.exception("No se pudo actualizar auditoría RUN en manejo de Exception")
-
+        logger.exception(f"Ocurrió un error inesperado: {e}")
         return 2
 
 
