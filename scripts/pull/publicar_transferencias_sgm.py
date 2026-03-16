@@ -553,27 +553,54 @@ def enriquecer_con_stock(df_norm: pd.DataFrame, df_stock: pd.DataFrame) -> pd.Da
 # =========================
 # 9) DETALLES YA PUBLICADOS EN DMZ
 # =========================
-def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str]) -> set[str]:
+def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str], chunk_size: int = 500) -> set[str]:
+    """
+    Devuelve el conjunto de connexa_detail_uuid ya existentes en repl.TRANSF_CONNEXA_IN.
+
+    Se consulta por bloques para evitar errores de SQL Server / pyodbc con listas IN muy grandes.
+    """
     ids = sorted({str(x).strip().lower() for x in detail_uuids if str(x).strip()})
     if not ids:
+        log_kv("detalles_ya_publicados_consultados", cantidad=0, chunks=0)
         return set()
 
-    sql = text("""
-        SELECT LOWER(LTRIM(RTRIM(connexa_detail_uuid))) AS connexa_detail_uuid
-        FROM repl.TRANSF_CONNEXA_IN
-        WHERE connexa_detail_uuid IN :ids
-    """).bindparams(bindparam("ids", expanding=True))
+    encontrados: set[str] = set()
 
-    with sql_engine.connect() as conn:
-        df = pd.read_sql(sql, conn, params={"ids": ids})
+    log_kv(
+        "consulta_detalles_ya_publicados_inicio",
+        total_detail_uuids=len(ids),
+        chunk_size=chunk_size,
+    )
 
-    if df.empty:
-        log_kv("detalles_ya_publicados_consultados", cantidad=0)
-        return set()
+    for i in range(0, len(ids), chunk_size):
+        bloque = ids[i:i + chunk_size]
 
-    publicados = set(df["connexa_detail_uuid"].astype(str).str.strip().str.lower().tolist())
-    log_kv("detalles_ya_publicados_consultados", cantidad=len(publicados))
-    return publicados
+        placeholders = ", ".join([f":p{j}" for j in range(len(bloque))])
+        sql = text(f"""
+            SELECT LOWER(LTRIM(RTRIM(connexa_detail_uuid))) AS connexa_detail_uuid
+            FROM repl.TRANSF_CONNEXA_IN
+            WHERE connexa_detail_uuid IN ({placeholders})
+        """)
+
+        params = {f"p{j}": bloque[j] for j in range(len(bloque))}
+
+        with sql_engine.connect() as conn:
+            df = pd.read_sql(sql, conn, params=params)
+
+        if not df.empty:
+            encontrados.update(
+                df["connexa_detail_uuid"].astype(str).str.strip().str.lower().tolist()
+            )
+
+    log_kv(
+        "detalles_ya_publicados_consultados",
+        cantidad=len(encontrados),
+        total_ids=len(ids),
+        chunks=((len(ids) - 1) // chunk_size) + 1,
+        chunk_size=chunk_size,
+    )
+    return encontrados
+
 
 
 def marcar_detalles_ya_publicados(df: pd.DataFrame, ya_publicados: set[str]) -> pd.DataFrame:
