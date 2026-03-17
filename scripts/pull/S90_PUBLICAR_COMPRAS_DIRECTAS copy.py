@@ -15,13 +15,7 @@ Incluye:
   incluyendo la equivalencia:
       c_compra_connexa  -> C_COMPRA_KIKKER
 
-Ajustes 2026-03-12:
-- Se corrige el tratamiento de id en PostgreSQL: ahora puede ser UUID
-- Se corrige el marcado de publicados en PG para soportar UUID y enteros
-- Se encapsula la normalización de ID PG
-- Se mejora el tipado de published_ids
-
-Revisión original: 2025-11-14
+Revisión: 2025-11-14
 Autor: EWE / Zeetrex
 """
 
@@ -30,14 +24,15 @@ import sys
 import logging
 import traceback
 import io
-from datetime import datetime
-from typing import Dict, List, Set, Tuple, Union
-from uuid import UUID
+from typing import Dict, List, Set, Tuple
 
 import pandas as pd
 import psycopg2 as pg2
+from psycopg2.extras import execute_values  # (no se usa, pero se deja por consistencia)
 import pyodbc
+from sqlalchemy import create_engine, text
 from dotenv import load_dotenv, dotenv_values
+from datetime import datetime
 
 
 # --------------------------------------------------------------------
@@ -114,49 +109,6 @@ PK_COLS_PG: List[str] = [
     "c_sucu_empr",
 ]
 
-PublishedId = Union[str, int]
-
-
-# --------------------------------------------------------------------
-# Helpers de IDs PG
-# --------------------------------------------------------------------
-def es_uuid_valido(valor) -> bool:
-    """Devuelve True si el valor puede interpretarse como UUID."""
-    if valor is None:
-        return False
-    try:
-        UUID(str(valor).strip())
-        return True
-    except Exception:
-        return False
-
-
-def es_int_valido(valor) -> bool:
-    """Devuelve True si el valor puede interpretarse como entero."""
-    if valor is None:
-        return False
-    try:
-        int(str(valor).strip())
-        return True
-    except Exception:
-        return False
-
-
-def normalizar_id_pg(valor) -> str:
-    """
-    Normaliza el ID de PostgreSQL como texto.
-    Acepta UUID, int o string.
-    """
-    if pd.isna(valor):
-        raise ValueError("id nulo en PostgreSQL")
-
-    valor_str = str(valor).strip()
-    if not valor_str:
-        raise ValueError("id vacío en PostgreSQL")
-
-    return valor_str
-
-
 # --------------------------------------------------------------------
 # Conexiones
 # --------------------------------------------------------------------
@@ -190,7 +142,6 @@ def sqlsrv_connect():
     except Exception as e:
         logging.error(f"❌ Error conectando a SQL Server: {e}")
         return None
-
 
 # --------------------------------------------------------------------
 # Leer metadatos del destino
@@ -301,6 +252,7 @@ def preparar_df_para_sql(
 
     for src_col, dest_col in column_map_pg_to_sql.items():
         if src_col in df.columns:
+            # Verifican que exista también en el destino (widths) por seguridad
             if dest_col.lower() in widths:
                 src_cols_present.append(src_col)
                 dest_cols.append(dest_col)
@@ -320,7 +272,7 @@ def preparar_df_para_sql(
         )
 
     df_sql = df[src_cols_present].copy()
-
+    # Renombrar columnas al nombre de destino (SQL)
     rename_dict = {src: dest for src, dest in zip(src_cols_present, dest_cols)}
     df_sql.rename(columns=rename_dict, inplace=True)
 
@@ -343,48 +295,50 @@ def normalizar_valor_sql(col: str, valor_raw):
     - Evita mandar NULL en columnas NOT NULL (usa "", "N" o 0).
     - Convierte tipos a los esperados (int para decimales sin escala, str para char).
     """
-    # PKs numéricas / numéricas obligatorias
-    if col in (
-        "C_PROVEEDOR",
-        "C_ARTICULO",
-        "C_SUCU_EMPR",
-        "C_COMPRADOR",
-        "U_PREFIJO_OC",
-        "U_SUFIJO_OC",
-    ):
+    import pandas as pd
+
+    # PKs numéricas: NO deberían venir nulas
+    if col in ("C_PROVEEDOR", "C_ARTICULO", "C_SUCU_EMPR", "C_COMPRADOR",
+               "U_PREFIJO_OC", "U_SUFIJO_OC"):
         if pd.isna(valor_raw):
+            # Para PKs sería grave tener NULL; preferimos explotar
             if col in ("C_PROVEEDOR", "C_ARTICULO", "C_SUCU_EMPR"):
                 raise ValueError(f"Valor nulo en columna PK numérica {col}")
+            # Para otras numéricas NOT NULL seguimos criterio histórico: default 0
             return 0
+        # Viene como float o string, lo llevamos a int
         return int(valor_raw)
 
     # Cantidad (decimal(13,3))
     if col == "Q_BULTOS_KILOS_DIARCO":
         if pd.isna(valor_raw):
+            # En principio no debería venir vacío; por seguridad 0
             return 0
+        # Dejarlo como float/decimal; el driver castea a decimal(13,3)
         return float(valor_raw)
 
-    # CHAR/VARCHAR NOT NULL
-    if col in (
-        "C_USUARIO_GENERO_OC",
-        "C_TERMINAL_GENERO_OC",
-        "C_USUARIO_BLOQUEO",
-        "C_COMPRA_KIKKER",
-        "C_USUARIO_MODIF",
-    ):
+    # CHAR(10)/CHAR(15)/CHAR(20) NOT NULL
+    if col in ("C_USUARIO_GENERO_OC", "C_TERMINAL_GENERO_OC",
+               "C_USUARIO_BLOQUEO", "C_COMPRA_KIKKER", "C_USUARIO_MODIF"):
+        # Igual que el script original: str(valor or "")
         return str(valor_raw or "")
 
     # M_PROCESADO CHAR(1) NOT NULL
     if col == "M_PROCESADO":
+        # Script original: str(m_procesado or "N")
         return str(valor_raw or "N")
 
-    # DATETIME
+    # DATETIME NOT NULL (asumimos que vienen informados desde PG)
     if col in ("F_ALTA_SIST", "F_GENERO_OC", "F_PROCESADO"):
         if pd.isna(valor_raw):
+            # Si llegase a venir vacío, dejamos None
+            # (asumiendo que en la práctica no ocurre o hay default en la tabla)
             return datetime(1900, 1, 1, 0, 0, 0, 0)
+
+        # pandas.Timestamp -> datetime
         return valor_raw.to_pydatetime() if hasattr(valor_raw, "to_pydatetime") else valor_raw
 
-    # Fallback
+    # Fallback genérico: respetar valor, pero convertir NaN a None
     if pd.isna(valor_raw):
         return None
     return valor_raw
@@ -397,22 +351,26 @@ def publicar_compras_directas(
     cursor_sql,
     schema: str,
     table: str,
-) -> Set[PublishedId]:
+) -> Set:
     """
     df_pg  = DF original (incluye 'id' para marcar publicadas)
     df_sql = DF con columnas renombradas a nombres de destino (SQL)
     cols_sql = lista de columnas en destino en el orden de inserción
     """
+    import pandas as pd
+
     if df_sql.empty:
         logging.info("⚠ No hay compras directas para publicar en SQL Server.")
         return set()
 
+    # Validan que las columnas PK existan en df_sql
     for pk in PK_COLS_SQL:
         if pk not in df_sql.columns:
             raise RuntimeError(
                 f"La columna PK destino '{pk}' no está presente entre las columnas a enviar: {list(df_sql.columns)}"
             )
 
+    # Columnas a actualizar (todas menos la PK)
     non_pk_cols = [c for c in cols_sql if c not in PK_COLS_SQL]
 
     if not non_pk_cols:
@@ -440,33 +398,42 @@ def publicar_compras_directas(
 
     logging.info("📝 SQL UPSERT (UPDATE+INSERT) preparado para Compras Directas.")
 
-    published_ids: Set[PublishedId] = set()
+    published_ids: Set = set()
 
     for idx, row_sql in df_sql.iterrows():
+        # Fila correspondiente en el DF original (para obtener 'id' y/o PK origen)
         row_pg = df_pg.loc[idx]
 
+        # 1) valores SET (no PK) normalizados
         vals_set = [normalizar_valor_sql(c, row_sql[c]) for c in non_pk_cols]
+        # 2) valores WHERE (PK destino) normalizados
         vals_where = [normalizar_valor_sql(c, row_sql[c]) for c in PK_COLS_SQL]
+        # 3) valores INSERT (todas las columnas destino) normalizados
         vals_insert = [normalizar_valor_sql(c, row_sql[c]) for c in cols_sql]
 
+        # Armamos lista final de parámetros
         params = vals_set + vals_where + vals_insert
 
         try:
             cursor_sql.execute(tsql, params)
 
+            # Registrar ID PG si existe
             if "id" in df_pg.columns:
-                published_ids.add(normalizar_id_pg(row_pg["id"]))
+                published_ids.add(int(row_pg["id"]))
             else:
+                # Fallback por PK de negocio (lado PG)
                 try:
                     pk_tuple = tuple(row_pg[pg_col] for pg_col in PK_COLS_PG)
-                    published_ids.add(str(pk_tuple))
+                    published_ids.add(pk_tuple)
                 except Exception:
                     logging.warning(
                         f"⚠ No se pudo construir PK de negocio PG para fila idx={idx}."
                     )
 
         except Exception as e:
-            pk_log = ", ".join([f"{pk}={row_sql[pk]!r}" for pk in PK_COLS_SQL])
+            pk_log = ", ".join(
+                [f"{pk}={row_sql[pk]!r}" for pk in PK_COLS_SQL]
+            )
             logging.error(
                 f"❌ Error publicando fila idx={idx}, PK destino=({pk_log}): {e}"
             )
@@ -476,28 +443,34 @@ def publicar_compras_directas(
     return published_ids
 
 
+
 # --------------------------------------------------------------------
 # Marcar como publicadas en PostgreSQL
 # --------------------------------------------------------------------
-
-def marcar_publicadas(conn_pg, published_ids: Set[PublishedId]):
+def marcar_publicadas(conn_pg, published_ids: Set):
     if not published_ids:
         logging.info("⚠ No hay IDs para marcar como publicados en PostgreSQL.")
         return
 
-    ids_list = [str(x).strip() for x in published_ids]
+    if all(isinstance(x, int) for x in published_ids):
+        # Caso normal: id entero
+        sql = """
+            UPDATE public.t080_oc_precarga_connexa
+               SET m_publicado = TRUE,
+                   f_procesado = NOW()
+             WHERE id = ANY(%s)
+        """
+        ids_list = list(published_ids)
+        with conn_pg.cursor() as cur:
+            cur.execute(sql, (ids_list,))
+        logging.info(f"✅ Filas marcadas como publicadas en PG por ID: {len(ids_list)}")
+    else:
+        # Fallback por PK de negocio (si no existiera 'id'): no lo aplicamos por seguridad
+        logging.info(
+            "⚠ published_ids no son enteros. Se esperaba marcar por ID. "
+            "Por seguridad NO se marca nada."
+        )
 
-    sql = """
-        UPDATE public.t080_oc_precarga_connexa
-           SET m_publicado = TRUE,
-               f_procesado = NOW()
-         WHERE id::text = ANY(%s::text[])
-    """
-
-    with conn_pg.cursor() as cur:
-        cur.execute(sql, (ids_list,))
-
-    logging.info(f"✅ Filas marcadas como publicadas en PG por ID texto: {len(ids_list)}")
 
 # --------------------------------------------------------------------
 # MAIN
@@ -532,7 +505,7 @@ def main():
             conn_pg.commit()
             return
 
-        # Truncado de texto según destino
+        # Truncado de texto según destino (incluye alias para c_compra_connexa)
         df_pg_trunc = truncar_df(df_pg, widths)
 
         # Filtrar SOLO columnas mapeadas y renombrar a nombres de destino
@@ -564,12 +537,11 @@ def main():
     except Exception as e:
         logging.error(f"❌ Error general en S90_PUBLICAR_COMPRAS_DIRECTAS.py: {e}")
         traceback.print_exc()
-
         if conn_pg:
             conn_pg.rollback()
         if conn_sql:
             conn_sql.rollback()
-
+        # Propagar error para que Prefect vea exit code != 0
         raise
 
     finally:
