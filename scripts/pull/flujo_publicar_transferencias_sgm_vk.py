@@ -1267,6 +1267,11 @@ def main() -> int:
 
         return 2
 
+from prefect import flow
+
+@flow(name="Publicar transferencias Connexa SGM Valkimia Retorno")
+def publicar_transferencias_sgm_vk():
+    return main()
 
 if __name__ == "__main__":
     sys.exit(main())
