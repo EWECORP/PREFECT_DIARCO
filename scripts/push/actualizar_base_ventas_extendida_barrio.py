@@ -80,9 +80,10 @@ WITH max_dest AS (
     FROM src.base_ventas_extendida
 ),
 params AS (
-    SELECT (max_fecha - INTERVAL %s)::date AS fecha_desde
+    SELECT max_fecha::date AS fecha_desde
     FROM max_dest
 )
+
 INSERT INTO src.base_ventas_extendida__stg(
     fecha, codigo_articulo, sucursal, precio, unidades, importe_vendido,
     con_stock, venta_especial, promo_normal, promo_fuerte,
@@ -90,35 +91,76 @@ INSERT INTO src.base_ventas_extendida__stg(
     costo, familia, rubro, subrubro, c_proveedor_primario,
     nombre_articulo, clasificacion, fecha_procesado, marca_procesado
 )
+
+-- ============================
+-- 1) VENTAS < 300
+-- ============================
 SELECT
-    V.f_venta::date                                       AS fecha,
-    V.c_articulo::bigint                                  AS codigo_articulo,
-    V.c_sucu_empr::int                                    AS sucursal,
-    V.i_precio_venta::numeric(18,6)                       AS precio,
-    V.q_unidades_vendidas::numeric(18,6)                  AS unidades,
-    V.i_vendido::numeric(18,6)                            AS importe_vendido,
-    TRUE  AS con_stock,
-    FALSE AS venta_especial,
-    FALSE AS promo_normal,
-    FALSE AS promo_fuerte,
-    NULL  AS precio_prefijado,
-    NULL  AS factor_precio,
-    V.i_precio_costo::numeric(18,6)                       AS costo,
-    V.c_familia::int                                     AS familia,
-    A.c_rubro::int                                       AS rubro,
-    A.c_subrubro_1::int                                  AS subrubro,
-    A.c_proveedor_primario::int                           AS c_proveedor_primario,
-    TRIM(BOTH FROM REPLACE(REPLACE(REPLACE(A.n_articulo, CHR(9), ''), CHR(13), ''), CHR(10), ''))
-                                                            AS nombre_articulo,
-    A.c_clasificacion_compra::int                         AS clasificacion,
-    CURRENT_TIMESTAMP                                     AS fecha_procesado,
-    0                                                     AS marca_procesado
-FROM src.t702_est_vtas_por_articulo_dbarrio V
+    V.f_venta::date,
+    V.c_articulo::bigint,
+    V.c_sucu_empr::int,
+    V.i_precio_venta::numeric(18,6),
+    V.q_unidades_vendidas::numeric(18,6),
+    V.i_vendido::numeric(18,6),
+    TRUE,
+    FALSE,
+    FALSE,
+    FALSE,
+    NULL::numeric AS precio_prefijado,
+	NULL::numeric AS factor_precio,
+
+    V.i_precio_costo::numeric(18,6),
+    V.c_familia::int,
+    A.c_rubro::int,
+    A.c_subrubro_1::int,
+    A.c_proveedor_primario::int,
+    TRIM(BOTH FROM REPLACE(REPLACE(REPLACE(A.n_articulo, CHR(9), ''), CHR(13), ''), CHR(10), '')),
+    A.c_clasificacion_compra::int,
+    CURRENT_TIMESTAMP,
+    0
+FROM src.t702_est_vtas_por_articulo V
 LEFT JOIN src.t050_articulos A
-        ON V.c_articulo = A.c_articulo
+       ON V.c_articulo = A.c_articulo
 CROSS JOIN params p
 WHERE V.f_venta::date >= p.fecha_desde
-    AND A.m_baja = 'N';
+  AND A.m_baja = 'N'
+  AND V.c_sucu_empr < 300
+
+UNION ALL
+
+-- ============================
+-- 2) VENTAS >= 300
+-- ============================
+SELECT
+    V.f_venta::date,
+    V.c_articulo::bigint,
+    V.c_sucu_empr::int,
+    V.i_precio_venta::numeric(18,6),
+    V.q_unidades_vendidas::numeric(18,6),
+    V.i_vendido::numeric(18,6),
+    TRUE,
+    FALSE,
+    FALSE,
+    FALSE,
+	NULL::numeric AS precio_prefijado,
+	NULL::numeric AS factor_precio,
+
+    V.i_precio_costo::numeric(18,6),
+    V.c_familia::int,
+    A.c_rubro::int,
+    A.c_subrubro_1::int,
+    A.c_proveedor_primario::int,
+    TRIM(BOTH FROM REPLACE(REPLACE(REPLACE(A.n_articulo, CHR(9), ''), CHR(13), ''), CHR(10), '')),
+    A.c_clasificacion_compra::int,
+    CURRENT_TIMESTAMP,
+    0
+FROM src.t702_est_vtas_por_articulo_dbarrio V
+LEFT JOIN src.t050_articulos A
+       ON V.c_articulo = A.c_articulo
+CROSS JOIN params p
+WHERE V.f_venta::date >= p.fecha_desde
+  AND A.m_baja = 'N'
+  AND V.c_sucu_empr >= 300;
 """
 
 SQL_UPDATE_OFERTAS = """

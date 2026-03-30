@@ -1,0 +1,4 @@
+venv/scripts/activate
+python ETL_DIARCO/scripts/push/actualizar_base_ventas_extendida.py
+
+python ETL_DIARCO/scripts/push/actualizar_base_ventas_extendida_barrio.py
