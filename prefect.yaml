@@ -150,6 +150,31 @@ deployments:
       cron: "45 6 * * *"   # todos los días 06:15 América/Buenos_Aires
       timezone: "America/Argentina/Buenos_Aires"
 
+  - name: envio-manual-tabla
+    version: null
+    tags:
+      - dmz
+      - manual
+      - replicacion
+      - sqlserver
+      - postgres
+      - diarco
+    description: >-
+      Deployment manual ETL_DIARCO para enviar una única tabla desde SQL Server hacia PostgreSQL,
+      parametrizando esquema origen, tabla origen, esquema destino, tabla destino, filtro SQL y truncado.
+    entrypoint: scripts/send/flujo_envio_manual_tabla_final.py:envio_manual_tabla_sql_a_postgres
+    parameters:
+      esquema_sql: repl
+      tabla_sql: T050_ARTICULOS
+      schema_pg: src
+      tabla_pg: t050_articulos
+      filtro_sql: 1=1
+      truncar_destino: true
+      validar_nombres: true
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedules: []
 
 
   - name: TRANSFER_PUBLISH_VKM_PROD

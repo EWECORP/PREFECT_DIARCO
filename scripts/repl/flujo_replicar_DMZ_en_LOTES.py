@@ -63,7 +63,8 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T117_COMPRADORES",
         "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_CABE",
         "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_DETA",
-        "repl.usp_replicar_T874_PRECARGA_CONNEXA_HIST"
+        "repl.usp_replicar_T874_PRECARGA_CONNEXA_HIST",
+        "repl.usp_replicar_T_COMPETENCIA_DETALLE"
     ]
     resultados = [ejecutar_sp.submit(sp) for sp in batch_rapido]
     [r.result() for r in resultados]

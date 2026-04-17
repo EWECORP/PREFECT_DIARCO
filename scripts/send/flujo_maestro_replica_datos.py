@@ -35,10 +35,10 @@ def esperar_archivo_en_sftp_remoto(nombre_zip: str, espera_maxima: int = 1680, i
     print(f"🔐 Conectando al SFTP remoto: {host}:{port} como {user}")
     while tiempo < espera_maxima:
         try:
-            with paramiko.Transport((host, port)) as transport:
-                transport.connect(username=user, password=password)
+            with paramiko.Transport((host, port)) as transport: # pyright: ignore[reportArgumentType]
+                transport.connect(username=user, password=password) # pyright: ignore[reportArgumentType]
                 sftp = paramiko.SFTPClient.from_transport(transport)
-                sftp.stat(ruta_remota)
+                sftp.stat(ruta_remota) # pyright: ignore[reportOptionalMemberAccess]
                 print(f"✅ Archivo disponible en el SFTP remoto: {ruta_remota}")
                 return True
         except FileNotFoundError:
