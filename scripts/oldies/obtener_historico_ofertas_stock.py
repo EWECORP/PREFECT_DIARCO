@@ -132,7 +132,7 @@ def cargar_ofertas_stock(lista_ids):
         FROM [repl].[T710_ESTADIS_STOCK] S
         LEFT JOIN [repl].[T050_ARTICULOS] A  
             ON S.C_ARTICULO = A.C_ARTICULO  
-        WHERE C_ANIO = 2025
+        WHERE C_ANIO = 2026
         AND A.C_PROVEEDOR_PRIMARIO IN ({ids});
     """
     df_stock = pd.read_sql(query_stock, conn) # type: ignore
@@ -162,7 +162,7 @@ def cargar_ofertas_stock(lista_ids):
             O.M_OFERTA_DIA31
         FROM [repl].[T710_ESTADIS_OFERTA_FOLDER] O
         LEFT JOIN [repl].[T050_ARTICULOS] A ON O.C_ARTICULO = A.C_ARTICULO
-        WHERE C_ANIO = 2025
+        WHERE C_ANIO = 2026
         --- AND A.C_PROVEEDOR_PRIMARIO IN ({ids});
     """
     df_oferta = pd.read_sql(query_oferta, conn) # type: ignore

@@ -61,8 +61,8 @@ def replicar_estadistica_stock_dmz():
     GO
     
     DELETE FROM [repl].[T710_ESTADIS_STOCK]
-        WHERE C_ANIO = 2025
-        AND C_MES >= MONTH(DATEADD(MONTH, -1, GETDATE()))
+        WHERE C_ANIO = 2026
+        AND C_MES >= MONTH(DATEADD(MONTH, -2, GETDATE()))
     GO
 
     INSERT INTO [repl].[T710_ESTADIS_STOCK]
@@ -78,8 +78,8 @@ def replicar_estadistica_stock_dmz():
         ,CAST(0 AS BIT) AS Procesado
 
         FROM [DIARCOP001].[DiarcoP].[dbo].[T710_ESTADIS_STOCK]
-        WHERE C_ANIO = 2025
-        AND C_MES >= MONTH(DATEADD(MONTH, -1, GETDATE()))
+        WHERE C_ANIO = 2026
+        AND C_MES >= MONTH(DATEADD(MONTH, -2, GETDATE()))
     GO
     """
     data_sync = open_sql_dmz()
@@ -181,7 +181,7 @@ def cargar_stock_articulos_PG():
 # Cargar datos en PostgreSQL PRIMERA VEZ
 @task(name="replicar_matriz_stock_PG")
 def replicar_matriz_stock_PG():
-    query4 = "SELECT * FROM [repl].[T710_ESTADIS_STOCK] WHERE C_ANIO * 100 + C_MES > 202406;"
+    query4 = "SELECT * FROM [repl].[T710_ESTADIS_STOCK] WHERE C_ANIO * 100 + C_MES >= 202602;"
 
     table_name = "src.t710_estadis_stock"
     chunk_size = 50000
