@@ -117,6 +117,13 @@ PK_COLS_PG: List[str] = [
 PublishedId = Union[str, int]
 
 
+def es_compra_directa(valor) -> bool:
+    """Identifica compras directas por prefijo D en c_compra_connexa."""
+    if pd.isna(valor):
+        return False
+    return str(valor).strip().upper().startswith("D")
+
+
 # --------------------------------------------------------------------
 # Helpers de IDs PG
 # --------------------------------------------------------------------
@@ -235,10 +242,10 @@ def truncar_df(df: pd.DataFrame, widths: Dict[str, Dict[str, object]]) -> pd.Dat
         dtype = meta["dtype"]
         length = meta["length"]
 
-        if dtype in ("varchar", "nvarchar", "char", "nchar") and length and length > 0:
+        if dtype in ("varchar", "nvarchar", "char", "nchar") and length and length > 0: # type: ignore
             serie = df2[col]
             mask = serie.notna()
-            df2.loc[mask, col] = serie[mask].astype(str).str.slice(0, length)
+            df2.loc[mask, col] = serie[mask].astype(str).str.slice(0, length) # type: ignore
     return df2
 
 
@@ -276,6 +283,7 @@ def obtener_compras_directas(conn_pg) -> pd.DataFrame:
             ajuste
         FROM public.t080_oc_precarga_connexa
         WHERE m_publicado = false
+          AND UPPER(COALESCE(c_compra_connexa, '')) LIKE 'D%%'
     """
     df = pd.read_sql(sql, conn_pg)
     logging.info(f"📦 Compras directas pendientes en PG: {len(df)}")
@@ -443,7 +451,7 @@ def publicar_compras_directas(
     published_ids: Set[PublishedId] = set()
 
     for idx, row_sql in df_sql.iterrows():
-        row_pg = df_pg.loc[idx]
+        row_pg = df_pg.loc[idx] # pyright: ignore[reportArgumentType, reportCallIssue]
 
         vals_set = [normalizar_valor_sql(c, row_sql[c]) for c in non_pk_cols]
         vals_where = [normalizar_valor_sql(c, row_sql[c]) for c in PK_COLS_SQL]
@@ -474,6 +482,74 @@ def publicar_compras_directas(
 
     logging.info(f"✅ Filas publicadas/actualizadas en SQL Server: {len(published_ids)}")
     return published_ids
+
+
+def obtener_ids_verificados_en_sql_server(
+    df_pg: pd.DataFrame,
+    df_sql: pd.DataFrame,
+    cursor_sql,
+    schema: str,
+    table: str,
+) -> Set[PublishedId]:
+    """
+    Verifica contra SQL Server cuáles filas del lote existen realmente
+    luego del commit y devuelve sólo los IDs de PG respaldados por destino.
+    """
+    if df_sql.empty:
+        return set()
+
+    compras = tuple(sorted(df_sql["C_COMPRA_KIKKER"].dropna().astype(str).unique().tolist()))
+    proveedores = tuple(sorted(df_sql["C_PROVEEDOR"].dropna().astype(int).unique().tolist()))
+    sucursales = tuple(sorted(df_sql["C_SUCU_EMPR"].dropna().astype(int).unique().tolist()))
+
+    if not compras or not proveedores or not sucursales:
+        logging.warning("⚠ No hay claves suficientes para verificar publicaciones en SQL Server.")
+        return set()
+
+    compras_sql = "(" + ",".join(["?"] * len(compras)) + ")"
+    proveedores_sql = "(" + ",".join(["?"] * len(proveedores)) + ")"
+    sucursales_sql = "(" + ",".join(["?"] * len(sucursales)) + ")"
+
+    sql = f"""
+        SELECT C_COMPRA_KIKKER, C_PROVEEDOR, C_ARTICULO, C_SUCU_EMPR
+        FROM {schema}.{table}
+        WHERE C_COMPRA_KIKKER IN {compras_sql}
+          AND C_PROVEEDOR IN {proveedores_sql}
+          AND C_SUCU_EMPR IN {sucursales_sql}
+    """
+
+    params = list(compras) + list(proveedores) + list(sucursales)
+    cursor_sql.execute(sql, params)
+    existentes = {
+        (str(r[0]).strip(), int(r[1]), int(r[2]), int(r[3]))
+        for r in cursor_sql.fetchall()
+    }
+
+    verified_ids: Set[PublishedId] = set()
+    missing_keys: List[Tuple[str, int, int, int]] = []
+
+    for idx, row_sql in df_sql.iterrows():
+        pk = (
+            str(row_sql["C_COMPRA_KIKKER"]).strip(),
+            int(row_sql["C_PROVEEDOR"]),
+            int(row_sql["C_ARTICULO"]),
+            int(row_sql["C_SUCU_EMPR"]),
+        )
+        if pk in existentes:
+            row_pg = df_pg.loc[idx] # pyright: ignore[reportArgumentType, reportCallIssue]
+            if "id" in df_pg.columns:
+                verified_ids.add(normalizar_id_pg(row_pg["id"]))
+        else:
+            missing_keys.append(pk)
+
+    if missing_keys:
+        logging.warning(
+            f"⚠ Filas no verificadas en SQL Server luego del commit: {len(missing_keys)}. "
+            f"Ejemplo: {missing_keys[:5]}"
+        )
+
+    logging.info(f"🔎 Filas verificadas en SQL Server: {len(verified_ids)}")
+    return verified_ids
 
 
 # --------------------------------------------------------------------
@@ -532,6 +608,16 @@ def main():
             conn_pg.commit()
             return
 
+        # Defensa adicional: si por algún motivo el SELECT cambia, igual
+        # no dejamos pasar compras no directas en este publicador.
+        mask_directas = df_pg["c_compra_connexa"].apply(es_compra_directa)
+        df_pg = df_pg.loc[mask_directas].copy()
+        logging.info(f"🧭 Filas directas válidas en lote: {len(df_pg)}")
+        if df_pg.empty:
+            logging.info("⏹ No hay compras directas válidas para publicar. Fin.")
+            conn_pg.commit()
+            return
+
         # Truncado de texto según destino
         df_pg_trunc = truncar_df(df_pg, widths)
 
@@ -543,7 +629,7 @@ def main():
         )
 
         # Publicar en SQL Server
-        published_ids = publicar_compras_directas(
+        attempted_ids = publicar_compras_directas(
             df_pg=df_pg_trunc,
             df_sql=df_sql,
             cols_sql=cols_sql,
@@ -555,8 +641,23 @@ def main():
         # Commit en SQL Server
         conn_sql.commit()
 
-        # Marcar como publicadas en PG
-        marcar_publicadas(conn_pg, published_ids)
+        # Verificar contra SQL Server antes de marcar publicadas en PG
+        verified_ids = obtener_ids_verificados_en_sql_server(
+            df_pg=df_pg_trunc,
+            df_sql=df_sql,
+            cursor_sql=cursor_sql,
+            schema=schema,
+            table=table,
+        )
+
+        if len(verified_ids) != len(attempted_ids):
+            logging.warning(
+                f"⚠ Diferencia entre filas intentadas y verificadas. "
+                f"Intentadas={len(attempted_ids)} | Verificadas={len(verified_ids)}"
+            )
+
+        # Marcar como publicadas en PG solo las verificadas
+        marcar_publicadas(conn_pg, verified_ids)
         conn_pg.commit()
 
         logging.info("🏁 Publicación de compras directas finalizada OK.")

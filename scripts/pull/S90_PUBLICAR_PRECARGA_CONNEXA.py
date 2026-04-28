@@ -385,6 +385,7 @@ def open_and_read_pending_from_pg() -> pd.DataFrame:
                 SELECT *
                 FROM public.t080_oc_precarga_connexa
                 WHERE m_publicado = false
+                  AND UPPER(COALESCE(c_compra_connexa, '')) NOT LIKE 'D%'
             """),
             cx,
         )
