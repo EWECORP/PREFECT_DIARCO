@@ -4,7 +4,7 @@
 #   [data-sync].[repl].[TRANSF_CONNEXA_IN]
 #
 # Regla implementada:
-# - Solo se publican detalles con stock disponible suficiente, bajo lógica
+# - Solo se publican detalles con stock neto disponible suficiente, bajo lógica
 #   "todo o nada", descontando saldo en memoria por (sucursal origen, artículo).
 # - Si no alcanza el saldo completo para una línea, esa línea NO se publica.
 # - Las líneas no publicadas permanecen en Connexa bajo cabecera PRECARGA_CONNEXA.
@@ -15,6 +15,18 @@
 # - Connexa MS (PGP_*): lectura de transferencias + update de estado cabeceras
 # - diarco_data (PG_*): lectura de src.base_stock_sucursal + auditoría en audit.*
 # - SQL Server DMZ: inserción en repl.TRANSF_CONNEXA_IN
+# - Valkimia vía linked server SQL Server: lectura de necesidades ACO para calcular SND
+#
+# Stock Neto Disponible (SND):
+#   SND = q_bultos_disponible_base - bultos_aco_valkimia
+#
+# donde:
+# - q_bultos_disponible_base sale de src.base_stock_sucursal
+# - bultos_aco_valkimia sale de [DIARCO-VKMSQL\SQL2008R2].[VALKIMIA].[dbo].[IntNecIN]
+#
+# Supuesto:
+# - El query de Valkimia no discrimina origen, por lo que se imputa la reserva ACO
+#   únicamente al CD 41 (origin_cd_num = 41).
 #
 # Capacidades operativas:
 # - Logging estructurado a consola + archivo
@@ -24,6 +36,7 @@
 # Notas:
 # - Este script NO ejecuta el SP publicador SGM; solo carga staging + marca cabeceras en 80.
 # - Para evitar duplicados por reintento, se filtran connexa_detail_uuid ya presentes en staging.
+# - Las búsquedas masivas en SQL Server se resuelven por bloques para evitar errores pyodbc/ODBC.
 
 import os
 import sys
@@ -33,11 +46,11 @@ import traceback
 import urllib.parse
 from pathlib import Path
 from datetime import datetime
-from typing import List
+from typing import List, Set
 
 import pandas as pd
 from dotenv import dotenv_values, load_dotenv
-from sqlalchemy import create_engine, text, bindparam
+from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 
 
@@ -119,7 +132,7 @@ log_kv(
     pg_host=secrets.get("PG_HOST"),
     pg_user=secrets.get("PG_USER"),
     sql_server=secrets.get("SQL_SERVER"),
-    sql_database=secrets.get("SQL_DATABASE", "data-sync"),
+    sql_database=secrets.get("SQL_DATABASE"),
     log_file=str(LOG_FILE),
     reject_file=str(REJECT_FILE),
 )
@@ -320,6 +333,8 @@ def audit_insert_detail_rows(pg_diarco_data_engine: Engine, df_asignado: pd.Data
                 "qty_requested_raw": float(r["qty_requested"]) if pd.notna(r.get("qty_requested")) else None,
                 "qty_requested_num": float(r["qty_requested_num"]) if pd.notna(r.get("qty_requested_num")) else None,
                 "units_per_package": float(r["units_per_package"]) if pd.notna(r.get("units_per_package")) else None,
+                "q_bultos_disponible_base": float(r["q_bultos_disponible_base"]) if pd.notna(r.get("q_bultos_disponible_base")) else None,
+                "bultos_aco_valkimia": float(r["bultos_aco_valkimia"]) if pd.notna(r.get("bultos_aco_valkimia")) else None,
                 "q_bultos_disponible": float(r["q_bultos_disponible"]) if pd.notna(r.get("q_bultos_disponible")) else None,
                 "saldo_inicial_grupo": float(r["saldo_inicial_grupo"]) if pd.notna(r.get("saldo_inicial_grupo")) else None,
                 "saldo_antes": float(r["saldo_antes"]) if pd.notna(r.get("saldo_antes")) else None,
@@ -329,8 +344,8 @@ def audit_insert_detail_rows(pg_diarco_data_engine: Engine, df_asignado: pd.Data
                 "publicable": bool(r.get("publicable", False)),
                 "publicable_ahora": bool(r.get("publicable_ahora", False)),
                 "motivo_no_publicado": r.get("motivo_no_publicado"),
-                "requested_at": r.get("requested_at").to_pydatetime() if pd.notna(r.get("requested_at")) else None,
-                "created_at": r.get("created_at").to_pydatetime() if pd.notna(r.get("created_at")) else None,
+                "requested_at": r.get("requested_at").to_pydatetime() if pd.notna(r.get("requested_at")) else None, # type: ignore
+                "created_at": r.get("created_at").to_pydatetime() if pd.notna(r.get("created_at")) else None, # type: ignore
             }
         )
 
@@ -352,6 +367,8 @@ def audit_insert_detail_rows(pg_diarco_data_engine: Engine, df_asignado: pd.Data
         qty_requested_raw,
         qty_requested_num,
         units_per_package,
+        q_bultos_disponible_base,
+        bultos_aco_valkimia,
         q_bultos_disponible,
         saldo_inicial_grupo,
         saldo_antes,
@@ -381,6 +398,8 @@ def audit_insert_detail_rows(pg_diarco_data_engine: Engine, df_asignado: pd.Data
         :qty_requested_raw,
         :qty_requested_num,
         :units_per_package,
+        :q_bultos_disponible_base,
+        :bultos_aco_valkimia,
         :q_bultos_disponible,
         :saldo_inicial_grupo,
         :saldo_antes,
@@ -405,9 +424,6 @@ def audit_insert_detail_rows(pg_diarco_data_engine: Engine, df_asignado: pd.Data
 # 6) LECTURA DESDE CONNEXA
 # =========================
 def obtener_transferencias_precarga(pg_connexa_engine: Engine) -> pd.DataFrame:
-    """
-    Obtiene los detalles de transferencias en estado PRECARGA_CONNEXA desde Connexa MS.
-    """
     sql = """
     SELECT
         d.id                          AS connexa_detail_uuid,
@@ -454,7 +470,6 @@ def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
 
     df["item_code_num"] = pd.to_numeric(df["item_code"], errors="coerce").fillna(0).astype(int)
     df["dest_store_num"] = pd.to_numeric(df["destination_store_code"], errors="coerce").fillna(0).astype(int)
-    # qty_requested en Connexa ya viene expresado en BULTOS
     df["qty_requested_num"] = pd.to_numeric(df["qty_requested"], errors="coerce").fillna(0.0).round(3)
 
     df["connexa_header_uuid"] = df["connexa_header_uuid"].astype(str).str.strip().str.lower()
@@ -472,21 +487,22 @@ def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 8) STOCK DESDE DIARCO_DATA
+# 8) STOCK BASE DESDE DIARCO_DATA
 # =========================
 def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFrame) -> pd.DataFrame:
     """
-    Obtiene q_bultos_disponible desde src.base_stock_sucursal en diarco_data.
+    Obtiene q_bultos_disponible_base por (codigo_articulo, codigo_sucursal origen)
+    desde src.base_stock_sucursal.
     """
     cols = ["item_code_num", "origin_cd_num"]
     if df_norm.empty or not set(cols).issubset(df_norm.columns):
-        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible"])
+        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible_base"])
 
     articulos = sorted([int(x) for x in df_norm["item_code_num"].dropna().unique().tolist() if int(x) > 0])
     sucursales = sorted([int(x) for x in df_norm["origin_cd_num"].dropna().unique().tolist() if int(x) > 0])
 
     if not articulos or not sucursales:
-        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible"])
+        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible_base"])
 
     sql = """
         SELECT
@@ -497,7 +513,7 @@ def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFram
                     (COALESCE(stock, 0) + COALESCE(transfer_pendiente, 0))
                     / NULLIF(COALESCE(factor_venta, 0), 0)
                 )
-            )::bigint AS q_bultos_disponible
+            )::bigint AS q_bultos_disponible_base
         FROM src.base_stock_sucursal
         WHERE codigo_sucursal = ANY(CAST(:lista_sucursales AS bigint[]))
           AND codigo_articulo = ANY(CAST(:lista_articulos AS bigint[]))
@@ -518,42 +534,101 @@ def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFram
             params={
                 "lista_sucursales": sucursales,
                 "lista_articulos": articulos,
-            },
+            }, # type: ignore
         )
 
     if df_stock.empty:
-        log_kv("stock_disponible_leido", cantidad=0)
-        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible"])
+        log_kv("stock_base_cd_leido", cantidad=0)
+        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible_base"])
 
     df_stock["item_code_num"] = pd.to_numeric(df_stock["item_code_num"], errors="coerce").fillna(0).astype(int)
     df_stock["origin_cd_num"] = pd.to_numeric(df_stock["origin_cd_num"], errors="coerce").fillna(0).astype(int)
-    df_stock["q_bultos_disponible"] = pd.to_numeric(df_stock["q_bultos_disponible"], errors="coerce").fillna(0.0)
+    df_stock["q_bultos_disponible_base"] = pd.to_numeric(
+        df_stock["q_bultos_disponible_base"], errors="coerce"
+    ).fillna(0.0)
 
-    log_kv("stock_disponible_leido", cantidad=len(df_stock))
+    log_kv("stock_base_cd_leido", cantidad=len(df_stock))
     return df_stock
 
 
-def enriquecer_con_stock(df_norm: pd.DataFrame, df_stock: pd.DataFrame) -> pd.DataFrame:
-    if df_norm.empty:
-        df = df_norm.copy()
-        df["q_bultos_disponible"] = pd.Series(dtype="float")
-        return df
+# =========================
+# 9) RESERVAS ACO VALKIMIA
+# =========================
+def obtener_bultos_aco_valkimia(sql_engine: Engine, df_norm: pd.DataFrame, chunk_size: int = 300) -> pd.DataFrame:
+    """
+    Obtiene bultos ya comprometidos en Valkimia (estado ACO) por SKU.
 
-    df = df_norm.merge(
-        df_stock,
-        how="left",
-        on=["item_code_num", "origin_cd_num"],
+    Se interpreta como reserva del CD 41, por lo que luego se imputa
+    a origin_cd_num = 41.
+    """
+    if df_norm.empty or "item_code_num" not in df_norm.columns:
+        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "bultos_aco_valkimia"])
+
+    skus = sorted([int(x) for x in df_norm["item_code_num"].dropna().unique().tolist() if int(x) > 0])
+    if not skus:
+        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "bultos_aco_valkimia"])
+
+    encontrados = []
+
+    log_kv(
+        "consulta_bultos_aco_valkimia_inicio",
+        total_skus=len(skus),
+        chunk_size=chunk_size,
     )
 
-    df["q_bultos_disponible"] = pd.to_numeric(df["q_bultos_disponible"], errors="coerce").fillna(0.0)
-    log_kv("transferencias_enriquecidas_con_stock", cantidad=len(df))
-    return df
+    for i in range(0, len(skus), chunk_size):
+        bloque = skus[i:i + chunk_size]
+
+        placeholders = ", ".join([f":p{j}" for j in range(len(bloque))])
+        sql = text(f"""
+            SELECT
+                CAST([INIArtId] AS bigint) AS item_code_num,
+                SUM(CAST([INICnt1] AS decimal(18,3))) AS bultos_aco_valkimia
+            FROM [DIARCO-VKMSQL\\SQL2008R2].[VALKIMIA].[dbo].[IntNecIN]
+            WHERE INIEst = 'ACO'
+              AND [INIEntId] < 300
+              AND [INICnt1] > 0
+              AND [INIArtId] IN ({placeholders})
+            GROUP BY [INIArtId]
+        """)
+
+        params = {f"p{j}": bloque[j] for j in range(len(bloque))}
+
+        with sql_engine.connect() as conn:
+            df = pd.read_sql(sql, conn, params=params)
+
+        if not df.empty:
+            encontrados.append(df)
+
+    if not encontrados:
+        log_kv("bultos_aco_valkimia_leidos", cantidad=0, total_bultos_aco=0)
+        return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "bultos_aco_valkimia"])
+
+    df_aco = pd.concat(encontrados, ignore_index=True)
+    df_aco["item_code_num"] = pd.to_numeric(df_aco["item_code_num"], errors="coerce").fillna(0).astype(int)
+    df_aco["bultos_aco_valkimia"] = pd.to_numeric(df_aco["bultos_aco_valkimia"], errors="coerce").fillna(0.0)
+
+    # Se imputa solamente al CD 41
+    df_aco["origin_cd_num"] = 41
+
+    df_aco = (
+        df_aco.groupby(["item_code_num", "origin_cd_num"], as_index=False)["bultos_aco_valkimia"]
+        .sum()
+    )
+
+    log_kv(
+        "bultos_aco_valkimia_leidos",
+        cantidad=len(df_aco),
+        total_bultos_aco=float(df_aco["bultos_aco_valkimia"].sum()) if not df_aco.empty else 0.0,
+    )
+
+    return df_aco
 
 
 # =========================
-# 9) DETALLES YA PUBLICADOS EN DMZ
+# 10) DETALLES YA PUBLICADOS EN DMZ
 # =========================
-def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str], chunk_size: int = 500) -> set[str]:
+def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str], chunk_size: int = 300) -> Set[str]:
     """
     Devuelve el conjunto de connexa_detail_uuid ya existentes en repl.TRANSF_CONNEXA_IN.
 
@@ -564,7 +639,7 @@ def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str], 
         log_kv("detalles_ya_publicados_consultados", cantidad=0, chunks=0)
         return set()
 
-    encontrados: set[str] = set()
+    encontrados: Set[str] = set()
 
     log_kv(
         "consulta_detalles_ya_publicados_inicio",
@@ -602,19 +677,77 @@ def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str], 
     return encontrados
 
 
-
-def marcar_detalles_ya_publicados(df: pd.DataFrame, ya_publicados: set[str]) -> pd.DataFrame:
+def marcar_detalles_ya_publicados(df: pd.DataFrame, ya_publicados: Set[str]) -> pd.DataFrame:
     out = df.copy()
     out["ya_publicado"] = out["connexa_detail_uuid"].isin(ya_publicados)
     return out
 
 
 # =========================
-# 10) ASIGNACIÓN EN MEMORIA
+# 11) STOCK NETO DISPONIBLE (SND)
+# =========================
+def enriquecer_con_stock_y_snd(
+    df_norm: pd.DataFrame,
+    df_stock_base: pd.DataFrame,
+    df_aco_valkimia: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Enriquece detalles con:
+      - q_bultos_disponible_base
+      - bultos_aco_valkimia
+      - q_bultos_disponible (SND final)
+
+    Fórmula:
+      SND = max(0, q_bultos_disponible_base - bultos_aco_valkimia)
+    """
+    if df_norm.empty:
+        df = df_norm.copy()
+        df["q_bultos_disponible_base"] = pd.Series(dtype="float")
+        df["bultos_aco_valkimia"] = pd.Series(dtype="float")
+        df["q_bultos_disponible"] = pd.Series(dtype="float")
+        return df
+
+    df = df_norm.merge(
+        df_stock_base,
+        how="left",
+        on=["item_code_num", "origin_cd_num"],
+    )
+
+    df = df.merge(
+        df_aco_valkimia,
+        how="left",
+        on=["item_code_num", "origin_cd_num"],
+    )
+
+    df["q_bultos_disponible_base"] = pd.to_numeric(
+        df.get("q_bultos_disponible_base"), errors="coerce" # type: ignore
+    ).fillna(0.0) # type: ignore
+
+    df["bultos_aco_valkimia"] = pd.to_numeric(
+        df.get("bultos_aco_valkimia"), errors="coerce" # type: ignore
+    ).fillna(0.0) # type: ignore
+
+    df["q_bultos_disponible"] = (
+        df["q_bultos_disponible_base"] - df["bultos_aco_valkimia"]
+    ).clip(lower=0.0)
+
+    log_kv(
+        "stock_neto_disponible_calculado",
+        cantidad=len(df),
+        stock_base_total=float(df["q_bultos_disponible_base"].sum()) if not df.empty else 0.0,
+        aco_total=float(df["bultos_aco_valkimia"].sum()) if not df.empty else 0.0,
+        snd_total=float(df["q_bultos_disponible"].sum()) if not df.empty else 0.0,
+    )
+
+    return df
+
+
+# =========================
+# 12) ASIGNACIÓN EN MEMORIA
 # =========================
 def asignar_stock_en_memoria_todo_o_nada(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Asigna stock en memoria por (origin_cd_num, item_code_num), bajo criterio FIFO y todo o nada.
+    Asigna stock neto disponible en memoria por (origin_cd_num, item_code_num), bajo criterio FIFO y todo o nada.
     """
     if df.empty:
         out = df.copy()
@@ -713,7 +846,7 @@ def asignar_stock_en_memoria_todo_o_nada(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 11) TRANSFORMACIÓN A STAGING
+# 13) TRANSFORMACIÓN A STAGING
 # =========================
 def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
     base_cols = [
@@ -789,7 +922,7 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 12) INSERCIÓN EN SQL SERVER
+# 14) INSERCIÓN EN SQL SERVER
 # =========================
 def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> int:
     if df_stg.empty:
@@ -811,7 +944,7 @@ def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> i
 
 
 # =========================
-# 13) UPDATE DE CABECERAS EN CONNEXA
+# 15) UPDATE DE CABECERAS EN CONNEXA
 # =========================
 def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
     uuids: List[uuid.UUID] = []
@@ -855,7 +988,7 @@ def actualizar_estado_cabeceras(pg_connexa_engine: Engine, header_uuids: List[st
 
 
 # =========================
-# 14) CABECERAS COMPLETAMENTE PUBLICABLES
+# 16) CABECERAS COMPLETAMENTE PUBLICABLES
 # =========================
 def obtener_headers_completamente_publicables(df_all: pd.DataFrame) -> List[str]:
     if df_all.empty:
@@ -883,7 +1016,7 @@ def obtener_headers_completamente_publicables(df_all: pd.DataFrame) -> List[str]
 
 
 # =========================
-# 15) EXPORT DE RECHAZADAS
+# 17) EXPORT DE RECHAZADAS
 # =========================
 def exportar_rechazadas(df_asignado: pd.DataFrame, output_file: Path) -> int:
     if df_asignado.empty:
@@ -911,6 +1044,8 @@ def exportar_rechazadas(df_asignado: pd.DataFrame, output_file: Path) -> int:
         "qty_requested",
         "qty_requested_num",
         "units_per_package",
+        "q_bultos_disponible_base",
+        "bultos_aco_valkimia",
         "q_bultos_disponible",
         "saldo_inicial_grupo",
         "saldo_antes",
@@ -958,7 +1093,7 @@ def log_resumen_rechazadas(df_asignado: pd.DataFrame) -> None:
 
 
 # =========================
-# 16) MAIN
+# 18) MAIN
 # =========================
 def main() -> int:
     inicio = datetime.now()
@@ -1000,33 +1135,43 @@ def main() -> int:
         # 3. Detectar detalles ya publicados en staging DMZ
         ya_publicados = obtener_detalles_ya_publicados(
             sql_engine,
-            df_norm["connexa_detail_uuid"].astype(str).tolist()
+            df_norm["connexa_detail_uuid"].astype(str).tolist(),
+            chunk_size=300,
         )
 
-        # 4. Leer stock desde diarco_data
-        df_stock = obtener_stock_disponible(pg_diarco_data_engine, df_norm)
+        # 4. Leer stock base desde diarco_data
+        df_stock_base = obtener_stock_disponible(pg_diarco_data_engine, df_norm)
 
-        # 5. Enriquecer + marcar publicados
-        df_work = enriquecer_con_stock(df_norm, df_stock)
+        # 5. Leer reservas ACO Valkimia
+        df_aco_valkimia = obtener_bultos_aco_valkimia(sql_engine, df_norm, chunk_size=300)
+
+        # 6. Enriquecer con SND
+        df_work = enriquecer_con_stock_y_snd(
+            df_norm=df_norm,
+            df_stock_base=df_stock_base,
+            df_aco_valkimia=df_aco_valkimia,
+        )
+
+        # 7. Marcar publicados previos
         df_work = marcar_detalles_ya_publicados(df_work, ya_publicados)
 
-        # 6. Asignar stock en memoria (todo o nada)
+        # 8. Asignar stock neto en memoria (todo o nada)
         df_asignado = asignar_stock_en_memoria_todo_o_nada(df_work)
 
-        # 7. Filtrar líneas que se publican ahora
+        # 9. Filtrar líneas que se publican ahora
         df_a_insertar = df_asignado[df_asignado["publicable_ahora"]].copy()
 
-        # 8. Transformar staging
+        # 10. Transformar staging
         df_stg = transformar_a_staging(df_a_insertar)
 
-        # 9. Insertar en SQL Server
+        # 11. Insertar en SQL Server
         if not df_stg.empty:
             n_insertadas = insertar_en_staging_sqlserver(df_stg, sql_engine)
         else:
             n_insertadas = 0
             log_kv("sin_filas_para_insertar", mensaje="No hay filas nuevas para insertar en staging.")
 
-        # 10. Determinar cabeceras completas y actualizarlas en Connexa
+        # 12. Determinar cabeceras completas y actualizarlas en Connexa
         header_uuids_actualizables = obtener_headers_completamente_publicables(df_asignado)
         if header_uuids_actualizables:
             n_headers_actualizadas = actualizar_estado_cabeceras(
@@ -1038,15 +1183,15 @@ def main() -> int:
             n_headers_actualizadas = 0
             log_kv("sin_cabeceras_para_actualizar", mensaje="No hay cabeceras completas para actualizar a 80.")
 
-        # 11. Exportar rechazadas
+        # 13. Exportar rechazadas
         n_rechazadas = exportar_rechazadas(df_asignado, REJECT_FILE)
         log_resumen_rechazadas(df_asignado)
 
-        # 12. Persistir auditoría detalle en diarco_data
+        # 14. Persistir auditoría detalle en diarco_data
         n_audit_detail = audit_insert_detail_rows(pg_diarco_data_engine, df_asignado, RUN_ID)
         log_kv("auditoria_detalle_insertada", cantidad=n_audit_detail)
 
-        # 13. Métricas finales
+        # 15. Métricas finales
         total_origen = len(df_asignado)
         total_ya_publicado = int(df_asignado["ya_publicado"].sum()) if not df_asignado.empty else 0
         total_publicable_ahora = int(df_asignado["publicable_ahora"].sum()) if not df_asignado.empty else 0
@@ -1122,6 +1267,11 @@ def main() -> int:
 
         return 2
 
+from prefect import flow
+
+@flow(name="Publicar transferencias Connexa SGM Valkimia Retorno")
+def publicar_transferencias_sgm_vk():
+    return main()
 
 if __name__ == "__main__":
     sys.exit(main())
