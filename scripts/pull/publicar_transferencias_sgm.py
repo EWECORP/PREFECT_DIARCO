@@ -46,7 +46,7 @@ import traceback
 import urllib.parse
 from pathlib import Path
 from datetime import datetime
-from typing import List, Set
+from typing import Iterable, List, Set
 
 import pandas as pd
 from dotenv import dotenv_values, load_dotenv
@@ -109,6 +109,21 @@ def log_kv(evento: str, **kwargs) -> None:
     for k, v in kwargs.items():
         partes.append(f"{k}={repr(v)}")
     logger.info(" | ".join(partes))
+
+
+def normalize_uuid_strings(values: Iterable[object]) -> List[str]:
+    normalized: List[str] = []
+    for value in values:
+        if value is None:
+            continue
+        raw = str(value).strip().lower()
+        if not raw:
+            continue
+        try:
+            normalized.append(str(uuid.UUID(raw)))
+        except Exception:
+            continue
+    return sorted(set(normalized))
 
 
 # =========================
@@ -421,7 +436,142 @@ def audit_insert_detail_rows(pg_diarco_data_engine: Engine, df_asignado: pd.Data
 
 
 # =========================
-# 6) LECTURA DESDE CONNEXA
+# 6) BLOCKLIST MANUAL EN DIARCO_DATA
+# =========================
+def transfer_blocklist_table_exists(pg_diarco_data_engine: Engine) -> bool:
+    sql = "SELECT to_regclass('audit.transfer_blocklist') IS NOT NULL AS exists;"
+    with pg_diarco_data_engine.connect() as conn:
+        result = conn.execute(text(sql)).scalar()
+    return bool(result)
+
+
+def ensure_transfer_blocklist_table(pg_diarco_data_engine: Engine) -> None:
+    statements = [
+        """
+        CREATE SCHEMA IF NOT EXISTS audit;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS audit.transfer_blocklist (
+            connexa_detail_uuid uuid PRIMARY KEY,
+            connexa_header_uuid uuid NULL,
+            motivo text NOT NULL,
+            usuario text NOT NULL,
+            observacion text NULL,
+            active boolean NOT NULL DEFAULT TRUE,
+            created_at timestamptz NOT NULL DEFAULT NOW(),
+            updated_at timestamptz NOT NULL DEFAULT NOW()
+        );
+        """,
+        """
+        CREATE INDEX IF NOT EXISTS ix_transfer_blocklist_active
+            ON audit.transfer_blocklist (active, created_at DESC);
+        """,
+    ]
+
+    with pg_diarco_data_engine.begin() as conn:
+        for statement in statements:
+            conn.execute(text(statement))
+
+
+def obtener_detalles_bloqueados_manualmente(
+    pg_diarco_data_engine: Engine,
+    detail_uuids: List[str],
+) -> pd.DataFrame:
+    ids = normalize_uuid_strings(detail_uuids)
+    if not ids or not transfer_blocklist_table_exists(pg_diarco_data_engine):
+        return pd.DataFrame(
+            columns=[
+                "connexa_detail_uuid",
+                "connexa_header_uuid",
+                "bloqueo_motivo",
+                "bloqueo_usuario",
+                "bloqueo_observacion",
+                "bloqueada_manual",
+                "bloqueo_created_at",
+            ]
+        )
+
+    sql = """
+    SELECT
+        LOWER(connexa_detail_uuid::text) AS connexa_detail_uuid,
+        LOWER(connexa_header_uuid::text) AS connexa_header_uuid,
+        motivo AS bloqueo_motivo,
+        usuario AS bloqueo_usuario,
+        observacion AS bloqueo_observacion,
+        TRUE AS bloqueada_manual,
+        created_at AS bloqueo_created_at
+    FROM audit.transfer_blocklist
+    WHERE active IS TRUE
+      AND connexa_detail_uuid = ANY(CAST(:lista_ids AS uuid[]));
+    """
+
+    with pg_diarco_data_engine.connect() as conn:
+        df = pd.read_sql(
+            text(sql),
+            conn,
+            params={"lista_ids": ids}, # pyright: ignore[reportArgumentType]
+            parse_dates=["bloqueo_created_at"],
+        )
+
+    if df.empty:
+        log_kv("detalles_bloqueados_manualmente", cantidad=0)
+        return pd.DataFrame(
+            columns=[
+                "connexa_detail_uuid",
+                "connexa_header_uuid",
+                "bloqueo_motivo",
+                "bloqueo_usuario",
+                "bloqueo_observacion",
+                "bloqueada_manual",
+                "bloqueo_created_at",
+            ]
+        )
+
+    for col in ("connexa_detail_uuid", "connexa_header_uuid"):
+        df[col] = df[col].fillna("").astype(str).str.strip().str.lower()
+        df.loc[df[col].eq(""), col] = pd.NA
+
+    for col in ("bloqueo_motivo", "bloqueo_usuario", "bloqueo_observacion"):
+        df[col] = df[col].fillna("").astype(str).str.strip()
+
+    df["bloqueada_manual"] = df["bloqueada_manual"].fillna(False).astype(bool)
+    log_kv("detalles_bloqueados_manualmente", cantidad=len(df))
+    return df
+
+
+def marcar_detalles_bloqueados_manualmente(df: pd.DataFrame, df_blocklist: pd.DataFrame) -> pd.DataFrame:
+    out = df.copy()
+    if df_blocklist.empty:
+        out["bloqueada_manual"] = False
+        out["bloqueo_motivo"] = ""
+        out["bloqueo_usuario"] = ""
+        out["bloqueo_observacion"] = ""
+        out["bloqueo_created_at"] = pd.NaT
+        return out
+
+    out = out.merge(
+        df_blocklist[
+            [
+                "connexa_detail_uuid",
+                "bloqueada_manual",
+                "bloqueo_motivo",
+                "bloqueo_usuario",
+                "bloqueo_observacion",
+                "bloqueo_created_at",
+            ]
+        ],
+        how="left",
+        on="connexa_detail_uuid",
+    )
+
+    out["bloqueada_manual"] = out["bloqueada_manual"].fillna(False).astype(bool)
+    for col in ("bloqueo_motivo", "bloqueo_usuario", "bloqueo_observacion"):
+        out[col] = out[col].fillna("").astype(str).str.strip()
+    return out
+
+
+# =========================
+# 7) LECTURA DESDE CONNEXA
 # =========================
 def obtener_transferencias_precarga(pg_connexa_engine: Engine) -> pd.DataFrame:
     sql = """
@@ -460,7 +610,7 @@ def obtener_transferencias_precarga(pg_connexa_engine: Engine) -> pd.DataFrame:
 
 
 # =========================
-# 7) NORMALIZACIÓN
+# 8) NORMALIZACIÓN
 # =========================
 def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
     if df_src.empty:
@@ -487,7 +637,7 @@ def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 8) STOCK BASE DESDE DIARCO_DATA
+# 9) STOCK BASE DESDE DIARCO_DATA
 # =========================
 def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFrame) -> pd.DataFrame:
     """
@@ -552,7 +702,7 @@ def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFram
 
 
 # =========================
-# 9) RESERVAS ACO VALKIMIA
+# 10) RESERVAS ACO VALKIMIA
 # =========================
 def obtener_bultos_aco_valkimia(sql_engine: Engine, df_norm: pd.DataFrame, chunk_size: int = 300) -> pd.DataFrame:
     """
@@ -626,7 +776,7 @@ def obtener_bultos_aco_valkimia(sql_engine: Engine, df_norm: pd.DataFrame, chunk
 
 
 # =========================
-# 10) DETALLES YA PUBLICADOS EN DMZ
+# 11) DETALLES YA PUBLICADOS EN DMZ
 # =========================
 def obtener_detalles_ya_publicados(sql_engine: Engine, detail_uuids: List[str], chunk_size: int = 300) -> Set[str]:
     """
@@ -684,7 +834,7 @@ def marcar_detalles_ya_publicados(df: pd.DataFrame, ya_publicados: Set[str]) -> 
 
 
 # =========================
-# 11) STOCK NETO DISPONIBLE (SND)
+# 12) STOCK NETO DISPONIBLE (SND)
 # =========================
 def enriquecer_con_stock_y_snd(
     df_norm: pd.DataFrame,
@@ -743,7 +893,7 @@ def enriquecer_con_stock_y_snd(
 
 
 # =========================
-# 12) ASIGNACIÓN EN MEMORIA
+# 13) ASIGNACIÓN EN MEMORIA
 # =========================
 def asignar_stock_en_memoria_todo_o_nada(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -803,6 +953,14 @@ def asignar_stock_en_memoria_todo_o_nada(df: pd.DataFrame) -> pd.DataFrame:
                 resultados.append(row)
                 continue
 
+            if bool(row.get("bloqueada_manual", False)):
+                row["q_bultos_asignado"] = 0.0
+                row["publicable"] = False
+                row["motivo_no_publicado"] = "BLOQUEADA_MANUALMENTE"
+                row["saldo_despues"] = round(saldo, 3)
+                resultados.append(row)
+                continue
+
             if qty <= 0:
                 row["q_bultos_asignado"] = 0.0
                 row["publicable"] = False
@@ -846,7 +1004,7 @@ def asignar_stock_en_memoria_todo_o_nada(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 13) TRANSFORMACIÓN A STAGING
+# 14) TRANSFORMACIÓN A STAGING
 # =========================
 def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
     base_cols = [
@@ -922,7 +1080,7 @@ def transformar_a_staging(df_src: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 14) INSERCIÓN EN SQL SERVER
+# 15) INSERCIÓN EN SQL SERVER
 # =========================
 def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> int:
     if df_stg.empty:
@@ -944,7 +1102,7 @@ def insertar_en_staging_sqlserver(df_stg: pd.DataFrame, sql_engine: Engine) -> i
 
 
 # =========================
-# 15) UPDATE DE CABECERAS EN CONNEXA
+# 16) UPDATE DE CABECERAS EN CONNEXA
 # =========================
 def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
     uuids: List[uuid.UUID] = []
@@ -988,7 +1146,7 @@ def actualizar_estado_cabeceras(pg_connexa_engine: Engine, header_uuids: List[st
 
 
 # =========================
-# 16) CABECERAS COMPLETAMENTE PUBLICABLES
+# 17) CABECERAS COMPLETAMENTE PUBLICABLES
 # =========================
 def obtener_headers_completamente_publicables(df_all: pd.DataFrame) -> List[str]:
     if df_all.empty:
@@ -1016,7 +1174,7 @@ def obtener_headers_completamente_publicables(df_all: pd.DataFrame) -> List[str]
 
 
 # =========================
-# 17) EXPORT DE RECHAZADAS
+# 18) EXPORT DE RECHAZADAS
 # =========================
 def exportar_rechazadas(df_asignado: pd.DataFrame, output_file: Path) -> int:
     if df_asignado.empty:
@@ -1051,6 +1209,10 @@ def exportar_rechazadas(df_asignado: pd.DataFrame, output_file: Path) -> int:
         "saldo_antes",
         "saldo_despues",
         "motivo_no_publicado",
+        "bloqueada_manual",
+        "bloqueo_motivo",
+        "bloqueo_usuario",
+        "bloqueo_created_at",
         "requested_at",
         "created_at",
         "created_by",
@@ -1093,7 +1255,7 @@ def log_resumen_rechazadas(df_asignado: pd.DataFrame) -> None:
 
 
 # =========================
-# 18) MAIN
+# 19) MAIN
 # =========================
 def main() -> int:
     inicio = datetime.now()
@@ -1132,46 +1294,53 @@ def main() -> int:
         # 2. Normalizar
         df_norm = normalizar_transferencias(df_src)
 
-        # 3. Detectar detalles ya publicados en staging DMZ
+        # 3. Marcar bloqueos manuales activos por detail_uuid
+        df_blocklist = obtener_detalles_bloqueados_manualmente(
+            pg_diarco_data_engine,
+            df_norm["connexa_detail_uuid"].astype(str).tolist(),
+        )
+        df_norm = marcar_detalles_bloqueados_manualmente(df_norm, df_blocklist)
+
+        # 4. Detectar detalles ya publicados en staging DMZ
         ya_publicados = obtener_detalles_ya_publicados(
             sql_engine,
             df_norm["connexa_detail_uuid"].astype(str).tolist(),
             chunk_size=300,
         )
 
-        # 4. Leer stock base desde diarco_data
+        # 5. Leer stock base desde diarco_data
         df_stock_base = obtener_stock_disponible(pg_diarco_data_engine, df_norm)
 
-        # 5. Leer reservas ACO Valkimia
+        # 6. Leer reservas ACO Valkimia
         df_aco_valkimia = obtener_bultos_aco_valkimia(sql_engine, df_norm, chunk_size=300)
 
-        # 6. Enriquecer con SND
+        # 7. Enriquecer con SND
         df_work = enriquecer_con_stock_y_snd(
             df_norm=df_norm,
             df_stock_base=df_stock_base,
             df_aco_valkimia=df_aco_valkimia,
         )
 
-        # 7. Marcar publicados previos
+        # 8. Marcar publicados previos
         df_work = marcar_detalles_ya_publicados(df_work, ya_publicados)
 
-        # 8. Asignar stock neto en memoria (todo o nada)
+        # 9. Asignar stock neto en memoria (todo o nada)
         df_asignado = asignar_stock_en_memoria_todo_o_nada(df_work)
 
-        # 9. Filtrar líneas que se publican ahora
+        # 10. Filtrar líneas que se publican ahora
         df_a_insertar = df_asignado[df_asignado["publicable_ahora"]].copy()
 
-        # 10. Transformar staging
+        # 11. Transformar staging
         df_stg = transformar_a_staging(df_a_insertar)
 
-        # 11. Insertar en SQL Server
+        # 12. Insertar en SQL Server
         if not df_stg.empty:
             n_insertadas = insertar_en_staging_sqlserver(df_stg, sql_engine)
         else:
             n_insertadas = 0
             log_kv("sin_filas_para_insertar", mensaje="No hay filas nuevas para insertar en staging.")
 
-        # 12. Determinar cabeceras completas y actualizarlas en Connexa
+        # 13. Determinar cabeceras completas y actualizarlas en Connexa
         header_uuids_actualizables = obtener_headers_completamente_publicables(df_asignado)
         if header_uuids_actualizables:
             n_headers_actualizadas = actualizar_estado_cabeceras(
@@ -1183,15 +1352,15 @@ def main() -> int:
             n_headers_actualizadas = 0
             log_kv("sin_cabeceras_para_actualizar", mensaje="No hay cabeceras completas para actualizar a 80.")
 
-        # 13. Exportar rechazadas
+        # 14. Exportar rechazadas
         n_rechazadas = exportar_rechazadas(df_asignado, REJECT_FILE)
         log_resumen_rechazadas(df_asignado)
 
-        # 14. Persistir auditoría detalle en diarco_data
+        # 15. Persistir auditoría detalle en diarco_data
         n_audit_detail = audit_insert_detail_rows(pg_diarco_data_engine, df_asignado, RUN_ID)
         log_kv("auditoria_detalle_insertada", cantidad=n_audit_detail)
 
-        # 15. Métricas finales
+        # 16. Métricas finales
         total_origen = len(df_asignado)
         total_ya_publicado = int(df_asignado["ya_publicado"].sum()) if not df_asignado.empty else 0
         total_publicable_ahora = int(df_asignado["publicable_ahora"].sum()) if not df_asignado.empty else 0
