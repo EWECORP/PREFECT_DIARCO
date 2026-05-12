@@ -1,0 +1,124 @@
+name: dmz_diarco_flows
+prefect-version: 3.4.1
+
+pull:
+- prefect.deployments.steps.set_working_directory:
+    directory: E:/ETL/ETL_DIARCO
+
+deployments:
+  
+  - name: IOSDB_PRODUCTS_LAB
+    entrypoint: IOSdb/main.py:products_flow
+    description: "Sincroniza productos hacia la plataforma IOS"
+    tags: ["iosdb", "lab", "products"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron: "0 7 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters:
+      notify: true
+
+  - name: IOSDB_STOCK_MAYORISTA_LAB
+    entrypoint: IOSdb/main.py:mayorista_flow
+    description: "Sincroniza stock mayorista hacia la plataforma IOS"
+    tags: ["iosdb", "lab", "stock", "mayorista"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron: "0 8 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters:
+      notify: true
+      max_workers: 10
+
+  - name: IOSDB_STOCK_BARRIO_LAB
+    entrypoint: IOSdb/main.py:barrio_flow
+    description: "Sincroniza stock barrio hacia la plataforma IOS"
+    tags: ["iosdb", "lab", "stock", "barrio"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron: "0 9 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters:
+      notify: true
+      max_workers: 10
+
+  - name: IOSDB_RETRY_LAB
+    entrypoint: IOSdb/main.py:retry_flow
+    description: "Reintenta payloads IOSdb fallidos"
+    tags: ["iosdb", "lab", "retry"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    schedule:
+      cron: "30 10 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+    parameters:
+      notify: true
+
+  - name: IOSDB_CATEGORIES_MANUAL
+    entrypoint: IOSdb/main.py:categories_flow
+    description: "Sincronizacion manual de categorias IOS"
+    tags: ["iosdb", "manual", "categories"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      notify: false
+
+  - name: IOSDB_CADENA_MANUAL
+    entrypoint: IOSdb/main.py:cadena_flow
+    description: "Sincronizacion manual de stock cadena IOS"
+    tags: ["iosdb", "manual", "stock", "cadena"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      notify: false
+
+  - name: IOSDB_INITIAL_PRODUCTS_MANUAL
+    entrypoint: IOSdb/main.py:initial_products_flow
+    description: "Carga inicial manual de productos IOS"
+    tags: ["iosdb", "manual", "products", "initial-load"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      notify: false
+
+  - name: IOSDB_MASTER_MANUAL
+    entrypoint: IOSdb/main.py:iosdb_master_flow
+    description: "Flujo maestro IOSdb para ejecuciones manuales o coordinadas"
+    tags: ["iosdb", "manual", "master"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      run_products: true
+      run_mayorista: true
+      run_barrio: true
+      run_retry: true
+      run_categories: false
+      run_cadena: false
+      notify: true
+
+
+
+  # - name: Actualizar_Bases_Ventas_Postgres
+  #   entrypoint: scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas
+  #   description: "Flujo maestro orquestador para subir tablas Ventas DIARDO + BARRIO entre SQL Server y PostgreSQL"
+  #   tags: ["oc", "recepcion", "diarco", "prod"]
+  #   work_pool:
+  #     name: dmz-diarco
+  #     work_queue_name: default
+  #   schedule:
+  #     cron:  "01 6 * * *"   # Todos los días a las 6:01 AM  
+  #     timezone: "America/Argentina/Buenos_Aires"
+  #   parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
+
+#  prefect deploy scripts/send/actualizar_bases_ventas.py:actualizar_bases_ventas  --name Push_datos_Ventas_Stock_Diarios  --work-queue push-forecast  --cron "30 6 * * *"

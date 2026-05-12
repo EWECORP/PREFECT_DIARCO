@@ -1,0 +1,6 @@
+prefect
+tenacity
+requests
+pyodbc
+python-dotenv
+psycopg2-binary
