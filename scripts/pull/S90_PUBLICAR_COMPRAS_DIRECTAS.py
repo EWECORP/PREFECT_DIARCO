@@ -31,7 +31,7 @@ import logging
 import traceback
 import io
 from datetime import datetime
-from typing import Dict, List, Set, Tuple, Union
+from typing import Dict, List, Optional, Set, Tuple, Union
 from uuid import UUID
 
 import pandas as pd
@@ -115,6 +115,9 @@ PK_COLS_PG: List[str] = [
 ]
 
 PublishedId = Union[str, int]
+
+M_PROCESADO_STAGING = "X"
+M_PROCESADO_PENDIENTE = "N"
 
 
 def es_compra_directa(valor) -> bool:
@@ -490,6 +493,7 @@ def obtener_ids_verificados_en_sql_server(
     cursor_sql,
     schema: str,
     table: str,
+    estado: Optional[str] = None,
 ) -> Set[PublishedId]:
     """
     Verifica contra SQL Server cuáles filas del lote existen realmente
@@ -510,15 +514,19 @@ def obtener_ids_verificados_en_sql_server(
     proveedores_sql = "(" + ",".join(["?"] * len(proveedores)) + ")"
     sucursales_sql = "(" + ",".join(["?"] * len(sucursales)) + ")"
 
+    filtro_estado = "" if estado is None else "AND M_PROCESADO = ?"
     sql = f"""
         SELECT C_COMPRA_KIKKER, C_PROVEEDOR, C_ARTICULO, C_SUCU_EMPR
         FROM {schema}.{table}
         WHERE C_COMPRA_KIKKER IN {compras_sql}
           AND C_PROVEEDOR IN {proveedores_sql}
           AND C_SUCU_EMPR IN {sucursales_sql}
+          {filtro_estado}
     """
 
     params = list(compras) + list(proveedores) + list(sucursales)
+    if estado is not None:
+        params.append(estado)
     cursor_sql.execute(sql, params)
     existentes = {
         (str(r[0]).strip(), int(r[1]), int(r[2]), int(r[3]))
@@ -550,6 +558,115 @@ def obtener_ids_verificados_en_sql_server(
 
     logging.info(f"🔎 Filas verificadas en SQL Server: {len(verified_ids)}")
     return verified_ids
+
+
+def cargar_claves_lote_sqlserver(cursor_sql, df_sql: pd.DataFrame) -> int:
+    """
+    Carga las claves completas únicas del lote en una tabla temporal.
+    Se usa para verificar y liberar exactamente este lote de compras directas.
+    """
+    cursor_sql.execute("""
+        IF OBJECT_ID('tempdb..#COMPRAS_DIRECTAS_KEYS') IS NOT NULL
+            DROP TABLE #COMPRAS_DIRECTAS_KEYS;
+    """)
+    cursor_sql.execute("""
+        CREATE TABLE #COMPRAS_DIRECTAS_KEYS (
+            C_COMPRA_KIKKER VARCHAR(255) NOT NULL,
+            C_PROVEEDOR INT NOT NULL,
+            C_ARTICULO INT NOT NULL,
+            C_SUCU_EMPR INT NOT NULL,
+            PRIMARY KEY (C_COMPRA_KIKKER, C_PROVEEDOR, C_ARTICULO, C_SUCU_EMPR)
+        );
+    """)
+
+    keys = {
+        (
+            str(row["C_COMPRA_KIKKER"]).strip(),
+            int(row["C_PROVEEDOR"]),
+            int(row["C_ARTICULO"]),
+            int(row["C_SUCU_EMPR"]),
+        )
+        for _, row in df_sql.iterrows()
+    }
+
+    for key in keys:
+        cursor_sql.execute(
+            """
+            INSERT INTO #COMPRAS_DIRECTAS_KEYS (
+                C_COMPRA_KIKKER, C_PROVEEDOR, C_ARTICULO, C_SUCU_EMPR
+            ) VALUES (?, ?, ?, ?)
+            """,
+            key,
+        )
+    return len(keys)
+
+
+def contar_claves_lote_en_destino(
+    cursor_sql,
+    schema: str,
+    table: str,
+    estado: Optional[str] = None,
+) -> int:
+    filtro_estado = "" if estado is None else "AND target.M_PROCESADO = ?"
+    sql = f"""
+        SELECT COUNT(1)
+        FROM #COMPRAS_DIRECTAS_KEYS AS keys_lote
+        WHERE EXISTS (
+            SELECT 1
+            FROM {schema}.{table} AS target
+            WHERE target.C_COMPRA_KIKKER = keys_lote.C_COMPRA_KIKKER
+              AND target.C_PROVEEDOR = keys_lote.C_PROVEEDOR
+              AND target.C_ARTICULO = keys_lote.C_ARTICULO
+              AND target.C_SUCU_EMPR = keys_lote.C_SUCU_EMPR
+              {filtro_estado}
+        )
+    """
+    if estado is None:
+        cursor_sql.execute(sql)
+    else:
+        cursor_sql.execute(sql, (estado,))
+    return int(cursor_sql.fetchone()[0])
+
+
+def liberar_lote_sqlserver(cursor_sql, schema: str, table: str, df_sql: pd.DataFrame) -> int:
+    esperadas = cargar_claves_lote_sqlserver(cursor_sql, df_sql)
+    if esperadas == 0:
+        return 0
+
+    encontradas = contar_claves_lote_en_destino(cursor_sql, schema, table)
+    if encontradas != esperadas:
+        raise RuntimeError(
+            f"Lote incompleto en SQL Server: esperadas={esperadas}, encontradas={encontradas}. "
+            "Se mantiene M_PROCESADO='X' y no se actualiza PostgreSQL."
+        )
+
+    cursor_sql.execute(
+        f"""
+        UPDATE target
+           SET M_PROCESADO = ?
+        FROM {schema}.{table} AS target
+        INNER JOIN #COMPRAS_DIRECTAS_KEYS AS keys_lote
+            ON target.C_COMPRA_KIKKER = keys_lote.C_COMPRA_KIKKER
+           AND target.C_PROVEEDOR = keys_lote.C_PROVEEDOR
+           AND target.C_ARTICULO = keys_lote.C_ARTICULO
+           AND target.C_SUCU_EMPR = keys_lote.C_SUCU_EMPR
+        WHERE target.M_PROCESADO = ?
+        """,
+        (M_PROCESADO_PENDIENTE, M_PROCESADO_STAGING),
+    )
+
+    listas = contar_claves_lote_en_destino(
+        cursor_sql,
+        schema,
+        table,
+        M_PROCESADO_PENDIENTE,
+    )
+    if listas != esperadas:
+        raise RuntimeError(
+            f"Lote no liberado completamente: esperadas={esperadas}, listas={listas}. "
+            "Se revierte la liberación y no se actualiza PostgreSQL."
+        )
+    return listas
 
 
 # --------------------------------------------------------------------
@@ -627,8 +744,11 @@ def main():
             widths,
             COLUMN_MAP_PG_TO_SQL,
         )
+        if "M_PROCESADO" not in df_sql.columns:
+            raise RuntimeError("No se puede garantizar integridad: falta M_PROCESADO en el lote SQL.")
+        df_sql["M_PROCESADO"] = M_PROCESADO_STAGING
 
-        # Publicar en SQL Server
+        # Publicar en SQL Server en staging: el consumidor sólo toma M_PROCESADO='N'.
         attempted_ids = publicar_compras_directas(
             df_pg=df_pg_trunc,
             df_sql=df_sql,
@@ -638,16 +758,26 @@ def main():
             table=table,
         )
 
-        # Commit en SQL Server
+        # Commit en SQL Server con M_PROCESADO='X'.
         conn_sql.commit()
 
-        # Verificar contra SQL Server antes de marcar publicadas en PG
+        released = liberar_lote_sqlserver(
+            cursor_sql=cursor_sql,
+            schema=schema,
+            table=table,
+            df_sql=df_sql,
+        )
+        conn_sql.commit()
+        logging.info(f"✅ Lote liberado a M_PROCESADO='N' en SQL Server: {released} claves.")
+
+        # Verificar contra SQL Server ya liberado antes de marcar publicadas en PG
         verified_ids = obtener_ids_verificados_en_sql_server(
             df_pg=df_pg_trunc,
             df_sql=df_sql,
             cursor_sql=cursor_sql,
             schema=schema,
             table=table,
+            estado=M_PROCESADO_PENDIENTE,
         )
 
         if len(verified_ids) != len(attempted_ids):

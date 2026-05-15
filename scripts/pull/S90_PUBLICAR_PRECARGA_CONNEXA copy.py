@@ -33,9 +33,6 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="repla
 
 print(f"[INFO] Python ejecutado: {sys.executable}")
 
-M_PROCESADO_STAGING = "X"
-M_PROCESADO_PENDIENTE = "N"
-
 # ------------------------------
 # .env y paths
 # ------------------------------
@@ -377,102 +374,6 @@ def truncar_según_schema(df: pd.DataFrame, lens: Dict[str, Optional[int]]) -> p
             df[src_col] = df[src_col].astype("string").fillna("").str.slice(0, maxlen)
     return df
 
-def _cargar_claves_lote_sqlserver(cursor_ss, df: pd.DataFrame) -> int:
-    """
-    Carga las claves completas del lote actual en una tabla temporal de SQL Server.
-    Esto permite verificar y liberar exactamente las filas del lote, sin depender
-    sólo de C_COMPRA_KIKKER.
-    """
-    cursor_ss.execute("""
-        IF OBJECT_ID('tempdb..#PRECARGA_CONNEXA_KEYS') IS NOT NULL
-            DROP TABLE #PRECARGA_CONNEXA_KEYS;
-    """)
-    cursor_ss.execute("""
-        CREATE TABLE #PRECARGA_CONNEXA_KEYS (
-            C_PROVEEDOR INT NOT NULL,
-            C_ARTICULO INT NOT NULL,
-            C_SUCU_EMPR INT NOT NULL,
-            C_COMPRA_KIKKER VARCHAR(255) NOT NULL,
-            PRIMARY KEY (C_PROVEEDOR, C_ARTICULO, C_SUCU_EMPR, C_COMPRA_KIKKER)
-        );
-    """)
-
-    rows = []
-    for row in df.itertuples(index=False):
-        rows.append((
-            int(getattr(row, "c_proveedor")),
-            int(getattr(row, "c_articulo")),
-            int(getattr(row, "c_sucu_empr")),
-            str(getattr(row, "c_compra_connexa") or ""),
-        ))
-
-    for row in rows:
-        cursor_ss.execute(
-            """
-            INSERT INTO #PRECARGA_CONNEXA_KEYS (
-                C_PROVEEDOR, C_ARTICULO, C_SUCU_EMPR, C_COMPRA_KIKKER
-            ) VALUES (?, ?, ?, ?)
-            """,
-            row,
-        )
-    return len(rows)
-
-def _contar_claves_lote_en_destino(cursor_ss, schema: str, table: str, estado: Optional[str] = None) -> int:
-    filtro_estado = "" if estado is None else "AND target.M_PROCESADO = ?"
-    query = f"""
-        SELECT COUNT(1)
-        FROM #PRECARGA_CONNEXA_KEYS AS keys_lote
-        WHERE EXISTS (
-            SELECT 1
-            FROM {schema}.{table} AS target
-            WHERE target.C_PROVEEDOR = keys_lote.C_PROVEEDOR
-              AND target.C_ARTICULO = keys_lote.C_ARTICULO
-              AND target.C_SUCU_EMPR = keys_lote.C_SUCU_EMPR
-              AND target.C_COMPRA_KIKKER = keys_lote.C_COMPRA_KIKKER
-              {filtro_estado}
-        )
-    """
-    if estado is None:
-        cursor_ss.execute(query)
-    else:
-        cursor_ss.execute(query, (estado,))
-    return int(cursor_ss.fetchone()[0])
-
-def _liberar_lote_sqlserver(cursor_ss, schema: str, table: str, df_lote: pd.DataFrame) -> int:
-    esperadas = _cargar_claves_lote_sqlserver(cursor_ss, df_lote)
-    if esperadas == 0:
-        return 0
-
-    encontradas = _contar_claves_lote_en_destino(cursor_ss, schema, table)
-    if encontradas != esperadas:
-        raise RuntimeError(
-            f"Lote incompleto en SQL Server: esperadas={esperadas}, encontradas={encontradas}. "
-            "Se mantiene M_PROCESADO='X' y no se actualiza PostgreSQL."
-        )
-
-    cursor_ss.execute(
-        f"""
-        UPDATE target
-           SET M_PROCESADO = ?
-        FROM {schema}.{table} AS target
-        INNER JOIN #PRECARGA_CONNEXA_KEYS AS keys_lote
-            ON target.C_PROVEEDOR = keys_lote.C_PROVEEDOR
-           AND target.C_ARTICULO = keys_lote.C_ARTICULO
-           AND target.C_SUCU_EMPR = keys_lote.C_SUCU_EMPR
-           AND target.C_COMPRA_KIKKER = keys_lote.C_COMPRA_KIKKER
-        WHERE target.M_PROCESADO = ?
-        """,
-        (M_PROCESADO_PENDIENTE, M_PROCESADO_STAGING),
-    )
-
-    listas = _contar_claves_lote_en_destino(cursor_ss, schema, table, M_PROCESADO_PENDIENTE)
-    if listas != esperadas:
-        raise RuntimeError(
-            f"Lote no liberado completamente: esperadas={esperadas}, listas={listas}. "
-            "Se revierte la liberación y no se actualiza PostgreSQL."
-        )
-    return listas
-
 # ------------------------------
 # Lectura de pendientes
 # ------------------------------
@@ -566,8 +467,8 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
         n_omit   = len(df_omit)
         logging.info(f"[INFO] Lote={total_pend} | A insertar={n_insert} | Omitidas(existían)={n_omit}")
 
-        # 2.b) Inserción efectiva: primero quedan ocultas para el proceso consumidor.
-        published_compra_ids: Set[str] = set()
+        # 2.b) Inserción efectiva
+        inserted_compra_ids: Set[str] = set()
         if n_insert > 0:
             insert_stmt = f"""
                 INSERT INTO {schema}.{table} (
@@ -590,7 +491,7 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
                         str(getattr(row,"c_terminal_genero_oc") or ""),
                         getattr(row,"f_genero_oc").to_pydatetime() if pd.notna(getattr(row,"f_genero_oc")) else None,
                         str(getattr(row,"c_usuario_bloqueo") or ""),
-                        M_PROCESADO_STAGING,
+                        str(getattr(row,"m_procesado") or "N"),
                         getattr(row,"f_procesado").to_pydatetime() if pd.notna(getattr(row,"f_procesado")) else None,
                         int(getattr(row,"u_prefijo_oc")) if pd.notna(getattr(row,"u_prefijo_oc")) else 0,
                         int(getattr(row,"u_sufijo_oc"))  if pd.notna(getattr(row,"u_sufijo_oc"))  else 0,
@@ -657,7 +558,7 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
                     str(getattr(row,"c_terminal_genero_oc") or ""),
                     getattr(row,"f_genero_oc").to_pydatetime() if pd.notna(getattr(row,"f_genero_oc")) else None,
                     str(getattr(row,"c_usuario_bloqueo") or ""),
-                    M_PROCESADO_STAGING,
+                    str(getattr(row,"m_procesado") or "N"),
                     getattr(row,"f_procesado").to_pydatetime() if pd.notna(getattr(row,"f_procesado")) else None,
                     int(getattr(row,"u_prefijo_oc")) if pd.notna(getattr(row,"u_prefijo_oc")) else 0,
                     int(getattr(row,"u_sufijo_oc"))  if pd.notna(getattr(row,"u_sufijo_oc"))  else 0,
@@ -667,26 +568,19 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
                 ))
 
             conn_ss.commit()
-            print(f"✔ Inserciones/actualizaciones MERGE ejecutadas en staging ({len(df_insert)} filas con M_PROCESADO='X')")
+            print(f"✔ Inserciones/actualizaciones MERGE ejecutadas correctamente ({len(df_insert)} filas)")
 
             print(f"✔ Insertadas en SQL Server: {len(batch)} filas")
             logging.info(f"[INFO] Inserción SQL Server OK: {len(batch)}")
 
-        # Si es un reintento idempotente, también se intenta liberar lo ya existente
-        # para evitar dejar filas en X sin que PostgreSQL vuelva a intentarlas.
-        df_release = df_insert.copy()
-        if idempotente_marcar_existentes and n_omit > 0:
-            df_release = pd.concat([df_release, df_omit], ignore_index=True)
+            inserted_compra_ids = set(df_insert["c_compra_connexa"].dropna().astype(str))
 
-        if not df_release.empty:
-            released = _liberar_lote_sqlserver(cursor_ss, schema, table, df_release)
-            conn_ss.commit()
-            published_compra_ids = set(df_release["c_compra_connexa"].dropna().astype(str))
-            print(f"✔ Lote verificado y liberado a M_PROCESADO='N' ({released} filas)")
-            logging.info(f"[INFO] Lote liberado en SQL Server: {released}")
+        # Idempotencia opcional: marcar también las “omitidas” por existir (misma PK completa)
+        if idempotente_marcar_existentes and n_omit > 0:
+            inserted_compra_ids |= set(df_omit["c_compra_connexa"].dropna().astype(str))
 
         # 3) Marcar como publicadas SOLO las compras insertadas (y/o existentes si idempotente=True)
-        if published_compra_ids:
+        if inserted_compra_ids:
             conn_pg = open_pg_psycopg2()
             if conn_pg is None:
                 raise ConnectionError("No se pudo reabrir PG para UPDATE.")
@@ -699,25 +593,19 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
                          WHERE m_publicado = false
                            AND c_compra_connexa = ANY(%s)
                         """,
-                        (list(published_compra_ids),)
+                        (list(inserted_compra_ids),)
                     )
                     updated = cur.rowcount
             print(f"✔ {updated} registros actualizados con m_publicado = true")
-            logging.info(f"[INFO] Publicadas en PG: {updated} (compras={len(published_compra_ids)})")
+            logging.info(f"[INFO] Publicadas en PG: {updated} (compras={len(inserted_compra_ids)})")
         else:
             print("ℹ No se marcaron publicaciones en PG (no hubo inserciones efectivas ni idempotencia activada).")
             logging.info("[INFO] Sin UPDATE PG (0 compras a marcar).")
 
     except Exception as e:
-        try:
-            if conn_ss:
-                conn_ss.rollback()
-        except Exception:
-            pass
         logging.error("[ERROR] Fallo en publicación de OC Precarga")
         logging.error(traceback.format_exc())
         print("[ERROR] Error en la ejecución:", e)
-        raise
 
     finally:
         try:
