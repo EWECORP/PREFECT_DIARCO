@@ -509,6 +509,14 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
         df_oc = forzar_enteros(df_oc)
         total_pend = len(df_oc)
         logging.info(f"[INFO] Pendientes leídos: {total_pend}")
+        
+        if "q_bultos_kilos_diarco" in df_oc.columns:
+            total_bultos = df_oc["q_bultos_kilos_diarco"].sum()
+        else:
+            total_bultos = 0
+            logging.warning("[WARN] La columna q_bultos_kilos_diarco no existe en df_oc")
+
+        logging.info(f"[INFO] Total bultos/kilos ORIGEN: {total_bultos}")
 
         df_oc = limpiar_campos_oc(df_oc)
         validar_longitudes(df_oc)
@@ -668,6 +676,14 @@ def publicar_oc_precarga(idempotente_marcar_existentes: bool = False):
 
             conn_ss.commit()
             print(f"✔ Inserciones/actualizaciones MERGE ejecutadas en staging ({len(df_insert)} filas con M_PROCESADO='X')")
+                                
+            if "q_bultos_kilos_diarco" in df_insert.columns:
+                total_bultos = df_insert["q_bultos_kilos_diarco"].sum()
+            else:
+                total_bultos = 0
+                logging.warning("[WARN] La columna q_bultos_kilos_diarco no existe en df_insert")
+
+            logging.info(f"[INFO] Total bultos/kilos DESTINO: {total_bultos}")
 
             print(f"✔ Insertadas en SQL Server: {len(batch)} filas")
             logging.info(f"[INFO] Inserción SQL Server OK: {len(batch)}")

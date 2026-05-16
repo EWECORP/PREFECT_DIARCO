@@ -13,6 +13,7 @@ Correcciones (2025-10-02):
 - Construcción segura de df_merged usando 'partes' (41CD/82CD) para evitar variables no definidas.
 - Unicidad intra-lote por PK destino y anti-join con tabla destino para evitar PK 2627.
 - Guardado opcional de CSVs de diagnóstico.
+- Nombre Ajustado - (INACTIVADO)
 """
 
 import pandas as pd
