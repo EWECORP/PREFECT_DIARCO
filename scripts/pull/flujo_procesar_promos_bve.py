@@ -1,15 +1,32 @@
 from datetime import date, timedelta
+import io
+import os
+import sys
+
+from dotenv import dotenv_values
 from prefect import flow, task, get_run_logger
 from sqlalchemy import create_engine, text
-import os
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+
+print(f"[INFO] Python ejecutado: {sys.executable}")
+
+ENV_PATH = os.environ.get("ETL_ENV_PATH", "E:/ETL/ETL_DIARCO/.env")
+if not os.path.exists(ENV_PATH):
+    print(f"El archivo .env no existe en la ruta: {ENV_PATH}")
+    print(f"Directorio actual: {os.getcwd()}")
+    sys.exit(1)
+
+secrets = dotenv_values(ENV_PATH)
 
 
 def get_pg_engine():
-    host = os.getenv("PG_HOST")
-    port = os.getenv("PG_PORT", "5432")
-    db = os.getenv("PG_DB")
-    user = os.getenv("PG_USER")
-    password = os.getenv("PG_PASSWORD")
+    host = secrets["PG_HOST"]
+    port = secrets.get("PG_PORT", "5432")
+    db = secrets["PG_DB"]
+    user = secrets["PG_USER"]
+    password = secrets["PG_PASSWORD"]
 
     url = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}"
     return create_engine(url, pool_pre_ping=True)
