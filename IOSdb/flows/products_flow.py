@@ -42,8 +42,8 @@ ORDER BY id
 QUERY_PRODUCTS_DETAILS_TEMPLATE = """
 SELECT DISTINCT
     CAST(art.C_ARTICULO AS varchar(50))  AS id,
-    CAST(art.N_ARTICULO AS varchar(255)) AS name,
-    CAST(art.C_EAN      AS varchar(50))  AS barcode,
+    TRIM(CAST(art.N_ARTICULO AS varchar(255))) AS name,
+    TRIM(CAST(art.C_EAN AS varchar(50))) AS barcode,
     CAST(NULL AS varchar(500))           AS photo_url,
     CASE
         WHEN art.M_VENDE_POR_PESO = 'S' THEN 'true'
