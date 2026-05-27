@@ -111,6 +111,59 @@ def _load_module_from_path(module_name: str, file_path: Path):
     return module
 
 
+def _read_file_tail(file_path: Optional[Path], max_lines: int = 40) -> str:
+    if file_path is None:
+        return ""
+
+    try:
+        path = Path(file_path)
+        if not path.exists():
+            return ""
+
+        with path.open("r", encoding="utf-8", errors="replace") as fh:
+            lines = fh.readlines()
+
+        tail = "".join(lines[-max_lines:]).strip()
+        return tail
+    except Exception:
+        return ""
+
+
+def _rc_description(rc: int) -> str:
+    rc_map = {
+        1: "error controlado de configuración o ejecución",
+        2: "excepción inesperada dentro del script de pre-publicación",
+    }
+    return rc_map.get(rc, "código de salida no mapeado")
+
+
+def _build_pre_publicacion_error(script_path: Path, rc: int, mod=None) -> str:
+    details = [
+        "Pre-publicación a staging falló.",
+        f"script={script_path}",
+        f"exit_code={rc}",
+        f"detalle_exit_code={_rc_description(rc)}",
+    ]
+
+    run_id = getattr(mod, "RUN_ID", None) if mod is not None else None
+    log_file = getattr(mod, "LOG_FILE", None) if mod is not None else None
+    reject_file = getattr(mod, "REJECT_FILE", None) if mod is not None else None
+
+    if run_id:
+        details.append(f"run_id={run_id}")
+    if log_file:
+        details.append(f"log_file={log_file}")
+    if reject_file:
+        details.append(f"reject_file={reject_file}")
+
+    log_tail = _read_file_tail(Path(log_file) if log_file else None)
+    if log_tail:
+        details.append("ultimas_lineas_log:")
+        details.append(log_tail)
+
+    return "\n".join(details)
+
+
 def _to_uuid_list(values: List[str]) -> List[uuid.UUID]:
     out: List[uuid.UUID] = []
     for v in values or []:
@@ -148,14 +201,33 @@ def ejecutar_pre_publicacion_staging() -> int:
 
     logger.info(f"Ejecutando pre-publicación: {script_path}")
 
-    mod = _load_module_from_path("publicar_transferencias_sgm_mod", script_path)
+    try:
+        mod = _load_module_from_path("publicar_transferencias_sgm_mod", script_path)
+    except SystemExit as exc:
+        rc = int(exc.code) if isinstance(exc.code, int) else 1
+        error_msg = _build_pre_publicacion_error(script_path=script_path, rc=rc)
+        logger.error(error_msg)
+        raise RuntimeError(error_msg) from exc
 
     if not hasattr(mod, "main"):
         raise AttributeError("El script publicar_transferencias_sgm.py no expone función main().")
 
-    rc = int(mod.main() or 0)
+    try:
+        rc = int(mod.main() or 0)
+    except SystemExit as exc:
+        rc = int(exc.code) if isinstance(exc.code, int) else 1
+        error_msg = _build_pre_publicacion_error(script_path=script_path, rc=rc, mod=mod)
+        logger.error(error_msg)
+        raise RuntimeError(error_msg) from exc
+    except Exception as exc:
+        error_msg = _build_pre_publicacion_error(script_path=script_path, rc=2, mod=mod)
+        logger.exception(error_msg)
+        raise RuntimeError(error_msg) from exc
+
     if rc != 0:
-        raise RuntimeError(f"Pre-publicación a staging falló. Exit code={rc}")
+        error_msg = _build_pre_publicacion_error(script_path=script_path, rc=rc, mod=mod)
+        logger.error(error_msg)
+        raise RuntimeError(error_msg)
 
     logger.info("Pre-publicación a staging finalizada OK.")
     return rc
