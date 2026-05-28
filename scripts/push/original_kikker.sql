@@ -1,6 +1,8 @@
 USE [kikker]
 GO
 
+/***** Nueva forma de generarr datos 
+
 /****** Object:  StoredProcedure [dbo].[SP_KIKKER_T_4_PRODUCTOS_LOJA]    Script Date: 19/06/2025 15:26:41 ******/
 SET ANSI_NULLS ON
 GO
