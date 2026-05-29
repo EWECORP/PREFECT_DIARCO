@@ -13,16 +13,15 @@
 #
 # Fuentes / destinos:
 # - Connexa MS (PGP_*): lectura de transferencias + update de estado cabeceras
-# - diarco_data (PG_*): auditoría en audit.*
-# - SQL Server SGM_PROD (SQLP_*): lectura de stock base en T061_STOCK_DIARIO
-# - SQL Server DMZ (SQL_*): inserción en repl.TRANSF_CONNEXA_IN
+# - diarco_data (PG_*): lectura de src.base_stock_sucursal + auditoría en audit.*
+# - SQL Server DMZ: inserción en repl.TRANSF_CONNEXA_IN
 # - Valkimia vía linked server SQL Server: lectura de necesidades ACO para calcular SND
 #
 # Stock Neto Disponible (SND):
 #   SND = q_bultos_disponible_base - bultos_aco_valkimia
 #
 # donde:
-# - q_bultos_disponible_base sale de [DIARCOP001].[DiarcoP].[dbo].[T061_STOCK_DIARIO]
+# - q_bultos_disponible_base sale de src.base_stock_sucursal
 # - bultos_aco_valkimia sale de [DIARCO-VKMSQL\SQL2008R2].[VALKIMIA].[dbo].[IntNecIN]
 #
 # Supuesto:
@@ -147,8 +146,6 @@ log_kv(
     pg_db=secrets.get("PG_DB"),
     pg_host=secrets.get("PG_HOST"),
     pg_user=secrets.get("PG_USER"),
-    sqlp_server=secrets.get("SQLP_SERVER"),
-    sqlp_database=secrets.get("SQLP_DATABASE"),
     sql_server=secrets.get("SQL_SERVER"),
     sql_database=secrets.get("SQL_DATABASE"),
     log_file=str(LOG_FILE),
@@ -216,37 +213,6 @@ def get_sqlserver_engine() -> Engine:
     timeout_seconds = 30
 
     log_kv("conexion_sqlserver_intento", host=host, port=port, db=db, user=user, driver=driver)
-
-    params = urllib.parse.quote_plus(
-        f"DRIVER={driver};"
-        f"SERVER={host},{port};"
-        f"DATABASE={db};"
-        f"UID={user};PWD={pwd};"
-        f"Encrypt=yes;TrustServerCertificate=yes;"
-        f"Connect Timeout={timeout_seconds};"
-    )
-    url = f"mssql+pyodbc:///?odbc_connect={params}"
-    return create_engine(url, pool_pre_ping=True, fast_executemany=True)
-
-
-def get_sqlserver_prod_engine() -> Engine:
-    """
-    SQL Server SGM_PROD / DiarcoP.
-    Usa variables SQLP_*.
-    """
-    host = os.getenv("SQLP_SERVER")
-    port = os.getenv("SQLP_PORT", "1433")
-    db = os.getenv("SQLP_DATABASE", "DiarcoP")
-    user = os.getenv("SQLP_USER")
-    pwd = os.getenv("SQLP_PASSWORD")
-    driver = os.getenv("SQLP_DRIVER", "ODBC Driver 17 for SQL Server")
-
-    if not all([host, db, user, pwd]):
-        raise RuntimeError("Faltan variables de entorno SQLP_SERVER, SQLP_DATABASE, SQLP_USER o SQLP_PASSWORD")
-
-    timeout_seconds = 30
-
-    log_kv("conexion_sqlserver_prod_intento", host=host, port=port, db=db, user=user, driver=driver)
 
     params = urllib.parse.quote_plus(
         f"DRIVER={driver};"
@@ -671,12 +637,12 @@ def normalizar_transferencias(df_src: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================
-# 9) STOCK BASE DESDE SGM_PROD
+# 9) STOCK BASE DESDE DIARCO_DATA
 # =========================
-def obtener_stock_disponible(sql_prod_engine: Engine, df_norm: pd.DataFrame, chunk_size_articulos: int = 500) -> pd.DataFrame:
+def obtener_stock_disponible(pg_diarco_data_engine: Engine, df_norm: pd.DataFrame) -> pd.DataFrame:
     """
-    Obtiene q_bultos_disponible_base por (articulo, sucursal origen)
-    desde [DIARCOP001].[DiarcoP].[dbo].[T061_STOCK_DIARIO].
+    Obtiene q_bultos_disponible_base por (codigo_articulo, codigo_sucursal origen)
+    desde src.base_stock_sucursal.
     """
     cols = ["item_code_num", "origin_cd_num"]
     if df_norm.empty or not set(cols).issubset(df_norm.columns):
@@ -688,50 +654,42 @@ def obtener_stock_disponible(sql_prod_engine: Engine, df_norm: pd.DataFrame, chu
     if not articulos or not sucursales:
         return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible_base"])
 
-    sucursales_sql = ", ".join(str(x) for x in sucursales)
-    frames = []
+    sql = """
+        SELECT
+            codigo_articulo::bigint AS item_code_num,
+            codigo_sucursal::bigint AS origin_cd_num,
+            MAX(
+                FLOOR(
+                    (COALESCE(stock, 0) + COALESCE(transfer_pendiente, 0))
+                    / NULLIF(COALESCE(factor_venta, 0), 0)
+                )
+            )::bigint AS q_bultos_disponible_base
+        FROM src.base_stock_sucursal
+        WHERE codigo_sucursal = ANY(CAST(:lista_sucursales AS bigint[]))
+          AND codigo_articulo = ANY(CAST(:lista_articulos AS bigint[]))
+          AND COALESCE(factor_venta, 0) > 0
+        GROUP BY codigo_articulo, codigo_sucursal
+        HAVING MAX(
+            FLOOR(
+                (COALESCE(stock, 0) + COALESCE(transfer_pendiente, 0))
+                / NULLIF(COALESCE(factor_venta, 0), 0)
+            )
+        ) > 0
+    """
 
-    log_kv(
-        "consulta_stock_base_sgm_prod_inicio",
-        total_articulos=len(articulos),
-        total_sucursales=len(sucursales),
-        chunk_size_articulos=chunk_size_articulos,
-    )
-
-    with sql_prod_engine.connect() as conn:
-        for i in range(0, len(articulos), chunk_size_articulos):
-            bloque_articulos = articulos[i:i + chunk_size_articulos]
-            articulos_sql = ", ".join(str(x) for x in bloque_articulos)
-            sql = f"""
-                SELECT
-                    CAST([C_ARTICULO] AS bigint) AS item_code_num,
-                    CAST([C_SUCU_EMPR] AS bigint) AS origin_cd_num,
-                    CAST(
-                        [Q_UNID_ARTICULO_DIA_ANT]
-                        - [Q_UNID_ARTICULO_VEND]
-                        - [Q_UNID_ARTICULO_EGRE]
-                        + [Q_UNID_ARTICULO_INGR] AS decimal(18,3)
-                    ) AS q_bultos_disponible_base
-                FROM [dbo].[T061_STOCK_DIARIO]
-                WHERE [C_SUCU_EMPR] IN ({sucursales_sql})
-                  AND [C_ARTICULO] IN ({articulos_sql})
-            """
-            frames.append(pd.read_sql(sql, conn))
-
-    if frames:
-        df_stock = pd.concat(frames, ignore_index=True)
-    else:
-        df_stock = pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible_base"])
+    with pg_diarco_data_engine.connect() as conn:
+        df_stock = pd.read_sql(
+            text(sql),
+            conn,
+            params={
+                "lista_sucursales": sucursales,
+                "lista_articulos": articulos,
+            }, # type: ignore
+        )
 
     if df_stock.empty:
-        log_kv("stock_base_sgm_prod_leido", cantidad=0)
+        log_kv("stock_base_cd_leido", cantidad=0)
         return pd.DataFrame(columns=["item_code_num", "origin_cd_num", "q_bultos_disponible_base"])
-
-    df_stock = (
-        df_stock.dropna(subset=["item_code_num", "origin_cd_num"])
-        .drop_duplicates(subset=["item_code_num", "origin_cd_num"], keep="last")
-        .reset_index(drop=True)
-    )
 
     df_stock["item_code_num"] = pd.to_numeric(df_stock["item_code_num"], errors="coerce").fillna(0).astype(int)
     df_stock["origin_cd_num"] = pd.to_numeric(df_stock["origin_cd_num"], errors="coerce").fillna(0).astype(int)
@@ -739,11 +697,7 @@ def obtener_stock_disponible(sql_prod_engine: Engine, df_norm: pd.DataFrame, chu
         df_stock["q_bultos_disponible_base"], errors="coerce"
     ).fillna(0.0)
 
-    log_kv(
-        "stock_base_sgm_prod_leido",
-        cantidad=len(df_stock),
-        total_bultos=float(df_stock["q_bultos_disponible_base"].sum()) if not df_stock.empty else 0.0,
-    )
+    log_kv("stock_base_cd_leido", cantidad=len(df_stock))
     return df_stock
 
 
@@ -781,7 +735,7 @@ def obtener_bultos_aco_valkimia(sql_engine: Engine, df_norm: pd.DataFrame, chunk
                 CAST([INIArtId] AS bigint) AS item_code_num,
                 SUM(CAST([INICnt1] AS decimal(18,3))) AS bultos_aco_valkimia
             FROM [DIARCO-VKMSQL\\SQL2008R2].[VALKIMIA].[dbo].[IntNecIN]
-            WHERE INIEst IN ('PRE', 'ACO')
+            WHERE INIEst = 'ACO'
               AND [INIEntId] < 300
               AND [INICnt1] > 0
               AND [INIArtId] IN ({placeholders})
@@ -1307,12 +1261,10 @@ def main() -> int:
     inicio = datetime.now()
     pg_connexa_engine = None
     pg_diarco_data_engine = None
-    sql_prod_engine = None
 
     try:
         pg_connexa_engine = get_pg_connexa_engine()
         pg_diarco_data_engine = get_pg_diarco_data_engine()
-        sql_prod_engine = get_sqlserver_prod_engine()
         sql_engine = get_sqlserver_engine()
 
         audit_insert_run_start(pg_diarco_data_engine, RUN_ID, inicio)
@@ -1356,8 +1308,8 @@ def main() -> int:
             chunk_size=300,
         )
 
-        # 5. Leer stock base desde SGM_PROD
-        df_stock_base = obtener_stock_disponible(sql_prod_engine, df_norm)
+        # 5. Leer stock base desde diarco_data
+        df_stock_base = obtener_stock_disponible(pg_diarco_data_engine, df_norm)
 
         # 6. Leer reservas ACO Valkimia
         df_aco_valkimia = obtener_bultos_aco_valkimia(sql_engine, df_norm, chunk_size=300)
