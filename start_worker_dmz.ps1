@@ -80,6 +80,7 @@ Log "[INFO] WorkerLog: $WorkerLog"
 $env:ETL_ENV_PATH = $EnvPath
 $env:BASE_DIR     = $BaseDir
 $env:PYTHONUTF8   = "1"
+$env:DO_NOT_TRACK = "1"
 
 # Forzar UTF-8 en consola
 chcp 65001 | Out-Null

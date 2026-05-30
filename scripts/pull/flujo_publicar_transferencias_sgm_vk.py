@@ -1,4 +1,13 @@
 # scripts/pull/flujo_publicar_transferencias_sgm_vk.py
+# 01/05/2026
+# Flujo completo de publicación de transferencias SGM y VK desde Connexa hacia SQL Server, con retorno de resultados para actualización de estados en Connexa.
+# Este flujo reemplaza a los scripts individuales de publicación (publicar_transferencias_sgm.py y publicar_transferencias_vk.py) y al script de retorno por cabeceras, unificando todo el proceso en un solo flujo orquestado con Prefect.
+# Pasos del flujo:
+#    1) Ejecutar el script de pre-publicación (publicar_transferencias_sgm original) que carga staging en SQL Server y pone las cabeceras en estado "syncing" (80).
+#    2) Ejecutar SPs de publicación por lote para SGM y luego VK,      hasta agotar pendientes o alcanzar límites de loops.
+#    3) Leer retorno por cabeceras desde SQL Server para identificar cuáles se cerraron correctamente y cuáles con error.
+#    4) Actualizar estados en Connexa según retorno: status_id=10 para OK, status_id=85 para ERROR.
+
 from __future__ import annotations
 
 import importlib.util

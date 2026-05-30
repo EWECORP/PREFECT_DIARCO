@@ -1,4 +1,9 @@
 # scripts/pull/publicar_transferencias_sgm.py
+# 01/05/2026
+# DEPRECADO: este script se mantiene para referencia histórica, pero ya no se ejecuta ni se actualiza.
+#           El proceso de publicación de transferencias SGM ahora se realiza mediante un SP en SQL Server, llamado desde un script Python más simple.
+#           Razones: CONNEXA ya publica el NETO CONSOLIDADO
+#           El SP implementa la misma lógica de publicación "todo o nada" basada en stock neto disponible, pero con mejor performance y menor complejidad operativa, al ejecutarse directamente en SQL Server sin necesidad de mover datos entre sistemas.
 #
 # Publica transferencias desde CONNEXA (PostgreSQL Microservicios) hacia staging en SQL Server DMZ:
 #   [data-sync].[repl].[TRANSF_CONNEXA_IN]
