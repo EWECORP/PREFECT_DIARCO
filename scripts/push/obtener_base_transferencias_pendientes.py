@@ -1,124 +1,131 @@
-#obtener_base_transferencias_pendientes.py
-# Rutina para obtener Base_Transferencias_Pendientes SIN PARAMETROS
+# obtener_base_transferencias_pendientes.py
 
 import os
 import sys
-import pandas as pd
-import psycopg2 as pg2
-from psycopg2.extras import execute_values
-import logging
-from prefect import flow, task, get_run_logger
-from prefect.filesystems import LocalFileSystem
-from sqlalchemy import create_engine
+
 from dotenv import load_dotenv
+from prefect import flow, get_run_logger, task
 
-# storage = LocalFileSystem(basepath="D:/services/ETL_DIARCO/flows") #D:\Services\ETL_DIARCO\flows  "D:/services/ETL_DIARCO/flows
+from etl_chunk_utils import (
+    build_sql_server_engine,
+    coerce_float_column,
+    coerce_int_column,
+    open_pg_conn,
+    replace_table_from_query_chunks,
+    setup_script_logger,
+)
 
-# Configurar logging
-logger = logging.getLogger("replicacion_logger")
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-os.makedirs("logs", exist_ok=True)
-file_handler = logging.FileHandler("logs/replicacion_psycopg2.log", encoding="utf-8")
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
-console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
 
-# Cargar variables de entorno
 load_dotenv()
-# SQL DMZ - Acceso a la base de datos de producción
+
 SQL_SERVER = os.getenv("SQL_SERVER")
 SQL_USER = os.getenv("SQL_USER")
 SQL_PASSWORD = os.getenv("SQL_PASSWORD")
 SQL_DATABASE = os.getenv("SQL_DATABASE")
-#Testing
-SQLT_DRIVER= os.getenv("SQLT_DRIVER")
-SQLT_SERVER= os.getenv("SQLT_SERVER")
-SQLT_USER= os.getenv("SQLT_USER")
-SQLT_PASSWORD= os.getenv("SQLT_PASSWORD")
-SQLT_DATABASE= os.getenv("SQLT_DATABASE")
-SQLT_PORT=os.getenv("SQLT_PORT")
-# PostgreSQL
+
 PG_HOST = os.getenv("PG_HOST")
 PG_PORT = os.getenv("PG_PORT")
 PG_DB = os.getenv("PG_DB")
 PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 
-# Crear engine SQL Server
-def open_sql_conn():
-    print(f"Conectando a SQL Server: {SQL_SERVER}")
-    print(f"Conectando a SQL Server: {SQL_DATABASE}") 
-    return create_engine(f"mssql+pyodbc://{SQL_USER}:{SQL_PASSWORD}@{SQL_SERVER}/{SQL_DATABASE}?driver=ODBC+Driver+17+for+SQL+Server")
+TABLE_DESTINO = "src.base_transferencias_pendientes"
+READ_CHUNK_SIZE = int(os.getenv("ETL_CHUNK_SIZE_TRANSFERENCIAS", "30000"))
 
-def open_pg_conn():
-    return pg2.connect(dbname=PG_DB, user=PG_USER, password=PG_PASSWORD, host=PG_HOST, port=PG_PORT)
+logger = setup_script_logger(
+    "obtener_base_transferencias_pendientes",
+    "replicacion_base_transferencias_pendientes.log",
+)
 
-def infer_postgres_types(df):
-    type_map = {
-        "int64": "BIGINT",
-        "int32": "INTEGER",
-        "float64": "DOUBLE PRECISION",
-        "bool": "BOOLEAN",
-        "datetime64[ns]": "TIMESTAMP",
-        "object": "TEXT"
-    }
-    col_defs = [f"{col} {type_map.get(str(df[col].dtype), 'TEXT')}" for col in df.columns]
-    return ", ".join(col_defs)
+sql_engine = build_sql_server_engine(
+    SQL_SERVER,
+    SQL_USER,
+    SQL_PASSWORD,
+    SQL_DATABASE,
+)
 
-    
-@task(name="cargar_transferencias_pendientes_pg")
-def cargar_transferencias_pendientes_pg():
-    print(f"-> Generando datos para ID: {ids}")
-    # ----------------------------------------------------------------
-    # FILTRA Transferencias Pendientes  (FULL DEMORADAS)
-    # ----------------------------------------------------------------
-    query = f"""
-        SELECT [C_SUCU_ORIG]
-            ,[C_SUCU_DEST]
-            ,[C_ARTICULO]
-            ,[q_pendiente]           
-            ,'Flujo Diario' AS [FUENTE_ORIGEN]
-            ,GETDATE() AS [FECHA_EXTRACCION]
-            ,0 AS [ESTADO_SINCRONIZACION]
-        FROM [DIARCOP001].[DiarcoP].[dbo].[v_transferencias_pendientes]     
-        WHERE [q_pendiente] > 0;
-    """
 
-    # logger.info(f"---->  QUERY: {query}")
-    data_sync = open_sql_conn()    
-    df = pd.read_sql(query, data_sync)
-    logger.info(f"{len(df)} filas leídas de los Pendientes {ids}")
-    # Reemplazar en PostgreSQL la Base de Estimación para FORECAST
-    conn = open_pg_conn()
-    cur = conn.cursor()
-    table_name = f"src.base_transferencias_pendientes"
-    columns = ', '.join(df.columns)
-    cur.execute(f"DROP TABLE IF EXISTS {table_name} CASCADE")
-    create_sql = f"CREATE TABLE {table_name} ({infer_postgres_types(df)})"
-    cur.execute(create_sql)
-    values = [tuple(row) for row in df.itertuples(index=False, name=None)]
-    insert_sql = f"INSERT INTO {table_name} ({columns}) VALUES %s"
-    execute_values(cur, insert_sql, values, page_size=5000)
-    conn.commit()
-    cur.close()
-    conn.close()
-    logger.info(f"Datos cargados en PostgreSQL → {table_name}")
+def open_pg_conn_local():
+    return open_pg_conn(PG_HOST, PG_PORT, PG_DB, PG_USER, PG_PASSWORD)
+
+
+ESQUEMA_TRANSFERENCIAS_PENDIENTES = {
+    "c_sucu_orig": "INTEGER",
+    "c_sucu_dest": "INTEGER",
+    "c_articulo": "INTEGER",
+    "q_pendiente": "DOUBLE PRECISION",
+    "fuente_origen": "VARCHAR",
+    "fecha_extraccion": "TIMESTAMP",
+    "estado_sincronizacion": "INTEGER",
+}
+
+
+QUERY = """
+    SELECT
+        [C_SUCU_ORIG],
+        [C_SUCU_DEST],
+        [C_ARTICULO],
+        [q_pendiente],
+        GETDATE() AS [FECHA_EXTRACCION]
+    FROM [DIARCOP001].[DiarcoP].[dbo].[v_transferencias_pendientes]
+    WHERE [q_pendiente] > 0;
+"""
+
+
+def transformar_chunk(df, chunk_index, task_logger):
+    df["FUENTE_ORIGEN"] = "v_transferencias_pendientes"
+    df["ESTADO_SINCRONIZACION"] = 0
+
+    for column in ["C_SUCU_ORIG", "C_SUCU_DEST", "C_ARTICULO", "ESTADO_SINCRONIZACION"]:
+        coerce_int_column(df, column, task_logger)
+
+    coerce_float_column(df, "q_pendiente", task_logger)
+
+    task_logger.info(
+        "Chunk %s transformado para transferencias pendientes | filas=%s",
+        chunk_index,
+        len(df),
+    )
     return df
 
 
-@flow(name="capturar_transferencias_pendientes")
+@task(name="cargar_transferencias_pendientes_pg")
+def cargar_transferencias_pendientes_pg():
+    task_logger = get_run_logger()
+    metrics = replace_table_from_query_chunks(
+        query=QUERY,
+        sql_engine=sql_engine,
+        pg_conn_factory=open_pg_conn_local,
+        table_name=TABLE_DESTINO,
+        schema_dict=ESQUEMA_TRANSFERENCIAS_PENDIENTES,
+        transform_chunk=transformar_chunk,
+        logger=task_logger,
+        read_chunk_size=READ_CHUNK_SIZE,
+    )
+    return metrics
+
+
+@flow(name="capturar_transferencias_pendientes", persist_result=False)
 def capturar_transferencias_pendientes():
-    log = get_run_logger()
+    flow_logger = get_run_logger()
     try:
-        filas_art = cargar_transferencias_pendientes_pg.with_options(name="Carga Transferencias").submit().result()
-        log.info(f"Transferencias Pendientes: {filas_art} filas insertadas")
-    except Exception as e:
-        log.error(f"Error cargando registros: {e}")
+        load_result = cargar_transferencias_pendientes_pg.with_options(
+            name="Carga Transferencias Pendientes",
+        ).submit().result()
+
+        flow_logger.info(
+            "Flujo completado | tabla=%s | filas=%s | chunks=%s | duracion=%.2fs",
+            TABLE_DESTINO,
+            load_result["rows"],
+            load_result["chunks"],
+            load_result["seconds"],
+        )
+    except Exception as exc:
+        flow_logger.error("Error general en el flujo de transferencias pendientes: %s", exc)
+        raise
+
 
 if __name__ == "__main__":
-    ids = list(map(int, sys.argv[1:]))  # ← lee los proveedores como argumentos
+    _ = sys.argv[1:]
     capturar_transferencias_pendientes()
-    logger.info("--------------->  Flujo de replicación FINALIZADO.")
+    logger.info("Proceso finalizado: obtener_base_transferencias_pendientes")

@@ -1,138 +1,179 @@
-
-# Rutina para obtener Base_Forecast_Oc_Demoradas SIN PARAMETROS
+# obtener_oc_demoradas_proveedor.py
 
 import os
 import sys
-import pandas as pd
-import psycopg2 as pg2
-from psycopg2.extras import execute_values
-import logging
-from prefect import flow, task, get_run_logger
-from prefect.filesystems import LocalFileSystem
-from sqlalchemy import create_engine
+
 from dotenv import load_dotenv
+from prefect import flow, get_run_logger, task
 
-# storage = LocalFileSystem(basepath="D:/services/ETL_DIARCO/flows") #D:\Services\ETL_DIARCO\flows  "D:/services/ETL_DIARCO/flows
+from etl_chunk_utils import (
+    build_sql_server_engine,
+    coerce_datetime_column,
+    coerce_int_column,
+    coerce_string_column,
+    open_pg_conn,
+    replace_table_from_query_chunks,
+    setup_script_logger,
+)
 
-# Configurar logging
-logger = logging.getLogger("replicacion_logger")
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-os.makedirs("logs", exist_ok=True)
-file_handler = logging.FileHandler("logs/replicacion_psycopg2.log", encoding="utf-8")
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
-console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
 
-# Cargar variables de entorno
 load_dotenv()
-# SQL DMZ - Acceso a la base de datos de producción
+
 SQL_SERVER = os.getenv("SQL_SERVER")
 SQL_USER = os.getenv("SQL_USER")
 SQL_PASSWORD = os.getenv("SQL_PASSWORD")
 SQL_DATABASE = os.getenv("SQL_DATABASE")
-#Testing
-SQLT_DRIVER= os.getenv("SQLT_DRIVER")
-SQLT_SERVER= os.getenv("SQLT_SERVER")
-SQLT_USER= os.getenv("SQLT_USER")
-SQLT_PASSWORD= os.getenv("SQLT_PASSWORD")
-SQLT_DATABASE= os.getenv("SQLT_DATABASE")
-SQLT_PORT=os.getenv("SQLT_PORT")
-# PostgreSQL
+
 PG_HOST = os.getenv("PG_HOST")
 PG_PORT = os.getenv("PG_PORT")
 PG_DB = os.getenv("PG_DB")
 PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 
-# Crear engine SQL Server
-def open_sql_conn():
-    print(f"Conectando a SQL Server: {SQL_SERVER}")
-    print(f"Conectando a SQL Server: {SQL_DATABASE}") 
-    return create_engine(f"mssql+pyodbc://{SQL_USER}:{SQL_PASSWORD}@{SQL_SERVER}/{SQL_DATABASE}?driver=ODBC+Driver+17+for+SQL+Server")
+TABLE_DESTINO = "src.base_forecast_oc_demoradas"
+READ_CHUNK_SIZE = int(os.getenv("ETL_CHUNK_SIZE_OC_DEMORADAS", "20000"))
 
-def open_pg_conn():
-    return pg2.connect(dbname=PG_DB, user=PG_USER, password=PG_PASSWORD, host=PG_HOST, port=PG_PORT)
+logger = setup_script_logger(
+    "obtener_oc_demoradas_proveedor",
+    "replicacion_oc_demoradas_proveedor.log",
+)
 
-def infer_postgres_types(df):
-    type_map = {
-        "int64": "BIGINT",
-        "int32": "INTEGER",
-        "float64": "DOUBLE PRECISION",
-        "bool": "BOOLEAN",
-        "datetime64[ns]": "TIMESTAMP",
-        "object": "TEXT"
-    }
-    col_defs = [f"{col} {type_map.get(str(df[col].dtype), 'TEXT')}" for col in df.columns]
-    return ", ".join(col_defs)
+sql_engine = build_sql_server_engine(
+    SQL_SERVER, # type: ignore
+    SQL_USER, # type: ignore
+    SQL_PASSWORD, # type: ignore
+    SQL_DATABASE, # type: ignore
+)
 
-    
-@task(name="cargar_oc_demoradas_proveedores_pg")
-def cargar_oc_demoradas_proveedores_pg():
-    print(f"-> Generando datos para ID: {ids}")
-    # ----------------------------------------------------------------
-    # FILTRA Ordenes de Compra Demoradas por Proveedor  (FULL DEMORADAS)
-    # ----------------------------------------------------------------
-    query = f"""              
-        SELECT  [C_OC]
-            ,[U_PREFIJO_OC]
-            ,[U_SUFIJO_OC]      
-            ,[U_DIAS_LIMITE_ENTREGA]
-            ,[FECHA_LIMITE]
-            ,DATEDIFF (DAY, [FECHA_LIMITE], GETDATE()) as Demora
-            ,[C_PROVEEDOR] as Codigo_Proveedor
-            ,[C_SUCU_COMPRA] as Codigo_Sucursal
-            ,[C_SUCU_DESTINO]
-            ,[C_SUCU_DESTINO_ALT]
-            ,[C_SITUAC]
-            ,[F_SITUAC]
-            ,[F_ALTA_SIST]
-            ,[F_EMISION]
-            ,[F_ENTREGA]    
-            ,[C_USUARIO_OPERADOR]  
-            ,'Flujo Diario' AS [FUENTE_ORIGEN]
-            ,GETDATE() AS [FECHA_EXTRACCION]
-            ,0 AS [ESTADO_SINCRONIZACION]
-            
-        FROM [repl].[T080_OC_CABE]  
-        WHERE [FECHA_LIMITE] < GETDATE()
-        AND [C_SITUAC] = 1;
-    """
 
-    # logger.info(f"---->  QUERY: {query}")
-    data_sync = open_sql_conn()    
-    df = pd.read_sql(query, data_sync)
-    logger.info(f"{len(df)} filas leídas de los Proveedores {ids}")
-    # Reemplazar en PostgreSQL la Base de Estimación para FORECAST
-    conn = open_pg_conn()
-    cur = conn.cursor()
-    table_name = f"src.base_forecast_oc_demoradas"
-    columns = ', '.join(df.columns)
-    cur.execute(f"DROP TABLE IF EXISTS {table_name} CASCADE")
-    create_sql = f"CREATE TABLE {table_name} ({infer_postgres_types(df)})"
-    cur.execute(create_sql)
-    values = [tuple(row) for row in df.itertuples(index=False, name=None)]
-    insert_sql = f"INSERT INTO {table_name} ({columns}) VALUES %s"
-    execute_values(cur, insert_sql, values, page_size=5000)
-    conn.commit()
-    cur.close()
-    conn.close()
-    logger.info(f"Datos cargados en PostgreSQL → {table_name}")
+def open_pg_conn_local():
+    return open_pg_conn(PG_HOST, PG_PORT, PG_DB, PG_USER, PG_PASSWORD) # pyright: ignore[reportArgumentType]
+
+
+ESQUEMA_OC_DEMORADAS = {
+    "c_oc": "BIGINT",
+    "u_prefijo_oc": "VARCHAR",
+    "u_sufijo_oc": "VARCHAR",
+    "u_dias_limite_entrega": "INTEGER",
+    "fecha_limite": "TIMESTAMP",
+    "demora": "INTEGER",
+    "codigo_proveedor": "INTEGER",
+    "codigo_sucursal": "INTEGER",
+    "c_sucu_destino": "INTEGER",
+    "c_sucu_destino_alt": "INTEGER",
+    "c_situac": "INTEGER",
+    "f_situac": "TIMESTAMP",
+    "f_alta_sist": "TIMESTAMP",
+    "f_emision": "TIMESTAMP",
+    "f_entrega": "TIMESTAMP",
+    "c_usuario_operador": "VARCHAR",
+    "fuente_origen": "VARCHAR",
+    "fecha_extraccion": "TIMESTAMP",
+    "estado_sincronizacion": "INTEGER",
+}
+
+
+QUERY = """
+    SELECT
+        [C_OC],
+        [U_PREFIJO_OC],
+        [U_SUFIJO_OC],
+        [U_DIAS_LIMITE_ENTREGA],
+        [FECHA_LIMITE],
+        DATEDIFF(DAY, [FECHA_LIMITE], GETDATE()) AS [Demora],
+        [C_PROVEEDOR] AS [Codigo_Proveedor],
+        [C_SUCU_COMPRA] AS [Codigo_Sucursal],
+        [C_SUCU_DESTINO],
+        [C_SUCU_DESTINO_ALT],
+        [C_SITUAC],
+        [F_SITUAC],
+        [F_ALTA_SIST],
+        [F_EMISION],
+        [F_ENTREGA],
+        [C_USUARIO_OPERADOR],
+        GETDATE() AS [FECHA_EXTRACCION]
+    FROM [repl].[T080_OC_CABE]
+    WHERE [FECHA_LIMITE] < GETDATE()
+      AND [C_SITUAC] = 1;
+"""
+
+
+def transformar_chunk(df, chunk_index, task_logger):
+    df["FUENTE_ORIGEN"] = "T080_OC_CABE"
+    df["ESTADO_SINCRONIZACION"] = 0
+
+    int_columns = [
+        "C_OC",
+        "U_DIAS_LIMITE_ENTREGA",
+        "Demora",
+        "Codigo_Proveedor",
+        "Codigo_Sucursal",
+        "C_SUCU_DESTINO",
+        "C_SUCU_DESTINO_ALT",
+        "C_SITUAC",
+        "ESTADO_SINCRONIZACION",
+    ]
+    for column in int_columns:
+        coerce_int_column(df, column, task_logger)
+
+    for column in [
+        "FECHA_LIMITE",
+        "F_SITUAC",
+        "F_ALTA_SIST",
+        "F_EMISION",
+        "F_ENTREGA",
+        "FECHA_EXTRACCION",
+    ]:
+        coerce_datetime_column(df, column, task_logger)
+
+    for column in ["U_PREFIJO_OC", "U_SUFIJO_OC", "C_USUARIO_OPERADOR"]:
+        coerce_string_column(df, column, task_logger, strip=True)
+
+    task_logger.info(
+        "Chunk %s transformado para OC demoradas | filas=%s",
+        chunk_index,
+        len(df),
+    )
     return df
 
 
-@flow(name="capturar_oc_demoradas_proveedores")
+@task(name="cargar_oc_demoradas_proveedores_pg")
+def cargar_oc_demoradas_proveedores_pg():
+    task_logger = get_run_logger()
+    metrics = replace_table_from_query_chunks(
+        query=QUERY,
+        sql_engine=sql_engine,
+        pg_conn_factory=open_pg_conn_local,
+        table_name=TABLE_DESTINO,
+        schema_dict=ESQUEMA_OC_DEMORADAS,
+        transform_chunk=transformar_chunk,
+        logger=task_logger, # pyright: ignore[reportArgumentType]
+        read_chunk_size=READ_CHUNK_SIZE,
+    )
+    return metrics
+
+
+@flow(name="capturar_oc_demoradas_proveedores", persist_result=False)
 def capturar_oc_demoradas_proveedores():
-    log = get_run_logger()
+    flow_logger = get_run_logger()
     try:
-        filas_art = cargar_oc_demoradas_proveedores_pg.with_options(name="Carga Stock").submit().result()
-        log.info(f"OC Demoradas: {filas_art} filas insertadas")
-    except Exception as e:
-        log.error(f"Error cargando registros: {e}")
+        load_result = cargar_oc_demoradas_proveedores_pg.with_options(
+            name="Carga OC Demoradas Proveedores",
+        ).submit().result()
+
+        flow_logger.info(
+            "Flujo completado | tabla=%s | filas=%s | chunks=%s | duracion=%.2fs",
+            TABLE_DESTINO,
+            load_result["rows"],
+            load_result["chunks"],
+            load_result["seconds"],
+        )
+    except Exception as exc:
+        flow_logger.error("Error general en el flujo de OC demoradas: %s", exc)
+        raise
+
 
 if __name__ == "__main__":
-    ids = list(map(int, sys.argv[1:]))  # ← lee los proveedores como argumentos
+    _ = sys.argv[1:]
     capturar_oc_demoradas_proveedores()
-    logger.info("--------------->  Flujo de replicación FINALIZADO.")
+    logger.info("Proceso finalizado: obtener_oc_demoradas_proveedor")

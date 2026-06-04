@@ -1,5 +1,8 @@
 prefect
 OpenAI
 sqlalchemy
+pandas
+python-dotenv
+pyodbc
 psycopg2
 psycopg2-binary
