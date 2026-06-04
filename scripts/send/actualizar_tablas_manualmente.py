@@ -242,7 +242,7 @@ def vaciar_tabla(tabla_pg: str,
 def actualizar_tablas_maestras():
     logger = get_run_logger()
     tablas = [
-        ("repl","t050_articulos", "T050_ARTICULOS"),
+        #("repl","t050_articulos", "T050_ARTICULOS"),
         # ("repl", "t020_proveedor", "T020_PROVEEDOR"),
         # ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
         # ("repl", "t060_stock", "T060_STOCK"),
@@ -268,8 +268,8 @@ def actualizar_tablas_maestras():
         
         # ("repl", "t080_oc_pendientes", "T080_OC_PENDIENTES"),  
         # ("repl", "t080_oc_cabe", "T080_OC_CABE"),  
-        # ("repl", "t081_oc_deta", "T081_OC_DETA"),  
-        # ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
+         ("repl", "t081_oc_deta", "T081_OC_DETA"),  
+         ("repl", "t051_articulos_sucursal", "T051_ARTICULOS_SUCURSAL"),        
         # ("repl", "t710_estadis_reposicion", "T710_ESTADIS_REPOSICION"),
         # ("repl", "t874_precarga_connexa_hist", "T874_PRECARGA_CONNEXA_HIST")
         
