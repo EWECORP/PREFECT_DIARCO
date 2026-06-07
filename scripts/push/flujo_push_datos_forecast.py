@@ -85,11 +85,11 @@ def forecast_flow():
     started_at = perf_counter()
 
     scripts = [
-        #"obtener_base_productos_vigentes.py",
         "obtener_base_stock.py",
         "obtener_oc_demoradas_proveedor.py",
         "obtener_base_transferencias_pendientes.py",
         "obtener_base_productos_transito.py",
+        "obtener_base_productos_vigentes.py"
     ]
 
     logger.info("Inicio flujo forecast | scripts=%s", len(scripts))
