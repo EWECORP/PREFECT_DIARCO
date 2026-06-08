@@ -89,7 +89,7 @@ ESQUEMA_BASE_PRODUCTOS = {
 
 
 def transformar_chunk(df, chunk_index, task_logger):
-    df["FUENTE_ORIGEN"] = "SP_BASE_PRODUCTOS_SUCURSAL"
+    df["FUENTE_ORIGEN"] = "SP_BASE_PRODUCTOS_VIGNTS"
     df["FECHA_EXTRACCION"] = datetime.now()
     df["ESTADO_SINCRONIZACION"] = 0
 

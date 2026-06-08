@@ -94,13 +94,9 @@ def sync_dmz_optimizado():
     # === Planes, condiciones, snc ===
     logger.info("⏳ Replicando ARTICULOS y PARAMETROS - Grupo 4/6 ")
     grupo_condiciones = [
-        "repl.usp_replicar_T114_RUBROS",
-        "repl.usp_replicar_T117_COMPRADORES",
         "repl.usp_replicar_T021_PROV_COMPROB",
         "repl.usp_replicar_T055_ARTICULOS_PARAM_STOCK",
         "repl.usp_replicar_T055_LEAD_TIME_B2_SUCURSALES",  
-        "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_CABE",
-        "repl.usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_DETA",
         "repl.usp_replicar_T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
         "repl.usp_replicar_T085_ARTICULOS_EAN_EDI"
     ]

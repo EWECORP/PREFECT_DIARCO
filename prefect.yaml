@@ -30,6 +30,67 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
     parameters: {}
 
+  - name: CDC_T050_ARTICULOS_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t050_articulos"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t050_articulos
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T020_PROVEEDOR_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t020_proveedor"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t020_proveedor
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T052_ARTICULOS_PROVEEDOR_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t052_articulos_proveedor"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t052_articulos_proveedor
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_MONITOR_FASE_1
+    entrypoint: scripts/cdc/cdc_monitor.py:monitorear_cdc
+    description: "Monitorea salud de los pilotos CDC y alerta cuando fallan o quedan atrasados"
+    tags: ["cdc", "monitor", "observabilidad"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      notify: true
+      notify_on_warning: false
+      fail_on_critical: true
+      stale_factor: 3.0
+      min_stale_minutes: 15
+      failure_threshold: 2
+      lookback_runs: 5
+      monitor_timezone: "America/Argentina/Buenos_Aires"
+      active_window_start: "08:00"
+      active_window_end: "18:00"
+    schedule:
+      cron: "*/10 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
   - name: FORECAST_PUSH_INPUT_DATA_PROD
     entrypoint: scripts/push/flujo_push_datos_forecast.py:forecast_flow
     description: "Carga Diaria de Datos de proveedores habilitados"
