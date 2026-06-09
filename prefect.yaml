@@ -69,6 +69,84 @@ deployments:
       cron: "*/5 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
+  - name: CDC_T100_EMPRESA_SUC_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t100_empresa_suc"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t100_empresa_suc
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T114_RUBROS_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t114_rubros"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t114_rubros
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T117_COMPRADORES_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t117_compradores"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t117_compradores
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T051_ARTICULOS_SUCURSAL_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t051_articulos_sucursal"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t051_articulos_sucursal
+    schedule:
+      cron: "*/10 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T020_PROVEEDOR_DIAS_ENTREGA_CABE_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t020_proveedor_dias_entrega_cabe"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t020_proveedor_dias_entrega_cabe
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T020_PROVEEDOR_DIAS_ENTREGA_DETA_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t020_proveedor_dias_entrega_deta"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t020_proveedor_dias_entrega_deta
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
   - name: CDC_MONITOR_FASE_1
     entrypoint: scripts/cdc/cdc_monitor.py:monitorear_cdc
     description: "Monitorea salud de los pilotos CDC y alerta cuando fallan o quedan atrasados"
