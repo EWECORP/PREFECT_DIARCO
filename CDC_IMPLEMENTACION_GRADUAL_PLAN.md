@@ -4,6 +4,42 @@
 
 Incorporar Change Data Capture (CDC) en SQL Server para reducir tiempos de replica, evitar truncados y recargas completas innecesarias, y simplificar la sincronizacion entre DIARCO y CONNEXA sin reemplazar de una sola vez los flujos actuales.
 
+## Estado actual del proyecto
+
+Al 9 de junio de 2026, la base CDC ya no esta en etapa de idea o prototipo: quedo implementada, validada y funcionando sobre una tanda amplia de tablas maestras y medianas.
+
+Tablas ya preparadas y operativas dentro del esquema CDC:
+
+- `T050_ARTICULOS`
+- `T020_PROVEEDOR`
+- `T052_ARTICULOS_PROVEEDOR`
+- `T100_EMPRESA_SUC`
+- `T114_RUBROS`
+- `T117_COMPRADORES`
+- `T051_ARTICULOS_SUCURSAL`
+- `T020_PROVEEDOR_DIAS_ENTREGA_CABE`
+- `T020_PROVEEDOR_DIAS_ENTREGA_DETA`
+- `T085_ARTICULOS_EAN_EDI`
+- `T055_ARTICULOS_PARAM_STOCK`
+- `T055_ARTICULOS_CONDCOMPRA_COSTOS`
+
+Componentes ya implementados:
+
+- metadata central en PostgreSQL: `etl.cdc_table_config`, `etl.cdc_state`, `etl.cdc_run_log`
+- aplicador generico: `scripts/cdc/cdc_replicar_tabla.py`
+- monitoreo y alertas: `scripts/cdc/cdc_monitor.py`
+- deployments Prefect para ejecucion recurrente de pilotos y monitoreo
+- validaciones SQL por tabla en `cdc/sqlserver/` y `cdc/postgres/`
+
+Conclusion practica:
+
+- Fase 0 completada
+- Fase 1 completada
+- Fase 2 completada
+- Fase 3, en el sentido de expansion a maestras y tablas medianas, completada para la tanda priorizada
+
+Por lo tanto, el proximo paso natural ya no es "seguir sumando tablas maestras" de forma indefinida, sino pasar a una fase de consolidacion y recorte controlado del flujo legacy.
+
 ## Diagnostico del estado actual
 
 ### Lo que hoy funciona bien
@@ -227,6 +263,10 @@ Entregables:
 - frecuencia objetivo por tabla
 - tabla de compatibilidad `tabla -> modo`
 
+Estado:
+
+- completada
+
 ### Fase 1. Piloto productivo con una sola tabla
 
 Tabla sugerida: `T050_ARTICULOS`
@@ -247,6 +287,10 @@ Criterio de salida:
 - sin drift en conteos y claves
 - tiempo estable de aplicacion
 
+Estado:
+
+- completada
+
 ### Fase 2. Generalizacion del motor CDC
 
 Objetivo: dejar de tener un script por tabla y pasar a un framework parametrico.
@@ -258,6 +302,10 @@ Pasos:
 3. soportar varios `capture_instance`
 4. agregar reintentos y manejo de reseed
 5. agregar limites de lote por corrida si el atraso es alto
+
+Estado:
+
+- completada
 
 ### Fase 3. Expansion a maestras relacionadas
 
@@ -276,6 +324,11 @@ Objetivo:
 - reducir ventanas de lock
 - alimentar mas rapido forecast, tableros y maestras
 
+Estado:
+
+- completada para la tanda priorizada del proyecto
+- tablas cubiertas: `T020`, `T050`, `T051`, `T052`, `T055`, `T085`, `T100`, `T114`, `T117`
+
 ### Fase 4. Tablas operativas sensibles
 
 Incorporar OC y tablas relacionadas solo despues de validar el motor:
@@ -290,11 +343,65 @@ Recomendacion:
 - controles diarios de cantidades
 - muestreo de claves y fechas
 
+### Fase 4.1. Consolidacion y retiro selectivo de legacy
+
+Antes de entrar de lleno en OC, conviene hacer una fase intermedia de ordenamiento operativo.
+
+Objetivo:
+
+- consolidar `src` como capa canonica efectiva y no solo declarativa
+- empezar a retirar dependencias innecesarias de `repl` para las tablas ya migradas
+- bajar costo operativo del esquema legacy
+
+Acciones sugeridas:
+
+1. armar una matriz `tabla -> origen actual -> origen objetivo -> estado`
+2. identificar que flujos siguen leyendo desde `repl` para tablas que ya tienen CDC estable en `src`
+3. hacer dual-run corto y comparaciones para cada consumidor importante
+4. reemplazar gradualmente lecturas `repl.*` por `src.*` en los procesos downstream
+5. desactivar SP, refresh o replicaciones completas solo cuando haya equivalencia probada
+6. dejar rollback simple por tabla durante la transicion
+
+Criterio de salida:
+
+- consumidores principales leyendo desde `src` para las tablas ya migradas
+- baja de ejecuciones legacy innecesarias
+- monitoreo CDC estable durante al menos 1 o 2 semanas sin drift relevante
+
+### Fase 4.2. Tablas operativas sensibles
+
+Una vez cerrada la consolidacion, avanzar con:
+
+- `T080_OC_CABE`
+- `T081_OC_DETA`
+- `T080_OC_PENDIENTES`
+
+En estas tablas conviene mantener enfoque hibrido:
+
+- bootstrap inicial por snapshot o SP actual
+- CDC para deltas recientes
+- validaciones diarias por conteo, fechas y muestreo de claves
+
+### Fase 4.3. Tabla pesada en modo hibrido
+
+Despues de OC, la candidata natural es `T060_STOCK`, pero no como replica CDC "plena" desde el dia uno.
+
+Recomendacion:
+
+- conservar batch o snapshot controlado para bootstrap
+- usar CDC solo como complemento incremental
+- monitorear volumen, latenica y costo operativo antes de reemplazar el flujo actual
+
 ### Fase 5. Retiro selectivo de flujos legacy
 
 No conviene apagar todo junto.
 
 Ir reemplazando solo los SP o refresh completos que ya tengan equivalencia probada con CDC. En cada reemplazo, dejar un mecanismo simple de rollback al flujo anterior.
+
+Estado:
+
+- pendiente
+- debe iniciarse tabla por tabla, empezando por las ya estabilizadas en `src`
 
 ## Decisiones tecnicas recomendadas
 
@@ -372,25 +479,29 @@ Mitigacion:
 
 ### Lo que yo haria primero
 
-1. Elegir `T050_ARTICULOS` como tabla piloto.
-2. Crear metadata y estado en PostgreSQL.
-3. Ejecutar el worker CDC desde el servidor ETL en la DMZ.
-4. Reescribir el prototipo CDC para que sea generico e idempotente.
-5. Publicar directo en `src`.
-6. Ejecutarlo en paralelo con el flujo actual durante varios dias.
-7. Cuando cierre por conteo y muestreo, sumar `T020_PROVEEDOR` y `T052_ARTICULOS_PROVEEDOR`.
+Eso ya fue realizado. A partir del estado actual, lo siguiente que conviene hacer es:
+
+1. congelar la tanda actual como base estable de CDC
+2. documentar que tablas ya quedaron "canonicas en `src`"
+3. relevar que procesos todavia consumen `repl` para esas tablas
+4. priorizar el reemplazo de lecturas legacy mas simples
+5. preparar luego la entrada de `T080_OC_CABE`, `T081_OC_DETA` y `T080_OC_PENDIENTES` en modo hibrido
 
 ### Lo que dejaria para despues
 
-- `T060_STOCK`
+- `T060_STOCK` en modo CDC pleno
 - estadisticas pesadas
 - tablas historicas de alto volumen
-- reemplazo total de todos los SP de replica
+- apagado total de `repl` sin retiro gradual
 
 ## Siguientes pasos sugeridos
 
-1. Ejecutar los scripts de `cdc/sqlserver` y `cdc/postgres`.
-2. Cargar la configuracion `pilot_t050_articulos`.
-3. Probar el flujo `scripts/cdc/cdc_replicar_tabla.py` en el servidor ETL de la DMZ.
-4. Validar conteos, claves y deletes sobre `src.t050_articulos`.
-5. Extender el mismo patron a la siguiente tanda de tablas maestras.
+1. Armar una matriz de transicion `tabla -> consumidor -> hoy lee repl/src -> decision`.
+2. Elegir 2 o 3 consumidores sencillos y migrarlos para que lean desde `src` en tablas ya estabilizadas.
+3. Medir durante algunos dias drift, alertas y tiempos antes de apagar pasos legacy por tabla.
+4. Definir el plan hibrido para `T080_OC_CABE`, `T081_OC_DETA` y `T080_OC_PENDIENTES`.
+5. Dejar `T060_STOCK` para una etapa posterior y con estrategia especifica de volumen.
+
+Documento de trabajo recomendado para esta etapa:
+
+- `CDC_TRANSICION_REPL_A_SRC_MATRIX.md`

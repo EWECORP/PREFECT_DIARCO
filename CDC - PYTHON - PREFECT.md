@@ -96,6 +96,38 @@ Usar un modelo de dos pasos por tabla:
 
 El snapshot deja la tabla alineada en PostgreSQL y el CDC mantiene los cambios posteriores sin truncar ni recargar todo.
 
+## Estado actual de implementacion
+
+La arquitectura propuesta en este documento ya fue implementada y validada en el proyecto.
+
+Hoy el repositorio ya cuenta con:
+
+- aplicador generico `scripts/cdc/cdc_replicar_tabla.py`
+- metadata `etl.cdc_table_config`, `etl.cdc_state`, `etl.cdc_run_log`
+- monitor `scripts/cdc/cdc_monitor.py`
+- deployments Prefect por tabla
+- pilotos operativos para tablas maestras y medianas priorizadas
+
+Tablas ya cubiertas por la implementacion actual:
+
+- `T050_ARTICULOS`
+- `T020_PROVEEDOR`
+- `T052_ARTICULOS_PROVEEDOR`
+- `T100_EMPRESA_SUC`
+- `T114_RUBROS`
+- `T117_COMPRADORES`
+- `T051_ARTICULOS_SUCURSAL`
+- `T020_PROVEEDOR_DIAS_ENTREGA_CABE`
+- `T020_PROVEEDOR_DIAS_ENTREGA_DETA`
+- `T085_ARTICULOS_EAN_EDI`
+- `T055_ARTICULOS_PARAM_STOCK`
+- `T055_ARTICULOS_CONDCOMPRA_COSTOS`
+
+Consecuencia practica:
+
+- el siguiente paso recomendado ya no es construir mas esqueleto CDC
+- el foco debe pasar a consolidacion, migracion de consumidores y retiro gradual del flujo legacy
+
 ## Tablas recomendadas para comenzar
 
 ### Primera ola
@@ -124,6 +156,33 @@ El snapshot deja la tabla alineada en PostgreSQL y el CDC mantiene los cambios p
 - `T080_OC_PENDIENTES`
 - `T702_EST_VTAS_POR_ARTICULO`
 - `T710_ESTADIS_STOCK`
+
+Nota importante:
+
+- `T080_OC_PENDIENTES` no debe tratarse como tabla candidata a CDC directo
+- en la arquitectura actual es un dataset derivado generado en la DMZ por `repl.usp_replicar_T080_OC_PENDIENTES`
+- por lo tanto su evolucion debe resolverse como proceso derivado / materializacion intermedia, no como captura CDC sobre una tabla origen
+
+## Proximo paso recomendado
+
+Con la tanda actual estable, la hoja de ruta sugerida es:
+
+1. consolidar `src` como origen canonico real para los consumidores
+2. retirar lecturas innecesarias sobre `repl` en tablas ya migradas
+3. redisenar primero los SP de la DMZ que siguen mezclando tablas CDC con tablas legacy:
+   - `dbo.SP_BASE_PRODUCTOS_DMZ`
+   - `dbo.SP_BASE_STOCK_EXTEND`
+4. preparar una fase hibrida para:
+   - `T080_OC_CABE`
+   - `T081_OC_DETA`
+   - `T080_OC_PENDIENTES` como artefacto derivado
+5. dejar `T060_STOCK` para una etapa posterior y con estrategia especifica de volumen
+
+En otras palabras:
+
+- primero consolidacion y recorte de legacy
+- despues tablas operativas sensibles
+- al final tablas pesadas
 
 ## Habilitar CDC en SQL Server
 

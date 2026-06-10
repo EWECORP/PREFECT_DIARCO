@@ -61,6 +61,16 @@ def require_env(name: str) -> str:
     return value
 
 
+def get_env_int(name: str, default: int) -> int:
+    value = os.getenv(name)
+    if value is None or value == "":
+        return default
+    try:
+        return int(value)
+    except ValueError as exc:
+        raise RuntimeError(f"La variable {name} debe ser numerica. Valor actual: {value}") from exc
+
+
 def normalize_lsn(value: Any) -> bytes | None:
     if value is None:
         return None
@@ -102,7 +112,11 @@ def open_sqlserver_conn(config: TableConfig) -> pyodbc.Connection:
         f"UID={user};"
         f"PWD={password}"
     )
-    return pyodbc.connect(conn_str)
+    conn = pyodbc.connect(conn_str)
+    timeout_seconds = get_env_int("CDC_SQL_TIMEOUT_SECONDS", 0)
+    if timeout_seconds > 0:
+        conn.timeout = timeout_seconds
+    return conn
 
 
 def parse_table_config(row: tuple[Any, ...]) -> TableConfig:
@@ -345,12 +359,12 @@ def get_target_columns(
     return [row[0] for row in rows]
 
 
-def fetch_cdc_rows(
+def open_cdc_cursor(
     sql_conn: pyodbc.Connection,
     capture_instance: str,
     from_lsn: bytes,
     to_lsn: bytes,
-) -> tuple[list[str], list[tuple[Any, ...]]]:
+) -> tuple[list[str], pyodbc.Cursor]:
     query = f"""
     SELECT *
     FROM cdc.fn_cdc_get_all_changes_{capture_instance}(?, ?, 'all')
@@ -359,8 +373,11 @@ def fetch_cdc_rows(
     cur = sql_conn.cursor()
     cur.execute(query, from_lsn, to_lsn)
     columns = [column[0] for column in cur.description]
-    rows = cur.fetchall()
-    return columns, rows
+    return columns, cur
+
+
+def get_fetch_size(config: TableConfig) -> int:
+    return max(100, get_env_int("CDC_FETCH_SIZE", config.batch_size))
 
 
 def collapse_changes(
@@ -566,6 +583,7 @@ def replicar_tabla_cdc(
     logger = get_run_logger()
     started_at = utc_now()
     started_perf = perf_counter()
+    current_phase = "init"
 
     pg_conn = open_pg_conn()
     ensure_state_row(pg_conn, config_name)
@@ -577,9 +595,11 @@ def replicar_tabla_cdc(
     state = get_state(pg_conn, config_name)
     state_last_end_lsn = normalize_lsn(state["last_end_lsn"])
     state_last_start_lsn = normalize_lsn(state["last_start_lsn"])
+    fetch_size = get_fetch_size(config)
 
     sql_conn = open_sqlserver_conn(config)
     try:
+        current_phase = "read_lsn_window"
         min_lsn = get_min_lsn(sql_conn, config.capture_instance)
         max_lsn = get_max_lsn(sql_conn)
 
@@ -657,14 +677,67 @@ def replicar_tabla_cdc(
             logger.info("No hay cambios pendientes para %s", config.config_name)
             return {"status": "idle", "rows_read": 0, "rows_upserted": 0, "rows_deleted": 0}
 
-        columns, change_rows = fetch_cdc_rows(sql_conn, config.capture_instance, from_lsn, max_lsn)
-        upserts, deletes, rows_read = collapse_changes(columns, change_rows, config, target_columns)
+        logger.info(
+            "CDC inicio lectura | config=%s | from_lsn=%s | to_lsn=%s | fetch_size=%s",
+            config.config_name,
+            format_lsn(from_lsn),
+            format_lsn(max_lsn),
+            fetch_size,
+        )
 
-        apply_deletes(pg_conn, config, deletes)
-        apply_upserts(pg_conn, config, target_columns, upserts)
+        current_phase = "open_cdc_cursor"
+        columns, cdc_cursor = open_cdc_cursor(sql_conn, config.capture_instance, from_lsn, max_lsn)
+
+        batch_number = 0
+        rows_read = 0
+        rows_upserted = 0
+        rows_deleted = 0
+
+        while True:
+            current_phase = f"fetch_batch_{batch_number + 1}"
+            change_rows = cdc_cursor.fetchmany(fetch_size)
+            if not change_rows:
+                break
+
+            batch_number += 1
+            current_phase = f"collapse_batch_{batch_number}"
+            upserts, deletes, batch_rows_read = collapse_changes(
+                columns,
+                change_rows,
+                config,
+                target_columns,
+            )
+            rows_read += batch_rows_read
+
+            logger.info(
+                "CDC lote leido | config=%s | batch=%s | rows_read_batch=%s | upserts_batch=%s | deletes_batch=%s",
+                config.config_name,
+                batch_number,
+                batch_rows_read,
+                len(upserts),
+                len(deletes),
+            )
+
+            current_phase = f"apply_batch_{batch_number}"
+            deleted_count = apply_deletes(pg_conn, config, deletes)
+            upserted_count = apply_upserts(pg_conn, config, target_columns, upserts)
+            pg_conn.commit()
+
+            rows_deleted += deleted_count
+            rows_upserted += upserted_count
+
+            logger.info(
+                "CDC lote aplicado | config=%s | batch=%s | rows_read_total=%s | upserts_total=%s | deletes_total=%s",
+                config.config_name,
+                batch_number,
+                rows_read,
+                rows_upserted,
+                rows_deleted,
+            )
 
         finished_at = utc_now()
         duration_ms = int((perf_counter() - started_perf) * 1000)
+        current_phase = "persist_success_state"
         update_state(
             pg_conn,
             config_name,
@@ -682,8 +755,8 @@ def replicar_tabla_cdc(
             from_lsn=from_lsn,
             to_lsn=max_lsn,
             rows_read=rows_read,
-            rows_upserted=len(upserts),
-            rows_deleted=len(deletes),
+            rows_upserted=rows_upserted,
+            rows_deleted=rows_deleted,
             status="success",
             duration_ms=duration_ms,
             error_text=None,
@@ -696,22 +769,23 @@ def replicar_tabla_cdc(
             format_lsn(from_lsn),
             format_lsn(max_lsn),
             rows_read,
-            len(upserts),
-            len(deletes),
+            rows_upserted,
+            rows_deleted,
         )
         return {
             "status": "success",
             "from_lsn": format_lsn(from_lsn),
             "to_lsn": format_lsn(max_lsn),
             "rows_read": rows_read,
-            "rows_upserted": len(upserts),
-            "rows_deleted": len(deletes),
+            "rows_upserted": rows_upserted,
+            "rows_deleted": rows_deleted,
         }
 
     except Exception as exc:
         pg_conn.rollback()
         finished_at = utc_now()
         duration_ms = int((perf_counter() - started_perf) * 1000)
+        error_text = f"[phase={current_phase}] {exc}"
 
         with open_pg_conn() as error_conn:
             ensure_state_row(error_conn, config_name)
@@ -722,7 +796,7 @@ def replicar_tabla_cdc(
                 last_end_lsn=state_last_end_lsn,
                 last_status="failed",
                 last_rowcount=0,
-                last_error=str(exc),
+                last_error=error_text,
                 last_started_at=started_at,
                 last_finished_at=finished_at,
             )
@@ -736,10 +810,10 @@ def replicar_tabla_cdc(
                 rows_deleted=0,
                 status="failed",
                 duration_ms=duration_ms,
-                error_text=str(exc),
+                error_text=error_text,
             )
             error_conn.commit()
-        logger.error("Error en CDC %s: %s", config_name, exc)
+        logger.error("Error en CDC %s: %s", config_name, error_text)
         raise
     finally:
         sql_conn.close()

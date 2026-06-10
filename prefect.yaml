@@ -115,6 +115,10 @@ deployments:
     work_pool:
       name: dmz-diarco
       work_queue_name: replicas-dmz
+      job_variables:
+        env:
+          CDC_FETCH_SIZE: "5000"
+          CDC_SQL_TIMEOUT_SECONDS: "1800"
     parameters:
       config_name: pilot_t051_articulos_sucursal
     schedule:
@@ -145,6 +149,45 @@ deployments:
       config_name: pilot_t020_proveedor_dias_entrega_deta
     schedule:
       cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T085_ARTICULOS_EAN_EDI_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t085_articulos_ean_edi"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t085_articulos_ean_edi
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T055_ARTICULOS_PARAM_STOCK_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t055_articulos_param_stock"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t055_articulos_param_stock
+    schedule:
+      cron: "*/5 8-17 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: CDC_T055_ARTICULOS_CONDCOMPRA_COSTOS_PILOTO
+    entrypoint: scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
+    description: "Piloto CDC SQL Server -> PostgreSQL directo sobre src.t055_articulos_condcompra_costos"
+    tags: ["cdc", "piloto", "maestros"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: replicas-dmz
+    parameters:
+      config_name: pilot_t055_articulos_condcompra_costos
+    schedule:
+      cron: "*/10 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_MONITOR_FASE_1

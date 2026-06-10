@@ -19,24 +19,24 @@ INSERT INTO etl.cdc_table_config (
     notes
 )
 VALUES (
-    'pilot_t051_articulos_sucursal',
+    'pilot_t085_articulos_ean_edi',
     '192.168.0.11',
     'DiarcoP',
     'dbo',
-    'T051_ARTICULOS_SUCURSAL',
-    'dbo_T051_ARTICULOS_SUCURSAL',
+    'T085_ARTICULOS_EAN_EDI',
+    'dbo_T085_ARTICULOS_EAN_EDI',
     'SQLP_DRIVER',
     'SQLP_PORT',
     'SQLP_USER',
     'SQLP_PASSWORD',
     'src',
-    't051_articulos_sucursal',
-    ARRAY['c_sucu_empr', 'c_articulo'],
+    't085_articulos_ean_edi',
+    ARRAY['c_articulo', 'c_ean'],
     true,
     'cdc',
-    600,
+    300,
     5000,
-    'Septima tabla piloto CDC SQL Server -> PostgreSQL para T051_ARTICULOS_SUCURSAL'
+    'Decima tabla piloto CDC SQL Server -> PostgreSQL para T085_ARTICULOS_EAN_EDI'
 )
 ON CONFLICT (config_name) DO UPDATE
 SET source_server = EXCLUDED.source_server,
@@ -64,7 +64,7 @@ INSERT INTO etl.cdc_state (
     updated_at
 )
 VALUES (
-    'pilot_t051_articulos_sucursal',
+    'pilot_t085_articulos_ean_edi',
     'never_run',
     now()
 )

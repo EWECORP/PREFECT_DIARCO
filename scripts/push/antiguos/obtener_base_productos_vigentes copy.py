@@ -2,7 +2,6 @@
 
 import ast
 import os
-import re
 import sys
 from datetime import datetime
 from time import perf_counter
@@ -39,12 +38,9 @@ PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 
 SP_NAME = "[dbo].[SP_BASE_PRODUCTOS_DMZ]"
-DEFAULT_TABLE_DESTINO = os.getenv(
-    "BASE_PRODUCTOS_TARGET_TABLE",
-    "src.base_productos_vigentes",
-).strip()
+TABLE_DESTINO = "src.base_productos_vigentes"
 READ_CHUNK_SIZE = int(os.getenv("ETL_CHUNK_SIZE_BASE_PRODUCTOS", "25000"))
-DEFAULT_BASE_PRODUCTOS_SOURCE_MODE = os.getenv(
+BASE_PRODUCTOS_SOURCE_MODE = os.getenv(
     "BASE_PRODUCTOS_SOURCE_MODE",
     "sqlserver_sp",
 ).strip().lower()
@@ -64,35 +60,6 @@ sql_engine = build_sql_server_engine(
 
 def open_pg_conn_local():
     return open_pg_conn(PG_HOST, PG_PORT, PG_DB, PG_USER, PG_PASSWORD) # pyright: ignore[reportArgumentType]
-
-
-def assert_sql_table_name(table_name: str) -> str:
-    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)?", table_name):
-        raise ValueError(
-            "Nombre de tabla invalido para target_table / BASE_PRODUCTOS_TARGET_TABLE. "
-            "Usar formato schema.tabla o tabla."
-        )
-    return table_name
-
-
-def resolve_runtime_options(payload):
-    source_mode = DEFAULT_BASE_PRODUCTOS_SOURCE_MODE
-    table_destino = DEFAULT_TABLE_DESTINO
-
-    if isinstance(payload, dict):
-        if payload.get("mode") is not None:
-            source_mode = str(payload["mode"]).strip().lower()
-        if payload.get("target_table") is not None:
-            table_destino = str(payload["target_table"]).strip()
-    elif isinstance(payload, str):
-        source_mode = payload.strip().lower()
-    elif payload is not None:
-        raise ValueError(
-            "Argumento no soportado. Usar string con el modo o dict con "
-            "{'mode': '...', 'target_table': 'schema.tabla'}."
-        )
-
-    return source_mode, assert_sql_table_name(table_destino)
 
 
 ESQUEMA_BASE_PRODUCTOS = {
@@ -183,7 +150,7 @@ SELECT
 FROM dbo.SUCURSALES_EXCLUIDAS ex
 """
 
-PG_INSERT_BASE_PRODUCTOS_HYBRID_TEMPLATE = """
+PG_INSERT_BASE_PRODUCTOS_HYBRID = """
 WITH vigencia AS (
     SELECT
         suc.c_sucu_empr::integer AS c_sucu_empr,
@@ -216,7 +183,7 @@ WITH vigencia AS (
        AND hv.c_articulo = suc.c_articulo
     WHERE suc.c_sucu_empr <> 300
 )
-INSERT INTO {table_name} (
+INSERT INTO src.base_productos_vigentes (
     c_sucu_empr,
     c_articulo,
     c_proveedor_primario,
@@ -452,7 +419,7 @@ def crear_indices_temporales(pg_cur):
     )
 
 
-def cargar_base_productos_hibrida_impl(task_logger, table_destino: str):
+def cargar_base_productos_hibrida_impl(task_logger):
     started_at = perf_counter()
     sql_chunks = 0
 
@@ -501,15 +468,11 @@ def cargar_base_productos_hibrida_impl(task_logger, table_destino: str):
 
                 crear_indices_temporales(cur)
 
-                cur.execute(f"DROP TABLE IF EXISTS {table_destino} CASCADE")
-                cur.execute(create_table_statement(ESQUEMA_BASE_PRODUCTOS, table_destino))
-                task_logger.info("Tabla destino recreada en modo hybrid: %s", table_destino)
+                cur.execute(f"DROP TABLE IF EXISTS {TABLE_DESTINO} CASCADE")
+                cur.execute(create_table_statement(ESQUEMA_BASE_PRODUCTOS, TABLE_DESTINO))
+                task_logger.info("Tabla destino recreada en modo hybrid: %s", TABLE_DESTINO)
 
-                cur.execute(
-                    PG_INSERT_BASE_PRODUCTOS_HYBRID_TEMPLATE.format(
-                        table_name=table_destino,
-                    )
-                )
+                cur.execute(PG_INSERT_BASE_PRODUCTOS_HYBRID)
                 inserted_rows = cur.rowcount if cur.rowcount is not None else 0
 
             conn.commit()
@@ -517,14 +480,14 @@ def cargar_base_productos_hibrida_impl(task_logger, table_destino: str):
             conn.rollback()
             task_logger.exception(
                 "Se revirtió la transacción de carga hybrid sobre %s",
-                table_destino,
+                TABLE_DESTINO,
             )
             raise
 
     elapsed = perf_counter() - started_at
     task_logger.info(
         "Carga hybrid finalizada | tabla_destino=%s | filas=%s | chunks_sqlserver=%s | duracion=%.2fs",
-        table_destino,
+        TABLE_DESTINO,
         inserted_rows,
         sql_chunks,
         elapsed,
@@ -533,57 +496,50 @@ def cargar_base_productos_hibrida_impl(task_logger, table_destino: str):
 
 
 @task(name="cargar_base_productos_pg")
-def cargar_base_productos(
-    source_mode: str = DEFAULT_BASE_PRODUCTOS_SOURCE_MODE,
-    table_destino: str = DEFAULT_TABLE_DESTINO,
-):
+def cargar_base_productos():
     task_logger = get_run_logger()
-    table_destino = assert_sql_table_name(table_destino)
 
-    if source_mode == "sqlserver_sp":
+    if BASE_PRODUCTOS_SOURCE_MODE == "sqlserver_sp":
         task_logger.info(
-            "Carga base_productos_vigentes en modo sqlserver_sp | sp=%s | tabla_destino=%s",
+            "Carga base_productos_vigentes en modo sqlserver_sp | sp=%s",
             SP_NAME,
-            table_destino,
         )
         return replace_table_from_query_chunks(
             query=f"EXEC {SP_NAME}",
             sql_engine=sql_engine,
             pg_conn_factory=open_pg_conn_local,
-            table_name=table_destino,
+            table_name=TABLE_DESTINO,
             schema_dict=ESQUEMA_BASE_PRODUCTOS,
             transform_chunk=transformar_chunk,
             logger=task_logger, # pyright: ignore[reportArgumentType]
             read_chunk_size=READ_CHUNK_SIZE,
         )
 
-    if source_mode == "hybrid_src":
+    if BASE_PRODUCTOS_SOURCE_MODE == "hybrid_src":
         task_logger.info(
-            "Carga base_productos_vigentes en modo hybrid_src | src=PostgreSQL + remanentes SQL Server | tabla_destino=%s",
-            table_destino,
+            "Carga base_productos_vigentes en modo hybrid_src | src=PostgreSQL + remanentes SQL Server",
         )
-        return cargar_base_productos_hibrida_impl(task_logger, table_destino)
+        return cargar_base_productos_hibrida_impl(task_logger)
 
     raise ValueError(
-        "BASE_PRODUCTOS_SOURCE_MODE / mode invalido. Valores soportados: "
+        "BASE_PRODUCTOS_SOURCE_MODE invalido. Valores soportados: "
         "'sqlserver_sp', 'hybrid_src'."
     )
 
 
 @task(name="eliminar_duplicados_base_productos_vigentes")
-def eliminar_duplicados(table_destino: str = DEFAULT_TABLE_DESTINO):
+def eliminar_duplicados():
     task_logger = get_run_logger()
-    table_destino = assert_sql_table_name(table_destino)
-    query_delete_returning = f"""
+    query_delete_returning = """
         WITH cte AS (
             SELECT ctid,
                    ROW_NUMBER() OVER (
                        PARTITION BY c_sucu_empr, c_articulo, c_proveedor_primario
                        ORDER BY fecha_extraccion DESC NULLS LAST
                    ) AS rn
-            FROM {table_destino}
+            FROM src.base_productos_vigentes
         )
-        DELETE FROM {table_destino} b
+        DELETE FROM src.base_productos_vigentes b
         USING cte
         WHERE b.ctid = cte.ctid
           AND cte.rn > 1
@@ -597,8 +553,7 @@ def eliminar_duplicados(table_destino: str = DEFAULT_TABLE_DESTINO):
                 eliminados = cur.rowcount
             conn.commit()
         task_logger.info(
-            "Depuración completada en %s | duplicados_eliminados=%s",
-            table_destino,
+            "Depuración completada en base_productos_vigentes | duplicados_eliminados=%s",
             eliminados,
         )
         return eliminados
@@ -608,25 +563,21 @@ def eliminar_duplicados(table_destino: str = DEFAULT_TABLE_DESTINO):
 
 
 @flow(name="obtener_base_productos_vigentes", persist_result=False)
-def capturar_base_articulos(
-    source_mode: str = DEFAULT_BASE_PRODUCTOS_SOURCE_MODE,
-    table_destino: str = DEFAULT_TABLE_DESTINO,
-):
+def capturar_base_articulos():
     flow_logger = get_run_logger()
-    table_destino = assert_sql_table_name(table_destino)
     try:
         load_result = cargar_base_productos.with_options(
             name="Carga Base Productos Vigentes",
-        ).submit(source_mode=source_mode, table_destino=table_destino).result()
+        ).submit().result()
 
         deleted_rows = eliminar_duplicados.with_options(
             name="Eliminar Duplicados Base Productos Vigentes",
-        ).submit(table_destino=table_destino).result()
+        ).submit().result()
 
         flow_logger.info(
             "Flujo completado | tabla=%s | modo=%s | filas=%s | chunks=%s | duplicados_eliminados=%s | duracion_carga=%.2fs",
-            table_destino,
-            source_mode,
+            TABLE_DESTINO,
+            BASE_PRODUCTOS_SOURCE_MODE,
             load_result["rows"],
             load_result["chunks"],
             deleted_rows,
@@ -639,7 +590,6 @@ def capturar_base_articulos(
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    payload = ast.literal_eval(args[0]) if args else None
-    source_mode, table_destino = resolve_runtime_options(payload)
-    capturar_base_articulos(source_mode=source_mode, table_destino=table_destino)
+    _ = ast.literal_eval(args[0]) if args else None
+    capturar_base_articulos()
     logger.info("Proceso finalizado: obtener_base_productos_vigentes")

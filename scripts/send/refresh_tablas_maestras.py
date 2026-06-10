@@ -282,26 +282,20 @@ def ejecutar_sp(nombre_sp: str):
 def sync_dmz_optimizado():
     logger = get_run_logger()
 
-    # === SPs críticos (con dependencias) en serie ===
+    # === SPs críticos legacy (las tablas cubiertas por CDC se retiran gradualmente) ===
     logger.info("⏳ Ejecutando SP Encadenados - Grupo 10")
-    ejecutar_sp("repl.usp_replicar_T050_ARTICULOS")
-    logger.info("✅ SP Encadenados - Grupo 1/9 Finalizado")
     ejecutar_sp("repl.usp_replicar_T060_STOCK")
-    logger.info("✅ SP Encadenados - Grupo 2/9 Finalizado")
-    ejecutar_sp("repl.usp_replicar_T052_ARTICULOS_PROVEEDOR")
-    logger.info("⏳ Ejecutando SP Encadenados - Grupo 3/9 ")
+    logger.info("✅ SP Encadenados - Grupo 1/6 Finalizado")
     ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL")
-    logger.info("✅ SP Encadenados - Grupo 4/9 Finalizado")
+    logger.info("✅ SP Encadenados - Grupo 2/6 Finalizado")
     ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL_BARRIO") 
-    logger.info("⏳ Ejecutando SP Encadenados - Grupo 5/9 ")  
-    ejecutar_sp("repl.usp_replicar_T020_PROVEEDOR")
-    logger.info("✅ SP Encadenados - Grupo 6/9 Finalizado")
+    logger.info("⏳ Ejecutando SP Encadenados - Grupo 3/6 ")
     ejecutar_sp("repl.usp_replicar_M_3_ARTICULOS")
-    logger.info("⏳ Ejecutando SP Encadenados - Grupo 7/9 ")
+    logger.info("⏳ Ejecutando SP Encadenados - Grupo 4/6 ")
     ejecutar_sp("repl.usp_replicar_T080_OC_PENDIENTES")
-    logger.info("✅ SP Encadenados - Grupo 8/9 Finalizado")
+    logger.info("✅ SP Encadenados - Grupo 5/6 Finalizado")
     ejecutar_sp("repl.usp_replicar_T080_OC_CABE")
-    logger.info("⏳ Ejecutando SP Encadenados - Grupo 9/9 ")
+    logger.info("⏳ Ejecutando SP Encadenados - Grupo 6/6 ")
     ejecutar_sp("repl.usp_replicar_T081_OC_DETA")    
     logger.info("✅ Replicación DMZ Optimizada Finalizada")
 
@@ -331,11 +325,10 @@ def ejecutar_script(nombre):
 def actualizar_tablas_maestras():
     logger = get_run_logger()
     tablas = [
-        ("repl","t050_articulos", "T050_ARTICULOS"),
-        ("repl", "t020_proveedor", "T020_PROVEEDOR"),
-        ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
+        # Tablas aun mantenidas por refresh batch legacy.
+        # Las tablas cubiertas por CDC estable se retiran gradualmente de esta lista.
         ("repl", "m_3_articulos", "M_3_ARTICULOS"),
-              
+               
         ("repl", "t080_oc_pendientes", "T080_OC_PENDIENTES"),  
         ("repl", "t080_oc_cabe", "T080_OC_CABE"),  
         ("repl", "t081_oc_deta", "T081_OC_DETA"),  
@@ -359,8 +352,8 @@ def actualizar_tablas_maestras():
 def refresh_flow():
 
     scripts = [
-        "obtener_base_productos_vigentes.py",  ## Salida del SP_BASE_PRODUCTOS_SUCURSAL  
-        "obtener_base_stock.py",  ## Salida del SP_BASE_PRODUCTOS_SUCURSAL 
+        "obtener_base_productos_vigentes.py",  ## Salida del SP_BASE_PRODUCTOS_DMZ / modo hybrid_src
+        "obtener_base_stock.py",  ## Salida del SP_BASE_STOCK_EXTEND
         "obtener_oc_demoradas_proveedor.py" ,               ##  Genera Base_Forecast_Oc_Demoradas
         "obtener_base_transferencias_pendientes.py"        ##  Genera Base_Transferencias_Pendientes
     ]

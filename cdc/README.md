@@ -28,12 +28,22 @@ Esta carpeta concentra la base del nuevo esquema de CDC para ETL_DIARCO.
   - `070_prepare_src_t051_articulos_sucursal.sql`: prepara `src.t051_articulos_sucursal` para la segunda ola
   - `071_seed_pilot_t051_articulos_sucursal.sql`: inserta la configuracion inicial de `T051_ARTICULOS_SUCURSAL`
   - `072_validate_pilot_t051_articulos_sucursal.sql`: valida estado, corridas y ultimos registros impactados de `T051_ARTICULOS_SUCURSAL`
+  - `073_tune_pilot_t051_articulos_sucursal.sql`: ajusta `batch_size` recomendado de `T051_ARTICULOS_SUCURSAL` a 5000
   - `080_prepare_src_t020_proveedor_dias_entrega_cabe.sql`: prepara `src.t020_proveedor_dias_entrega_cabe`
   - `081_seed_pilot_t020_proveedor_dias_entrega_cabe.sql`: inserta la configuracion inicial de `T020_PROVEEDOR_DIAS_ENTREGA_CABE`
   - `082_validate_pilot_t020_proveedor_dias_entrega_cabe.sql`: valida estado, corridas y ultimos registros impactados de `T020_PROVEEDOR_DIAS_ENTREGA_CABE`
   - `090_prepare_src_t020_proveedor_dias_entrega_deta.sql`: prepara `src.t020_proveedor_dias_entrega_deta`
   - `091_seed_pilot_t020_proveedor_dias_entrega_deta.sql`: inserta la configuracion inicial de `T020_PROVEEDOR_DIAS_ENTREGA_DETA`
   - `092_validate_pilot_t020_proveedor_dias_entrega_deta.sql`: valida estado, corridas y ultimos registros impactados de `T020_PROVEEDOR_DIAS_ENTREGA_DETA`
+  - `100_prepare_src_t085_articulos_ean_edi.sql`: prepara `src.t085_articulos_ean_edi`
+  - `101_seed_pilot_t085_articulos_ean_edi.sql`: inserta la configuracion inicial de `T085_ARTICULOS_EAN_EDI`
+  - `102_validate_pilot_t085_articulos_ean_edi.sql`: valida estado, corridas y ultimos registros impactados de `T085_ARTICULOS_EAN_EDI`
+  - `110_prepare_src_t055_articulos_param_stock.sql`: prepara `src.t055_articulos_param_stock`
+  - `111_seed_pilot_t055_articulos_param_stock.sql`: inserta la configuracion inicial de `T055_ARTICULOS_PARAM_STOCK`
+  - `112_validate_pilot_t055_articulos_param_stock.sql`: valida estado, corridas y ultimos registros impactados de `T055_ARTICULOS_PARAM_STOCK`
+  - `120_prepare_src_t055_articulos_condcompra_costos.sql`: prepara `src.t055_articulos_condcompra_costos`
+  - `121_seed_pilot_t055_articulos_condcompra_costos.sql`: inserta la configuracion inicial de `T055_ARTICULOS_CONDCOMPRA_COSTOS`
+  - `122_validate_pilot_t055_articulos_condcompra_costos.sql`: valida estado, corridas y ultimos registros impactados de `T055_ARTICULOS_CONDCOMPRA_COSTOS`
   - `030_create_cdc_monitoring_view.sql`: crea una vista consolidada de salud para todos los pilotos CDC
   - `031_validate_cdc_monitoring.sql`: consultas operativas sobre salud, alertas abiertas y ultimas corridas
 - `sqlserver/`
@@ -55,6 +65,12 @@ Esta carpeta concentra la base del nuevo esquema de CDC para ETL_DIARCO.
   - `081_validate_cdc_t020_proveedor_dias_entrega_cabe.sql`: validaciones operativas de `T020_PROVEEDOR_DIAS_ENTREGA_CABE`
   - `090_enable_cdc_t020_proveedor_dias_entrega_deta.sql`: habilita CDC en SQL Server para `T020_PROVEEDOR_DIAS_ENTREGA_DETA`
   - `091_validate_cdc_t020_proveedor_dias_entrega_deta.sql`: validaciones operativas de `T020_PROVEEDOR_DIAS_ENTREGA_DETA`
+  - `100_enable_cdc_t085_articulos_ean_edi.sql`: habilita CDC en SQL Server para `T085_ARTICULOS_EAN_EDI`
+  - `101_validate_cdc_t085_articulos_ean_edi.sql`: validaciones operativas de `T085_ARTICULOS_EAN_EDI`
+  - `110_enable_cdc_t055_articulos_param_stock.sql`: habilita CDC en SQL Server para `T055_ARTICULOS_PARAM_STOCK`
+  - `111_validate_cdc_t055_articulos_param_stock.sql`: validaciones operativas de `T055_ARTICULOS_PARAM_STOCK`
+  - `120_enable_cdc_t055_articulos_condcompra_costos.sql`: habilita CDC en SQL Server para `T055_ARTICULOS_CONDCOMPRA_COSTOS`
+  - `121_validate_cdc_t055_articulos_condcompra_costos.sql`: validaciones operativas de `T055_ARTICULOS_CONDCOMPRA_COSTOS`
 
 ## Orden sugerido
 
@@ -150,6 +166,7 @@ Orden sugerido:
 4. Ejecutar `postgres/071_seed_pilot_t051_articulos_sucursal.sql`.
 5. Ejecutar `scripts/cdc/cdc_replicar_tabla.py pilot_t051_articulos_sucursal current_max_lsn`.
 6. Validar con `postgres/072_validate_pilot_t051_articulos_sucursal.sql`.
+7. Si el piloto ya estaba sembrado con `batch_size = 10000`, ejecutar `postgres/073_tune_pilot_t051_articulos_sucursal.sql`.
 
 Luego repetir el mismo patron para:
 
@@ -165,9 +182,45 @@ Deployments Prefect ya preparados para esta tanda:
 Notas operativas:
 
 - `T051_ARTICULOS_SUCURSAL` arranca con `poll_seconds = 600` y cron cada 10 minutos por volumen.
+- `T051_ARTICULOS_SUCURSAL` queda recomendado con `batch_size = 5000` por volumen real observado.
 - `T020_PROVEEDOR_DIAS_ENTREGA_CABE` queda con PK `c_proveedor`.
 - `T020_PROVEEDOR_DIAS_ENTREGA_DETA` queda con PK `c_proveedor + c_sucu_empr + c_articulo`.
 - si alguna tabla falla al crear el indice `UNIQUE`, conviene relevar duplicados antes de activar el piloto.
+
+## Tercera tanda
+
+La siguiente tanda ya quedo preparada:
+
+- `T085_ARTICULOS_EAN_EDI`
+- `T055_ARTICULOS_PARAM_STOCK`
+- `T055_ARTICULOS_CONDCOMPRA_COSTOS`
+
+Orden sugerido:
+
+1. Ejecutar `sqlserver/100_enable_cdc_t085_articulos_ean_edi.sql`.
+2. Ejecutar `sqlserver/101_validate_cdc_t085_articulos_ean_edi.sql`.
+3. Ejecutar `postgres/100_prepare_src_t085_articulos_ean_edi.sql`.
+4. Ejecutar `postgres/101_seed_pilot_t085_articulos_ean_edi.sql`.
+5. Ejecutar `scripts/cdc/cdc_replicar_tabla.py pilot_t085_articulos_ean_edi current_max_lsn`.
+6. Validar con `postgres/102_validate_pilot_t085_articulos_ean_edi.sql`.
+
+Luego repetir el mismo patron para:
+
+- `T055_ARTICULOS_PARAM_STOCK` con `110/111/112`
+- `T055_ARTICULOS_CONDCOMPRA_COSTOS` con `120/121/122`
+
+Deployment Prefect ya preparado:
+
+- `CDC_T085_ARTICULOS_EAN_EDI_PILOTO`
+- `CDC_T055_ARTICULOS_PARAM_STOCK_PILOTO`
+- `CDC_T055_ARTICULOS_CONDCOMPRA_COSTOS_PILOTO`
+
+Notas operativas:
+
+- `T085_ARTICULOS_EAN_EDI` queda con PK operativa asumida `c_articulo + c_ean`.
+- `T055_ARTICULOS_PARAM_STOCK` queda con PK `c_sucu_empr + c_clasificacion_compra + c_familia + c_rubro`.
+- `T055_ARTICULOS_CONDCOMPRA_COSTOS` queda con PK `c_proveedor + c_articulo + c_sucu_empr`.
+- `T055_ARTICULOS_CONDCOMPRA_COSTOS` arranca con `poll_seconds = 600`, `batch_size = 10000` y cron cada 10 minutos por volumen.
 
 ## Flujo Python
 
@@ -184,6 +237,14 @@ scripts/cdc/cdc_replicar_tabla.py:replicar_tabla_cdc
 ```
 
 Una vez realizado el bootstrap manual inicial, los deployments programados deben ejecutarse sin `bootstrap_mode`.
+
+Notas operativas del worker:
+
+- el worker ahora procesa el rango CDC por lotes y deja logs `CDC lote leido` / `CDC lote aplicado`
+- si una tabla pesada parece "quieta", esos logs permiten ver si sigue avanzando
+- `CDC_FETCH_SIZE` permite ajustar el tamano de `fetchmany()`; por default usa `batch_size` del metadata
+- `CDC_SQL_TIMEOUT_SECONDS` permite fijar timeout ODBC para lecturas CDC; `0` deja el timeout deshabilitado
+- para `pilot_t051_articulos_sucursal`, la corrida estable observada fue con `CDC_FETCH_SIZE=5000` y `CDC_SQL_TIMEOUT_SECONDS=1800`
 
 ## Monitoreo fase 1
 
@@ -229,3 +290,48 @@ Cada tabla `src` usada por el piloto CDC debe tener una PK o un indice `UNIQUE` 
 - `src.t050_articulos`: `UNIQUE (c_articulo)`
 - `src.t020_proveedor`: `UNIQUE (c_proveedor)`
 - `src.t052_articulos_proveedor`: `UNIQUE (c_proveedor, c_articulo)`
+
+## Validacion de transicion para `base_productos_vigentes`
+
+Para comparar el modo legacy `sqlserver_sp` contra el nuevo `hybrid_src` sin tocar la tabla canonica:
+
+1. Generar snapshot del modo actual:
+
+```powershell
+python scripts/push/obtener_base_productos_vigentes.py "{'mode': 'sqlserver_sp', 'target_table': 'src.base_productos_vigentes_cmp_sqlserver_sp'}"
+```
+
+2. Generar snapshot del modo nuevo:
+
+```powershell
+python scripts/push/obtener_base_productos_vigentes.py "{'mode': 'hybrid_src', 'target_table': 'src.base_productos_vigentes_cmp_hybrid_src'}"
+```
+
+Alternativa recomendada para la prueba manual:
+
+```powershell
+.\scripts\cdc\run_validacion_base_productos_vigentes.ps1
+```
+
+Ese script ejecuta ambos snapshots back-to-back y luego deja indicado el archivo SQL a revisar.
+
+3. Ejecutar la comparacion operativa:
+
+```sql
+\i cdc/postgres/130_validate_base_productos_vigentes_modes.sql
+```
+
+La validacion revisa:
+
+- conteo total y claves distintas por modo
+- duplicados por clave operativa
+- claves presentes solo en uno de los modos
+- diferencias de atributos en claves compartidas
+- una muestra automatica de sucursales / articulos testigo
+
+Notas:
+
+- el script `obtener_base_productos_vigentes.py` sigue usando `src.base_productos_vigentes` por defecto
+- el modo nuevo solo se activa al pasar `mode='hybrid_src'` o configurar `BASE_PRODUCTOS_SOURCE_MODE`
+- las tablas snapshot pueden eliminarse luego de la comparacion
+- conviene tomar ambos snapshots de forma consecutiva en la misma ventana operativa; si entre las dos corridas pasan horas, la comparacion puede mostrar drift que en realidad corresponde a cambios reales de datos

@@ -242,16 +242,13 @@ def vaciar_tabla(tabla_pg: str,
 def actualizar_tablas_maestras():
     logger = get_run_logger()
     tablas = [
+        # Tablas aun mantenidas por refresh batch legacy.
+        # Las tablas cubiertas por CDC estable se retiran gradualmente de esta lista.
         ("repl","t050_articulos", "T050_ARTICULOS"),
-        ("repl", "t020_proveedor", "T020_PROVEEDOR"),
         ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
         ("repl", "t060_stock", "T060_STOCK"),
         ("repl", "t061_stock_diario", "T061_STOCK_DIARIO"),
         ("repl", "m_3_articulos", "M_3_ARTICULOS"),
-        ("repl", "t100_empresa_suc", "T100_EMPRESA_SUC"),
-        ("repl", "t114_rubros", "T114_RUBROS"),
-        ("repl", "t117_compradores", "T117_COMPRADORES"),
-        ("repl", "t020_proveedor_dias_entrega_cabe","T020_PROVEEDOR_DIAS_ENTREGA_CABE"),
         ("repl", "t020_proveedor_dias_entrega_deta","T020_PROVEEDOR_DIAS_ENTREGA_DETA"),
 
         ("dbo", "m_1_categorias", "M_1_CATEGORIAS"),

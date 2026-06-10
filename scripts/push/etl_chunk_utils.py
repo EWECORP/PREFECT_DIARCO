@@ -1,7 +1,9 @@
 import csv
 import io
 import logging
+import os
 import sys
+from datetime import datetime
 from pathlib import Path
 from time import perf_counter
 from typing import Callable, Dict
@@ -26,13 +28,28 @@ def setup_script_logger(logger_name: str, log_filename: str) -> logging.Logger:
     logs_dir = Path(__file__).resolve().parents[2] / "logs"
     logs_dir.mkdir(parents=True, exist_ok=True)
 
-    file_handler = logging.FileHandler(logs_dir / log_filename, encoding="utf-8")
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
-
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
+
+    primary_log_path = logs_dir / log_filename
+    try:
+        file_handler = logging.FileHandler(primary_log_path, encoding="utf-8")
+    except PermissionError:
+        fallback_name = (
+            f"{primary_log_path.stem}_{datetime.now():%Y%m%d_%H%M%S}_{os.getpid()}"
+            f"{primary_log_path.suffix}"
+        )
+        fallback_path = logs_dir / fallback_name
+        file_handler = logging.FileHandler(fallback_path, encoding="utf-8")
+        logger.warning(
+            "Archivo de log bloqueado: %s. Se usa archivo alternativo: %s",
+            primary_log_path,
+            fallback_path,
+        )
+
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
 
     return logger
 
