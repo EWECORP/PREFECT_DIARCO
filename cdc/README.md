@@ -29,6 +29,7 @@ Esta carpeta concentra la base del nuevo esquema de CDC para ETL_DIARCO.
   - `071_seed_pilot_t051_articulos_sucursal.sql`: inserta la configuracion inicial de `T051_ARTICULOS_SUCURSAL`
   - `072_validate_pilot_t051_articulos_sucursal.sql`: valida estado, corridas y ultimos registros impactados de `T051_ARTICULOS_SUCURSAL`
   - `073_tune_pilot_t051_articulos_sucursal.sql`: ajusta `batch_size` recomendado de `T051_ARTICULOS_SUCURSAL` a 5000
+  - `074_validate_cdc_touch_today_t051_articulos_sucursal.sql`: muestra filas tocadas hoy por CDC en `T051_ARTICULOS_SUCURSAL`
   - `080_prepare_src_t020_proveedor_dias_entrega_cabe.sql`: prepara `src.t020_proveedor_dias_entrega_cabe`
   - `081_seed_pilot_t020_proveedor_dias_entrega_cabe.sql`: inserta la configuracion inicial de `T020_PROVEEDOR_DIAS_ENTREGA_CABE`
   - `082_validate_pilot_t020_proveedor_dias_entrega_cabe.sql`: valida estado, corridas y ultimos registros impactados de `T020_PROVEEDOR_DIAS_ENTREGA_CABE`
@@ -167,6 +168,7 @@ Orden sugerido:
 5. Ejecutar `scripts/cdc/cdc_replicar_tabla.py pilot_t051_articulos_sucursal current_max_lsn`.
 6. Validar con `postgres/072_validate_pilot_t051_articulos_sucursal.sql`.
 7. Si el piloto ya estaba sembrado con `batch_size = 10000`, ejecutar `postgres/073_tune_pilot_t051_articulos_sucursal.sql`.
+8. Si se quiere validar especificamente que CDC actualizo `fuente_origen` / `fecha_extraccion` hoy, ejecutar `postgres/074_validate_cdc_touch_today_t051_articulos_sucursal.sql`.
 
 Luego repetir el mismo patron para:
 
@@ -332,6 +334,50 @@ La validacion revisa:
 Notas:
 
 - el script `obtener_base_productos_vigentes.py` sigue usando `src.base_productos_vigentes` por defecto
-- el modo nuevo solo se activa al pasar `mode='hybrid_src'` o configurar `BASE_PRODUCTOS_SOURCE_MODE`
+- el modo nuevo intermedio se activa al pasar `mode='hybrid_src'` o configurar `BASE_PRODUCTOS_SOURCE_MODE`
 - las tablas snapshot pueden eliminarse luego de la comparacion
 - conviene tomar ambos snapshots de forma consecutiva en la misma ventana operativa; si entre las dos corridas pasan horas, la comparacion puede mostrar drift que en realidad corresponde a cambios reales de datos
+
+## Validacion futura de `base_productos_vigentes` en modo PostgreSQL puro
+
+El modo `pg_src` queda preparado como candidato futuro, pero no es el camino operativo actual.
+
+Bloqueantes actuales:
+
+- `src.t804_hist_marca_listo_para_venta` todavia no esta sincronizada por CDC/PostgreSQL
+- `src.t051_articulos_sucursal_barrio` todavia no esta sincronizada por CDC/PostgreSQL
+
+Por ese motivo, la transicion actual debe seguir usando `hybrid_src`, que lee `src` para las tablas ya migradas y mantiene remanentes desde SQL Server.
+
+Para una prueba controlada futura, habilitar explicitamente el modo experimental y generar un snapshot con `pg_src`:
+
+```powershell
+$env:BASE_PRODUCTOS_ENABLE_EXPERIMENTAL_PG_SRC = "1"
+python scripts/push/obtener_base_productos_vigentes.py "{'mode': 'pg_src', 'target_table': 'src.base_productos_vigentes_cmp_pg_src'}"
+```
+
+Si se quiere comparar contra el modo intermedio actual:
+
+```powershell
+python scripts/push/obtener_base_productos_vigentes.py "{'mode': 'hybrid_src', 'target_table': 'src.base_productos_vigentes_cmp_hybrid_src'}"
+```
+
+Luego ejecutar:
+
+```sql
+\i cdc/postgres/131_validate_base_productos_pg_src.sql
+```
+
+El modo `pg_src` usa solo PostgreSQL y asume estas fuentes por defecto:
+
+- `src.t060_stock`
+- `src.t804_hist_marca_listo_para_venta`
+- `src.t051_articulos_sucursal_barrio`
+- `src.sucursales_excluidas`
+
+Estas tablas pueden cambiarse con variables de entorno:
+
+- `BASE_PRODUCTOS_PG_STOCK_TABLE`
+- `BASE_PRODUCTOS_PG_HIST_VIGENCIA_TABLE`
+- `BASE_PRODUCTOS_PG_MARCA_BARRIO_TABLE`
+- `BASE_PRODUCTOS_PG_SUC_EXCLUIDAS_TABLE`

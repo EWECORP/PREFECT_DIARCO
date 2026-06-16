@@ -317,21 +317,6 @@ deployments:
       cron: "05 7 * * *"   # todos los días 07:05 AM (REV)
       timezone: "America/Argentina/Buenos_Aires"
 
-  - name: ETL_REFRESH_BVE_BARRIO_DIARIO_PROD
-    entrypoint: scripts/push/actualizar_base_ventas_extendida_barrio.py:actualizar_base_ventas_extendida_barrio
-    description: "Carga incremental con ventana y upsert"
-    tags: ["bve","etl","diario"]
-    version: "1.0.1"
-    work_pool:
-      name: dmz-diarco
-      work_queue_name: default
-    parameters:
-      window_days: 14
-      analyze: true
-    schedule:
-      cron: "45 6 * * *"   # todos los días 06:15 América/Buenos_Aires
-      timezone: "America/Argentina/Buenos_Aires"
-
   - name: envio-manual-tabla
     version: null
     tags:

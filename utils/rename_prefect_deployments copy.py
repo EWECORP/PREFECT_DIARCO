@@ -26,7 +26,6 @@ RENAME_MAP: Dict[str, str] = {
     "Actualizar_tablas_maestras_Postgres": "MASTER_SYNC_MAESTROS_POSTGRES_PROD",
     "Actualizar_tablas_Tabulares_Postgres": "MASTER_SYNC_TABULARES_POSTGRES_PROD",
     "actualizar_base_ventas_extendida_diario": "ETL_REFRESH_BVE_DIARIO_PROD",
-    "actualizar_base_ventas_extendida_BARRIO": "ETL_REFRESH_BVE_BARRIO_DIARIO_PROD",
     "Refrescar_Tablas_Maestras_Postgres": "MASTER_REFRESH_MAESTROS_MEDIODIA_PROD",
     "Publicar_Transferencias_VKM": "TRANSFER_PUBLISH_VKM_PROD",
 }

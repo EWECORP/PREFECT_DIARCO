@@ -48,18 +48,45 @@ DEFAULT_BASE_PRODUCTOS_SOURCE_MODE = os.getenv(
     "BASE_PRODUCTOS_SOURCE_MODE",
     "sqlserver_sp",
 ).strip().lower()
+DEFAULT_PG_STOCK_TABLE = os.getenv(
+    "BASE_PRODUCTOS_PG_STOCK_TABLE",
+    "src.t060_stock",
+).strip()
+DEFAULT_PG_HIST_VIGENCIA_TABLE = os.getenv(
+    "BASE_PRODUCTOS_PG_HIST_VIGENCIA_TABLE",
+    "src.t804_hist_marca_listo_para_venta",
+).strip()
+DEFAULT_PG_MARCA_BARRIO_TABLE = os.getenv(
+    "BASE_PRODUCTOS_PG_MARCA_BARRIO_TABLE",
+    "src.t051_articulos_sucursal_barrio",
+).strip()
+DEFAULT_PG_SUC_EXCLUIDAS_TABLE = os.getenv(
+    "BASE_PRODUCTOS_PG_SUC_EXCLUIDAS_TABLE",
+    "src.sucursales_excluidas",
+).strip()
+ENABLE_EXPERIMENTAL_PG_SRC = os.getenv(
+    "BASE_PRODUCTOS_ENABLE_EXPERIMENTAL_PG_SRC",
+    "0",
+).strip() == "1"
 
 logger = setup_script_logger(
     "obtener_base_productos_vigentes",
     "replicacion_base_productos_vigentes.log",
 )
 
-sql_engine = build_sql_server_engine(
-    SQL_SERVER, # pyright: ignore[reportArgumentType]
-    SQL_USER, # pyright: ignore[reportArgumentType]
-    SQL_PASSWORD, # pyright: ignore[reportArgumentType]
-    SQL_DATABASE, # pyright: ignore[reportArgumentType]
-)
+_sql_engine = None
+
+
+def get_sql_engine():
+    global _sql_engine
+    if _sql_engine is None:
+        _sql_engine = build_sql_server_engine(
+            SQL_SERVER, # pyright: ignore[reportArgumentType]
+            SQL_USER, # pyright: ignore[reportArgumentType]
+            SQL_PASSWORD, # pyright: ignore[reportArgumentType]
+            SQL_DATABASE, # pyright: ignore[reportArgumentType]
+        )
+    return _sql_engine
 
 
 def open_pg_conn_local():
@@ -93,6 +120,15 @@ def resolve_runtime_options(payload):
         )
 
     return source_mode, assert_sql_table_name(table_destino)
+
+
+def get_pg_source_tables() -> dict[str, str]:
+    return {
+        "stock": assert_sql_table_name(DEFAULT_PG_STOCK_TABLE),
+        "hist_vigencia": assert_sql_table_name(DEFAULT_PG_HIST_VIGENCIA_TABLE),
+        "marca_barrio": assert_sql_table_name(DEFAULT_PG_MARCA_BARRIO_TABLE),
+        "suc_excluidas": assert_sql_table_name(DEFAULT_PG_SUC_EXCLUIDAS_TABLE),
+    }
 
 
 ESQUEMA_BASE_PRODUCTOS = {
@@ -181,6 +217,46 @@ SQL_QUERY_SUC_EXCLUIDAS = """
 SELECT
     CAST(ex.C_SUCU_EMPR AS INT) AS c_sucu_empr
 FROM dbo.SUCURSALES_EXCLUIDAS ex
+"""
+
+PG_QUERY_SURTIDO_TEMPLATE = """
+SELECT DISTINCT
+    st.c_articulo::integer AS c_articulo
+FROM {stock_table} st
+"""
+
+PG_QUERY_HIST_VIGENCIA_TEMPLATE = """
+SELECT
+    hist.c_sucu_empr::integer AS c_sucu_empr,
+    hist.c_articulo::integer AS c_articulo,
+    MAX(CASE WHEN hist.m_listo_para_venta_act = 'S' THEN hist.f_alta_sist END) AS fecha_alta_hist,
+    MAX(CASE WHEN hist.m_listo_para_venta_act = 'N' THEN hist.f_alta_sist END) AS fecha_baja_hist
+FROM {hist_vigencia_table} hist
+INNER JOIN (
+    SELECT DISTINCT c_articulo
+    FROM {stock_table}
+) surtido
+    ON surtido.c_articulo = hist.c_articulo
+GROUP BY hist.c_sucu_empr, hist.c_articulo
+"""
+
+PG_QUERY_MARCA_BARRIO_TEMPLATE = """
+SELECT
+    mb.c_sucu_empr::integer AS c_sucu_empr,
+    mb.c_articulo::integer AS c_articulo,
+    mb.m_habilitado_sucu::varchar(1) AS m_habilitado_sucu
+FROM {marca_barrio_table} mb
+INNER JOIN (
+    SELECT DISTINCT c_articulo
+    FROM {stock_table}
+) surtido
+    ON surtido.c_articulo = mb.c_articulo
+"""
+
+PG_QUERY_SUC_EXCLUIDAS_TEMPLATE = """
+SELECT
+    ex.c_sucu_empr::integer AS c_sucu_empr
+FROM {suc_excluidas_table} ex
 """
 
 PG_INSERT_BASE_PRODUCTOS_HYBRID_TEMPLATE = """
@@ -313,7 +389,7 @@ SELECT
             THEN prov.u_piso_paletizado::double precision
         ELSE prov.q_factor_proveedor::double precision
     END AS number_of_boxes_per_layer,
-    'BASE_PRODUCTOS_HYBRID_SRC' AS fuente_origen,
+    '{source_label}' AS fuente_origen,
     CURRENT_TIMESTAMP AS fecha_extraccion,
     0 AS estado_sincronizacion
 FROM src.t051_articulos_sucursal suc
@@ -420,7 +496,7 @@ def load_sqlserver_query_into_pg_temp(
     total_rows = 0
     total_chunks = 0
     for chunk_index, raw_chunk in enumerate(
-        pd.read_sql(query, sql_engine, chunksize=chunk_size),
+        pd.read_sql(query, get_sql_engine(), chunksize=chunk_size),
         start=1,
     ):
         aligned = align_dataframe_to_schema(raw_chunk, schema_dict)
@@ -435,6 +511,27 @@ def load_sqlserver_query_into_pg_temp(
         total_chunks,
     )
     return total_rows, total_chunks
+
+
+def load_pg_query_into_temp(
+    *,
+    pg_cur,
+    table_name,
+    schema_dict,
+    query,
+    task_logger,
+):
+    pg_cur.execute(f"DROP TABLE IF EXISTS {table_name}")
+    pg_cur.execute(create_temp_table_statement(schema_dict, table_name))
+    columns_sql = ", ".join(f'"{column}"' for column in schema_dict)
+    pg_cur.execute(f"INSERT INTO {table_name} ({columns_sql}) {query}")
+    total_rows = pg_cur.rowcount if pg_cur.rowcount is not None else 0
+    task_logger.info(
+        "Temp cargada desde PostgreSQL | tabla=%s | filas=%s",
+        table_name,
+        total_rows,
+    )
+    return total_rows
 
 
 def crear_indices_temporales(pg_cur):
@@ -508,6 +605,7 @@ def cargar_base_productos_hibrida_impl(task_logger, table_destino: str):
                 cur.execute(
                     PG_INSERT_BASE_PRODUCTOS_HYBRID_TEMPLATE.format(
                         table_name=table_destino,
+                        source_label="BASE_PRODUCTOS_HYBRID_SRC",
                     )
                 )
                 inserted_rows = cur.rowcount if cur.rowcount is not None else 0
@@ -532,6 +630,89 @@ def cargar_base_productos_hibrida_impl(task_logger, table_destino: str):
     return {"rows": inserted_rows, "chunks": sql_chunks, "seconds": elapsed}
 
 
+def cargar_base_productos_pg_src_impl(task_logger, table_destino: str):
+    started_at = perf_counter()
+    source_tables = get_pg_source_tables()
+
+    with open_pg_conn_local() as conn:
+        try:
+            with conn.cursor() as cur:
+                rows_surtido = load_pg_query_into_temp(
+                    pg_cur=cur,
+                    table_name="tmp_bp_surtido",
+                    schema_dict=TMP_SCHEMA_SURTIDO,
+                    query=PG_QUERY_SURTIDO_TEMPLATE.format(
+                        stock_table=source_tables["stock"],
+                    ),
+                    task_logger=task_logger,
+                )
+
+                load_pg_query_into_temp(
+                    pg_cur=cur,
+                    table_name="tmp_bp_hist_vigencia",
+                    schema_dict=TMP_SCHEMA_HIST_VIGENCIA,
+                    query=PG_QUERY_HIST_VIGENCIA_TEMPLATE.format(
+                        hist_vigencia_table=source_tables["hist_vigencia"],
+                        stock_table=source_tables["stock"],
+                    ),
+                    task_logger=task_logger,
+                )
+
+                load_pg_query_into_temp(
+                    pg_cur=cur,
+                    table_name="tmp_bp_marca_barrio",
+                    schema_dict=TMP_SCHEMA_MARCA_BARRIO,
+                    query=PG_QUERY_MARCA_BARRIO_TEMPLATE.format(
+                        marca_barrio_table=source_tables["marca_barrio"],
+                        stock_table=source_tables["stock"],
+                    ),
+                    task_logger=task_logger,
+                )
+
+                load_pg_query_into_temp(
+                    pg_cur=cur,
+                    table_name="tmp_bp_sucursales_excluidas",
+                    schema_dict=TMP_SCHEMA_SUC_EXCLUIDAS,
+                    query=PG_QUERY_SUC_EXCLUIDAS_TEMPLATE.format(
+                        suc_excluidas_table=source_tables["suc_excluidas"],
+                    ),
+                    task_logger=task_logger,
+                )
+
+                crear_indices_temporales(cur)
+
+                cur.execute(f"DROP TABLE IF EXISTS {table_destino} CASCADE")
+                cur.execute(create_table_statement(ESQUEMA_BASE_PRODUCTOS, table_destino))
+                task_logger.info("Tabla destino recreada en modo pg_src: %s", table_destino)
+
+                cur.execute(
+                    PG_INSERT_BASE_PRODUCTOS_HYBRID_TEMPLATE.format(
+                        table_name=table_destino,
+                        source_label="BASE_PRODUCTOS_PG_SRC",
+                    )
+                )
+                inserted_rows = cur.rowcount if cur.rowcount is not None else 0
+
+            conn.commit()
+        except Exception:
+            conn.rollback()
+            task_logger.exception(
+                "Se revirtió la transacción de carga pg_src sobre %s",
+                table_destino,
+            )
+            raise
+
+    elapsed = perf_counter() - started_at
+    task_logger.info(
+        "Carga pg_src finalizada | tabla_destino=%s | filas=%s | surtido=%s | duracion=%.2fs",
+        table_destino,
+        inserted_rows,
+        rows_surtido,
+        elapsed,
+    )
+    return {"rows": inserted_rows, "chunks": 0, "seconds": elapsed}
+
+
 @task(name="cargar_base_productos_pg")
 def cargar_base_productos(
     source_mode: str = DEFAULT_BASE_PRODUCTOS_SOURCE_MODE,
@@ -548,7 +729,7 @@ def cargar_base_productos(
         )
         return replace_table_from_query_chunks(
             query=f"EXEC {SP_NAME}",
-            sql_engine=sql_engine,
+            sql_engine=get_sql_engine(),
             pg_conn_factory=open_pg_conn_local,
             table_name=table_destino,
             schema_dict=ESQUEMA_BASE_PRODUCTOS,
@@ -564,9 +745,25 @@ def cargar_base_productos(
         )
         return cargar_base_productos_hibrida_impl(task_logger, table_destino)
 
+    if source_mode == "pg_src":
+        if not ENABLE_EXPERIMENTAL_PG_SRC:
+            raise RuntimeError(
+                "El modo pg_src esta preparado pero deshabilitado por ahora. "
+                "Requiere sincronizar en PostgreSQL las fuentes pendientes: "
+                "src.t804_hist_marca_listo_para_venta y "
+                "src.t051_articulos_sucursal_barrio. "
+                "Para pruebas controladas, configurar "
+                "BASE_PRODUCTOS_ENABLE_EXPERIMENTAL_PG_SRC=1."
+            )
+        task_logger.info(
+            "Carga base_productos_vigentes en modo pg_src | src=PostgreSQL puro | tabla_destino=%s",
+            table_destino,
+        )
+        return cargar_base_productos_pg_src_impl(task_logger, table_destino)
+
     raise ValueError(
         "BASE_PRODUCTOS_SOURCE_MODE / mode invalido. Valores soportados: "
-        "'sqlserver_sp', 'hybrid_src'."
+        "'sqlserver_sp', 'hybrid_src', 'pg_src'."
     )
 
 

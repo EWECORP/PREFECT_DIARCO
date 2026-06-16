@@ -13,3 +13,17 @@ SELECT
     updated_at
 FROM etl.cdc_table_config
 WHERE config_name = 'pilot_t051_articulos_sucursal';
+
+
+
+
+--- Informar NEVER RUN para volver a empezar el proceso desde el inicio (LSN NULL) y validar que funciona correctamente con la nueva configuración de batch_size
+UPDATE etl.cdc_state
+SET
+    last_start_lsn = NULL,
+    last_end_lsn = NULL,
+    last_status = 'never_run',
+    last_rowcount = 0,
+    last_error = NULL,
+    updated_at = now()
+WHERE config_name = 'pilot_t051_articulos_sucursal';

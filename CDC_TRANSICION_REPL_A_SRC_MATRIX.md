@@ -66,7 +66,7 @@ Los objetos de `scripts/sql/` agregan una capa intermedia importante en la DMZ. 
 | Replica legacy DMZ | `scripts/repl/flujo_replicar_DMZ_en_LOTES.py` | `T020`, `T050`, `T051`, `T052`, `T055`, `T085`, `T100`, `T114`, `T117` | `SQL Server -> repl` via SP | dejar solo tablas no migradas | recortar SP de tablas ya cubiertas por CDC cuando no tengan consumidores activos en `repl` | Alta | es el productor legacy principal |
 | Refresh de maestras | `scripts/send/actualizar_tablas_maestras.py` | `T050`, `T020`, `T052`, `T100`, `T114`, `T117`, `T020_*`, `T051` | exporta desde `repl` hacia `src` | consumir `src` directo o eliminar ese paso | sacar de la lista batch las tablas ya cubiertas por CDC | Alta | hoy duplica funcionalidad ya resuelta por CDC |
 | Refresh legacy adicional | `scripts/send/refresh_tablas_maestras.py` | `T050`, `T020`, `T052`, `T051` | SP sobre `repl` + envio a Postgres | flujo partido: dejar solo legacy real | retirar tablas CDC de este flujo | Alta | fuerte candidato a simplificacion |
-| Base productos vigentes | `scripts/push/obtener_base_productos_vigentes.py` + `scripts/sql/sp_SP_BASE_PRODUCTOS_DMZ.sql` | `T050`, `T051`, `T052`, `T100`, `T060` | SP SQL Server en DMZ mezclando `repl` y tablas derivadas | version nueva leyendo `src` + remanentes legacy | migrar despues de definir estrategia para `T060_STOCK` y `T051_*_BARRIO` | Media | el ejecutable actual usa `SP_BASE_PRODUCTOS_DMZ`, no `SP_BASE_PRODUCTOS_SUCURSAL` |
+| Base productos vigentes | `scripts/push/obtener_base_productos_vigentes.py` + `scripts/sql/sp_SP_BASE_PRODUCTOS_DMZ.sql` | `T050`, `T051`, `T052`, `T100`, `T060` | SP SQL Server en DMZ mezclando `repl` y tablas derivadas | `hybrid_src` como transicion; `pg_src` queda futuro/experimental | validar y estabilizar `hybrid_src`; postergar Linux puro hasta sincronizar `T804_*` y `T051_*_BARRIO` | Media | `pg_src` queda bloqueado por `src.t804_hist_marca_listo_para_venta` y `src.t051_articulos_sucursal_barrio` |
 | Base stock | `scripts/push/obtener_base_stock.py` + `scripts/sql/sp_SP_BASE_STOCK_EXTEND.sql` | `T050`, `T051`, `T055_*`, `T100`, `T020_PROVEEDOR_DIAS_ENTREGA_DETA` | SP SQL Server en DMZ leyendo `repl` + `T080_OC_PENDIENTES` | fase hibrida | mantener en legacy hasta resolver `T060`, `T710_*` y `T080_OC_PENDIENTES` | Alta | concentra varias dependencias operativas aun no migradas |
 | Materializacion OC pendientes | `scripts/sql/sp_SP_T080_OC_PENDIENTES.sql` | `T050`, `T052` | dataset derivado en `repl` | mantener derivado en DMZ | no migrar por CDC; redisenar luego como proceso derivado | Alta | `T080_OC_PENDIENTES` no existe como tabla fisica en el legacy |
 | Script auxiliar de consulta | `scripts/zvarios/sp.sql` | `T050`, `T051`, `T055`, `T100` | `repl` | `src` cuando se reutilice | no prioritario | Baja | artefacto manual / exploratorio |
@@ -127,6 +127,7 @@ Estado:
 Estado:
 
 - disponible un primer esqueleto en `scripts/push/obtener_base_productos_vigentes.py` con `BASE_PRODUCTOS_SOURCE_MODE=hybrid_src`
+- disponible candidato futuro Linux/PostgreSQL puro con `BASE_PRODUCTOS_SOURCE_MODE=pg_src`, deshabilitado por defecto hasta sincronizar `T804_*` y `T051_*_BARRIO`
 - el modo por defecto sigue siendo `sqlserver_sp` para conservar rollback simple
 
 ### Sprint 4

@@ -225,6 +225,102 @@ FROM (
 ORDER BY origen, c_sucu_empr, c_articulo, c_proveedor_primario
 LIMIT 50;
 
+-- 6b. Diagnostico de claves presentes solo en SQL Server SP contra tablas src usadas por hybrid_src
+WITH sp_keys AS (
+    SELECT DISTINCT c_sucu_empr, c_articulo, c_proveedor_primario
+    FROM src.base_productos_vigentes_cmp_sqlserver_sp
+),
+hy_keys AS (
+    SELECT DISTINCT c_sucu_empr, c_articulo, c_proveedor_primario
+    FROM src.base_productos_vigentes_cmp_hybrid_src
+),
+solo_sp AS (
+    SELECT
+        sp.c_sucu_empr,
+        sp.c_articulo,
+        sp.c_proveedor_primario
+    FROM sp_keys sp
+    LEFT JOIN hy_keys hy
+      ON hy.c_sucu_empr = sp.c_sucu_empr
+     AND hy.c_articulo = sp.c_articulo
+     AND hy.c_proveedor_primario IS NOT DISTINCT FROM sp.c_proveedor_primario
+    WHERE hy.c_sucu_empr IS NULL
+)
+SELECT
+    ss.c_sucu_empr,
+    ss.c_articulo,
+    ss.c_proveedor_primario,
+    CASE WHEN suc.c_articulo IS NULL THEN 0 ELSE 1 END AS existe_src_t051,
+    CASE WHEN art.c_articulo IS NULL THEN 0 ELSE 1 END AS existe_src_t050,
+    CASE WHEN prov.c_articulo IS NULL THEN 0 ELSE 1 END AS existe_src_t052,
+    CASE WHEN suc_mae.c_sucu_empr IS NULL THEN 0 ELSE 1 END AS existe_src_t100,
+    suc.c_sistematica,
+    suc.m_habilitado_sucu,
+    suc.m_listo_para_venta_sucu,
+    art.m_baja,
+    art.m_a_dar_de_baja,
+    art.c_clasificacion_compra,
+    suc_mae.m_sucu_virtual
+FROM solo_sp ss
+LEFT JOIN src.t051_articulos_sucursal suc
+  ON suc.c_sucu_empr = ss.c_sucu_empr
+ AND suc.c_articulo = ss.c_articulo
+LEFT JOIN src.t050_articulos art
+  ON art.c_articulo = ss.c_articulo
+LEFT JOIN src.t052_articulos_proveedor prov
+  ON prov.c_articulo = ss.c_articulo
+ AND prov.c_proveedor = ss.c_proveedor_primario
+LEFT JOIN src.t100_empresa_suc suc_mae
+  ON suc_mae.c_sucu_empr = ss.c_sucu_empr
+ORDER BY ss.c_sucu_empr, ss.c_articulo, ss.c_proveedor_primario
+LIMIT 50;
+
+-- 6c. Diagnostico de claves presentes solo en hybrid_src
+WITH sp_keys AS (
+    SELECT DISTINCT c_sucu_empr, c_articulo, c_proveedor_primario
+    FROM src.base_productos_vigentes_cmp_sqlserver_sp
+),
+hy_keys AS (
+    SELECT DISTINCT c_sucu_empr, c_articulo, c_proveedor_primario
+    FROM src.base_productos_vigentes_cmp_hybrid_src
+),
+solo_hybrid AS (
+    SELECT
+        hy.c_sucu_empr,
+        hy.c_articulo,
+        hy.c_proveedor_primario
+    FROM hy_keys hy
+    LEFT JOIN sp_keys sp
+      ON sp.c_sucu_empr = hy.c_sucu_empr
+     AND sp.c_articulo = hy.c_articulo
+     AND sp.c_proveedor_primario IS NOT DISTINCT FROM hy.c_proveedor_primario
+    WHERE sp.c_sucu_empr IS NULL
+)
+SELECT
+    sh.c_sucu_empr,
+    sh.c_articulo,
+    sh.c_proveedor_primario,
+    suc.fuente_origen AS t051_fuente_origen,
+    suc.fecha_extraccion AS t051_fecha_extraccion,
+    encode(suc.cdc_lsn, 'hex') AS t051_cdc_lsn_hex,
+    art.fuente_origen AS t050_fuente_origen,
+    art.fecha_extraccion AS t050_fecha_extraccion,
+    encode(art.cdc_lsn, 'hex') AS t050_cdc_lsn_hex,
+    prov.fuente_origen AS t052_fuente_origen,
+    prov.fecha_extraccion AS t052_fecha_extraccion,
+    encode(prov.cdc_lsn, 'hex') AS t052_cdc_lsn_hex
+FROM solo_hybrid sh
+LEFT JOIN src.t051_articulos_sucursal suc
+  ON suc.c_sucu_empr = sh.c_sucu_empr
+ AND suc.c_articulo = sh.c_articulo
+LEFT JOIN src.t050_articulos art
+  ON art.c_articulo = sh.c_articulo
+LEFT JOIN src.t052_articulos_proveedor prov
+  ON prov.c_articulo = sh.c_articulo
+ AND prov.c_proveedor = sh.c_proveedor_primario
+ORDER BY sh.c_sucu_empr, sh.c_articulo, sh.c_proveedor_primario
+LIMIT 50;
+
 -- 7. Conteo de diferencias de atributos sobre claves compartidas
 WITH shared_rows AS (
     SELECT
