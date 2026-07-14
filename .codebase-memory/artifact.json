@@ -1,0 +1,11 @@
+{
+    "schema_version": 2,
+    "commit": "bba9df5e0f3f423bb010bc148fc93c572be2b435",
+    "indexed_at": "2026-07-14T16:28:38Z",
+    "project": "ETL_DIARCO",
+    "nodes": 2117,
+    "edges": 7831,
+    "original_size": 5046272,
+    "compressed_size": 1105977,
+    "compression_level": 9
+}
