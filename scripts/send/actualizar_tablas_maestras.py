@@ -264,6 +264,8 @@ def actualizar_tablas_maestras():
         ("dbo", "m_95_sensibles", "M_95_SENSIBLES"),
         ("dbo", "m_96_stock_seguridad", "M_96_STOCK_SEGURIDAD"),
         
+        ("repl", "t100_empresa_suc", "T100_EMPRESA_SUC"), 
+        
         ("repl", "t_competencia_detalle", "T_COMPETENCIA_DETALLE"),
         
         ("repl", "t080_oc_pendientes", "T080_OC_PENDIENTES"),  
