@@ -1,11 +1,11 @@
 {
     "schema_version": 2,
-    "commit": "bba9df5e0f3f423bb010bc148fc93c572be2b435",
-    "indexed_at": "2026-07-14T16:28:38Z",
-    "project": "ETL_DIARCO",
-    "nodes": 2117,
-    "edges": 7831,
-    "original_size": 5046272,
-    "compressed_size": 1105977,
+    "commit": "9b70f36cc5a2dbc24ad97bfae8a892a979a1aef6",
+    "indexed_at": "2026-07-28T16:50:32Z",
+    "project": "C-ETL-ETL_DIARCO",
+    "nodes": 1029,
+    "edges": 3095,
+    "original_size": 2949120,
+    "compressed_size": 463991,
     "compression_level": 9
 }
