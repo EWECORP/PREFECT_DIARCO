@@ -35,23 +35,59 @@ def ejecutar_sp(nombre_sp: str):
     logger = get_run_logger()
     inicio = datetime.now()
     logger.info(f"🛠️ Ejecutando SP: {nombre_sp}")
+    conn = None
+    cursor = None
     try:
         conn = get_sqlserver_connection()
         cursor = conn.cursor()
         cursor.execute(f"EXEC {nombre_sp}")
         conn.commit()
-        cursor.close()
-        conn.close()
         duracion = (datetime.now() - inicio).total_seconds()
         logger.info(f"✅ {nombre_sp} ejecutado en {duracion:.2f}s")
     except Exception as e:
+        if conn is not None:
+            try:
+                conn.rollback()
+            except Exception as rollback_error:
+                logger.warning(
+                    f"⚠️ No se pudo revertir la transacción de {nombre_sp}: "
+                    f"{rollback_error}"
+                )
         logger.error(f"❌ Error en {nombre_sp}: {str(e)}")
         raise
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if conn is not None:
+            conn.close()
+
+
+def esperar_resultados(resultados):
+    """Espera todas las tareas y devuelve los nombres de las que fallaron."""
+    fallidos = []
+    for nombre_sp, resultado in resultados:
+        try:
+            resultado.result()
+        except Exception as error:
+            fallidos.append((nombre_sp, error))
+    return fallidos
+
+
+def ejecutar_en_serie_continuando(procedimientos):
+    """Ejecuta todos los SP en orden, sin cortar la lista ante una falla."""
+    fallidos = []
+    for nombre_sp in procedimientos:
+        try:
+            ejecutar_sp(nombre_sp)
+        except Exception as error:
+            fallidos.append((nombre_sp, error))
+    return fallidos
 
 # === Flujo de replicación completo, con paralelismo y control ===
 @flow(name="Flujo Replicacion DMZ Optimizado")
 def sync_dmz_optimizado():
     logger = get_run_logger()
+    fallidos = []
 
     # === SPs rápidos en paralelo ===
     logger.info("⏳ Ejecutando BATCH-RAPIDO - Grupo 1/6 ")
@@ -66,30 +102,31 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T874_PRECARGA_CONNEXA_HIST",
         "repl.usp_replicar_T_COMPETENCIA_DETALLE"
     ]
-    resultados = [ejecutar_sp.submit(sp) for sp in batch_rapido]
-    [r.result() for r in resultados]
+    resultados = [(sp, ejecutar_sp.submit(sp)) for sp in batch_rapido]
+    fallidos.extend(esperar_resultados(resultados))
 
     # === SPs críticos (con dependencias) en serie ===
     logger.info("⏳ Ejecutando SP Encadenados - Grupo 2/6 ")
-    ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL")
-    ejecutar_sp("repl.usp_replicar_T051_ARTICULOS_SUCURSAL_BARRIO")
-    ejecutar_sp("repl.usp_replicar_T052_ARTICULOS_PROVEEDOR")
-    ejecutar_sp("repl.usp_replicar_T060_STOCK")
-    ejecutar_sp("repl.usp_replicar_M_3_ARTICULOS")
-    ejecutar_sp("repl.usp_replicar_T080_OC_PENDIENTES")
-    ejecutar_sp("repl.usp_replicar_T080_OC_CABE")
-    ejecutar_sp("repl.usp_replicar_T081_OC_DETA")
+    fallidos.extend(ejecutar_en_serie_continuando([
+        "repl.usp_replicar_T051_ARTICULOS_SUCURSAL",
+        "repl.usp_replicar_T051_ARTICULOS_SUCURSAL_BARRIO",
+        "repl.usp_replicar_T052_ARTICULOS_PROVEEDOR",
+        "repl.usp_replicar_T060_STOCK",
+        "repl.usp_replicar_M_3_ARTICULOS",
+        "repl.usp_replicar_T080_OC_PENDIENTES",
+        "repl.usp_replicar_T080_OC_CABE",
+        "repl.usp_replicar_T081_OC_DETA"
+    ]))
 
     # === Largos y pesados ===
     logger.info("⏳ Ejecutando ESTADISTICAS PESADAS - Grupo 3/6 ")
-    for sp in [
+    fallidos.extend(ejecutar_en_serie_continuando([
         "repl.usp_replicar_T710_ESTADIS_REPOSICION",
         "repl.usp_replicar_T710_ESTADIS_STOCK",
         "repl.usp_replicar_T710_ESTADIS_OFERTA_FOLDER",
         "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO",
         "repl.usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO"
-    ]:
-        ejecutar_sp(sp)
+    ]))
 
     # === Planes, condiciones, snc ===
     logger.info("⏳ Replicando ARTICULOS y PARAMETROS - Grupo 4/6 ")
@@ -100,8 +137,8 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
         "repl.usp_replicar_T085_ARTICULOS_EAN_EDI"
     ]
-    resultados_cond = [ejecutar_sp.submit(sp) for sp in grupo_condiciones]
-    [r.result() for r in resultados_cond]
+    resultados_cond = [(sp, ejecutar_sp.submit(sp)) for sp in grupo_condiciones]
+    fallidos.extend(esperar_resultados(resultados_cond))
 
     # === Tableros Metabase Varios ===
     logger.info("⏳ Replicando INFO TABLEROS - Grupo 5/6 ")
@@ -116,21 +153,34 @@ def sync_dmz_optimizado():
         "repl.usp_replicar_T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANT",
         "repl.usp_replicar_USO_CONNEXA",
     ]
-    resultados_tabs = [ejecutar_sp.submit(sp) for sp in grupo_tableros]
-    [r.result() for r in resultados_tabs]
+    resultados_tabs = [(sp, ejecutar_sp.submit(sp)) for sp in grupo_tableros]
+    fallidos.extend(esperar_resultados(resultados_tabs))
 
     # === Competencia ===
     logger.info("⏳ Replicando COMPETENCIA - Grupo 6/6 ")
-    for sp in [
+    fallidos.extend(ejecutar_en_serie_continuando([
         "repl.usp_replicar_T090_COMPETENCIA",
         "repl.usp_replicar_T091_COMPETENCIA_PRECIOS_CABE",
         "repl.usp_replicar_T091_COMPETENCIA_PRECIOS_DETA"
-    ]:
-        ejecutar_sp(sp)
+    ]))
 
     logger.info("✅ Replicación Precios de Competencia")
     
-    ejecutar_sp("repl.usp_replicar_T710_ESTADIS_PRECIOS")
+    fallidos.extend(ejecutar_en_serie_continuando([
+        "repl.usp_replicar_T710_ESTADIS_PRECIOS"
+    ]))
+
+    if fallidos:
+        resumen = "; ".join(
+            f"{nombre_sp}: {error}" for nombre_sp, error in fallidos
+        )
+        logger.error(
+            f"❌ Replicación finalizada con {len(fallidos)} SP fallido(s): {resumen}"
+        )
+        raise RuntimeError(
+            f"La replicación terminó con {len(fallidos)} SP fallido(s): "
+            f"{', '.join(nombre_sp for nombre_sp, _ in fallidos)}"
+        )
     
     logger.info("✅ Replicación DMZ Optimizada Finalizada")
 
