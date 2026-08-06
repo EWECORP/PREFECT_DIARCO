@@ -102,7 +102,8 @@ FechasVenta AS (
 RestockMayorista AS (
     SELECT
         C_ARTICULO,
-        MAX(F_ULT_ING_STOCK) AS last_restock_date
+        ---MAX(F_ULT_ING_STOCK) AS last_restock_date
+        NULLIF(MAX(F_ULT_ING_STOCK), '1900-01-01') AS last_restock_date
     FROM [DIARCOP001].[DiarcoP].[dbo].T051_ARTICULOS_SUCURSAL
     WHERE C_SUCU_EMPR IN (SELECT C_SUCU_EMPR FROM SucursalesMayorista)
     GROUP BY C_ARTICULO
@@ -112,7 +113,8 @@ RestockMayorista AS (
 RestockBarrio AS (
     SELECT
         C_ARTICULO,
-        MAX(F_ULT_ING_STOCK) AS last_restock_date
+        ---MAX(F_ULT_ING_STOCK) AS last_restock_date
+        NULLIF(MAX(F_ULT_ING_STOCK), '1900-01-01') AS last_restock_date
     FROM [DIARCO-BARRIO].[DiarcoBarrio].[dbo].T051_ARTICULOS_SUCURSAL
     WHERE C_SUCU_EMPR IN (SELECT C_SUCU_EMPR FROM SucursalesBarrio)
     GROUP BY C_ARTICULO
@@ -279,6 +281,11 @@ SELECT
     FV.last_sale_date,
     FV.first_sale_date,
     RK.last_restock_date,
+    CASE 
+        WHEN CASE WHEN T1.M_VENDE_POR_PESO = 'N' THEN ST.Q_UNID_ARTICULO ELSE ST.Q_PESO_ARTICULO END <= 0 
+        THEN FV.last_sale_date
+        ELSE NULL 
+    END AS last_stock_date,
 
     -- Proveedor
     PROV.N_PROVEEDOR                                                AS supplier_name,
