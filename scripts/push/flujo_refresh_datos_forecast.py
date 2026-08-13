@@ -89,7 +89,8 @@ def forecast_flow():
         "obtener_oc_demoradas_proveedor.py" ,          ##  Genera Base_Forecast_Oc_Demoradas
         "obtener_base_transferencias_pendientes.py",   ##  Genera Base_Transferencias_Pendientes
         "obtener_base_productos_transito.py",          ##  Genera Base_Productos_En_Transito
-        "obtener_base_productos_vigentes.py"           ## Salida del SP_BASE_PRODUCTOS_DMZ / modo hybrid_src
+        "obtener_base_productos_vigentes.py",           ## Salida del SP_BASE_PRODUCTOS_DMZ / modo hybrid_src
+        "actualizar_ventas_diarias_stock.py",
     ]
 
     logger.info("Inicio flujo forecast | scripts=%s", len(scripts))

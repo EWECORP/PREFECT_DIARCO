@@ -89,7 +89,8 @@ def forecast_flow():
         "obtener_oc_demoradas_proveedor.py",
         "obtener_base_transferencias_pendientes.py",
         "obtener_base_productos_transito.py",
-        "obtener_base_productos_vigentes.py"
+        "obtener_base_productos_vigentes.py",
+        "actualizar_ventas_diarias_stock.py",
     ]
 
     logger.info("Inicio flujo forecast | scripts=%s", len(scripts))
