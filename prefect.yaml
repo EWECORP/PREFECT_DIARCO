@@ -344,7 +344,7 @@ deployments:
     schedules: []
 
   - name: PDD_BASE_ARTICULOS_LOGISTICA_MANUAL
-    version: "1.1.0"
+    version: "1.2.0"
     entrypoint: scripts/pdd/cargar_base_articulos_logistica.py:base_articulos_logistica_scd2_flow
     description: >-
       Valida y aplica manualmente un snapshot contractual SCD2 sobre

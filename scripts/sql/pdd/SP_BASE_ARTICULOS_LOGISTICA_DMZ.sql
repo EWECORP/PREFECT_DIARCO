@@ -39,27 +39,13 @@ BEGIN
         m_vende_por_peso = CAST(
             CASE WHEN art.M_VENDE_POR_PESO = 'S' THEN 1 ELSE 0 END AS bit
         ),
-        c_gtin_unidad = CAST(
-            CASE
-                WHEN LEN(codes.c_ean) = 13
-                 AND codes.c_ean NOT LIKE '%[^0-9]%'
-                THEN codes.c_ean
-                ELSE NULL
-            END AS varchar(14)
-        ),
+        c_gtin_unidad = CAST(gtin.c_ean_valido AS varchar(14)),
 
         c_tipo_bulto = CAST(
             CASE WHEN prov.Q_FACTOR_PROVEEDOR > 0 THEN 'CASE' ELSE NULL END
             AS varchar(30)
         ),
-        c_gtin_bulto = CAST(
-            CASE
-                WHEN LEN(codes.c_dun14) = 14
-                 AND codes.c_dun14 NOT LIKE '%[^0-9]%'
-                THEN codes.c_dun14
-                ELSE NULL
-            END AS varchar(14)
-        ),
+        c_gtin_bulto = CAST(gtin.c_dun14_valido AS varchar(14)),
         q_unidades_por_bulto = CASE WHEN prov.Q_FACTOR_PROVEEDOR > 0
                                     THEN prov.Q_FACTOR_PROVEEDOR ELSE NULL END,
 
@@ -134,7 +120,7 @@ BEGIN
             AS varchar(160)
         ),
         atributos_adicionales = CAST(
-            N'{"mapping_version":"DIARCO_DMZ_V2","gtin_rule":"T050_EAN13_DUN14","weight_semantics":"PENDING","q_peso_unit_art_candidate":'
+            N'{"mapping_version":"DIARCO_DMZ_V3","gtin_rule":"T050_EAN13_DUN14_MOD10_NO_PLACEHOLDER","weight_semantics":"PENDING","q_peso_unit_art_candidate":'
             + COALESCE(CONVERT(varchar(30), art.Q_PESO_UNIT_ART), 'null')
             + N'}'
             AS nvarchar(max)
@@ -151,6 +137,54 @@ BEGIN
             c_ean = NULLIF(LTRIM(RTRIM(CONVERT(varchar(50), art.C_EAN))), ''),
             c_dun14 = NULLIF(LTRIM(RTRIM(CONVERT(varchar(50), art.C_DUN14))), '')
     ) AS codes
+    OUTER APPLY (
+        SELECT
+            c_ean_valido = CASE
+                WHEN LEN(codes.c_ean) = 13
+                 AND codes.c_ean NOT LIKE '%[^0-9]%'
+                 AND REPLACE(LEFT(codes.c_ean, 12), LEFT(codes.c_ean, 1), '') <> ''
+                 AND TRY_CONVERT(int, RIGHT(codes.c_ean, 1)) =
+                     (10 - (
+                         TRY_CONVERT(int, SUBSTRING(codes.c_ean, 1, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_ean, 2, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_ean, 3, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_ean, 4, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_ean, 5, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_ean, 6, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_ean, 7, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_ean, 8, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_ean, 9, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_ean, 10, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_ean, 11, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_ean, 12, 1))
+                     ) % 10) % 10
+                THEN codes.c_ean
+                ELSE NULL
+            END,
+            c_dun14_valido = CASE
+                WHEN LEN(codes.c_dun14) = 14
+                 AND codes.c_dun14 NOT LIKE '%[^0-9]%'
+                 AND REPLACE(LEFT(codes.c_dun14, 13), LEFT(codes.c_dun14, 1), '') <> ''
+                 AND TRY_CONVERT(int, RIGHT(codes.c_dun14, 1)) =
+                     (10 - (
+                         3 * TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 1, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 2, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 3, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 4, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 5, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 6, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 7, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 8, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 9, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 10, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 11, 1))
+                         + TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 12, 1))
+                         + 3 * TRY_CONVERT(int, SUBSTRING(codes.c_dun14, 13, 1))
+                     ) % 10) % 10
+                THEN codes.c_dun14
+                ELSE NULL
+            END
+    ) AS gtin
     WHERE art.M_BAJA = 'N'
       AND EXISTS (
           SELECT 1

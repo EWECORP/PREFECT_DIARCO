@@ -17,6 +17,7 @@ from scripts.pdd.cargar_base_articulos_logistica import (
     assert_sqlserver_procedure_name,
     base_articulos_logistica_scd2_flow,
     calculate_input_checksum,
+    is_valid_gtin,
     normalize_snapshot,
     read_snapshot_file,
     read_snapshot_sqlserver,
@@ -39,6 +40,12 @@ def valid_row(**overrides):
 
 
 class NormalizeSnapshotTests(unittest.TestCase):
+    def test_gtin_rejects_invalid_check_digits_and_repeated_placeholders(self):
+        self.assertFalse(is_valid_gtin("11111111111113"))
+        self.assertFalse(is_valid_gtin("1111111111114"))
+        self.assertTrue(is_valid_gtin("0123456789012"))
+        self.assertTrue(is_valid_gtin("12345670"))
+
     def test_minimum_row_gets_defaults_and_contract_checksum(self):
         [row] = normalize_snapshot([valid_row()], effective_at=EFFECTIVE_AT)
 

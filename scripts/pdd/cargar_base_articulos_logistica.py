@@ -128,6 +128,21 @@ class SnapshotValidationError(ValueError):
     """El snapshot no cumple el contrato canónico."""
 
 
+def is_valid_gtin(value: str) -> bool:
+    """Valida longitud, dígito GS1 Mod-10 y descarta cuerpos placeholder."""
+    if not value.isdigit() or len(value) not in GTIN_LENGTHS:
+        return False
+    body, supplied_check_digit = value[:-1], int(value[-1])
+    if len(set(body)) == 1:
+        return False
+    weighted_sum = sum(
+        int(digit) * (3 if position % 2 == 1 else 1)
+        for position, digit in enumerate(reversed(body), start=1)
+    )
+    expected_check_digit = (10 - weighted_sum % 10) % 10
+    return supplied_check_digit == expected_check_digit
+
+
 def _is_null(value: Any) -> bool:
     return value is None or (isinstance(value, str) and not value.strip())
 
@@ -455,8 +470,10 @@ def _normalize_row(raw: Mapping[str, Any], row_number: int, effective_at: dateti
             errors.append(f"{field}: valor inválido {row[field]!r}")
     for field in ("c_gtin_unidad", "c_gtin_bulto"):
         value = row[field]
-        if value is not None and (not value.isdigit() or len(value) not in GTIN_LENGTHS):
-            errors.append(f"{field}: debe tener sólo dígitos y longitud 8, 12, 13 o 14")
+        if value is not None and not is_valid_gtin(value):
+            errors.append(
+                f"{field}: GTIN inválido, placeholder o con dígito verificador incorrecto"
+            )
     _validate_positive(row, DECIMAL_FIELDS - {"q_temperatura_min_c", "q_temperatura_max_c"}, errors)
     _validate_positive(row, {
         "q_bultos_por_capa", "q_capas_por_pallet", "q_bultos_por_pallet", "q_max_niveles_apilado"

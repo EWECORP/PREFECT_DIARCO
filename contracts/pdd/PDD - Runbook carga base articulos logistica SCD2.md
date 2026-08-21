@@ -12,9 +12,11 @@ ejecutar `[dbo].[SP_BASE_ARTICULOS_LOGISTICA_DMZ]` en `data-sync`.
 
 Para identificación GS1, el SP publica `T050_ARTICULOS.C_EAN` como
 `c_gtin_unidad` únicamente cuando contiene 13 dígitos y `C_DUN14` como
-`c_gtin_bulto` únicamente cuando contiene 14 dígitos. Otros valores, incluidos
-los códigos de balanza de artículos pesables, quedan en `NULL`. No se consumen
-EAN alternativos de `T085_ARTICULOS_EAN_EDI`.
+`c_gtin_bulto` únicamente cuando contiene 14 dígitos. Además valida el dígito
+GS1 Mod-10 y descarta cuerpos formados por un único dígito repetido. Otros
+valores, incluidos los códigos de balanza de artículos pesables y placeholders
+como `11111111111113` o `1111111111114`, quedan en `NULL`. No se consumen EAN
+alternativos de `T085_ARTICULOS_EAN_EDI`.
 
 El modo alternativo `source_mode=file` admite CSV UTF-8, JSON (array de
 objetos) o JSON Lines. Los nombres de campo son los del DDL canónico.
@@ -65,6 +67,11 @@ rechaza, no se corrige silenciosamente.
    GROUP BY c_articulo
    HAVING count(*) > 1;
    ```
+
+9. Ejecutar nuevamente el mismo origen, primero con `validate_only=true`. Para
+   confirmar idempotencia debe informar `new=0`, `changed=0`,
+   `closed_missing=0` y `unchanged=source_rows`. Peso y volumen deben continuar
+   clasificados como `MISSING` mientras no exista una fuente aprobada.
 
 El deployment queda deliberadamente sin schedule. Se podrá programar sólo
 después de aprobar esta primera carga y acordar la fuente logística recurrente.
