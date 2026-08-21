@@ -343,6 +343,26 @@ deployments:
       work_queue_name: default
     schedules: []
 
+  - name: PDD_BASE_ARTICULOS_LOGISTICA_MANUAL
+    version: "1.1.0"
+    entrypoint: scripts/pdd/cargar_base_articulos_logistica.py:base_articulos_logistica_scd2_flow
+    description: >-
+      Valida y aplica manualmente un snapshot contractual SCD2 sobre
+      diarco_data.src.base_articulos_logistica. No ejecuta el DDL ni publica hacia Stock Management.
+    tags: ["pdd", "logistica", "scd2", "manual"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      source_mode: sqlserver_sp
+      source_file: ""
+      stored_procedure: "[dbo].[SP_BASE_ARTICULOS_LOGISTICA_DMZ]"
+      full_snapshot: true
+      validate_only: true
+      effective_at: null
+      source_name: DIARCO_DMZ
+    schedules: []
+
 
   - name: TRANSFER_PUBLISH_VKM_PROD
     entrypoint: scripts/pull/flujo_publicar_transferencias_sgm_vk.py:publicar_transferencias_sgm_vk
