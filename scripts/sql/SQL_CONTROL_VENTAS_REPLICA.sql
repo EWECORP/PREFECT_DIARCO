@@ -1,0 +1,77 @@
+ 
+ /******************************
+  CONTROL DE CONSISTENCIA REGISTROS DE VENTA
+ *******************************/
+ --- VENTA DIARCO SGM- Residen el el servidor de la DMZ de DIARCO - SQL SERVER
+ --- BASE: [data-sync]
+ USE [data-sync]
+ GO
+
+ --- TABLAS ORIGINALES DIARCO
+ SELECT 
+    F_VENTA,
+    COUNT(*) AS REGISTROS,
+    SUM(Q_UNIDADES_VENDIDAS) AS UNIDADES
+  FROM [DCO-DBCORE-P02].[DiarcoEst].[dbo].[T702_EST_VTAS_POR_ARTICULO]
+  WHERE F_VENTA >= '2026-08-01'
+  GROUP BY F_VENTA
+  ORDER BY F_VENTA
+
+ --- VENTA DIARCO data-sync REPL
+
+  SELECT 
+    F_VENTA,
+    COUNT(*) AS REGISTROS,
+    SUM(Q_UNIDADES_VENDIDAS) AS UNIDADES
+  FROM [data-sync].[repl].[T702_EST_VTAS_POR_ARTICULO]
+  WHERE F_VENTA >= '2026-08-01'
+  GROUP BY F_VENTA
+  ORDER BY F_VENTA
+
+  --- VENTAS ORIGINALES BARRIO SGM
+SELECT 
+    F_VENTA,
+    COUNT(*) AS REGISTROS,
+    SUM(Q_UNIDADES_VENDIDAS) AS UNIDADES
+	FROM [DCO-DBCORE-P02].[DiarcoEst].[dbo].[T702_EST_VTAS_POR_ARTICULO_DBARRIO]
+  WHERE F_VENTA >= '2026-08-01'
+  GROUP BY F_VENTA
+  ORDER BY F_VENTA
+
+
+  -- VENTAS DIARCO BARRIO REPL
+  SELECT 
+    F_VENTA,
+    COUNT(*) AS REGISTROS,
+    SUM(Q_UNIDADES_VENDIDAS) AS UNIDADES
+	FROM [data-sync].[repl].[T702_EST_VTAS_POR_ARTICULO_DBARRIO]
+  WHERE F_VENTA >= '2026-08-01'
+  GROUP BY F_VENTA
+  ORDER BY F_VENTA
+
+
+
+
+/**********************************************
+    PARA VOLVER A SINCRONIZAR ELEGIR VENTANA Y ELIMINAR PARA REPROCESAR
+**********************************************/
+  --- VENTA DIARCO
+ DELETE FROM [data-sync].[repl].[T702_EST_VTAS_POR_ARTICULO]
+  WHERE F_VENTA >= '2026-08-10'      --- (3.410.078 rows affected)
+
+  --- REPROCESAR EXTRACCIÓN DATOS con STORED PROCEDURE
+DECLARE	@return_value int
+EXEC	@return_value = [repl].[usp_replicar_T702_EST_VTAS_POR_ARTICULO]
+SELECT	'Return Value' = @return_value     --- (Minutos 1.44)
+GO
+
+  --- VENTA BARRIO
+ DELETE FROM [data-sync].[repl].[T702_EST_VTAS_POR_ARTICULO_DBARRIO]
+  WHERE F_VENTA >= '2026-08-10'      --- (1.717.917 rows affected)
+
+  --- REPROCESAR EXTRACCIÓN DATOS con STORED PROCEDURE
+DECLARE	@return_value int
+EXEC	@return_value =  [repl].[usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO]
+SELECT	'Return Value' = @return_value      --- (Minutos 1.44)
+
+GO

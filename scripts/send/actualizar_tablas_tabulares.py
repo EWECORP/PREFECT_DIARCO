@@ -15,7 +15,10 @@ import logging
 from prefect import flow, task, get_run_logger
 from datetime import datetime, timedelta
 
-from flujo_maestro_replica_datos import flujo_maestro, generar_nombre_archivo
+if __package__:
+    from .flujo_maestro_replica_datos import flujo_maestro
+else:
+    from flujo_maestro_replica_datos import flujo_maestro
 
 # ====================== CONFIGURACIÓN Y LOGGING ======================
 load_dotenv()
@@ -69,6 +72,8 @@ def vaciar_registros_tabla(tabla_pg: str, valor_filtro: int) -> None:
     if tabla_pg not in whitelist:
         raise ValueError(f"Tabla no permitida: {tabla_pg}")
 
+    conn = None
+    cursor = None
     try:
         conn = open_pg_conn()
         cursor = conn.cursor()
@@ -82,8 +87,10 @@ def vaciar_registros_tabla(tabla_pg: str, valor_filtro: int) -> None:
         logger.error(f"❌ Error al eliminar datos de 'src.{tabla_pg}': {e}")
         raise
     finally:
-        cursor.close()
-        conn.close()
+        if cursor is not None:
+            cursor.close()
+        if conn is not None:
+            conn.close()
 
 # ====================== FLUJO PRINCIPAL ======================
 @flow(name="actualizar_tablas_tabulares")
@@ -101,28 +108,37 @@ def actualizar_tablas_tabulares():
         ("repl", "t710_estadis_oferta_folder", "T710_ESTADIS_OFERTA_FOLDER")
     ]
 
+    resultados = []
     for origen, tabla_pg, tabla_sql in tablas:
-        try:
-            logger.info(f"🔄 Procesando tabla: {tabla_pg}")
-            t0 = datetime.now()
+        logger.info(f"🔄 Procesando tabla: {tabla_pg}")
+        t0 = datetime.now()
 
-            # Calcular filtro (ejemplo: 202507 para julio 2025)
-            fecha_desde = datetime.today() - timedelta(days=1)
-            valor_filtro = fecha_desde.year * 100 + fecha_desde.month
-            logger.info(f"🧪 Filtro aplicado: C_ANIO * 100 + C_MES >= {valor_filtro}")
+        # Calcular filtro (ejemplo: 202507 para julio 2025)
+        fecha_desde = datetime.today() - timedelta(days=1)
+        valor_filtro = fecha_desde.year * 100 + fecha_desde.month
+        logger.info(f"🧪 Filtro aplicado: C_ANIO * 100 + C_MES >= {valor_filtro}")
 
-            # Paso 1: Eliminar registros recientes
-            vaciar_registros_tabla.submit(tabla_pg, valor_filtro)
+        # La eliminación debe finalizar antes de iniciar la recarga. Antes se
+        # enviaba la task sin esperar su resultado, dejando una carrera entre
+        # DELETE e INSERT.
+        vaciar_registros_tabla.submit(tabla_pg, valor_filtro).result()
 
-            # Paso 2: Ejecutar flujo de carga desde SQL Server
-            flujo_maestro(esquema=origen, tabla=tabla_sql, filtro_sql=f"C_ANIO * 100 + C_MES >= {valor_filtro}")
+        # Cualquier error se propaga: un flow Completed debe significar que las
+        # tres fuentes tabulares quedaron actualizadas.
+        flujo_maestro(
+            esquema=origen,
+            tabla=tabla_sql,
+            filtro_sql=f"C_ANIO * 100 + C_MES >= {valor_filtro}",
+        )
 
-            t1 = datetime.now()
-            logger.info(f"✅ Tabla {tabla_pg} actualizada exitosamente en {round((t1 - t0).total_seconds(), 1)}s.")
-        except Exception as e:
-            logger.error(f"❌ Error procesando {tabla_pg}: {e}")
+        duracion = round((datetime.now() - t0).total_seconds(), 1)
+        resultados.append(
+            {"tabla": tabla_pg, "periodo_desde": valor_filtro, "duracion_segundos": duracion}
+        )
+        logger.info(f"✅ Tabla {tabla_pg} actualizada exitosamente en {duracion}s.")
 
-    print("✅ Finalizó la actualización de tablas tabulares.")
+    logger.info("✅ Finalizó la actualización de tablas tabulares: %s", resultados)
+    return resultados
 
 # ====================== EJECUCIÓN LOCAL ======================
 if __name__ == "__main__":

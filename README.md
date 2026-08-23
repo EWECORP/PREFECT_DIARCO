@@ -18,6 +18,10 @@ El objetivo principal es automatizar la sincronización y replicación de datos 
 - actualizar tablas maestras y tablas tabulares en PostgreSQL
 - soportar procesos de `pull`, `push`, `send` y `repl`
 
+La cadena productiva vigente, sus precedencias, la compuerta propuesta basada en
+el cierre SGM y el plan para reemplazar dependencias horarias están documentados
+en [ORQUESTACION_PRODUCTIVA_ETL_DIARCO.md](ORQUESTACION_PRODUCTIVA_ETL_DIARCO.md).
+
 ---
 
 ## 📁 Estructura del proyecto
@@ -188,4 +192,3 @@ Estas utilidades permiten validar conexiones y detectar problemas de encoding o 
 - `scripts/send/refresh_tablas_maestras.py`: ejemplo de sincronización de tablas maestras
 - `.env`: configuración de conexión y parámetros operativos
 - `requirements.txt`: dependencias Python
-

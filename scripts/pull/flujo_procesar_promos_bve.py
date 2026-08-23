@@ -29,7 +29,17 @@ def get_pg_engine():
     password = secrets["PG_PASSWORD"]
 
     url = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}"
-    return create_engine(url, pool_pre_ping=True)
+    return create_engine(
+        url,
+        pool_pre_ping=True,
+        connect_args={
+            "application_name": "etl_diarco_bve_promos",
+            "keepalives": 1,
+            "keepalives_idle": 60,
+            "keepalives_interval": 30,
+            "keepalives_count": 5,
+        },
+    )
 
 
 @task(log_prints=True)
@@ -47,12 +57,15 @@ def ejecutar_sp_promos(fecha_desde: date, fecha_hasta: date, actualizar_base_ori
         );
     """)
 
-    with engine.begin() as conn:
-        conn.execute(sql, {
-            "fecha_desde": fecha_desde,
-            "fecha_hasta": fecha_hasta,
-            "actualizar_base_original": actualizar_base_original
-        })
+    try:
+        with engine.begin() as conn:
+            conn.execute(sql, {
+                "fecha_desde": fecha_desde,
+                "fecha_hasta": fecha_hasta,
+                "actualizar_base_original": actualizar_base_original
+            })
+    finally:
+        engine.dispose()
 
     logger.info("Stored procedure ejecutado correctamente.")
 
@@ -80,8 +93,11 @@ def validar_ultimo_log():
         LIMIT 1;
     """)
 
-    with engine.connect() as conn:
-        row = conn.execute(sql).mappings().first()
+    try:
+        with engine.connect() as conn:
+            row = conn.execute(sql).mappings().first()
+    finally:
+        engine.dispose()
 
     if row is None:
         raise RuntimeError("No se encontró log del proceso.")

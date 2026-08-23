@@ -40,7 +40,7 @@ deployments:
     parameters:
       config_name: pilot_t050_articulos
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T020_PROVEEDOR_PILOTO
@@ -53,7 +53,7 @@ deployments:
     parameters:
       config_name: pilot_t020_proveedor
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T052_ARTICULOS_PROVEEDOR_PILOTO
@@ -66,7 +66,7 @@ deployments:
     parameters:
       config_name: pilot_t052_articulos_proveedor
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T100_EMPRESA_SUC_PILOTO
@@ -92,7 +92,7 @@ deployments:
     parameters:
       config_name: pilot_t114_rubros
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T117_COMPRADORES_PILOTO
@@ -105,7 +105,7 @@ deployments:
     parameters:
       config_name: pilot_t117_compradores
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T051_ARTICULOS_SUCURSAL_PILOTO
@@ -122,7 +122,7 @@ deployments:
     parameters:
       config_name: pilot_t051_articulos_sucursal
     schedule:
-      cron: "*/10 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T020_PROVEEDOR_DIAS_ENTREGA_CABE_PILOTO
@@ -148,7 +148,7 @@ deployments:
     parameters:
       config_name: pilot_t020_proveedor_dias_entrega_deta
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T085_ARTICULOS_EAN_EDI_PILOTO
@@ -161,7 +161,7 @@ deployments:
     parameters:
       config_name: pilot_t085_articulos_ean_edi
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T055_ARTICULOS_PARAM_STOCK_PILOTO
@@ -174,7 +174,7 @@ deployments:
     parameters:
       config_name: pilot_t055_articulos_param_stock
     schedule:
-      cron: "*/5 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_T055_ARTICULOS_CONDCOMPRA_COSTOS_PILOTO
@@ -187,7 +187,7 @@ deployments:
     parameters:
       config_name: pilot_t055_articulos_condcompra_costos
     schedule:
-      cron: "*/10 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: CDC_MONITOR_FASE_1
@@ -209,7 +209,7 @@ deployments:
       active_window_start: "08:00"
       active_window_end: "18:00"
     schedule:
-      cron: "*/10 8-17 * * *"
+      cron: "*/15 8-17 * * *"
       timezone: "America/Argentina/Buenos_Aires"
 
   - name: FORECAST_PUSH_INPUT_DATA_PROD
@@ -317,6 +317,22 @@ deployments:
       cron: "05 7 * * *"   # todos los días 07:05 AM (REV)
       timezone: "America/Argentina/Buenos_Aires"
 
+  - name: PDD_ENRICHED_SALES_REPROCESS_MANUAL
+    version: "1.0.1"
+    entrypoint: scripts/pull/flujo_procesar_promos_bve.py:procesar_promos_bve
+    description: >-
+      Reconstruye de forma manual e idempotente el baseline mensual y las ventas
+      enriquecidas para un rango historico. fecha_hasta es exclusiva.
+    tags: ["pdd", "ventas", "reproceso", "manual"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      fecha_desde: null
+      fecha_hasta: null
+      actualizar_base_original: true
+    schedules: []
+
   - name: envio-manual-tabla
     version: null
     tags:
@@ -362,6 +378,81 @@ deployments:
       effective_at: null
       source_name: DIARCO_DMZ
     schedules: []
+
+  - name: PDD_SOURCE_READINESS_MANUAL
+    version: "1.0.4"
+    entrypoint: scripts/pdd/pdd_source_daily.py:pdd_source_daily_flow
+    description: >-
+      Diagnostica y audita el contrato de fuentes PDD en diarco_data sin ejecutar
+      cargas. Permite comprobar el corte antes de lanzar el maestro operativo.
+    tags: ["pdd", "fuentes", "readiness", "manual"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      business_date: null
+      refresh_tabular_sources: false
+      refresh_sales: false
+      refresh_branch_stock: false
+      refresh_assortment: false
+      refresh_logistics: false
+      refresh_open_purchase_orders: false
+      sales_overlap_days: 3
+      sales_reconciliation_days: 0
+      sales_reconciliation_weekday: 6
+      force_sales_reconciliation: false
+      fail_if_not_ready: false
+      created_by: pdd.source.readiness
+    schedules: []
+
+  - name: PDD_SOURCE_DAILY_MASTER_PROD
+    version: "1.0.4"
+    entrypoint: scripts/pdd/pdd_source_daily.py:pdd_source_daily_flow
+    description: >-
+      Sincroniza en orden causal las fuentes requeridas por PDD, refresca la vista
+      canonica de OC y persiste un contrato READY/BLOCKED antes del proceso
+      operativo de las 20:30.
+    tags: ["pdd", "fuentes", "diario", "produccion"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      business_date: null
+      refresh_tabular_sources: true
+      refresh_sales: true
+      refresh_branch_stock: true
+      refresh_assortment: true
+      refresh_logistics: true
+      refresh_open_purchase_orders: true
+      sales_overlap_days: 3
+      sales_reconciliation_days: 0
+      sales_reconciliation_weekday: 6
+      force_sales_reconciliation: false
+      fail_if_not_ready: true
+      created_by: pdd.source.daily
+    schedule:
+      cron: "30 18 * * *"
+      timezone: "America/Argentina/Buenos_Aires"
+
+  - name: PDD_SALES_RECONCILIATION_WEEKLY
+    version: "1.0.0"
+    entrypoint: scripts/pdd/pdd_source_daily.py:pdd_sales_reconciliation_flow
+    description: >-
+      Compara 45 dias entre los servidores de venta, data-sync y PostgreSQL;
+      repara solamente fechas distintas y reconstruye sus derivados. No genera
+      una auditoria READY/BLOCKED de todas las fuentes PDD.
+    tags: ["pdd", "fuentes", "ventas", "reconciliacion", "semanal"]
+    work_pool:
+      name: dmz-diarco
+      work_queue_name: default
+    parameters:
+      business_date: null
+      sales_overlap_days: 3
+      sales_reconciliation_days: 45
+      created_by: pdd.sales.reconciliation.weekly
+    schedule:
+      cron: "0 10 * * 0"
+      timezone: "America/Argentina/Buenos_Aires"
 
 
   - name: TRANSFER_PUBLISH_VKM_PROD

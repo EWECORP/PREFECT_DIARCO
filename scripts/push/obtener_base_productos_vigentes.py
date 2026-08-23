@@ -11,18 +11,32 @@ import pandas as pd
 from dotenv import load_dotenv
 from prefect import flow, get_run_logger, task
 
-from etl_chunk_utils import (
-    align_dataframe_to_schema,
-    build_sql_server_engine,
-    coerce_datetime_column,
-    coerce_float_column,
-    coerce_int_column,
-    copy_dataframe_to_postgres,
-    create_table_statement,
-    open_pg_conn,
-    replace_table_from_query_chunks,
-    setup_script_logger,
-)
+if __package__:
+    from .etl_chunk_utils import (
+        align_dataframe_to_schema,
+        build_sql_server_engine,
+        coerce_datetime_column,
+        coerce_float_column,
+        coerce_int_column,
+        copy_dataframe_to_postgres,
+        create_table_statement,
+        open_pg_conn,
+        replace_table_from_query_chunks,
+        setup_script_logger,
+    )
+else:
+    from etl_chunk_utils import (
+        align_dataframe_to_schema,
+        build_sql_server_engine,
+        coerce_datetime_column,
+        coerce_float_column,
+        coerce_int_column,
+        copy_dataframe_to_postgres,
+        create_table_statement,
+        open_pg_conn,
+        replace_table_from_query_chunks,
+        setup_script_logger,
+    )
 
 
 load_dotenv()

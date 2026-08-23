@@ -12,10 +12,15 @@ DECLARE
     v_log_id bigint;
     v_inicio timestamp := clock_timestamp();
     v_fin timestamp;
-    v_mes date;
+    v_desde_efectivo date;
+    v_mes_hasta date;
+    v_etapa text := 'INIT';
+    v_etapa_inicio timestamp;
+    v_etapa_count bigint := 0;
 
     v_baseline_count bigint := 0;
     v_enriquecida_count bigint := 0;
+    v_promo_reset_count bigint := 0;
     v_promo_count bigint := 0;
 
     v_error text;
@@ -28,7 +33,13 @@ BEGIN
         RAISE EXCEPTION 'p_hasta debe ser mayor que p_desde';
     END IF;
 
-    v_mes := date_trunc('month', p_desde)::date;
+    -- El baseline es mensual: una reparacion dentro de un mes obliga a
+    -- reconstruirlo desde su primer dia. p_hasta conserva semantica exclusiva.
+    v_desde_efectivo := date_trunc('month', p_desde)::date;
+    v_mes_hasta := date_trunc('month', p_hasta - 1)::date;
+
+    RAISE LOG '[PDD_BVE] stage=INIT status=STARTED pid=% desde=% hasta=% actualizar_base=%',
+        pg_backend_pid(), v_desde_efectivo, p_hasta, p_actualizar_base_original;
 
     INSERT INTO datamart.dm_bve_proceso_log
     (
@@ -52,13 +63,31 @@ BEGIN
     )
     RETURNING id INTO v_log_id;
 
+    v_etapa := 'DELETE_BASELINE';
+    v_etapa_inicio := clock_timestamp();
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=STARTED', v_log_id, v_etapa;
     DELETE FROM datamart.dm_bve_baseline_mensual
-    WHERE mes = v_mes;
+    WHERE mes >= v_desde_efectivo
+      AND mes <= v_mes_hasta;
+    GET DIAGNOSTICS v_etapa_count = ROW_COUNT;
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=COMPLETED rows=% elapsed_s=%',
+        v_log_id, v_etapa, v_etapa_count,
+        round(extract(epoch FROM (clock_timestamp() - v_etapa_inicio))::numeric, 3);
 
+    v_etapa := 'DELETE_ENRICHED';
+    v_etapa_inicio := clock_timestamp();
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=STARTED', v_log_id, v_etapa;
     DELETE FROM datamart.dm_bve_ventas_enriquecidas
-    WHERE fecha >= p_desde
+    WHERE fecha >= v_desde_efectivo
       AND fecha <  p_hasta;
+    GET DIAGNOSTICS v_etapa_count = ROW_COUNT;
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=COMPLETED rows=% elapsed_s=%',
+        v_log_id, v_etapa, v_etapa_count,
+        round(extract(epoch FROM (clock_timestamp() - v_etapa_inicio))::numeric, 3);
 
+    v_etapa := 'BUILD_BASELINE';
+    v_etapa_inicio := clock_timestamp();
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=STARTED', v_log_id, v_etapa;
     INSERT INTO datamart.dm_bve_baseline_mensual
     (
         mes,
@@ -88,7 +117,7 @@ BEGIN
         count(*),
         now()
     FROM src.base_ventas_extendida
-    WHERE fecha >= p_desde
+    WHERE fecha >= v_desde_efectivo
       AND fecha <  p_hasta
     GROUP BY
         date_trunc('month', fecha)::date,
@@ -96,7 +125,13 @@ BEGIN
         sucursal;
 
     GET DIAGNOSTICS v_baseline_count = ROW_COUNT;
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=COMPLETED rows=% elapsed_s=%',
+        v_log_id, v_etapa, v_baseline_count,
+        round(extract(epoch FROM (clock_timestamp() - v_etapa_inicio))::numeric, 3);
 
+    v_etapa := 'BUILD_ENRICHED';
+    v_etapa_inicio := clock_timestamp();
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=STARTED', v_log_id, v_etapa;
     INSERT INTO datamart.dm_bve_ventas_enriquecidas
     (
         fecha,
@@ -178,19 +213,32 @@ BEGIN
       ON b.codigo_articulo = v.codigo_articulo
      AND b.sucursal = v.sucursal
      AND b.mes = date_trunc('month', v.fecha)::date
-    WHERE v.fecha >= p_desde
+    WHERE v.fecha >= v_desde_efectivo
       AND v.fecha <  p_hasta;
 
     GET DIAGNOSTICS v_enriquecida_count = ROW_COUNT;
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=COMPLETED rows=% elapsed_s=%',
+        v_log_id, v_etapa, v_enriquecida_count,
+        round(extract(epoch FROM (clock_timestamp() - v_etapa_inicio))::numeric, 3);
 
     IF p_actualizar_base_original THEN
 
+        v_etapa := 'RESET_PROMO';
+        v_etapa_inicio := clock_timestamp();
+        RAISE LOG '[PDD_BVE] run_id=% stage=% status=STARTED', v_log_id, v_etapa;
         UPDATE src.base_ventas_extendida
 		SET promo_fuerte = false
-		WHERE fecha >= p_desde
+		WHERE fecha >= v_desde_efectivo
 		  AND fecha <  p_hasta
-		  AND promo_fuerte = true;
+		  AND promo_fuerte IS DISTINCT FROM false;
+        GET DIAGNOSTICS v_promo_reset_count = ROW_COUNT;
+        RAISE LOG '[PDD_BVE] run_id=% stage=% status=COMPLETED rows=% elapsed_s=%',
+            v_log_id, v_etapa, v_promo_reset_count,
+            round(extract(epoch FROM (clock_timestamp() - v_etapa_inicio))::numeric, 3);
 
+        v_etapa := 'SET_PROMO';
+        v_etapa_inicio := clock_timestamp();
+        RAISE LOG '[PDD_BVE] run_id=% stage=% status=STARTED', v_log_id, v_etapa;
         UPDATE src.base_ventas_extendida v
         SET promo_fuerte = true
         FROM datamart.dm_bve_ventas_enriquecidas e
@@ -199,15 +247,25 @@ BEGIN
           AND e.sucursal = v.sucursal
           AND e.precio = v.precio
           AND e.promo_fuerte_detectada = true
-          AND v.fecha >= p_desde
-          AND v.fecha <  p_hasta;
+          AND v.fecha >= v_desde_efectivo
+          AND v.fecha <  p_hasta
+          AND v.promo_fuerte IS DISTINCT FROM true;
 
         GET DIAGNOSTICS v_promo_count = ROW_COUNT;
+        RAISE LOG '[PDD_BVE] run_id=% stage=% status=COMPLETED rows=% elapsed_s=%',
+            v_log_id, v_etapa, v_promo_count,
+            round(extract(epoch FROM (clock_timestamp() - v_etapa_inicio))::numeric, 3);
 
     END IF;
 
+    v_etapa := 'ANALYZE';
+    v_etapa_inicio := clock_timestamp();
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=STARTED', v_log_id, v_etapa;
     ANALYZE datamart.dm_bve_baseline_mensual;
     ANALYZE datamart.dm_bve_ventas_enriquecidas;
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=COMPLETED elapsed_s=%',
+        v_log_id, v_etapa,
+        round(extract(epoch FROM (clock_timestamp() - v_etapa_inicio))::numeric, 3);
 
     v_fin := clock_timestamp();
 
@@ -222,6 +280,11 @@ BEGIN
         mensaje = 'Proceso finalizado correctamente'
     WHERE id = v_log_id;
 
+    RAISE LOG '[PDD_BVE] run_id=% stage=PROCESS status=COMPLETED elapsed_s=% baseline_rows=% enriched_rows=% promo_reset_rows=% promo_set_rows=%',
+        v_log_id,
+        round(extract(epoch FROM (v_fin - v_inicio))::numeric, 3),
+        v_baseline_count, v_enriquecida_count, v_promo_reset_count, v_promo_count;
+
 EXCEPTION WHEN OTHERS THEN
     v_error := SQLERRM;
     v_fin := clock_timestamp();
@@ -234,6 +297,10 @@ EXCEPTION WHEN OTHERS THEN
         mensaje = 'Error durante el procesamiento',
         error_detalle = v_error
     WHERE id = v_log_id;
+
+    RAISE LOG '[PDD_BVE] run_id=% stage=% status=ERROR elapsed_s=% error=%',
+        v_log_id, v_etapa,
+        round(extract(epoch FROM (v_fin - v_inicio))::numeric, 3), v_error;
 
     RAISE;
 END;

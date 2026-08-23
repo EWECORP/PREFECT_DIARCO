@@ -53,8 +53,15 @@ def esperar_archivo_en_sftp_remoto(nombre_zip: str, espera_maxima: int = 1680, i
 
 # 3. Flujo maestro
 @flow(name="flujo_maestro_replica_datos")
-def flujo_maestro(esquema: str, tabla: str, filtro_sql: str):
+def flujo_maestro(
+    esquema: str,
+    tabla: str,
+    filtro_sql: str,
+    tabla_destino: str | None = None,
+):
     print(f"🚀 Iniciando replicación para {esquema}.{tabla}")
+
+    destino = (tabla_destino or tabla).lower()
 
     nombre_zip = generar_nombre_archivo(esquema, tabla)
     print(f"📦 Nombre de archivo generado: {nombre_zip}")
@@ -71,6 +78,10 @@ def flujo_maestro(esquema: str, tabla: str, filtro_sql: str):
         timeout=600
     )
     print(f"✅ Exportación completada con estado: {export_result.state.name}")  # type: ignore
+    if not export_result.state.is_completed():  # type: ignore
+        raise RuntimeError(
+            f"La exportación de {esquema}.{tabla} terminó en {export_result.state.name}"  # type: ignore
+        )
 
     print(f"🔍 Esperando disponibilidad del archivo en el SFTP remoto...")
     esperar_archivo_en_sftp_remoto(nombre_zip)
@@ -80,12 +91,23 @@ def flujo_maestro(esquema: str, tabla: str, filtro_sql: str):
         name="importar_csv_pg/importar_csv_pg",
         parameters={
             "esquema": "src",
-            "tabla": tabla,
+            "tabla": destino,
             "nombre_zip": nombre_zip
         },
         timeout=600
     )
     print(f"✅ Importación completada con estado: {import_result.state.name}")  # type: ignore
+    if not import_result.state.is_completed():  # type: ignore
+        raise RuntimeError(
+            f"La importación de src.{destino} terminó en {import_result.state.name}"  # type: ignore
+        )
 
     print("🎯 Flujo maestro finalizado.")
+    return {
+        "source": f"{esquema}.{tabla}",
+        "target": f"src.{destino}",
+        "archive": nombre_zip,
+        "export_state": export_result.state.name,  # type: ignore
+        "import_state": import_result.state.name,  # type: ignore
+    }
 
