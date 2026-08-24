@@ -354,6 +354,8 @@ deployments:
       filtro_sql: 1=1
       truncar_destino: true
       validar_nombres: true
+      timeout_exportacion: null
+      timeout_importacion: null
     work_pool:
       name: dmz-diarco
       work_queue_name: default

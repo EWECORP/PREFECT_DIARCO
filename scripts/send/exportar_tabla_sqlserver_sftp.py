@@ -5,6 +5,7 @@ import pandas as pd
 import pyodbc
 import sys
 import psycopg2
+import time
 
 # Obtener el directorio raíz del proyecto
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -76,6 +77,9 @@ def exportar_y_comprimir(esquema, tabla, filtro_sql, nombre_zip):
 
     first_chunk = True
     chunksize = 50000  # pueden ajustar esto según memoria/rendimiento
+    filas_exportadas = 0
+    lotes_exportados = 0
+    inicio_exportacion = time.monotonic()
 
     with pyodbc.connect(SQLSERVER_CONN_STR) as conn, \
          open(nombre_csv, "w", newline="", encoding="utf-8") as f_out:
@@ -89,10 +93,35 @@ def exportar_y_comprimir(esquema, tabla, filtro_sql, nombre_zip):
                 header=first_chunk
             )
             first_chunk = False
+            lotes_exportados += 1
+            filas_exportadas += len(chunk.index)
+            logger.info(
+                "Lote %s exportado: %s filas acumuladas",
+                lotes_exportados,
+                filas_exportadas,
+            )
+
+    segundos_exportacion = time.monotonic() - inicio_exportacion
+    csv_mb = os.path.getsize(nombre_csv) / (1024 * 1024)
+    logger.info(
+        "Extracción finalizada: %s filas en %s lotes, %.2f MB, %.1fs",
+        filas_exportadas,
+        lotes_exportados,
+        csv_mb,
+        segundos_exportacion,
+    )
 
     logger.info(f"Comprimiendo {nombre_csv} en {zip_path}")
+    inicio_compresion = time.monotonic()
     with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
         zipf.write(nombre_csv, arcname=os.path.basename(nombre_csv))
+
+    zip_mb = os.path.getsize(zip_path) / (1024 * 1024)
+    logger.info(
+        "Compresión finalizada: %.2f MB, %.1fs",
+        zip_mb,
+        time.monotonic() - inicio_compresion,
+    )
 
     os.remove(nombre_csv)
     return zip_path
@@ -102,7 +131,12 @@ def exportar_y_comprimir(esquema, tabla, filtro_sql, nombre_zip):
 def enviar_por_sftp(zip_path):
     logger = get_run_logger()
     logger.info(f"Enviando archivo {zip_path} por SFTP a la ruta {SFTP_CONFIG['remote_path']}")
+    inicio_sftp = time.monotonic()
     enviar_archivo_sftp(zip_path, destino=SFTP_CONFIG['remote_path'], config=SFTP_CONFIG)
+    logger.info(
+        "Transferencia SFTP finalizada en %.1fs",
+        time.monotonic() - inicio_sftp,
+    )
     os.remove(zip_path)
 
 @flow(name="exportar_tabla_sql_sftp")

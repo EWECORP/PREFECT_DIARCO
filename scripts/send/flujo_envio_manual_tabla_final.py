@@ -208,7 +208,14 @@ def vaciar_tabla(
 
 
 @task(name="Ejecutar réplica de tabla", retries=0)
-def ejecutar_replicacion(esquema_sql: str, tabla_sql: str, filtro_sql: str = "1=1") -> None:
+def ejecutar_replicacion(
+    esquema_sql: str,
+    tabla_sql: str,
+    tabla_pg: str,
+    filtro_sql: str = "1=1",
+    timeout_exportacion: float | None = None,
+    timeout_importacion: float | None = None,
+) -> None:
     """
     Invoca la lógica estándar de réplica ya existente.
     """
@@ -219,7 +226,14 @@ def ejecutar_replicacion(esquema_sql: str, tabla_sql: str, filtro_sql: str = "1=
         tabla_sql,
         filtro_sql,
     )
-    flujo_maestro(esquema=esquema_sql, tabla=tabla_sql, filtro_sql=filtro_sql)
+    flujo_maestro(
+        esquema=esquema_sql,
+        tabla=tabla_sql,
+        filtro_sql=filtro_sql,
+        tabla_destino=tabla_pg,
+        timeout_exportacion=timeout_exportacion,
+        timeout_importacion=timeout_importacion,
+    )
     logger.info("✅ Réplica finalizada para %s.%s", esquema_sql, tabla_sql)
 
 
@@ -236,6 +250,8 @@ def envio_manual_tabla_sql_a_postgres(
     filtro_sql: str = "1=1",
     truncar_destino: bool = True,
     validar_nombres: bool = True,
+    timeout_exportacion: float | None = None,
+    timeout_importacion: float | None = None,
 ) -> dict[str, Any]:
     """
     Flujo manual parametrizable por tabla.
@@ -257,6 +273,10 @@ def envio_manual_tabla_sql_a_postgres(
     validar_nombres : bool
         Si True, exige que tabla_pg coincida con tabla_sql en lower-case.
         Esto evita cruces accidentales entre origen y destino.
+    timeout_exportacion : float | None
+        Máximo de segundos para esperar al exportador. None espera hasta estado final.
+    timeout_importacion : float | None
+        Máximo de segundos para esperar al importador. None espera hasta estado final.
     """
     logger = get_run_logger()
 
@@ -295,7 +315,14 @@ def envio_manual_tabla_sql_a_postgres(
     else:
         logger.warning("⚠️ Se omite TRUNCATE de destino por parámetro.")
 
-    ejecutar_replicacion(esquema_sql=esquema_sql, tabla_sql=tabla_sql, filtro_sql=filtro_sql)
+    ejecutar_replicacion(
+        esquema_sql=esquema_sql,
+        tabla_sql=tabla_sql,
+        tabla_pg=tabla_pg,
+        filtro_sql=filtro_sql,
+        timeout_exportacion=timeout_exportacion,
+        timeout_importacion=timeout_importacion,
+    )
 
     resultado = {
         "status": "OK",
@@ -304,6 +331,8 @@ def envio_manual_tabla_sql_a_postgres(
         "filtro_sql": filtro_sql,
         "truncar_destino": truncar_destino,
         "validar_nombres": validar_nombres,
+        "timeout_exportacion": timeout_exportacion,
+        "timeout_importacion": timeout_importacion,
     }
     logger.info("✅ Flujo finalizado correctamente: %s", resultado)
     return resultado

@@ -12,6 +12,45 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def validar_timeout_espera(timeout_segundos: float | None, etapa: str) -> None:
+    """Valida timeouts que deben esperar un estado final del deployment hijo."""
+    if timeout_segundos is not None and timeout_segundos <= 0:
+        raise ValueError(
+            f"El timeout de {etapa} debe ser mayor que cero o None para esperar sin límite."
+        )
+
+
+def describir_timeout(timeout_segundos: float | None) -> str:
+    if timeout_segundos is None:
+        return "sin límite de espera"
+    return f"con un máximo de {timeout_segundos:g}s"
+
+
+def validar_estado_deployment(
+    resultado,
+    etapa: str,
+    recurso: str,
+    timeout_segundos: float | None,
+) -> None:
+    """Diferencia un fallo final de un deployment que aún sigue ejecutándose."""
+    estado = resultado.state
+    if estado.is_completed():
+        return
+
+    if not estado.is_final():
+        espera = (
+            "aunque se configuró una espera sin límite"
+            if timeout_segundos is None
+            else f"después de esperar {timeout_segundos:g}s"
+        )
+        raise RuntimeError(
+            f"La {etapa} de {recurso} sigue en {estado.name} {espera}. "
+            "El deployment hijo puede continuar ejecutándose."
+        )
+
+    raise RuntimeError(f"La {etapa} de {recurso} terminó en {estado.name}")
+
 # 1. Generar nombre del archivo ZIP
 @task
 def generar_nombre_archivo(esquema: str, tabla: str) -> str:
@@ -58,15 +97,19 @@ def flujo_maestro(
     tabla: str,
     filtro_sql: str,
     tabla_destino: str | None = None,
+    timeout_exportacion: float | None = None,
+    timeout_importacion: float | None = None,
 ):
     print(f"🚀 Iniciando replicación para {esquema}.{tabla}")
 
     destino = (tabla_destino or tabla).lower()
+    validar_timeout_espera(timeout_exportacion, "exportación")
+    validar_timeout_espera(timeout_importacion, "importación")
 
     nombre_zip = generar_nombre_archivo(esquema, tabla)
     print(f"📦 Nombre de archivo generado: {nombre_zip}")
 
-    print(f"📤 Ejecutando flujo exportador...")
+    print(f"📤 Ejecutando flujo exportador {describir_timeout(timeout_exportacion)}...")
     export_result = run_deployment(
         name="exportar_tabla_sql_sftp/exportar_tabla_sql_sftp",
         parameters={
@@ -75,18 +118,20 @@ def flujo_maestro(
             "filtro_sql": filtro_sql,
             "nombre_zip": nombre_zip
         },
-        timeout=600
+        timeout=timeout_exportacion,
+    )
+    validar_estado_deployment(
+        export_result,
+        etapa="exportación",
+        recurso=f"{esquema}.{tabla}",
+        timeout_segundos=timeout_exportacion,
     )
     print(f"✅ Exportación completada con estado: {export_result.state.name}")  # type: ignore
-    if not export_result.state.is_completed():  # type: ignore
-        raise RuntimeError(
-            f"La exportación de {esquema}.{tabla} terminó en {export_result.state.name}"  # type: ignore
-        )
 
     print(f"🔍 Esperando disponibilidad del archivo en el SFTP remoto...")
     esperar_archivo_en_sftp_remoto(nombre_zip)
 
-    print(f"📥 Ejecutando flujo importador...")
+    print(f"📥 Ejecutando flujo importador {describir_timeout(timeout_importacion)}...")
     import_result = run_deployment(
         name="importar_csv_pg/importar_csv_pg",
         parameters={
@@ -94,13 +139,15 @@ def flujo_maestro(
             "tabla": destino,
             "nombre_zip": nombre_zip
         },
-        timeout=600
+        timeout=timeout_importacion,
+    )
+    validar_estado_deployment(
+        import_result,
+        etapa="importación",
+        recurso=f"src.{destino}",
+        timeout_segundos=timeout_importacion,
     )
     print(f"✅ Importación completada con estado: {import_result.state.name}")  # type: ignore
-    if not import_result.state.is_completed():  # type: ignore
-        raise RuntimeError(
-            f"La importación de src.{destino} terminó en {import_result.state.name}"  # type: ignore
-        )
 
     print("🎯 Flujo maestro finalizado.")
     return {

@@ -241,6 +241,7 @@ def vaciar_tabla(tabla_pg: str,
 @flow(name="actualizar_tablas_maestras")
 def actualizar_tablas_maestras():
     logger = get_run_logger()
+    errores: list[tuple[str, str]] = []
     tablas = [
         # Tablas aun mantenidas por refresh batch legacy.
         # Las tablas cubiertas por CDC estable se retiran gradualmente de esta lista.
@@ -291,8 +292,16 @@ def actualizar_tablas_maestras():
             logger.info(f"✅ Tabla {tabla_pg} actualizada con éxito.")
         except Exception as e:
             logger.error(f"❌ Error procesando {tabla_pg}: {e}")
+            errores.append((tabla_pg, str(e)))
 
-    print("✅ Actualización de Tablas Maestras finalizada.")
+    if errores:
+        detalle = "; ".join(f"{tabla}: {error}" for tabla, error in errores)
+        raise RuntimeError(
+            f"Actualización de Tablas Maestras finalizada con {len(errores)} error(es): "
+            f"{detalle}"
+        )
+
+    print("✅ Actualización de Tablas Maestras finalizada sin errores.")
 
 if __name__ == "__main__":
     actualizar_tablas_maestras()
