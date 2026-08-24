@@ -455,18 +455,6 @@ deployments:
       timezone: "America/Argentina/Buenos_Aires"
 
 
-  - name: TRANSFER_PUBLISH_VKM_PROD
-    entrypoint: scripts/pull/flujo_publicar_transferencias_sgm_vk.py:publicar_transferencias_sgm_vk
-    description: "Flujo Publicar y Actualizar estado Transferencias SGM_VKM"
-    tags: ["Transferencias", "replicacion", "pipeline", "etl"]
-    work_pool:
-      name: dmz-diarco
-      work_queue_name: pull-connexa
-    schedule:
-      cron:  "35 17 * * *"   # Todos los días a las 17:35 PM  (REV)
-      timezone: "America/Argentina/Buenos_Aires"
-    parameters: {}  # Parámetros definidos al momento de ejecutar el flujo
-
   - name: IOSDB_PRODUCTS_LAB
     entrypoint: IOSdb/main.py:products_flow
     description: "Sincroniza productos hacia la plataforma IOS"
