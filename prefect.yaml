@@ -382,7 +382,7 @@ deployments:
     schedules: []
 
   - name: PDD_SOURCE_READINESS_MANUAL
-    version: "1.0.4"
+    version: "1.0.5"
     entrypoint: scripts/pdd/pdd_source_daily.py:pdd_source_daily_flow
     description: >-
       Diagnostica y audita el contrato de fuentes PDD en diarco_data sin ejecutar
@@ -408,7 +408,7 @@ deployments:
     schedules: []
 
   - name: PDD_SOURCE_DAILY_MASTER_PROD
-    version: "1.0.4"
+    version: "1.0.5"
     entrypoint: scripts/pdd/pdd_source_daily.py:pdd_source_daily_flow
     description: >-
       Sincroniza en orden causal las fuentes requeridas por PDD, refresca la vista

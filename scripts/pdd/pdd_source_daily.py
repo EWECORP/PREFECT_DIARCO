@@ -136,7 +136,13 @@ def build_pg_engine() -> Engine:
     return create_engine(
         url,
         pool_pre_ping=True,
-        connect_args={"application_name": "etl_diarco:pdd_source_daily"},
+        connect_args={
+            "application_name": "etl_diarco:pdd_source_daily",
+            "keepalives": 1,
+            "keepalives_idle": 60,
+            "keepalives_interval": 30,
+            "keepalives_count": 5,
+        },
     )
 
 
@@ -380,21 +386,32 @@ def evaluate_source_state(
         )
     )
 
-    branch_blockers = date_blockers(state.get("branch_stock_date"), business_date)
+    # SP_BASE_STOCK_EXTEND etiqueta deliberadamente la foto ejecutada en D con
+    # fecha_stock=D-1. La vigencia exige ambas condiciones: contenido hasta el
+    # cierre D-1 y evidencia de que la extracción se realizó durante D.
+    branch_stock_date = state.get("branch_stock_date")
+    branch_stock_as_of_ts = state.get("branch_stock_as_of_ts")
+    branch_blockers = date_blockers(branch_stock_date, cutoff)
     if not state.get("branch_stock_rows"):
         branch_blockers.append("SOURCE_EMPTY")
+    elif (
+        branch_stock_as_of_ts is None
+        or branch_stock_as_of_ts.date() < business_date
+    ):
+        branch_blockers.append("REFRESH_NOT_PROVEN_FOR_BUSINESS_DATE")
     if state.get("branch_stock_nulls"):
         branch_blockers.append("NULL_PHYSICAL_STOCK")
     checks.append(
         _check(
             "BRANCH_STOCK",
             "src.base_stock_sucursal",
-            max_date=state.get("branch_stock_date"),
-            as_of_ts=state.get("branch_stock_as_of_ts"),
+            max_date=branch_stock_date,
+            as_of_ts=branch_stock_as_of_ts,
             row_count=state.get("branch_stock_rows"),
             blockers=sorted(set(branch_blockers)),
             detail={
-                "required_through": business_date.isoformat(),
+                "required_stock_through": cutoff.isoformat(),
+                "required_extraction_through": business_date.isoformat(),
                 "null_stock": int(state.get("branch_stock_nulls") or 0),
             },
         )
@@ -898,6 +915,7 @@ def pdd_source_daily_flow(
             text("SELECT pg_try_advisory_lock(hashtext(:lock_name))"),
             {"lock_name": LOCK_NAME},
         ).scalar_one()
+        lock_connection.commit()
         if not acquired:
             raise RuntimeError("Ya existe una sincronizacion diaria PDD en ejecucion")
 
@@ -970,6 +988,7 @@ def pdd_source_daily_flow(
                         text("SELECT pg_advisory_unlock(hashtext(:lock_name))"),
                         {"lock_name": LOCK_NAME},
                     )
+                    lock_connection.commit()
             except Exception:
                 # El cierre de la sesion libera automaticamente este tipo de
                 # lock. El intento de unlock nunca debe ocultar la excepcion
@@ -1015,6 +1034,7 @@ def pdd_sales_reconciliation_flow(
             text("SELECT pg_try_advisory_lock(hashtext(:lock_name))"),
             {"lock_name": LOCK_NAME},
         ).scalar_one()
+        lock_connection.commit()
         if not acquired:
             raise RuntimeError(
                 "Ya existe una sincronizacion diaria o reconciliacion PDD en ejecucion"
@@ -1053,6 +1073,7 @@ def pdd_sales_reconciliation_flow(
                         text("SELECT pg_advisory_unlock(hashtext(:lock_name))"),
                         {"lock_name": LOCK_NAME},
                     )
+                    lock_connection.commit()
             except Exception:
                 logger.warning(
                     "No se pudo liberar explicitamente el lock PDD semanal; "

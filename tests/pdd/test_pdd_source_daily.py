@@ -32,7 +32,8 @@ def ready_state() -> dict:
         "historical_stock_date": date(2026, 8, 21),
         "historical_stock_rows": 50,
         "historical_stock_as_of_ts": datetime(2026, 8, 22, tzinfo=timezone.utc),
-        "branch_stock_date": date(2026, 8, 22),
+        # La foto extraída en D representa el stock al cierre de D-1.
+        "branch_stock_date": date(2026, 8, 21),
         "branch_stock_rows": 500,
         "branch_stock_as_of_ts": datetime(2026, 8, 22, tzinfo=timezone.utc),
         "branch_stock_nulls": 0,
@@ -157,6 +158,62 @@ class EvaluateSourceStateTests(unittest.TestCase):
 
         self.assertIn("BRANCH_STOCK:NULL_PHYSICAL_STOCK", result.blocker_codes)
 
+    def test_branch_stock_from_previous_close_extracted_today_is_ready(self) -> None:
+        result = evaluate_source_state(
+            ready_state(),
+            date(2026, 8, 22),
+            {"OPEN_PURCHASE_ORDERS": datetime(2026, 8, 22, tzinfo=timezone.utc)},
+        )
+
+        self.assertNotIn("BRANCH_STOCK:SOURCE_DATE_BEHIND", result.blocker_codes)
+        self.assertNotIn(
+            "BRANCH_STOCK:REFRESH_NOT_PROVEN_FOR_BUSINESS_DATE",
+            result.blocker_codes,
+        )
+
+    def test_branch_stock_two_closes_behind_is_blocked(self) -> None:
+        state = ready_state()
+        state["branch_stock_date"] = date(2026, 8, 20)
+
+        result = evaluate_source_state(
+            state,
+            date(2026, 8, 22),
+            {"OPEN_PURCHASE_ORDERS": datetime(2026, 8, 22, tzinfo=timezone.utc)},
+        )
+
+        self.assertIn("BRANCH_STOCK:SOURCE_DATE_BEHIND", result.blocker_codes)
+
+    def test_branch_stock_without_current_extraction_evidence_is_blocked(self) -> None:
+        state = ready_state()
+        state["branch_stock_as_of_ts"] = datetime(
+            2026, 8, 21, 23, 59, tzinfo=timezone.utc
+        )
+
+        result = evaluate_source_state(
+            state,
+            date(2026, 8, 22),
+            {"OPEN_PURCHASE_ORDERS": datetime(2026, 8, 22, tzinfo=timezone.utc)},
+        )
+
+        self.assertIn(
+            "BRANCH_STOCK:REFRESH_NOT_PROVEN_FOR_BUSINESS_DATE",
+            result.blocker_codes,
+        )
+
+    def test_missing_branch_stock_remains_blocked(self) -> None:
+        state = ready_state()
+        state["branch_stock_date"] = None
+        state["branch_stock_rows"] = 0
+        state["branch_stock_as_of_ts"] = None
+
+        result = evaluate_source_state(
+            state,
+            date(2026, 8, 22),
+            {"OPEN_PURCHASE_ORDERS": datetime(2026, 8, 22, tzinfo=timezone.utc)},
+        )
+
+        self.assertIn("BRANCH_STOCK:SOURCE_EMPTY", result.blocker_codes)
+
 
 class SourceSyncContractTests(unittest.TestCase):
     def test_daily_source_modules_import_from_project_root(self) -> None:
@@ -238,6 +295,17 @@ class SourceSyncContractTests(unittest.TestCase):
 
         self.assertIn("not lock_connection.invalidated", source)
         self.assertIn("No se pudo liberar explicitamente el lock PDD", source)
+
+    def test_source_daily_connection_uses_keepalives(self) -> None:
+        source = (ROOT / "scripts" / "pdd" / "pdd_source_daily.py").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn('"application_name": "etl_diarco:pdd_source_daily"', source)
+        self.assertIn('"keepalives_idle": 60', source)
+        self.assertIn('"keepalives_interval": 30', source)
+        self.assertIn('"keepalives_count": 5', source)
+        self.assertIn("lock_connection.commit()", source)
 
     def test_daily_master_runs_two_hours_before_operational_pdd(self) -> None:
         config = yaml.safe_load((ROOT / "prefect.yaml").read_text(encoding="utf-8"))
