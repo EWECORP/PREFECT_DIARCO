@@ -174,34 +174,40 @@ BEGIN
         ),
 
         CASE
-            WHEN v.precio < b.precio_mediano * 0.80
+            WHEN b.unidades_mediana > 0
+             AND v.precio < b.precio_mediano * 0.80
              AND v.unidades > b.unidades_mediana * 2.5
                 THEN 100
-            WHEN v.precio < b.precio_mediano * 0.90
+            WHEN b.unidades_mediana > 0
+             AND v.precio < b.precio_mediano * 0.90
              AND v.unidades > b.unidades_mediana * 1.8
                 THEN 70
-            WHEN v.precio < b.precio_mediano * 0.95
+            WHEN b.unidades_mediana > 0
+             AND v.precio < b.precio_mediano * 0.95
              AND v.unidades > b.unidades_mediana * 1.3
                 THEN 40
             ELSE 0
         END,
 
         CASE
-            WHEN v.precio < b.precio_mediano * 0.80
+            WHEN b.unidades_mediana > 0
+             AND v.precio < b.precio_mediano * 0.80
              AND v.unidades > b.unidades_mediana * 2.5
                 THEN true
             ELSE false
         END,
 
         CASE
-            WHEN v.precio < b.precio_mediano * 0.90
+            WHEN b.unidades_mediana > 0
+             AND v.precio < b.precio_mediano * 0.90
              AND v.unidades > b.unidades_mediana * 1.8
                 THEN LEAST(v.unidades, b.unidades_mediana)
             ELSE v.unidades
         END,
 
         CASE
-            WHEN v.precio < b.precio_mediano * 0.90
+            WHEN b.unidades_mediana > 0
+             AND v.precio < b.precio_mediano * 0.90
              AND v.unidades > b.unidades_mediana * 1.8
                 THEN GREATEST(v.unidades - b.unidades_mediana, 0)
             ELSE 0

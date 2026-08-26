@@ -276,6 +276,7 @@ class SourceSyncContractTests(unittest.TestCase):
         self.assertIn("AND mes <= v_mes_hasta", ddl)
         self.assertIn("promo_fuerte IS DISTINCT FROM false", ddl)
         self.assertIn("v.promo_fuerte IS DISTINCT FROM true", ddl)
+        self.assertGreaterEqual(ddl.count("b.unidades_mediana > 0"), 6)
         self.assertIn("RAISE LOG '[PDD_BVE]", ddl)
 
     def test_enriched_sales_connection_uses_keepalives(self) -> None:
