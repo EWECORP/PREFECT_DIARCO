@@ -1,0 +1,66 @@
+[
+  {
+    "name": "dbo",
+    "propietario": "dbo"
+  },
+  {
+    "name": "guest",
+    "propietario": "guest"
+  },
+  {
+    "name": "INFORMATION_SCHEMA",
+    "propietario": "INFORMATION_SCHEMA"
+  },
+  {
+    "name": "sys",
+    "propietario": "sys"
+  },
+  {
+    "name": "repl",
+    "propietario": "dbo"
+  },
+  {
+    "name": "cdc",
+    "propietario": "cdc"
+  },
+  {
+    "name": "vkm",
+    "propietario": "dbo"
+  },
+  {
+    "name": "db_owner",
+    "propietario": "db_owner"
+  },
+  {
+    "name": "db_accessadmin",
+    "propietario": "db_accessadmin"
+  },
+  {
+    "name": "db_securityadmin",
+    "propietario": "db_securityadmin"
+  },
+  {
+    "name": "db_ddladmin",
+    "propietario": "db_ddladmin"
+  },
+  {
+    "name": "db_backupoperator",
+    "propietario": "db_backupoperator"
+  },
+  {
+    "name": "db_datareader",
+    "propietario": "db_datareader"
+  },
+  {
+    "name": "db_datawriter",
+    "propietario": "db_datawriter"
+  },
+  {
+    "name": "db_denydatareader",
+    "propietario": "db_denydatareader"
+  },
+  {
+    "name": "db_denydatawriter",
+    "propietario": "db_denydatawriter"
+  }
+]

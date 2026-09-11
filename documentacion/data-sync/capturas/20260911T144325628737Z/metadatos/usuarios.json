@@ -1,0 +1,100 @@
+[
+  {
+    "name": "jgalvan",
+    "type_desc": "SQL_USER",
+    "authentication_type_desc": "INSTANCE",
+    "default_schema_name": "dbo",
+    "sid": "0x1559B96C56618B4192729376B4946141"
+  },
+  {
+    "name": "cdc",
+    "type_desc": "SQL_USER",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": "cdc",
+    "sid": "0x010500000000000903000000B4F9C34C56A8B04791E5E7FF4460CB72"
+  },
+  {
+    "name": "gananos",
+    "type_desc": "SQL_USER",
+    "authentication_type_desc": "INSTANCE",
+    "default_schema_name": "dbo",
+    "sid": "0x34874518818865478C1AFD1665AE3564"
+  },
+  {
+    "name": "smugetti",
+    "type_desc": "SQL_USER",
+    "authentication_type_desc": "INSTANCE",
+    "default_schema_name": "dbo",
+    "sid": "0x1B70AAE7FBD982448298029858A4A784"
+  },
+  {
+    "name": "mochoa",
+    "type_desc": "SQL_USER",
+    "authentication_type_desc": "INSTANCE",
+    "default_schema_name": "dbo",
+    "sid": "0x842E63705DC6A74DB2CDA67059A94DA5"
+  },
+  {
+    "name": "db_owner",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000000400000"
+  },
+  {
+    "name": "db_accessadmin",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000001400000"
+  },
+  {
+    "name": "db_securityadmin",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000002400000"
+  },
+  {
+    "name": "db_ddladmin",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000003400000"
+  },
+  {
+    "name": "db_backupoperator",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000005400000"
+  },
+  {
+    "name": "db_datareader",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000006400000"
+  },
+  {
+    "name": "db_datawriter",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000007400000"
+  },
+  {
+    "name": "db_denydatareader",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000008400000"
+  },
+  {
+    "name": "db_denydatawriter",
+    "type_desc": "DATABASE_ROLE",
+    "authentication_type_desc": "NONE",
+    "default_schema_name": null,
+    "sid": "0x01050000000000090400000000000000000000000000000009400000"
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 994102582,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1010102639,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1058102810,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1074102867,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1090102924,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1106102981,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1122103038,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1138103095,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1154103152,
+    "minor_id": 0,
+    "name": "microsoft_database_tools_support",
+    "valor": "1"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1477580302,
+    "minor_id": 0,
+    "name": "MS_DiagramPane1",
+    "valor": "[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]\r\nBegin DesignProperties = \r\n   Begin PaneConfigurations = \r\n      Begin PaneConfiguration = 0\r\n         NumPanes = 4\r\n         Configuration = \"(H (1[40] 4[20] 2[20] 3) )\"\r\n      End\r\n      Begin PaneConfiguration = 1\r\n         NumPanes = 3\r\n         Configuration = \"(H (1 [50] 4 [25] 3))\"\r\n      End\r\n      Begin PaneConfiguration = 2\r\n         NumPanes = 3\r\n         Configuration = \"(H (1 [50] 2 [25] 3))\"\r\n      End\r\n      Begin PaneConfiguration = 3\r\n         NumPanes = 3\r\n         Configuration = \"(H (4 [30] 2 [40] 3))\"\r\n      End\r\n      Begin PaneConfiguration = 4\r\n         NumPanes = 2\r\n         Configuration = \"(H (1 [56] 3))\"\r\n      End\r\n      Begin PaneConfiguration = 5\r\n         NumPanes = 2\r\n         Configuration = \"(H (2 [66] 3))\"\r\n      End\r\n      Begin PaneConfiguration = 6\r\n         NumPanes = 2\r\n         Configuration = \"(H (4 [50] 3))\"\r\n      End\r\n      Begin PaneConfiguration = 7\r\n         NumPanes = 1\r\n         Configuration = \"(V (3))\"\r\n      End\r\n      Begin PaneConfiguration = 8\r\n         NumPanes = 3\r\n         Configuration = \"(H (1[56] 4[18] 2) )\"\r\n      End\r\n      Begin PaneConfiguration = 9\r\n         NumPanes = 2\r\n         Configuration = \"(H (1 [75] 4))\"\r\n      End\r\n      Begin PaneConfiguration = 10\r\n         NumPanes = 2\r\n         Configuration = \"(H (1[66] 2) )\"\r\n      End\r\n      Begin PaneConfiguration = 11\r\n         NumPanes = 2\r\n         Configuration = \"(H (4 [60] 2))\"\r\n      End\r\n      Begin PaneConfiguration = 12\r\n         NumPanes = 1\r\n         Configuration = \"(H (1) )\"\r\n      End\r\n      Begin PaneConfiguration = 13\r\n         NumPanes = 1\r\n         Configuration = \"(V (4))\"\r\n      End\r\n      Begin PaneConfiguration = 14\r\n         NumPanes = 1\r\n         Configuration = \"(V (2))\"\r\n      End\r\n      ActivePaneConfig = 0\r\n   End\r\n   Begin DiagramPane = \r\n      Begin Origin = \r\n         Top = 0\r\n         Left = 0\r\n      End\r\n      Begin Tables = \r\n         Begin Table = \"T_5_MOVIMIENTOS_DIARIOS\"\r\n            Begin Extent = \r\n               Top = 7\r\n               Left = 48\r\n               Bottom = 306\r\n               Right = 295\r\n            End\r\n            DisplayFlags = 280\r\n            TopColumn = 0\r\n         End\r\n         Begin Table = \"M_2_MOVIMIENTOS\"\r\n            Begin Extent = \r\n               Top = 7\r\n               Left = 343\r\n               Bottom = 170\r\n               Right = 630\r\n            End\r\n            DisplayFlags = 280\r\n            TopColumn = 0\r\n         End\r\n      End\r\n   End\r\n   Begin SQLPane = \r\n   End\r\n   Begin DataPane = \r\n      Begin ParameterDefaults = \"\"\r\n      End\r\n   End\r\n   Begin CriteriaPane = \r\n      Begin ColumnWidths = 11\r\n         Column = 1440\r\n         Alias = 900\r\n         Table = 1170\r\n         Output = 720\r\n         Append = 1400\r\n         NewValue = 1170\r\n         SortType = 1350\r\n         SortOrder = 1410\r\n         GroupBy = 1350\r\n         Filter = 1350\r\n         Or = 1350\r\n         Or = 1350\r\n         Or = 1350\r\n      End\r\n   End\r\nEnd\r\n"
+  },
+  {
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1477580302,
+    "minor_id": 0,
+    "name": "MS_DiagramPaneCount",
+    "valor": "1"
+  }
+]

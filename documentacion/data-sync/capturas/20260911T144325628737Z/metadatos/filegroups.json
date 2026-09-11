@@ -1,0 +1,8 @@
+[
+  {
+    "name": "PRIMARY",
+    "type_desc": "ROWS_FILEGROUP",
+    "is_default": true,
+    "is_read_only": false
+  }
+]

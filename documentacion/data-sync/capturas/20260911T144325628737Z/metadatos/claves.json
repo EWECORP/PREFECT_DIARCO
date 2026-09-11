@@ -1,0 +1,308 @@
+[
+  {
+    "parent_object_id": 162099618,
+    "name": "PK__M_SUCURS__7C49D73614306C7C",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 180195692,
+    "name": "PK__LOGS_T05__3213E83FDEF224B3",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 223339860,
+    "name": "PK__ART_NOCO__0E82EE7D87F1C3ED",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 253243957,
+    "name": "PK__TRANSF_C__3213E83F7E9C9A1A",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 287340088,
+    "name": "PK__IMPORTAR__3213E83F3AFBE09A",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 430624577,
+    "name": "PK_T710_ESTADIS_STOCK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 452196661,
+    "name": "PK__LOGS_T02__3213E83F229B2D43",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 484196775,
+    "name": "PK__LOGS_T02__3213E83F2C6C6407",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 555149023,
+    "name": "PK__LOGS_T00__3213E83FCABFAD49",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 599673184,
+    "name": "PK__LOGS_T70__3213E83F4164C9BB",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 651149365,
+    "name": "PK__LOGS_T02__3213E83F7690ADFB",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 731149650,
+    "name": "PK__LOGS_T07__3213E83FB6C47833",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 743673697,
+    "name": "PK__M_3_ARTI__CED1FE6711D8B689",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 811149935,
+    "name": "PK__LOGS_T07__3213E83F42321F7F",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 907150277,
+    "name": "PK__LOGS_T09__3213E83F9ADBDE4D",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 957246465,
+    "name": "PK__TRANSF_C__17D3D3A1035E8426",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1010102639,
+    "name": "PK__sysdiagr__C2B05B612E0AE482",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1010102639,
+    "name": "UK_principal_name",
+    "type_desc": "UNIQUE_CONSTRAINT",
+    "unique_index_id": 2
+  },
+  {
+    "parent_object_id": 1038626743,
+    "name": "PK__LOGS_T71__3213E83FD2DBB81E",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1051150790,
+    "name": "PK__LOGS_T09__3213E83F7929F156",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 2094630505,
+    "name": "PK_T051_ARTICULOS_SUCURSAL",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1083150904,
+    "name": "PK__LOGS_T09__3213E83F9F0F528D",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1086626914,
+    "name": "PK_T710_ESTADIS_REPOSICION",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1118627028,
+    "name": "PK__LOGS_T71__3213E83F00A905F8",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1179151246,
+    "name": "PK__LOGS_T71__3213E83FE53A45A3",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1198627313,
+    "name": "PK__LOGS_T70__3213E83F58D7D629",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1246627484,
+    "name": "PK__T117_COM__6E27F629CD5678E0",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1271675578,
+    "name": "PK__SUCURSAL__7F99C09A2D38EC9F",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1275151588,
+    "name": "PK__LOGS_T00__3213E83F015A1776",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1310627712,
+    "name": "PK__LOGS_T11__3213E83FFEE86429",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1323151759,
+    "name": "PK__T055_ART__3213E83F0ACDDDD8",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1358627883,
+    "name": "PK__LOGS_T02__3213E83FB2A7781A",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1426820145,
+    "name": "PK_T061_STOCK_DIARIO",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 171147655,
+    "name": "PK_T060_STOCK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1486628339,
+    "name": "PK__LOGS_T02__3213E83F5483A7DE",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1524200480,
+    "name": "PK__LOGS_T71__3213E83F0F37FB3C",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1582628681,
+    "name": "PK__LOGS_T05__3213E83F1CE53409",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1604200765,
+    "name": "PK_T710_ANIO_MES_ARTICULO_SUCURSAL",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1614628795,
+    "name": "PK__LOGS_T05__3213E83FDB8C66E2",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1646628909,
+    "name": "PK__LOGS_T05__3213E83F4A977CC0",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1650820943,
+    "name": "PK__LOGS_T06__3213E83F8BA19819",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1655676946,
+    "name": "PK__LOGS_T23__3213E83F40E10813",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1678629023,
+    "name": "PK__LOGS_T05__3213E83FA7F6E755",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1710629137,
+    "name": "PK__LOGS_T05__3213E83FB613AC8B",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1742629251,
+    "name": "PK__LOGS_T05__3213E83F5726D038",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1822629536,
+    "name": "PK__LOGS_T06__3213E83F63F51820",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1854629650,
+    "name": "PK__LOGS_T08__3213E83FD5BDC03B",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1886629764,
+    "name": "PK__LOGS_T08__3213E83F0B638120",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1918629878,
+    "name": "PK__LOGS_T08__3213E83F15794F3F",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1950629992,
+    "name": "PK__LOGS_T10__3213E83F5EBD951E",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  },
+  {
+    "parent_object_id": 1982630106,
+    "name": "PK__LOGS_T11__3213E83FF70242A5",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "unique_index_id": 1
+  }
+]

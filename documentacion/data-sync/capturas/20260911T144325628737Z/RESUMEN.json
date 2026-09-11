@@ -1,0 +1,54 @@
+{
+  "fecha_utc": "2026-09-11T14:43:25.628737+00:00",
+  "base": "data-sync",
+  "driver_captura": "ODBC Driver 18 for SQL Server",
+  "captura_solo_metadatos": true,
+  "cantidades": {
+    "servidor": 1,
+    "base": 1,
+    "permisos_captura": 1,
+    "archivos": 2,
+    "filegroups": 1,
+    "esquemas": 16,
+    "objetos": 431,
+    "columnas": 4335,
+    "tablas": 185,
+    "indices": 212,
+    "columnas_indices": 265,
+    "claves": 51,
+    "foreign_keys": 0,
+    "checks": 0,
+    "modulos": 138,
+    "parametros": 118,
+    "dependencias": 549,
+    "sinonimos": 0,
+    "secuencias": 0,
+    "tipos": 0,
+    "propiedades": 11,
+    "usuarios": 14,
+    "roles": 5,
+    "permisos": 188,
+    "volumen_estimado": 185,
+    "particiones": 212,
+    "linked_servers": 9,
+    "jobs": 10,
+    "pasos_jobs": 28,
+    "horarios_jobs": 9,
+    "backups": 0
+  },
+  "errores": {
+    "configuracion_instancia": {
+      "sqlstate": "ODBC SQL type -16 is not yet supported.  column-index=1  type=-16",
+      "estado": "No capturado; revisar permisos o compatibilidad."
+    }
+  },
+  "modulos_sin_definicion": [],
+  "limites": [
+    "No es un backup de datos ni un script integral de restauración.",
+    "Visibilidad limitada a permisos del usuario conectado.",
+    "SQL dinámico puede no aparecer en dependencias.",
+    "Comandos de jobs y credenciales excluidos; definiciones pueden contener redacciones.",
+    "No se capturan contraseñas, claves de cifrado, certificados privados ni filas de negocio.",
+    "La captura no es transaccional; puede haber cambios concurrentes."
+  ]
+}

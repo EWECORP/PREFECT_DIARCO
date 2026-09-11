@@ -1,0 +1,5492 @@
+[
+  {
+    "referencing_id": 18099105,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_DEBITO_PROVEEDORES",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 18099105,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T231_COMPROBANTES_CABE_HIST",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 43147199,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T055_ARTICULOS_CONDCOMPRA_COSTOS_SYNC",
+    "referenced_id": 1678629023,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 43147199,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 43147199,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 43147199,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": 27147142,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 43147199,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS_STG",
+    "referenced_id": 11147085,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 91147370,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T055_ARTICULOS_PARAM_STOCK_SYNC",
+    "referenced_id": 1710629137,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 91147370,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_ARTICULOS_PARAM_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 91147370,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ARTICULOS_PARAM_STOCK",
+    "referenced_id": 75147313,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 91147370,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ARTICULOS_PARAM_STOCK_STG",
+    "referenced_id": 59147256,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 139147541,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T055_LEAD_TIME_B2_SUCURSALES_SYNC",
+    "referenced_id": 1742629251,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 139147541,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_LEAD_TIME_B2_SUCURSALES",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 139147541,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_LEAD_TIME_B2_SUCURSALES",
+    "referenced_id": 123147484,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 139147541,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_LEAD_TIME_B2_SUCURSALES_STG",
+    "referenced_id": 107147427,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 148195578,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "BASE_PRODUCTOS_VIGENTES",
+    "referenced_id": 388196433,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 148195578,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_BASE_PRODUCTOS_SUCURSAL",
+    "referenced_id": 487672785,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 187147712,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T060_STOCK_SYNC",
+    "referenced_id": 1822629536,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 187147712,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 187147712,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 187147712,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK_STG",
+    "referenced_id": 155147598,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 1271675578,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": 548197003,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "t050_articulos",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": 2094630505,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL_BARRIO",
+    "referenced_id": 244195920,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": 2110630562,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": 1679345047,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 212195806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": 715865617,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 228195863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T051_ARTICULOS_SUCURSAL_BARRIO_SYNC",
+    "referenced_id": 180195692,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 228195863,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 228195863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL_BARRIO",
+    "referenced_id": 244195920,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 228195863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL_BARRIO_STG",
+    "referenced_id": 164195635,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 251147940,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T114_RUBROS_SYNC",
+    "referenced_id": 1982630106,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 251147940,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T114_RUBROS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 251147940,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T114_RUBROS",
+    "referenced_id": 2002106173,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 251147940,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T114_RUBROS_STG",
+    "referenced_id": 235147883,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 267147997,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T100_EMPRESA_SUC_SYNC",
+    "referenced_id": 1950629992,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 267147997,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 267147997,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": 1679345047,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 267147997,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC_HORARIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 267147997,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC_STG",
+    "referenced_id": 1695345104,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_Proveedor_Dias_Entrega_Deta",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "t050_articulos",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "diarco-barrio",
+    "referenced_database_name": "diarcobarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "t060_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 295672101,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 311672158,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 311672158,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 315148168,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T085_ARTICULOS_EAN_EDI_SYNC",
+    "referenced_id": 1918629878,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 315148168,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T085_ARTICULOS_EAN_EDI",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 315148168,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T085_ARTICULOS_EAN_EDI",
+    "referenced_id": 1986106116,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 315148168,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T085_ARTICULOS_EAN_EDI_STG",
+    "referenced_id": 299148111,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 327672215,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 327672215,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 327672215,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO_DBARRIO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 327672215,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T870_HIST_MOVIMIENTOS_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 343672272,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 343672272,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "t081_oc_deta",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 359672329,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 359672329,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 370100359,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_RECUPERO_PROVEEDORES",
+    "referenced_id": 322100188,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 370100359,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T020_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 370100359,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T079_SNC_CUOTAS_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 370100359,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T079_SNC_PORCENTAJE_PLAN",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 370100359,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T231_COMPROBANTES_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 375672386,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 375672386,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_1_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 375672386,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 375672386,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 375672386,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_PARAM_FLIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 375672386,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_PARAM_FLIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 377768403,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_T874_OC_PRECARGA_KIKKER_HIST",
+    "referenced_id": 512720879,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 391672443,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 391672443,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_estadis_stock",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 393768460,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_T874_OC_PRECARGA_KIKKER_HIST",
+    "referenced_id": 512720879,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 402100473,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_COMPETENCIA_DETALLE",
+    "referenced_id": 1893581784,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 402100473,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 402100473,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T090_COMPETENCIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 402100473,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_1_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_1_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_1_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_11.1_PROMOCIONES_HISTORICO_VIGENTES",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 407672500,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 409768517,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_CONNEXA_MENSUAL",
+    "referenced_id": 377768403,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 409768517,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_RESUMEN_MENSUAL",
+    "referenced_id": 1936725952,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 423672557,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 423672557,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_OFERTA_FOLDER",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 425768574,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_CABECERA_SGM",
+    "referenced_id": 1904725838,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 425768574,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_DETALLE_SGM",
+    "referenced_id": 1920725895,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 439672614,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 439672614,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_11.1_PROMOCIONES_HISTORICO_VIGENTES",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 439672614,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "t050_articulos",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 439672614,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 441768631,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_CONNEXA_SEMANAL",
+    "referenced_id": 393768460,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 441768631,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_RESUMEN_SEMANAL",
+    "referenced_id": 425768574,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 450100644,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_OC_DETALLE",
+    "referenced_id": 562101043,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 450100644,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 450100644,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 450100644,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 450100644,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 450100644,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 455672671,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 455672671,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_1_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 455672671,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SP_KIKKER_H_11.1_PROMOCIONES_HISTORICO_VIGENTES",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_OC_DETALLE_EXT",
+    "referenced_id": 546100986,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 466100701,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_Proveedor_Dias_Entrega_Deta",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "t050_articulos",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "diarco-barrio",
+    "referenced_database_name": "diarcobarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 471672728,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 475864762,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 475864762,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": 2110630562,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 475864762,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 1271675578,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_Proveedor_Dias_Entrega_Deta",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "t050_articulos",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "diarco-barrio",
+    "referenced_database_name": "diarcobarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 487672785,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 489768802,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_CONNEXA_SEMANAL",
+    "referenced_id": 393768460,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 489768802,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_RESUMEN_SEMANAL",
+    "referenced_id": 425768574,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 1271675578,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T230_facturador_negocios_especiales_por_cantidad",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T230_facturador_negocios_especiales_por_cantidad",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 503672842,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 512720879,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T874_OC_PRECARGA_KIKKER_HIST",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 528720936,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T080_OC_PRECARGA_KIKKER",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 567673070,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T702_VTAS_BARRIO_SYNC",
+    "referenced_id": 599673184,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 567673070,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO_DBARRIO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 567673070,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO_DBARRIO",
+    "referenced_id": 583673127,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 569769087,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_CONNEXA_MENSUAL",
+    "referenced_id": 377768403,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 569769087,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_RESUMEN_MENSUAL",
+    "referenced_id": 1936725952,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 580197117,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T020_PROVEEDOR_DIAS_ENTREGA_CABE_SYNC",
+    "referenced_id": 452196661,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 580197117,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 580197117,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_CABE",
+    "referenced_id": 516196889,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 580197117,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_CABE_STG",
+    "referenced_id": 532196946,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 596197174,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T020_PROVEEDOR_DIAS_ENTREGA_DETA_SYNC",
+    "referenced_id": 484196775,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 596197174,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 596197174,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": 548197003,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 596197174,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA_STG",
+    "referenced_id": 564197060,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 619149251,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANT_SYNC",
+    "referenced_id": 555149023,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 619149251,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANTERIOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 619149251,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANTERIOR_STG",
+    "referenced_id": 539148966,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 644197345,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 645577338,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_1_CATEGORIAS",
+    "referenced_id": 629577281,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 645577338,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 645577338,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 645577338,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS_DIFERENCIAS_DE_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 645577338,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T114_RUBROS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "M_3_ARTICULOS",
+    "referenced_id": 743673697,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T001_TABLA_CODIGO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS_DIFERENCIAS_DE_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 663673412,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T114_RUBROS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 677577452,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 677577452,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "t001_tabla_codigo",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 699149536,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T021_PROV_COMPROB_SYNC",
+    "referenced_id": 651149365,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 699149536,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T021_PROV_COMPROB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 699149536,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T021_PROV_COMPROB",
+    "referenced_id": 635149308,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 699149536,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T021_PROV_COMPROB_STG",
+    "referenced_id": 683149479,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 709577566,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_3_1_FAMILIA",
+    "referenced_id": 693577509,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 709577566,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 709577566,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T001_TABLA_CODIGO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 709577566,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 709577566,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T1",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 741577680,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_3_2_FAMILIA_ARTICULO",
+    "referenced_id": 725577623,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 741577680,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 741577680,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS_DIFERENCIAS_DE_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 779149821,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T079_SNC_CUOTAS_CABE_SYNC",
+    "referenced_id": 731149650,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 779149821,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T079_SNC_CUOTAS_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 779149821,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T079_SNC_CUOTAS_CABE",
+    "referenced_id": 715149593,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 779149821,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T079_SNC_CUOTAS_CABE_STG",
+    "referenced_id": 763149764,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 784721848,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "audit_T702_deletes",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 784721848,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "R",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 784721848,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 784721848,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO",
+    "referenced_id": 1426104121,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 789577851,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_9_COMPRADORES",
+    "referenced_id": 773577794,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 789577851,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 789577851,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T117_COMPRADORES",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 797245895,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SD03_TRANSF_ALTA_DETALLE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 797245895,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T058_ARTICULOS_TRANSF_PEND",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 797245895,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 800721905,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "audit_T702_BARRIO_deletes",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 800721905,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "R",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 800721905,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO_DBARRIO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 800721905,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO_DBARRIO",
+    "referenced_id": 583673127,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 853578079,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_92_DEPOSITOS",
+    "referenced_id": 837578022,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 853578079,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 853578079,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 857770113,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T058_ARTICULOS_TRANSF_PEND",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 859150106,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T079_SNC_CUOTAS_DETA_SYNC",
+    "referenced_id": 811149935,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 859150106,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T079_SNC_CUOTAS_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 859150106,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T079_SNC_CUOTAS_DETA",
+    "referenced_id": 795149878,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 859150106,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T079_SNC_CUOTAS_DETA_STG",
+    "referenced_id": 843150049,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 873770170,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SD03_TRANSF_ALTA_DETALLE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 873770170,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 885578193,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_93_SUSTITUTOS",
+    "referenced_id": 869578136,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 885578193,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS_SUSTITUTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 917578307,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_94_ALTERNATIVOS",
+    "referenced_id": 901578250,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 917578307,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 939150391,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T090_COMPETENCIA_SYNC",
+    "referenced_id": 907150277,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 939150391,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T090_COMPETENCIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 939150391,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T090_COMPETENCIA",
+    "referenced_id": 363148339,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 939150391,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T090_COMPETENCIA_STG",
+    "referenced_id": 891150220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 941246408,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 1271675578,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": 548197003,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": 2094630505,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL_BARRIO",
+    "referenced_id": 244195920,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": 2110630562,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": 1679345047,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 946818435,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": 715865617,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 948198428,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 948198428,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 948198428,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 948198428,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T080_OC_PENDIENTES",
+    "referenced_id": 1353771880,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 948198428,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 965578478,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_95_SENSIBLES",
+    "referenced_id": 933578364,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 965578478,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 978102525,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_91_SUCURSALES",
+    "referenced_id": 946102411,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 978102525,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_91_SUCURSALES",
+    "referenced_id": 946102411,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 978102525,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "M_91_SUCURSALES",
+    "referenced_id": 2066106401,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 978102525,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 978102525,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 978102525,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 994102582,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "dtproperties",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 994102582,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "sysdiagrams",
+    "referenced_id": 1010102639,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 997578592,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "M_96_STOCK_SEGURIDAD",
+    "referenced_id": 981578535,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 997578592,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 997578592,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 997578592,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 997578592,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 997578592,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1005246636,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_RETORNO_ACK",
+    "referenced_id": 957246465,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1021246693,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1022626686,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T710_SYNC",
+    "referenced_id": 1038626743,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1022626686,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1022626686,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1022626686,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_STOCK",
+    "referenced_id": 430624577,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1022626686,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_STOCK_STG",
+    "referenced_id": 1070626857,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T_11_1_PROMOCIONES",
+    "referenced_id": 1013578649,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "t050_articulos",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T230_facturador_negocios_especiales_por_cantidad",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T230_facturador_negocios_especiales_por_cantidad",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1029578706,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1035150733,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T091_COMPETENCIA_PRECIOS_CABE_SYNC",
+    "referenced_id": 1051150790,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1035150733,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1035150733,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_CABE",
+    "referenced_id": 427148567,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1035150733,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_CABE_STG",
+    "referenced_id": 955150448,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1037246750,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1058102810,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "sysdiagrams",
+    "referenced_id": 1010102639,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1074102867,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "sysdiagrams",
+    "referenced_id": 1010102639,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T_11_PRECIOS",
+    "referenced_id": 1045578763,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T001_TABLA_CODIGO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1077578877,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "MV_USO_MENSUAL_COMPRADOR",
+    "referenced_id": 1017770683,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "MV_USO_MENSUAL_PROVEEDOR",
+    "referenced_id": 1033770740,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "MV_USO_SEMANAL_COMPRADOR",
+    "referenced_id": 1049770797,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "MV_USO_SEMANAL_PROVEEDOR",
+    "referenced_id": 1065770854,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_USO_MENSUAL_COMPRADOR",
+    "referenced_id": 409768517,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_USO_MENSUAL_PROVEEDOR",
+    "referenced_id": 569769087,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_USO_SEMANAL_COMPRADOR",
+    "referenced_id": 441768631,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1081770911,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_USO_SEMANAL_PROVEEDOR",
+    "referenced_id": 489768802,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1090102924,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "sysdiagrams",
+    "referenced_id": 1010102639,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1106102981,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "sysdiagrams",
+    "referenced_id": 1010102639,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T_7_PEDIDOS_PENDIENTES",
+    "referenced_id": 1093578934,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1109578991,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1115151018,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T091_COMPETENCIA_PRECIOS_DETA_SYNC",
+    "referenced_id": 1083150904,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1115151018,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1115151018,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_DETA",
+    "referenced_id": 443148624,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1115151018,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_DETA_STG",
+    "referenced_id": 1131151075,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1122103038,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "sysdiagrams",
+    "referenced_id": 1010102639,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 1271675578,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": 548197003,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": 2094630505,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL_BARRIO",
+    "referenced_id": 244195920,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": 2110630562,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": 1679345047,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1129771082,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": 715865617,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1138103095,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "sysdiagrams",
+    "referenced_id": 1010102639,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1149247149,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SD03_GERENCIA_SINCRO_IDA_VK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1149247149,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T058_ARTICULOS_TRANSF_PEND",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1149247149,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1150627142,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T710_REPOSICION_SYNC",
+    "referenced_id": 1118627028,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1150627142,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1150627142,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": 1086626914,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1150627142,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION_STG",
+    "referenced_id": 1102626971,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T_8_STOCK",
+    "referenced_id": 1141579105,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T230_facturador_negocios_especiales_por_cantidad",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T230_facturador_negocios_especiales_por_cantidad",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1157579162,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1174295243,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T_COMPETENCIA_DETALLE",
+    "referenced_id": 1190295300,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1174295243,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1174295243,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T090_COMPETENCIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1174295243,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T091_COMPETENCIA_PRECIOS_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T_87_PRECIOS_ARTICULO_SUCURSAL",
+    "referenced_id": 1282103608,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_PARAM_FLIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_PARAM_FLIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1189579276,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1205579333,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_DETALLE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1211151360,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T710_ESTADIS_OFERTA_FOLDER_SYNC",
+    "referenced_id": 1179151246,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1211151360,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_OFERTA_FOLDER",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1211151360,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_OFERTA_FOLDER",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1211151360,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_OFERTA_FOLDER",
+    "referenced_id": 1147151132,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1211151360,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_OFERTA_FOLDER_STG",
+    "referenced_id": 1163151189,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1218103380,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1218103380,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1218103380,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T114_RUBROS",
+    "referenced_id": 1765581328,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1218103380,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T114_RUBROS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1230627427,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T702_VTAS_SYNC",
+    "referenced_id": 1198627313,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1230627427,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1230627427,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO",
+    "referenced_id": 1426104121,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1243151474,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT_SYNC",
+    "referenced_id": 1275151588,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1243151474,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT",
+    "referenced_id": 1227151417,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1243151474,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT_STG",
+    "referenced_id": 1259151531,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1243151474,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T000_SNC_PORCENTAJE_PLAN_SEMANA_VIGENTE_DIA_ANTERIOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1253579504,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T_87_PRECIOS_ARTICULO_SUCURSAL",
+    "referenced_id": 1282103608,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_87_PRECIOS_ARTICULO_SUCURSAL",
+    "referenced_id": 1282103608,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_PARAM_FLIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_PARAM_FLIA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1266103551,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1294627655,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T117_COMPRADORES_SYNC",
+    "referenced_id": 1310627712,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1294627655,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T117_COMPRADORES",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1294627655,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T117_COMPRADORES",
+    "referenced_id": 1278627598,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1294627655,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T117_COMPRADORES_STG",
+    "referenced_id": 1246627484,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1298103665,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_10_PROVEEDORES",
+    "referenced_id": 1234103437,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1298103665,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1298103665,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T079_PLANES_VIGENTES_DEVOLUCION",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1298103665,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T079_PLANES_VIGENTES_DEVOLUCION_EXCLUIR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 1271675578,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": 2094630505,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL_BARRIO",
+    "referenced_id": 244195920,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": 2110630562,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": 1679345047,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1314819746,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "referenced_id": 715865617,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1335675806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "CONCAT_WS_SIMULADO",
+    "referenced_id": 1319675749,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1335675806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T080_OC_CABE_SYNC",
+    "referenced_id": 1854629650,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1335675806,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1335675806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": 55671246,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1335675806,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T080_OC_CABE_STG",
+    "referenced_id": 71671303,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1351675863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "CONCAT_WS_SIMULADO",
+    "referenced_id": 1319675749,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1351675863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T081_OC_DETA_SYNC",
+    "referenced_id": 1886629764,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1351675863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T080_OC_CABE_STG",
+    "referenced_id": 71671303,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1351675863,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1351675863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": 1410104064,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1351675863,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T081_OC_DETA_STG",
+    "referenced_id": 219147826,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1371151930,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T055_ART_SUCU_PROV_DIAS_ENTREGA_SYNC",
+    "referenced_id": 1323151759,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1371151930,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ART_SUCU_PROV_DIAS_ENTREGA",
+    "referenced_id": 1307151702,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1371151930,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ART_SUCU_PROV_DIAS_ENTREGA_STG",
+    "referenced_id": 1355151873,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1371151930,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T055_ARTICULOS_SUCURSAL_PROVEEDOR_DIAS_ENTREGA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": null,
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T702_EST_VTAS_POR_ARTICULO_DBARRIO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": "DCO-DBCORE-P02",
+    "referenced_database_name": "DiarcoEst",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T870_HIST_MOVIMIENTOS_STOCK",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1413580074,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T900_SUCURSALES_EXCLUIDAS_GERENCIA_DB",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1422628111,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T020_PROVEEDOR_SYNC",
+    "referenced_id": 1358627883,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1422628111,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1422628111,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR",
+    "referenced_id": 1438628168,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1422628111,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_STG",
+    "referenced_id": 1406628054,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1477580302,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1477580302,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1504724413,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T110_IVA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1518628453,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T020_PROV_GESTION_COMPRA_SYNC",
+    "referenced_id": 1486628339,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1518628453,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_PROVEEDOR_GESTION_COMPRA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1518628453,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_GESTION_COMPRA",
+    "referenced_id": 1470628282,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1518628453,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_GESTION_COMPRA_STG",
+    "referenced_id": 1534628510,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1552724584,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T874_OC_PRECARGA_KIKKER_HIST",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1556200594,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T710_ESTADIS_PRECIOS_SYNC",
+    "referenced_id": 1524200480,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1556200594,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1556200594,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1556200594,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": 1604200765,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1556200594,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS_STG",
+    "referenced_id": 1588200708,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1605580758,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1605580758,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1621580815,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1621580815,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1637580872,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1637580872,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1653580929,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1653580929,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1669580986,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1669580986,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1685581043,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "M_2_MOVIMIENTOS",
+    "referenced_id": 661577395,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1685581043,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_5_MOVIMIENTOS_DIARIOS",
+    "referenced_id": 1397580017,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1714821171,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T061_STOCK_DIARIO_SYNC",
+    "referenced_id": 1650820943,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1714821171,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T061_STOCK_DIARIO",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1714821171,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T061_STOCK_DIARIO",
+    "referenced_id": 1426820145,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1714821171,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T061_STOCK_DIARIO_STG",
+    "referenced_id": 1698821114,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 935674381,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": 548197003,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": 2094630505,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": 27147142,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T080_OC_PENDIENTES",
+    "referenced_id": 1353771880,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": 1679345047,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
+    "referenced_id": 1799677459,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1728725211,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": 1086626914,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "DBO",
+    "referenced_entity_name": "NORMALIZA_STRING",
+    "referenced_id": 597577167,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": true
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "SUCURSALES_EXCLUIDAS",
+    "referenced_id": 935674381,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "referenced_id": 548197003,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": 2094630505,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "referenced_id": 27147142,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T060_STOCK",
+    "referenced_id": 171147655,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T078_STOCK_CONTROL_TRANSF_DETA",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T080_OC_PENDIENTES",
+    "referenced_id": 1353771880,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T100_EMPRESA_SUC",
+    "referenced_id": 1679345047,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
+    "referenced_id": 1799677459,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1808725496,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_REPOSICION",
+    "referenced_id": 1086626914,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1819153526,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "cdc",
+    "referenced_entity_name": "lsn_time_mapping",
+    "referenced_id": 1659152956,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1835153583,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "cdc",
+    "referenced_entity_name": "lsn_time_mapping",
+    "referenced_id": 1659152956,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1851153640,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "cdc",
+    "referenced_entity_name": "lsn_time_mapping",
+    "referenced_id": 1659152956,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1867153697,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "cdc",
+    "referenced_entity_name": "change_tables",
+    "referenced_id": 1579152671,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1867153697,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "cdc",
+    "referenced_entity_name": "lsn_time_mapping",
+    "referenced_id": 1659152956,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1904725838,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": 55671246,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1911677858,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD_SYNC",
+    "referenced_id": 1655676946,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1911677858,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DIARCOBARRIO",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1911677858,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DIARCOP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1911677858,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
+    "referenced_id": 1799677459,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1911677858,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD_STG",
+    "referenced_id": 1863677687,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1920725895,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T081_OC_DETA",
+    "referenced_id": 1410104064,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1936725952,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_CABECERA_SGM",
+    "referenced_id": 1904725838,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1936725952,
+    "referenced_server_name": null,
+    "referenced_database_name": "data-sync",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "V_OC_DETALLE_SGM",
+    "referenced_id": 1920725895,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1957582012,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T_OC_CABECERA",
+    "referenced_id": 1909581841,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1957582012,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T020_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 1957582012,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T080_OC_CABE",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2030630277,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T050_ARTICULOS_SYNC",
+    "referenced_id": 1582628681,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2030630277,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2030630277,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS",
+    "referenced_id": 2014630220,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2030630277,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T050_ARTICULOS_STG",
+    "referenced_id": 1566628624,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2078630448,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T051_ARTICULOS_SUCURSAL_SYNC",
+    "referenced_id": 1614628795,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2078630448,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2078630448,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL",
+    "referenced_id": 2094630505,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2078630448,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T051_ARTICULOS_SUCURSAL_STG",
+    "referenced_id": 2062630391,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2089774502,
+    "referenced_server_name": "DIARCO-VKMSQL\\SQL2008R2",
+    "referenced_database_name": "VALKIMIA",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "IntNecIN",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2095346529,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T710_ESTADIS_PRECIOS_SYNC",
+    "referenced_id": 1524200480,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2095346529,
+    "referenced_server_name": "DIARCO-BARRIO",
+    "referenced_database_name": "DiarcoBarrio",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2095346529,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2095346529,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS",
+    "referenced_id": 1604200765,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2095346529,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T710_ESTADIS_PRECIOS_STG",
+    "referenced_id": 1588200708,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2105774559,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2105774559,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "V_VALKIMIA_ESTADO_TRANFERENCIAS",
+    "referenced_id": 2089774502,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2121774616,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "V_CONNEXA_VK_BASE",
+    "referenced_id": 2105774559,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2137774673,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "V_CONNEXA_VK_ULTIMO_ESTADO_LINEA",
+    "referenced_id": 2121774616,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2142630676,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "LOGS_T052_ARTICULOS_PROVEEDOR_SYNC",
+    "referenced_id": 1646628909,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2142630676,
+    "referenced_server_name": "DIARCOP001",
+    "referenced_database_name": "DiarcoP",
+    "referenced_schema_name": "dbo",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": null,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2142630676,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR",
+    "referenced_id": 2110630562,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 2142630676,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "T052_ARTICULOS_PROVEEDOR_STG",
+    "referenced_id": 2126630619,
+    "is_schema_bound_reference": false,
+    "is_ambiguous": false
+  },
+  {
+    "referencing_id": 253243957,
+    "referenced_server_name": null,
+    "referenced_database_name": null,
+    "referenced_schema_name": "repl",
+    "referenced_entity_name": "TRANSF_CONNEXA_IN",
+    "referenced_id": 253243957,
+    "is_schema_bound_reference": true,
+    "is_ambiguous": false
+  }
+]

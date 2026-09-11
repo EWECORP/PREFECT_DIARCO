@@ -1,0 +1,92 @@
+[
+  {
+    "name": "DCO-DIARCOCI-T0",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "DCO-DIARCOCI-T0",
+    "catalog": null,
+    "is_linked": false,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": true
+  },
+  {
+    "name": "DIARCOP001",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "DIARCOP001",
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": true
+  },
+  {
+    "name": "DIARCO-BARRIO",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "DIARCO-BARRIO",
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": false
+  },
+  {
+    "name": "DIARCOP001-BK",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "DIARCOP001-BK",
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": false
+  },
+  {
+    "name": "DCO-DBCORE-P02",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "DCO-DBCORE-P02",
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": false
+  },
+  {
+    "name": "DIARCO-VKMSQL\\SQL2008R2",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "DIARCO-VKMSQL\\SQL2008R2",
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": true
+  },
+  {
+    "name": "10.54.200.88",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "10.54.200.88",
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": true
+  },
+  {
+    "name": "DIARCO_PROD_RPC",
+    "product": "",
+    "provider": "SQLNCLI",
+    "data_source": null,
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": true
+  },
+  {
+    "name": "10.10.41.13",
+    "product": "SQL Server",
+    "provider": "SQLNCLI",
+    "data_source": "10.10.41.13",
+    "catalog": null,
+    "is_linked": true,
+    "is_data_access_enabled": true,
+    "is_rpc_out_enabled": false
+  }
+]

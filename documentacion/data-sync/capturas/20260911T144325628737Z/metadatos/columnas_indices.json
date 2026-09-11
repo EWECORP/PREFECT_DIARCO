@@ -1,0 +1,2652 @@
+[
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "U_PREFIJO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 3,
+    "name": "U_SUFIJO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 4,
+    "name": "U_PREFIJO_LOTE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 5,
+    "name": "U_LOTE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 6,
+    "name": "M_OC_MADRE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 7,
+    "name": "M_OC_PARA_TRANSFERENCIA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 8,
+    "name": "M_OC_PAGOANT",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 9,
+    "name": "U_DIAS_LIMITE_ENTREGA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 10,
+    "name": "C_PROVEEDOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 11,
+    "name": "C_SUCU_COMPRA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 12,
+    "name": "C_SUCU_DESTINO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 13,
+    "name": "C_SUCU_DESTINO_ALT",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 14,
+    "name": "C_SITUAC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 15,
+    "name": "F_SITUAC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 16,
+    "name": "F_ALTA_SIST",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 17,
+    "name": "F_EMISION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 18,
+    "name": "F_ENTREGA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 19,
+    "name": "I_NETO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 20,
+    "name": "I_IVA_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 21,
+    "name": "I_IMP_INTERNO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 22,
+    "name": "I_TOTAL_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 23,
+    "name": "C_COMPRADOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 24,
+    "name": "C_USUARIO_OPERADOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 25,
+    "name": "C_TERMINAL_OPERADOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 26,
+    "name": "C_USUARIO_CUMPLIO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 27,
+    "name": "C_TIPO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 28,
+    "name": "C_PLAZO_ENTREGA1",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 29,
+    "name": "C_PLAZO_ENTREGA2",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 30,
+    "name": "C_PLAZO_ENTREGA3",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 31,
+    "name": "C_PLAZO_ENTREGA4",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 32,
+    "name": "C_PLAZO_ENTREGA5",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 33,
+    "name": "C_PLAZO_ENTREGA6",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 34,
+    "name": "D_COND_PAGO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 35,
+    "name": "D_OBSERVACION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 36,
+    "name": "F_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 37,
+    "name": "C_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 38,
+    "name": "U_PREFIJO_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 39,
+    "name": "U_SUFIJO_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 40,
+    "name": "D_OBSERVACION_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 41,
+    "name": "C_TIPO_ENTREGA_MERCADERIA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 42,
+    "name": "C_USUARIO_MODIFICO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 43,
+    "name": "C_TERMINAL_MODIFICO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 44,
+    "name": "F_MODIFICO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 45,
+    "name": "M_OC_ELECTRONICA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 46,
+    "name": "C_SITUAC_OC_ELECTRONICA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 47,
+    "name": "F_SITUAC_OC_ELECTRONICA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 48,
+    "name": "M_ENVIADO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 49,
+    "name": "M_ESP",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 50,
+    "name": "C_TIPO_PROVEEDOR_EDI",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 51,
+    "name": "FECHA_LIMITE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 52,
+    "name": "FUENTE_ORIGEN",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 53,
+    "name": "FECHA_EXTRACCION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 54,
+    "name": "CDC_LSN",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 1,
+    "index_column_id": 55,
+    "name": "ESTADO_SINCRONIZACION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "C_PROVEEDOR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 2,
+    "index_column_id": 2,
+    "name": "C_SITUAC",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 2,
+    "index_column_id": 3,
+    "name": "F_ENTREGA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 2,
+    "index_column_id": 4,
+    "name": "FECHA_LIMITE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 7,
+    "index_column_id": 1,
+    "name": "C_OC",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 12,
+    "index_column_id": 1,
+    "name": "C_OC",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 12,
+    "index_column_id": 2,
+    "name": "U_PREFIJO_OC",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 12,
+    "index_column_id": 3,
+    "name": "U_SUFIJO_OC",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 12,
+    "index_column_id": 4,
+    "name": "U_PREFIJO_LOTE",
+    "key_ordinal": 4,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 55671246,
+    "index_id": 12,
+    "index_column_id": 5,
+    "name": "U_LOTE",
+    "key_ordinal": 5,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 1,
+    "name": "C_OC",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 2,
+    "name": "U_PREFIJO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 3,
+    "name": "U_SUFIJO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 4,
+    "name": "U_PREFIJO_LOTE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 5,
+    "name": "U_LOTE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 6,
+    "name": "M_OC_MADRE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 7,
+    "name": "M_OC_PARA_TRANSFERENCIA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 8,
+    "name": "M_OC_PAGOANT",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 9,
+    "name": "U_DIAS_LIMITE_ENTREGA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 10,
+    "name": "C_PROVEEDOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 11,
+    "name": "C_SUCU_COMPRA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 12,
+    "name": "C_SUCU_DESTINO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 13,
+    "name": "C_SUCU_DESTINO_ALT",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 14,
+    "name": "C_SITUAC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 15,
+    "name": "F_SITUAC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 16,
+    "name": "F_ALTA_SIST",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 17,
+    "name": "F_EMISION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 18,
+    "name": "F_ENTREGA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 19,
+    "name": "I_NETO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 20,
+    "name": "I_IVA_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 21,
+    "name": "I_IMP_INTERNO_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 22,
+    "name": "I_TOTAL_OC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 23,
+    "name": "C_COMPRADOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 24,
+    "name": "C_USUARIO_OPERADOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 25,
+    "name": "C_TERMINAL_OPERADOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 26,
+    "name": "C_USUARIO_CUMPLIO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 27,
+    "name": "C_TIPO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 28,
+    "name": "C_PLAZO_ENTREGA1",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 29,
+    "name": "C_PLAZO_ENTREGA2",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 30,
+    "name": "C_PLAZO_ENTREGA3",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 31,
+    "name": "C_PLAZO_ENTREGA4",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 32,
+    "name": "C_PLAZO_ENTREGA5",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 33,
+    "name": "C_PLAZO_ENTREGA6",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 34,
+    "name": "D_COND_PAGO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 35,
+    "name": "D_OBSERVACION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 36,
+    "name": "F_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 37,
+    "name": "C_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 38,
+    "name": "U_PREFIJO_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 39,
+    "name": "U_SUFIJO_COMP_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 40,
+    "name": "D_OBSERVACION_ING_MERC",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 41,
+    "name": "C_TIPO_ENTREGA_MERCADERIA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 42,
+    "name": "C_USUARIO_MODIFICO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 43,
+    "name": "C_TERMINAL_MODIFICO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 44,
+    "name": "F_MODIFICO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 45,
+    "name": "M_OC_ELECTRONICA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 46,
+    "name": "C_SITUAC_OC_ELECTRONICA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 47,
+    "name": "F_SITUAC_OC_ELECTRONICA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 48,
+    "name": "M_ENVIADO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 49,
+    "name": "M_ESP",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 50,
+    "name": "C_TIPO_PROVEEDOR_EDI",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 51,
+    "name": "FECHA_LIMITE",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 52,
+    "name": "FUENTE_ORIGEN",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 53,
+    "name": "FECHA_EXTRACCION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 54,
+    "name": "CDC_LSN",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 9,
+    "index_column_id": 55,
+    "name": "ESTADO_SINCRONIZACION",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 10,
+    "index_column_id": 1,
+    "name": "C_OC",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 11,
+    "index_column_id": 1,
+    "name": "C_OC",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 11,
+    "index_column_id": 2,
+    "name": "U_PREFIJO_OC",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 11,
+    "index_column_id": 3,
+    "name": "U_SUFIJO_OC",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 11,
+    "index_column_id": 4,
+    "name": "U_PREFIJO_LOTE",
+    "key_ordinal": 4,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 71671303,
+    "index_id": 11,
+    "index_column_id": 5,
+    "name": "U_LOTE",
+    "key_ordinal": 5,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 116195464,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 116195464,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_ARTICULO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 116195464,
+    "index_id": 1,
+    "index_column_id": 3,
+    "name": "C_PROVEEDOR_PRIMARIO",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 116195464,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "COD_CD",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 162099618,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id_tienda",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 171147655,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 171147655,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_ARTICULO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 171147655,
+    "index_id": 6,
+    "index_column_id": 1,
+    "name": "C_ARTICULO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 180195692,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 223339860,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "c_articulo",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 4,
+    "index_column_id": 1,
+    "name": "connexa_header_uuid",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 4,
+    "index_column_id": 2,
+    "name": "estado",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 5,
+    "index_column_id": 1,
+    "name": "connexa_header_uuid",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 5,
+    "index_column_id": 2,
+    "name": "estado",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 5,
+    "index_column_id": 3,
+    "name": "f_procesado",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 5,
+    "index_column_id": 4,
+    "name": "mensaje_error",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 9,
+    "index_column_id": 1,
+    "name": "connexa_detail_uuid",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 1,
+    "name": "connexa_detail_uuid",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 2,
+    "name": "estado",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 3,
+    "name": "estado_vk",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 4,
+    "name": "u_id_sincro",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 5,
+    "name": "f_alta",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 6,
+    "name": "f_procesado",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 7,
+    "name": "f_procesado_vk",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 8,
+    "name": "mensaje_error",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 253243957,
+    "index_id": 15,
+    "index_column_id": 9,
+    "name": "mensaje_error_vk",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 287340088,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 388196433,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 388196433,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_ARTICULO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 388196433,
+    "index_id": 1,
+    "index_column_id": 3,
+    "name": "C_PROVEEDOR_PRIMARIO",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 388196433,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "COD_CD",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 430624577,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_ANIO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 430624577,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_MES",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 430624577,
+    "index_id": 1,
+    "index_column_id": 3,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 430624577,
+    "index_id": 1,
+    "index_column_id": 4,
+    "name": "C_ARTICULO",
+    "key_ordinal": 4,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 452196661,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 484196775,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 555149023,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 583673127,
+    "index_id": 3,
+    "index_column_id": 1,
+    "name": "F_VENTA",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 583673127,
+    "index_id": 3,
+    "index_column_id": 2,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 583673127,
+    "index_id": 3,
+    "index_column_id": 3,
+    "name": "C_ARTICULO",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 583673127,
+    "index_id": 3,
+    "index_column_id": 4,
+    "name": "I_PRECIO_VENTA",
+    "key_ordinal": 4,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 599673184,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 651149365,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 731149650,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 743673697,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_ARTICULO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 811149935,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 845246066,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 845246066,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_ARTICULO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 845246066,
+    "index_id": 1,
+    "index_column_id": 3,
+    "name": "C_PROVEEDOR_PRIMARIO",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 845246066,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "COD_CD",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 845246066,
+    "index_id": 3,
+    "index_column_id": 1,
+    "name": "ACTIVE_FOR_PURCHASE",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 845246066,
+    "index_id": 3,
+    "index_column_id": 2,
+    "name": "ACTIVE_FOR_SALE",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 845246066,
+    "index_id": 3,
+    "index_column_id": 3,
+    "name": "ACTIVE_ON_MIX",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 907150277,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 957246465,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "connexa_header_uuid",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1010102639,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "diagram_id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1010102639,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "principal_id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1010102639,
+    "index_id": 2,
+    "index_column_id": 2,
+    "name": "name",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1038626743,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1051150790,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1083150904,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1086626914,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1086626914,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_ARTICULO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1118627028,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1147151132,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_ANIO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1147151132,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_MES",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1179151246,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1198627313,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1246627484,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_COMPRADOR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1271675578,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1271675578,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1275151588,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1300199682,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "Codigo_Articulo",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1300199682,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "Codigo_Sucursal",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1300199682,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "Codigo_Proveedor",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1310627712,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1323151759,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1358627883,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1397580017,
+    "index_id": 4,
+    "index_column_id": 1,
+    "name": "F_MOVIMIENTO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1410104064,
+    "index_id": 2,
+    "index_column_id": 1,
+    "name": "C_OC",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1410104064,
+    "index_id": 2,
+    "index_column_id": 2,
+    "name": "U_PREFIJO_OC",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1410104064,
+    "index_id": 2,
+    "index_column_id": 3,
+    "name": "U_SUFIJO_OC",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1410104064,
+    "index_id": 2,
+    "index_column_id": 4,
+    "name": "C_ARTICULO",
+    "key_ordinal": 4,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1426104121,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "F_VENTA",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1426104121,
+    "index_id": 6,
+    "index_column_id": 1,
+    "name": "F_VENTA",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1426104121,
+    "index_id": 6,
+    "index_column_id": 2,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1426104121,
+    "index_id": 6,
+    "index_column_id": 3,
+    "name": "C_ARTICULO",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1426104121,
+    "index_id": 6,
+    "index_column_id": 4,
+    "name": "I_PRECIO_VENTA",
+    "key_ordinal": 4,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1426820145,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1426820145,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_ARTICULO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1470628282,
+    "index_id": 4,
+    "index_column_id": 1,
+    "name": "C_PROVEEDOR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1470628282,
+    "index_id": 4,
+    "index_column_id": 2,
+    "name": "C_USUARIO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1486628339,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1524200480,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1582628681,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1604200765,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_ANIO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1604200765,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_MES",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1604200765,
+    "index_id": 1,
+    "index_column_id": 3,
+    "name": "C_ARTICULO",
+    "key_ordinal": 3,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1604200765,
+    "index_id": 1,
+    "index_column_id": 4,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 4,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1614628795,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1646628909,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1650820943,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1655676946,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1678629023,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1710629137,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1742629251,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1822629536,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1854629650,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1886629764,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1918629878,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1950629992,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 1982630106,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "id",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 1,
+    "name": "C_ARTICULO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 2,
+    "name": "C_PROVEEDOR_PRIMARIO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 3,
+    "name": "C_COMPRADOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 4,
+    "name": "C_FAMILIA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 5,
+    "name": "M_BAJA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 6,
+    "name": "M_A_DAR_DE_BAJA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 7,
+    "name": "C_CLASIFICACION_COMPRA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 8,
+    "name": "Q_PESO_UNIT_ART",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2014630220,
+    "index_id": 91,
+    "index_column_id": 9,
+    "name": "M_VENDE_POR_PESO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 1,
+    "index_column_id": 1,
+    "name": "C_ARTICULO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 1,
+    "index_column_id": 2,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 17,
+    "index_column_id": 1,
+    "name": "C_ARTICULO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 17,
+    "index_column_id": 2,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 17,
+    "index_column_id": 3,
+    "name": "F_ALTA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 17,
+    "index_column_id": 4,
+    "name": "M_HABILITADO_SUCU",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 17,
+    "index_column_id": 5,
+    "name": "M_LISTO_PARA_VENTA_SUCU",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 17,
+    "index_column_id": 6,
+    "name": "M_OFERTA_SUCU",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 17,
+    "index_column_id": 7,
+    "name": "C_SISTEMATICA",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 18,
+    "index_column_id": 1,
+    "name": "C_SUCU_EMPR",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2094630505,
+    "index_id": 18,
+    "index_column_id": 2,
+    "name": "C_ARTICULO",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2110630562,
+    "index_id": 7,
+    "index_column_id": 1,
+    "name": "C_ARTICULO",
+    "key_ordinal": 1,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2110630562,
+    "index_id": 7,
+    "index_column_id": 2,
+    "name": "C_PROVEEDOR",
+    "key_ordinal": 2,
+    "is_descending_key": false,
+    "is_included_column": false,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2110630562,
+    "index_id": 7,
+    "index_column_id": 3,
+    "name": "Q_FACTOR_PROVEEDOR",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2110630562,
+    "index_id": 7,
+    "index_column_id": 4,
+    "name": "U_PISO_PALETIZADO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  },
+  {
+    "object_id": 2110630562,
+    "index_id": 7,
+    "index_column_id": 5,
+    "name": "U_ALTURA_PALETIZADO",
+    "key_ordinal": 0,
+    "is_descending_key": false,
+    "is_included_column": true,
+    "partition_ordinal": 0
+  }
+]

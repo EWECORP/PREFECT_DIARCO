@@ -1,0 +1,194 @@
+[
+  {
+    "name": "sa",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x01"
+  },
+  {
+    "name": "##MS_PolicyTsqlExecutionLogin##",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": true,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0xB5BA3F49077DF14C95D37EBB67C49F8F"
+  },
+  {
+    "name": "DCO-01SRV-T02\\Administrator",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x0105000000000005150000000F0AB93DC376A7EC2B9D4056F4010000"
+  },
+  {
+    "name": "NT SERVICE\\SQLWriter",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x010600000000000550000000732B9753646EF90356745CB675C3AA6CD6B4D28B"
+  },
+  {
+    "name": "NT SERVICE\\Winmgmt",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x0106000000000005500000005A048DDFF9C7430AB450D4E7477A2172AB4170F4"
+  },
+  {
+    "name": "NT Service\\MSSQLSERVER",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x010600000000000550000000E20F4FE7B15874E48E19026478C2DC9AC307B83E"
+  },
+  {
+    "name": "NT AUTHORITY\\SYSTEM",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x010100000000000512000000"
+  },
+  {
+    "name": "NT SERVICE\\SQLSERVERAGENT",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x010600000000000550000000DCA88F14B79FD47A992A3D8943F829A726066357"
+  },
+  {
+    "name": "NT SERVICE\\SQLTELEMETRY",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x010600000000000550000000447A1A9EE0235381234A54AA9BD0549C4FCC0642"
+  },
+  {
+    "name": "##MS_PolicyEventProcessingLogin##",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": true,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x1F450DE81BBBC142BA3E3B4DA003C01E"
+  },
+  {
+    "name": "kikker",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0xE38D04BA7B90A940A856266BCE06C81D"
+  },
+  {
+    "name": "DCO-01SRV-T02\\sromano",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x0105000000000005150000000F0AB93DC376A7EC2B9D4056EA030000"
+  },
+  {
+    "name": "DCO-01SRV-T02\\eettlin",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x0105000000000005150000000F0AB93DC376A7EC2B9D4056EE030000"
+  },
+  {
+    "name": "eettlin",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0xFBBB9DFB494DDD44A2FF0436E276B1FF"
+  },
+  {
+    "name": "data-sync",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x749605CDD0FBC848B6C1E40F7320EA19"
+  },
+  {
+    "name": "DCO-01SRV-T02\\jgalvan",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x0105000000000005150000000F0AB93DC376A7EC2B9D4056F0030000"
+  },
+  {
+    "name": "jgalvan",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x1559B96C56618B4192729376B4946141"
+  },
+  {
+    "name": "DCO-DIARCOCI-T0\\sopdbail",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x0105000000000005150000000F0AB93DC376A7EC2B9D4056F1030000"
+  },
+  {
+    "name": "ssis",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x96E98F69DB7CEF4F8D37852C49321B2A"
+  },
+  {
+    "name": "gananos",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x34874518818865478C1AFD1665AE3564"
+  },
+  {
+    "name": "smugetti",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "Español",
+    "sid": "0x1B70AAE7FBD982448298029858A4A784"
+  },
+  {
+    "name": "ffallardi",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "data-sync",
+    "default_language_name": "Español",
+    "sid": "0x2291569B21151C42B27953291EA90933"
+  },
+  {
+    "name": "DCO-DIARCOCI-T0\\alledesma",
+    "type_desc": "WINDOWS_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "us_english",
+    "sid": "0x0105000000000005150000000F0AB93DC376A7EC2B9D4056F4030000"
+  },
+  {
+    "name": "mochoa",
+    "type_desc": "SQL_LOGIN",
+    "is_disabled": false,
+    "default_database_name": "master",
+    "default_language_name": "Español",
+    "sid": "0x842E63705DC6A74DB2CDA67059A94DA5"
+  }
+]

@@ -1,0 +1,3881 @@
+[
+  {
+    "object_id": 1712725154,
+    "esquema": "dbo",
+    "name": "_debug_base_stock_dmz",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-11-25 09:58:43.037000",
+    "modify_date": "2025-11-25 09:58:43.037000"
+  },
+  {
+    "object_id": 1856725667,
+    "esquema": "dbo",
+    "name": "_debug_base_stock_ext",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-11-27 09:33:01.690000",
+    "modify_date": "2025-11-27 09:33:01.690000"
+  },
+  {
+    "object_id": 845246066,
+    "esquema": "dbo",
+    "name": "_debug_SP_BASE_PRODUCTOS_SUCURSAL",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-12-24 08:23:21.413000",
+    "modify_date": "2026-06-01 21:28:55.030000"
+  },
+  {
+    "object_id": 1300199682,
+    "esquema": "dbo",
+    "name": "_debug_SP_STOCK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-09-17 17:00:52.767000",
+    "modify_date": "2026-06-01 21:23:38.520000"
+  },
+  {
+    "object_id": 223339860,
+    "esquema": "dbo",
+    "name": "ART_NOCOM",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-17 14:16:36.730000",
+    "modify_date": "2026-06-17 14:16:36.730000"
+  },
+  {
+    "object_id": 1711345161,
+    "esquema": "dbo",
+    "name": "base_productos_dmz_test",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-07-24 16:11:40.133000",
+    "modify_date": "2026-07-24 16:11:40.133000"
+  },
+  {
+    "object_id": 1282819632,
+    "esquema": "dbo",
+    "name": "base_productos_vigentes_old",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-04 10:28:52.457000",
+    "modify_date": "2026-07-24 15:32:48.850000"
+  },
+  {
+    "object_id": 1266819575,
+    "esquema": "dbo",
+    "name": "base_stock_sucursal",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-04 10:25:06.110000",
+    "modify_date": "2026-06-04 10:25:06.110000"
+  },
+  {
+    "object_id": 722101613,
+    "esquema": "dbo",
+    "name": "CLUSTER_LOGISTICO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-14 14:11:10.930000",
+    "modify_date": "2025-02-14 14:11:10.930000"
+  },
+  {
+    "object_id": 1319675749,
+    "esquema": "dbo",
+    "name": "CONCAT_WS_SIMULADO",
+    "type": "FN",
+    "type_desc": "SQL_SCALAR_FUNCTION",
+    "create_date": "2025-07-02 14:10:46.923000",
+    "modify_date": "2025-07-02 14:12:40.640000"
+  },
+  {
+    "object_id": 1298819689,
+    "esquema": "dbo",
+    "name": "DF__base_prod__f_ins__4D6A6A69",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-04 10:28:52.460000",
+    "modify_date": "2026-06-04 10:28:52.460000"
+  },
+  {
+    "object_id": 1727345218,
+    "esquema": "dbo",
+    "name": "DF__base_prod__f_ins__66F53242",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-07-24 16:11:40.143000",
+    "modify_date": "2026-07-24 16:11:40.143000"
+  },
+  {
+    "object_id": 861246123,
+    "esquema": "dbo",
+    "name": "DF__debug_SP_BASE_PRODUCTOS_SUCURSAL__fecha_extraccion",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-12-24 08:23:21.417000",
+    "modify_date": "2025-12-24 08:23:21.417000"
+  },
+  {
+    "object_id": 1316199739,
+    "esquema": "dbo",
+    "name": "DF__debug_SP_STOCK_fecha_extraccion",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-09-17 17:00:52.770000",
+    "modify_date": "2025-09-17 17:00:52.770000"
+  },
+  {
+    "object_id": 882102183,
+    "esquema": "dbo",
+    "name": "DF__F_OC_PREC__CREAT__3493CFA7",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-02-24 12:23:17.493000",
+    "modify_date": "2025-02-24 12:23:17.493000"
+  },
+  {
+    "object_id": 1398296041,
+    "esquema": "dbo",
+    "name": "DF_M10_PROVEEDORES_ACCEPT_RETURN",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-04-22 12:15:43.650000",
+    "modify_date": "2026-04-22 12:15:43.650000"
+  },
+  {
+    "object_id": 491864819,
+    "esquema": "dbo",
+    "name": "ewe_articulos_logistica",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-08-21 16:27:27.973000",
+    "modify_date": "2026-08-21 16:27:27.973000"
+  },
+  {
+    "object_id": 866102126,
+    "esquema": "dbo",
+    "name": "F_OC_PRECARGA_CONNEXA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-24 12:23:17.267000",
+    "modify_date": "2025-02-24 12:23:17.493000"
+  },
+  {
+    "object_id": 1154103152,
+    "esquema": "dbo",
+    "name": "fn_diagramobjects",
+    "type": "FN",
+    "type_desc": "SQL_SCALAR_FUNCTION",
+    "create_date": "2025-03-12 13:18:56.153000",
+    "modify_date": "2025-03-12 13:18:56.153000"
+  },
+  {
+    "object_id": 629577281,
+    "esquema": "dbo",
+    "name": "M_1_CATEGORIAS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 15:59:14.260000",
+    "modify_date": "2024-12-02 15:59:14.260000"
+  },
+  {
+    "object_id": 1234103437,
+    "esquema": "dbo",
+    "name": "M_10_PROVEEDORES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-04-24 12:53:22.660000",
+    "modify_date": "2026-04-22 12:15:43.617000"
+  },
+  {
+    "object_id": 661577395,
+    "esquema": "dbo",
+    "name": "M_2_MOVIMIENTOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:18:02.750000",
+    "modify_date": "2024-12-02 16:18:02.750000"
+  },
+  {
+    "object_id": 693577509,
+    "esquema": "dbo",
+    "name": "M_3_1_FAMILIA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:21:03.887000",
+    "modify_date": "2024-12-02 16:21:03.887000"
+  },
+  {
+    "object_id": 725577623,
+    "esquema": "dbo",
+    "name": "M_3_2_FAMILIA_ARTICULO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:22:53.717000",
+    "modify_date": "2024-12-02 16:22:53.717000"
+  },
+  {
+    "object_id": 773577794,
+    "esquema": "dbo",
+    "name": "M_9_COMPRADORES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:24:53.243000",
+    "modify_date": "2024-12-02 16:24:53.243000"
+  },
+  {
+    "object_id": 946102411,
+    "esquema": "dbo",
+    "name": "M_91_SUCURSALES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-25 13:13:25.960000",
+    "modify_date": "2025-02-25 13:13:25.960000"
+  },
+  {
+    "object_id": 837578022,
+    "esquema": "dbo",
+    "name": "M_92_DEPOSITOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:27:59.757000",
+    "modify_date": "2024-12-02 16:27:59.757000"
+  },
+  {
+    "object_id": 869578136,
+    "esquema": "dbo",
+    "name": "M_93_SUSTITUTOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:29:40.850000",
+    "modify_date": "2024-12-02 16:29:40.850000"
+  },
+  {
+    "object_id": 901578250,
+    "esquema": "dbo",
+    "name": "M_94_ALTERNATIVOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:31:07.127000",
+    "modify_date": "2024-12-02 16:31:07.127000"
+  },
+  {
+    "object_id": 933578364,
+    "esquema": "dbo",
+    "name": "M_95_SENSIBLES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:33:28.943000",
+    "modify_date": "2024-12-02 16:33:28.943000"
+  },
+  {
+    "object_id": 981578535,
+    "esquema": "dbo",
+    "name": "M_96_STOCK_SEGURIDAD",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:35:09.183000",
+    "modify_date": "2024-12-02 16:35:09.183000"
+  },
+  {
+    "object_id": 162099618,
+    "esquema": "dbo",
+    "name": "M_SUCURSALES_EXT",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-23 14:47:29.343000",
+    "modify_date": "2025-01-23 14:47:29.343000"
+  },
+  {
+    "object_id": 597577167,
+    "esquema": "dbo",
+    "name": "NORMALIZA_STRING",
+    "type": "FN",
+    "type_desc": "SQL_SCALAR_FUNCTION",
+    "create_date": "2024-12-02 15:43:08.563000",
+    "modify_date": "2024-12-02 15:43:08.563000"
+  },
+  {
+    "object_id": 239339917,
+    "esquema": "dbo",
+    "name": "PK__ART_NOCO__0E82EE7D87F1C3ED",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2026-06-17 14:16:36.773000",
+    "modify_date": "2026-06-17 14:16:36.773000"
+  },
+  {
+    "object_id": 178099675,
+    "esquema": "dbo",
+    "name": "PK__M_SUCURS__7C49D73614306C7C",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-01-23 14:47:29.350000",
+    "modify_date": "2025-01-23 14:47:29.350000"
+  },
+  {
+    "object_id": 1287675635,
+    "esquema": "dbo",
+    "name": "PK__SUCURSAL__7F99C09A2D38EC9F",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-06-30 13:02:48.740000",
+    "modify_date": "2025-06-30 13:02:48.740000"
+  },
+  {
+    "object_id": 1026102696,
+    "esquema": "dbo",
+    "name": "PK__sysdiagr__C2B05B612E0AE482",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-03-12 13:18:55.943000",
+    "modify_date": "2025-03-12 13:18:55.943000"
+  },
+  {
+    "object_id": 1645248916,
+    "esquema": "dbo",
+    "name": "SP_AJUSTAR_STOCK_DESDE_JSON",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-01-13 12:19:18.043000",
+    "modify_date": "2026-01-13 12:19:18.043000"
+  },
+  {
+    "object_id": 1122103038,
+    "esquema": "dbo",
+    "name": "sp_alterdiagram",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-03-12 13:18:56.140000",
+    "modify_date": "2025-03-12 13:18:56.140000"
+  },
+  {
+    "object_id": 475864762,
+    "esquema": "dbo",
+    "name": "SP_BASE_ARTICULOS_LOGISTICA_DMZ",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-08-21 16:23:45.730000",
+    "modify_date": "2026-08-21 19:10:41.987000"
+  },
+  {
+    "object_id": 1607676775,
+    "esquema": "dbo",
+    "name": "SP_BASE_PRODUCTOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-20 07:20:59.613000",
+    "modify_date": "2025-08-20 09:19:16.657000"
+  },
+  {
+    "object_id": 1314819746,
+    "esquema": "dbo",
+    "name": "SP_BASE_PRODUCTOS_DMZ",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-06-04 11:12:37.033000",
+    "modify_date": "2026-07-20 09:17:58.953000"
+  },
+  {
+    "object_id": 1129771082,
+    "esquema": "dbo",
+    "name": "SP_BASE_PRODUCTOS_DMZ_LENTO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-02-25 13:27:35.517000",
+    "modify_date": "2026-06-03 16:15:43.790000"
+  },
+  {
+    "object_id": 212195806,
+    "esquema": "dbo",
+    "name": "SP_BASE_PRODUCTOS_DMZ_OLD",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-08-22 17:31:16.523000",
+    "modify_date": "2026-02-25 13:23:12.690000"
+  },
+  {
+    "object_id": 946818435,
+    "esquema": "dbo",
+    "name": "SP_BASE_PRODUCTOS_DMZ_RAPIDO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-06-03 16:20:21.283000",
+    "modify_date": "2026-06-04 11:12:03.013000"
+  },
+  {
+    "object_id": 1504724413,
+    "esquema": "dbo",
+    "name": "SP_BASE_PRODUCTOS_EN_TRANSITO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-11-21 09:59:37.460000",
+    "modify_date": "2025-11-21 10:04:18.430000"
+  },
+  {
+    "object_id": 487672785,
+    "esquema": "dbo",
+    "name": "SP_BASE_PRODUCTOS_SUCURSAL",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-20 10:14:58.720000",
+    "modify_date": "2026-03-28 14:36:47.923000"
+  },
+  {
+    "object_id": 503672842,
+    "esquema": "dbo",
+    "name": "SP_BASE_STOCK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-20 14:49:05.607000",
+    "modify_date": "2025-09-15 11:04:29.577000"
+  },
+  {
+    "object_id": 1728725211,
+    "esquema": "dbo",
+    "name": "SP_BASE_STOCK_DMZ",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-11-25 10:18:31.127000",
+    "modify_date": "2025-11-25 10:18:31.127000"
+  },
+  {
+    "object_id": 1808725496,
+    "esquema": "dbo",
+    "name": "SP_BASE_STOCK_EXTEND",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-11-27 09:16:40.087000",
+    "modify_date": "2025-11-27 09:16:40.087000"
+  },
+  {
+    "object_id": 311672158,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_1_COSTOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:49:17.917000",
+    "modify_date": "2025-06-18 16:49:17.917000"
+  },
+  {
+    "object_id": 327672215,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_1_MOVIMIENTOS_DIARIOS_HISTORICOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:50:44.367000",
+    "modify_date": "2025-06-18 16:50:44.367000"
+  },
+  {
+    "object_id": 343672272,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_1_PEDIDOS_PENDIENTES_HISTORICOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:51:54.453000",
+    "modify_date": "2025-06-18 16:51:54.453000"
+  },
+  {
+    "object_id": 359672329,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_1_PRECIOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:52:38.610000",
+    "modify_date": "2025-06-18 16:52:38.610000"
+  },
+  {
+    "object_id": 375672386,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_1_PRECIOS_PRODUCTOS_TIENDA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:53:14.090000",
+    "modify_date": "2025-06-18 16:53:14.090000"
+  },
+  {
+    "object_id": 391672443,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_1_STOCK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:53:43.700000",
+    "modify_date": "2025-06-18 16:53:43.700000"
+  },
+  {
+    "object_id": 407672500,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_1_STOCK_HISTORICO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:54:12.753000",
+    "modify_date": "2025-06-18 16:54:12.753000"
+  },
+  {
+    "object_id": 439672614,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_11.1_PROMOCIONES_HISTORICO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 17:03:17.267000",
+    "modify_date": "2025-06-18 17:03:17.267000"
+  },
+  {
+    "object_id": 423672557,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_11.1_PROMOCIONES_HISTORICO_VIGENTES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:55:57.537000",
+    "modify_date": "2025-06-18 16:55:57.537000"
+  },
+  {
+    "object_id": 455672671,
+    "esquema": "dbo",
+    "name": "SP_CNX_H_11.2_PROMOCIONES_PRODUCTO_HISTORICO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 17:23:21.883000",
+    "modify_date": "2025-06-18 17:23:21.883000"
+  },
+  {
+    "object_id": 645577338,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_1_CATEGORIAS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 15:59:40.970000",
+    "modify_date": "2024-12-02 15:59:40.970000"
+  },
+  {
+    "object_id": 1298103665,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_10_PROVEEDORES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-04-24 13:18:47.020000",
+    "modify_date": "2026-05-14 09:27:11.163000"
+  },
+  {
+    "object_id": 677577452,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_2_TIPO_MOVIMIENTO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:18:46.543000",
+    "modify_date": "2025-05-21 13:45:25.683000"
+  },
+  {
+    "object_id": 709577566,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_3_1_FAMILIA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:21:41.517000",
+    "modify_date": "2024-12-02 16:21:41.517000"
+  },
+  {
+    "object_id": 741577680,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_3_2_FAMILIA_ARTICULO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:23:13.837000",
+    "modify_date": "2024-12-02 16:23:34.913000"
+  },
+  {
+    "object_id": 789577851,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_9_COMPRADORES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:25:09.573000",
+    "modify_date": "2024-12-02 16:25:09.573000"
+  },
+  {
+    "object_id": 978102525,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_91_SUCURSALES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-02-25 13:15:26.290000",
+    "modify_date": "2025-12-18 11:11:56.433000"
+  },
+  {
+    "object_id": 853578079,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_92_DEPOSITOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:28:15.527000",
+    "modify_date": "2024-12-02 16:28:15.527000"
+  },
+  {
+    "object_id": 885578193,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_93_SUSTITUTOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:30:06.837000",
+    "modify_date": "2024-12-02 16:30:06.837000"
+  },
+  {
+    "object_id": 917578307,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_94_ALTERNATIVOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:31:27.310000",
+    "modify_date": "2024-12-02 16:31:27.310000"
+  },
+  {
+    "object_id": 965578478,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_95_SENSIBLES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:34:10.963000",
+    "modify_date": "2024-12-02 16:34:10.963000"
+  },
+  {
+    "object_id": 997578592,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_96_STOCK_SEGURIDAD",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:35:56",
+    "modify_date": "2024-12-02 16:35:56"
+  },
+  {
+    "object_id": 1218103380,
+    "esquema": "dbo",
+    "name": "SP_CNX_M_T050_ARTICULOS_T114_RUBROS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-04-23 17:29:56.087000",
+    "modify_date": "2025-04-23 17:29:56.087000"
+  },
+  {
+    "object_id": 1029578706,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_11_1_PROMOCIONES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:38:55.430000",
+    "modify_date": "2024-12-02 16:38:55.430000"
+  },
+  {
+    "object_id": 1077578877,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_11_PRECIOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:42:03.313000",
+    "modify_date": "2024-12-02 16:42:03.313000"
+  },
+  {
+    "object_id": 295672101,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_4_PRODUCTOS_SUCU",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-18 16:29:56.050000",
+    "modify_date": "2025-06-19 10:37:18.527000"
+  },
+  {
+    "object_id": 471672728,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_4_PRODUCTOS_SUCURSAL",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-19 13:57:32.983000",
+    "modify_date": "2025-06-19 13:57:32.983000"
+  },
+  {
+    "object_id": 1413580074,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_5_MOVIMIENTOS_DIARIOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-11 09:36:41.360000",
+    "modify_date": "2025-01-20 15:54:40.540000"
+  },
+  {
+    "object_id": 1109578991,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_7_PEDIDOS_PENDIENTES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:48:37.353000",
+    "modify_date": "2024-12-02 16:48:58.577000"
+  },
+  {
+    "object_id": 1157579162,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_8_STOCK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:51:02.740000",
+    "modify_date": "2024-12-02 16:51:02.740000"
+  },
+  {
+    "object_id": 1189579276,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_87_PRECIOS_ARTICULO_SUCURSAL",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2024-12-02 16:52:06.223000",
+    "modify_date": "2024-12-02 16:55:22.893000"
+  },
+  {
+    "object_id": 402100473,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_COMPETENCIA_DETALLE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-01-31 10:10:32.053000",
+    "modify_date": "2025-01-31 10:10:32.053000"
+  },
+  {
+    "object_id": 18099105,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_DEBITO_PROVEEDORES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-01-21 18:54:23.707000",
+    "modify_date": "2025-01-21 18:54:23.707000"
+  },
+  {
+    "object_id": 1957582012,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_OC_CABECERA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-01-13 14:55:53.617000",
+    "modify_date": "2025-01-31 14:59:37.313000"
+  },
+  {
+    "object_id": 450100644,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_OC_DETALLE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-01-31 13:36:03.320000",
+    "modify_date": "2025-02-03 00:25:10.697000"
+  },
+  {
+    "object_id": 466100701,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_OC_DETALLE_EXT",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-01-31 13:42:36.820000",
+    "modify_date": "2025-01-31 17:23:22"
+  },
+  {
+    "object_id": 370100359,
+    "esquema": "dbo",
+    "name": "SP_CNX_T_RECUPERO_PROVEEDORES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-01-28 11:49:35.520000",
+    "modify_date": "2025-01-31 09:36:58.740000"
+  },
+  {
+    "object_id": 1090102924,
+    "esquema": "dbo",
+    "name": "sp_creatediagram",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-03-12 13:18:56.090000",
+    "modify_date": "2025-03-12 13:18:56.090000"
+  },
+  {
+    "object_id": 1138103095,
+    "esquema": "dbo",
+    "name": "sp_dropdiagram",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-03-12 13:18:56.143000",
+    "modify_date": "2025-03-12 13:18:56.143000"
+  },
+  {
+    "object_id": 148195578,
+    "esquema": "dbo",
+    "name": "SP_GENERA_BASE_PRODUCTOS_VIGENTES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-08-22 13:24:01.650000",
+    "modify_date": "2025-08-22 13:24:01.650000"
+  },
+  {
+    "object_id": 1074102867,
+    "esquema": "dbo",
+    "name": "sp_helpdiagramdefinition",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-03-12 13:18:56.050000",
+    "modify_date": "2025-03-12 13:18:56.050000"
+  },
+  {
+    "object_id": 1058102810,
+    "esquema": "dbo",
+    "name": "sp_helpdiagrams",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-03-12 13:18:55.983000",
+    "modify_date": "2025-03-12 13:18:55.983000"
+  },
+  {
+    "object_id": 1106102981,
+    "esquema": "dbo",
+    "name": "sp_renamediagram",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-03-12 13:18:56.130000",
+    "modify_date": "2025-03-12 13:18:56.130000"
+  },
+  {
+    "object_id": 38291196,
+    "esquema": "dbo",
+    "name": "SP_SGM_CONNEXA_RECEPTION_RECEIVE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-03-13 13:20:56.073000",
+    "modify_date": "2026-03-13 13:20:56.073000"
+  },
+  {
+    "object_id": 994102582,
+    "esquema": "dbo",
+    "name": "sp_upgraddiagrams",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-03-12 13:18:55.700000",
+    "modify_date": "2025-03-12 13:18:55.700000"
+  },
+  {
+    "object_id": 1266103551,
+    "esquema": "dbo",
+    "name": "SP_ZTRX_T_87_PRECIOS_ARTICULO_SUCURSAL",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-04-24 12:58:38.540000",
+    "modify_date": "2025-04-24 13:20:39.383000"
+  },
+  {
+    "object_id": 1271675578,
+    "esquema": "dbo",
+    "name": "SUCURSALES_EXCLUIDAS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-30 13:02:48.737000",
+    "modify_date": "2026-06-04 11:28:16.073000"
+  },
+  {
+    "object_id": 1010102639,
+    "esquema": "dbo",
+    "name": "sysdiagrams",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-03-12 13:18:55.817000",
+    "modify_date": "2025-03-12 13:18:55.817000"
+  },
+  {
+    "object_id": 834102012,
+    "esquema": "dbo",
+    "name": "T_100_SUCURSALES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-14 15:28:35.080000",
+    "modify_date": "2025-02-14 15:28:35.080000"
+  },
+  {
+    "object_id": 1013578649,
+    "esquema": "dbo",
+    "name": "T_11_1_PROMOCIONES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:38:23.970000",
+    "modify_date": "2024-12-02 16:38:23.970000"
+  },
+  {
+    "object_id": 1045578763,
+    "esquema": "dbo",
+    "name": "T_11_PRECIOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:41:21.900000",
+    "modify_date": "2024-12-02 16:41:21.900000"
+  },
+  {
+    "object_id": 1477580302,
+    "esquema": "dbo",
+    "name": "T_5_1_MOVIMIENTOS_DIARIOS",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-11 10:45:57.713000",
+    "modify_date": "2024-12-11 11:43:27.737000"
+  },
+  {
+    "object_id": 1397580017,
+    "esquema": "dbo",
+    "name": "T_5_MOVIMIENTOS_DIARIOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-11 09:36:08.257000",
+    "modify_date": "2026-06-01 21:28:55.693000"
+  },
+  {
+    "object_id": 1605580758,
+    "esquema": "dbo",
+    "name": "T_5_MOVIMIENTOS_DIARIOS_1",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-14 16:11:12.363000",
+    "modify_date": "2024-12-14 16:11:12.363000"
+  },
+  {
+    "object_id": 1621580815,
+    "esquema": "dbo",
+    "name": "T_5_MOVIMIENTOS_DIARIOS_2",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-14 16:11:25.447000",
+    "modify_date": "2024-12-14 16:11:25.447000"
+  },
+  {
+    "object_id": 1637580872,
+    "esquema": "dbo",
+    "name": "T_5_MOVIMIENTOS_DIARIOS_3",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-14 16:11:35.930000",
+    "modify_date": "2024-12-14 16:11:35.930000"
+  },
+  {
+    "object_id": 1653580929,
+    "esquema": "dbo",
+    "name": "T_5_MOVIMIENTOS_DIARIOS_4",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-14 16:11:46.093000",
+    "modify_date": "2024-12-14 16:11:46.093000"
+  },
+  {
+    "object_id": 1669580986,
+    "esquema": "dbo",
+    "name": "T_5_MOVIMIENTOS_DIARIOS_5",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-14 16:11:55.760000",
+    "modify_date": "2024-12-14 16:15:20.677000"
+  },
+  {
+    "object_id": 1685581043,
+    "esquema": "dbo",
+    "name": "T_5_MOVIMIENTOS_DIARIOS_6",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-14 16:12:06.360000",
+    "modify_date": "2024-12-14 16:15:11.630000"
+  },
+  {
+    "object_id": 1093578934,
+    "esquema": "dbo",
+    "name": "T_7_PEDIDOS_PENDIENTES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:48:12.747000",
+    "modify_date": "2024-12-02 16:48:12.747000"
+  },
+  {
+    "object_id": 1205579333,
+    "esquema": "dbo",
+    "name": "T_710_ESTADIS_DETALLE",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-02 17:43:59.727000",
+    "modify_date": "2024-12-02 17:55:32.520000"
+  },
+  {
+    "object_id": 1253579504,
+    "esquema": "dbo",
+    "name": "T_710_ESTADIS_REPOSICION",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2024-12-02 18:03:36.530000",
+    "modify_date": "2024-12-02 18:03:36.530000"
+  },
+  {
+    "object_id": 1141579105,
+    "esquema": "dbo",
+    "name": "T_8_STOCK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-02 16:50:47.027000",
+    "modify_date": "2024-12-02 16:50:47.027000"
+  },
+  {
+    "object_id": 1282103608,
+    "esquema": "dbo",
+    "name": "T_87_PRECIOS_ARTICULO_SUCURSAL",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-04-24 13:04:55.067000",
+    "modify_date": "2025-04-24 13:04:55.067000"
+  },
+  {
+    "object_id": 690101499,
+    "esquema": "dbo",
+    "name": "T_CLUSTER_PARAM_STOCK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-13 17:08:19.083000",
+    "modify_date": "2025-02-13 17:08:19.083000"
+  },
+  {
+    "object_id": 1893581784,
+    "esquema": "dbo",
+    "name": "T_COMPETENCIA_DETALLE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-07 16:36:21.957000",
+    "modify_date": "2025-01-31 10:08:59.910000"
+  },
+  {
+    "object_id": 1381579960,
+    "esquema": "dbo",
+    "name": "T_DATASET_ELASTICIDAD",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-06 16:30:06.217000",
+    "modify_date": "2024-12-06 16:30:06.217000"
+  },
+  {
+    "object_id": 1797581442,
+    "esquema": "dbo",
+    "name": "T_ESTADISTICA_PRECIOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-06 09:37:49.770000",
+    "modify_date": "2025-01-06 09:37:49.770000"
+  },
+  {
+    "object_id": 386100416,
+    "esquema": "dbo",
+    "name": "T_FALTANTES_SUBRUBRO_LOCAL",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-28 13:36:23.280000",
+    "modify_date": "2025-01-28 13:36:23.280000"
+  },
+  {
+    "object_id": 1813581499,
+    "esquema": "dbo",
+    "name": "T_HISTORIAL_OFERTAS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-06 10:08:55.600000",
+    "modify_date": "2025-01-06 10:08:55.600000"
+  },
+  {
+    "object_id": 1317579732,
+    "esquema": "dbo",
+    "name": "T_HISTORIAL_PRECIOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-06 14:10:55.017000",
+    "modify_date": "2024-12-06 14:10:55.017000"
+  },
+  {
+    "object_id": 1349579846,
+    "esquema": "dbo",
+    "name": "T_HISTORIAL_VENTAS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-06 15:30:07.730000",
+    "modify_date": "2024-12-06 15:30:07.730000"
+  },
+  {
+    "object_id": 1909581841,
+    "esquema": "dbo",
+    "name": "T_OC_CABECERA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-13 12:20:01.707000",
+    "modify_date": "2025-01-13 12:24:23.067000"
+  },
+  {
+    "object_id": 562101043,
+    "esquema": "dbo",
+    "name": "T_OC_DETALLE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-03 00:22:36.313000",
+    "modify_date": "2025-02-03 00:22:36.313000"
+  },
+  {
+    "object_id": 546100986,
+    "esquema": "dbo",
+    "name": "T_OC_DETALLE_EXT",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-31 17:01:35.643000",
+    "modify_date": "2025-01-31 17:01:35.643000"
+  },
+  {
+    "object_id": 322100188,
+    "esquema": "dbo",
+    "name": "T_RECUPERO_PROVEEDORES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-01-28 11:36:54.257000",
+    "modify_date": "2025-01-28 11:36:54.257000"
+  },
+  {
+    "object_id": 594101157,
+    "esquema": "dbo",
+    "name": "T001_TABLA_CODIGO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-10 12:31:53.247000",
+    "modify_date": "2025-02-10 12:31:53.247000"
+  },
+  {
+    "object_id": 2098106515,
+    "esquema": "dbo",
+    "name": "T020_PROVEEDOR_GESTION_COMPRA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-03 19:07:04.590000",
+    "modify_date": "2025-05-03 19:07:04.590000"
+  },
+  {
+    "object_id": 1717581157,
+    "esquema": "dbo",
+    "name": "T051_ARTICULOS_SUCURSAL",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-17 11:49:10.523000",
+    "modify_date": "2024-12-17 11:49:10.523000"
+  },
+  {
+    "object_id": 578101100,
+    "esquema": "dbo",
+    "name": "T052_ARTICULOS_PROVEEDOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-10 12:20:55.190000",
+    "modify_date": "2025-02-10 12:20:55.190000"
+  },
+  {
+    "object_id": 674101442,
+    "esquema": "dbo",
+    "name": "T055_ARTICULOS_PARAM_STOCK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-13 16:58:12.540000",
+    "modify_date": "2025-02-13 16:58:12.540000"
+  },
+  {
+    "object_id": 857770113,
+    "esquema": "dbo",
+    "name": "T058_ARTICULOS_TRANSF_PEND",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-20 11:45:21.993000",
+    "modify_date": "2026-02-20 11:45:21.993000"
+  },
+  {
+    "object_id": 1202103323,
+    "esquema": "dbo",
+    "name": "T080_OC_PRECARGA_KIKKER",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-04-23 12:08:00.590000",
+    "modify_date": "2025-04-23 12:08:00.590000"
+  },
+  {
+    "object_id": 642101328,
+    "esquema": "dbo",
+    "name": "T085_ARTICULOS_EAN",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-02-11 17:10:58.653000",
+    "modify_date": "2025-02-11 17:10:58.653000"
+  },
+  {
+    "object_id": 1765581328,
+    "esquema": "dbo",
+    "name": "T114_RUBROS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-20 10:29:30.950000",
+    "modify_date": "2024-12-20 10:29:30.950000"
+  },
+  {
+    "object_id": 1733581214,
+    "esquema": "dbo",
+    "name": "T710_ESTADIS_DETALLE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-19 11:21:37.630000",
+    "modify_date": "2024-12-19 11:21:37.630000"
+  },
+  {
+    "object_id": 1749581271,
+    "esquema": "dbo",
+    "name": "T710_ESTADIS_REPOSICION",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2024-12-19 17:56:21.293000",
+    "modify_date": "2024-12-19 17:56:21.293000"
+  },
+  {
+    "object_id": 551673013,
+    "esquema": "dbo",
+    "name": "TMP_Base_Productos",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-21 13:44:55.790000",
+    "modify_date": "2025-06-21 13:44:55.790000"
+  },
+  {
+    "object_id": 1042102753,
+    "esquema": "dbo",
+    "name": "UK_principal_name",
+    "type": "UQ",
+    "type_desc": "UNIQUE_CONSTRAINT",
+    "create_date": "2025-03-12 13:18:55.967000",
+    "modify_date": "2025-03-12 13:18:55.967000"
+  },
+  {
+    "object_id": 1904725838,
+    "esquema": "dbo",
+    "name": "V_OC_CABECERA_SGM",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2025-11-28 12:24:55.760000",
+    "modify_date": "2025-11-28 12:49:18.960000"
+  },
+  {
+    "object_id": 377768403,
+    "esquema": "dbo",
+    "name": "V_OC_CONNEXA_MENSUAL",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-09 09:31:59.103000",
+    "modify_date": "2026-02-12 10:19:59.323000"
+  },
+  {
+    "object_id": 393768460,
+    "esquema": "dbo",
+    "name": "V_OC_CONNEXA_SEMANAL",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-09 09:37:57.933000",
+    "modify_date": "2026-02-12 10:20:42.623000"
+  },
+  {
+    "object_id": 1920725895,
+    "esquema": "dbo",
+    "name": "V_OC_DETALLE_SGM",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2025-11-28 12:50:41.533000",
+    "modify_date": "2025-11-28 12:50:41.533000"
+  },
+  {
+    "object_id": 1936725952,
+    "esquema": "dbo",
+    "name": "V_OC_RESUMEN_MENSUAL",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2025-11-28 12:59:01.100000",
+    "modify_date": "2025-12-21 11:32:29.537000"
+  },
+  {
+    "object_id": 425768574,
+    "esquema": "dbo",
+    "name": "V_OC_RESUMEN_SEMANAL",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-09 10:44:56.440000",
+    "modify_date": "2026-02-09 10:44:56.440000"
+  },
+  {
+    "object_id": 528720936,
+    "esquema": "dbo",
+    "name": "V_T080_OC_PRECARGA_KIKKER",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2025-10-16 15:16:26.947000",
+    "modify_date": "2025-12-21 11:45:56.013000"
+  },
+  {
+    "object_id": 512720879,
+    "esquema": "dbo",
+    "name": "V_T874_OC_PRECARGA_KIKKER_HIST",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2025-10-16 15:13:45.653000",
+    "modify_date": "2025-12-21 11:45:27.187000"
+  },
+  {
+    "object_id": 409768517,
+    "esquema": "dbo",
+    "name": "V_USO_MENSUAL_COMPRADOR",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-09 10:18:03.957000",
+    "modify_date": "2026-02-12 10:24:12.333000"
+  },
+  {
+    "object_id": 569769087,
+    "esquema": "dbo",
+    "name": "V_USO_MENSUAL_PROVEEDOR",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-12 10:11:27.073000",
+    "modify_date": "2026-02-12 10:11:27.073000"
+  },
+  {
+    "object_id": 441768631,
+    "esquema": "dbo",
+    "name": "V_USO_SEMANAL_COMPRADOR",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-09 10:48:59.633000",
+    "modify_date": "2026-02-12 10:25:15.753000"
+  },
+  {
+    "object_id": 489768802,
+    "esquema": "dbo",
+    "name": "V_USO_SEMANAL_PROVEEDOR",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-02-10 11:44:09.150000",
+    "modify_date": "2026-02-18 11:09:32.207000"
+  },
+  {
+    "object_id": 1520724470,
+    "esquema": "repl",
+    "name": "BASE_PRODUCTOS_EN_TRANSITO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-11-21 10:02:41.457000",
+    "modify_date": "2025-11-21 10:02:41.457000"
+  },
+  {
+    "object_id": 388196433,
+    "esquema": "repl",
+    "name": "BASE_PRODUCTOS_VIGENTES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 18:00:35.683000",
+    "modify_date": "2026-06-01 21:25:10.517000"
+  },
+  {
+    "object_id": 116195464,
+    "esquema": "repl",
+    "name": "BASE_PRODUCTOS_VIGENTES_OLD",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 13:13:01.387000",
+    "modify_date": "2026-06-02 00:00:36.297000"
+  },
+  {
+    "object_id": 1342627826,
+    "esquema": "repl",
+    "name": "DF__LOGS_T117__fecha__5006DFF2",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-13 15:18:12.973000",
+    "modify_date": "2025-05-13 15:18:12.973000"
+  },
+  {
+    "object_id": 1618820829,
+    "esquema": "repl",
+    "name": "DF__T061_STOC__F_DES__607D3EDD",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.787000",
+    "modify_date": "2026-06-07 15:29:37.787000"
+  },
+  {
+    "object_id": 1634820886,
+    "esquema": "repl",
+    "name": "DF__T061_STOC__F_HAS__61716316",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.807000",
+    "modify_date": "2026-06-07 15:29:37.807000"
+  },
+  {
+    "object_id": 1602820772,
+    "esquema": "repl",
+    "name": "DF__T061_STOC__Q_PES__5F891AA4",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.777000",
+    "modify_date": "2026-06-07 15:29:37.777000"
+  },
+  {
+    "object_id": 1586820715,
+    "esquema": "repl",
+    "name": "DF__T061_STOC__Q_UNI__5E94F66B",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.760000",
+    "modify_date": "2026-06-07 15:29:37.760000"
+  },
+  {
+    "object_id": 1831677573,
+    "esquema": "repl",
+    "name": "DF__T230_FACT__Q_UNI__6D2D2E85",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-08-20 11:44:59.807000",
+    "modify_date": "2025-08-20 11:44:59.807000"
+  },
+  {
+    "object_id": 1895677801,
+    "esquema": "repl",
+    "name": "DF__T230_FACT__Q_UNI__70FDBF69",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-08-20 11:46:37.417000",
+    "modify_date": "2025-08-20 11:46:37.417000"
+  },
+  {
+    "object_id": 989246579,
+    "esquema": "repl",
+    "name": "DF__TRANSF_CO__infor__3AF6B473",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-12-26 08:34:49.223000",
+    "modify_date": "2025-12-26 08:34:49.223000"
+  },
+  {
+    "object_id": 132195521,
+    "esquema": "repl",
+    "name": "DF_BASE_PRODUCTOS_VIGENTES__fecha_extraccion",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-08-22 13:13:01.390000",
+    "modify_date": "2025-08-22 13:13:01.390000"
+  },
+  {
+    "object_id": 404196490,
+    "esquema": "repl",
+    "name": "DF_BASE_PRODUCTOS_VIGENTES_fecha_ext",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-08-22 18:00:35.687000",
+    "modify_date": "2025-08-22 18:00:35.687000"
+  },
+  {
+    "object_id": 1474820316,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_PESO_ARTICULO_DIA_ANT",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.620000",
+    "modify_date": "2026-06-07 15:29:37.620000"
+  },
+  {
+    "object_id": 1538820544,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_PESO_ARTICULO_EGRE",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.690000",
+    "modify_date": "2026-06-07 15:29:37.690000"
+  },
+  {
+    "object_id": 1570820658,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_PESO_ARTICULO_INGR",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.747000",
+    "modify_date": "2026-06-07 15:29:37.747000"
+  },
+  {
+    "object_id": 1506820430,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_PESO_ARTICULO_VEND",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.663000",
+    "modify_date": "2026-06-07 15:29:37.663000"
+  },
+  {
+    "object_id": 1458820259,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_UNID_ARTICULO_DIA_ANT",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.367000",
+    "modify_date": "2026-06-07 15:29:37.367000"
+  },
+  {
+    "object_id": 1522820487,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_UNID_ARTICULO_EGRE",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.680000",
+    "modify_date": "2026-06-07 15:29:37.680000"
+  },
+  {
+    "object_id": 1554820601,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_UNID_ARTICULO_INGR",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.727000",
+    "modify_date": "2026-06-07 15:29:37.727000"
+  },
+  {
+    "object_id": 1490820373,
+    "esquema": "repl",
+    "name": "DF_T061_STOCK_DIARIO_Q_UNID_ARTICULO_VEND",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.643000",
+    "modify_date": "2026-06-07 15:29:37.643000"
+  },
+  {
+    "object_id": 462624691,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA1",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.013000",
+    "modify_date": "2025-05-07 10:31:41.013000"
+  },
+  {
+    "object_id": 606625204,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA10",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.070000",
+    "modify_date": "2025-05-07 10:31:41.070000"
+  },
+  {
+    "object_id": 622625261,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA11",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.077000",
+    "modify_date": "2025-05-07 10:31:41.077000"
+  },
+  {
+    "object_id": 638625318,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA12",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.080000",
+    "modify_date": "2025-05-07 10:31:41.080000"
+  },
+  {
+    "object_id": 654625375,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA13",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.090000",
+    "modify_date": "2025-05-07 10:31:41.090000"
+  },
+  {
+    "object_id": 670625432,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA14",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.093000",
+    "modify_date": "2025-05-07 10:31:41.093000"
+  },
+  {
+    "object_id": 686625489,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA15",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.100000",
+    "modify_date": "2025-05-07 10:31:41.100000"
+  },
+  {
+    "object_id": 702625546,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA16",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.107000",
+    "modify_date": "2025-05-07 10:31:41.107000"
+  },
+  {
+    "object_id": 718625603,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA17",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.113000",
+    "modify_date": "2025-05-07 10:31:41.113000"
+  },
+  {
+    "object_id": 734625660,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA18",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.120000",
+    "modify_date": "2025-05-07 10:31:41.120000"
+  },
+  {
+    "object_id": 750625717,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA19",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.123000",
+    "modify_date": "2025-05-07 10:31:41.123000"
+  },
+  {
+    "object_id": 478624748,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA2",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.020000",
+    "modify_date": "2025-05-07 10:31:41.020000"
+  },
+  {
+    "object_id": 766625774,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA20",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.130000",
+    "modify_date": "2025-05-07 10:31:41.130000"
+  },
+  {
+    "object_id": 782625831,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA21",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.137000",
+    "modify_date": "2025-05-07 10:31:41.137000"
+  },
+  {
+    "object_id": 798625888,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA22",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.143000",
+    "modify_date": "2025-05-07 10:31:41.143000"
+  },
+  {
+    "object_id": 814625945,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA23",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.150000",
+    "modify_date": "2025-05-07 10:31:41.150000"
+  },
+  {
+    "object_id": 830626002,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA24",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.157000",
+    "modify_date": "2025-05-07 10:31:41.157000"
+  },
+  {
+    "object_id": 846626059,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA25",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.160000",
+    "modify_date": "2025-05-07 10:31:41.160000"
+  },
+  {
+    "object_id": 862626116,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA26",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.167000",
+    "modify_date": "2025-05-07 10:31:41.167000"
+  },
+  {
+    "object_id": 878626173,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA27",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.173000",
+    "modify_date": "2025-05-07 10:31:41.173000"
+  },
+  {
+    "object_id": 894626230,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA28",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.180000",
+    "modify_date": "2025-05-07 10:31:41.180000"
+  },
+  {
+    "object_id": 910626287,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA29",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.187000",
+    "modify_date": "2025-05-07 10:31:41.187000"
+  },
+  {
+    "object_id": 494624805,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA3",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.027000",
+    "modify_date": "2025-05-07 10:31:41.027000"
+  },
+  {
+    "object_id": 926626344,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA30",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.203000",
+    "modify_date": "2025-05-07 10:31:41.203000"
+  },
+  {
+    "object_id": 942626401,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA31",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.210000",
+    "modify_date": "2025-05-07 10:31:41.210000"
+  },
+  {
+    "object_id": 510624862,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA4",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.033000",
+    "modify_date": "2025-05-07 10:31:41.033000"
+  },
+  {
+    "object_id": 526624919,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA5",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.040000",
+    "modify_date": "2025-05-07 10:31:41.040000"
+  },
+  {
+    "object_id": 542624976,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA6",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.047000",
+    "modify_date": "2025-05-07 10:31:41.047000"
+  },
+  {
+    "object_id": 558625033,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA7",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.050000",
+    "modify_date": "2025-05-07 10:31:41.050000"
+  },
+  {
+    "object_id": 574625090,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA8",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.057000",
+    "modify_date": "2025-05-07 10:31:41.057000"
+  },
+  {
+    "object_id": 590625147,
+    "esquema": "repl",
+    "name": "DF_T710_ESTADIS_STOCK_Q_DIA9",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:41.063000",
+    "modify_date": "2025-05-07 10:31:41.063000"
+  },
+  {
+    "object_id": 585769144,
+    "esquema": "repl",
+    "name": "DF_TRANSF_CONNEXA_IN_estado",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-02-12 11:59:30.610000",
+    "modify_date": "2026-02-12 11:59:30.610000"
+  },
+  {
+    "object_id": 319340202,
+    "esquema": "repl",
+    "name": "DF-IMPORTAR_TRANSF_CONNEXA_IN_estado",
+    "type": "D ",
+    "type_desc": "DEFAULT_CONSTRAINT",
+    "create_date": "2026-06-18 13:43:47.250000",
+    "modify_date": "2026-06-18 13:43:47.250000"
+  },
+  {
+    "object_id": 507148852,
+    "esquema": "repl",
+    "name": "fnd_site_names",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-14 16:45:55.083000",
+    "modify_date": "2025-05-14 16:45:55.083000"
+  },
+  {
+    "object_id": 1006626629,
+    "esquema": "repl",
+    "name": "Historico_Stock_Sucursal",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-07 13:04:45.537000",
+    "modify_date": "2025-05-07 13:04:45.537000"
+  },
+  {
+    "object_id": 287340088,
+    "esquema": "repl",
+    "name": "IMPORTAR_TRANSF_CONNEXA_IN",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-18 13:43:47.177000",
+    "modify_date": "2026-06-18 13:43:47.250000"
+  },
+  {
+    "object_id": 555149023,
+    "esquema": "repl",
+    "name": "LOGS_T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANT_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 17:15:46.060000",
+    "modify_date": "2025-05-15 17:36:58.840000"
+  },
+  {
+    "object_id": 1275151588,
+    "esquema": "repl",
+    "name": "LOGS_T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:58:01.313000",
+    "modify_date": "2025-05-15 18:58:01.313000"
+  },
+  {
+    "object_id": 1486628339,
+    "esquema": "repl",
+    "name": "LOGS_T020_PROV_GESTION_COMPRA_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:56:49.063000",
+    "modify_date": "2025-05-13 15:56:49.063000"
+  },
+  {
+    "object_id": 452196661,
+    "esquema": "repl",
+    "name": "LOGS_T020_PROVEEDOR_DIAS_ENTREGA_CABE_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 18:08:10.470000",
+    "modify_date": "2025-08-22 18:08:10.470000"
+  },
+  {
+    "object_id": 484196775,
+    "esquema": "repl",
+    "name": "LOGS_T020_PROVEEDOR_DIAS_ENTREGA_DETA_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 18:08:18.507000",
+    "modify_date": "2025-08-22 18:08:18.507000"
+  },
+  {
+    "object_id": 1358627883,
+    "esquema": "repl",
+    "name": "LOGS_T020_PROVEEDOR_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:27:48.477000",
+    "modify_date": "2025-05-13 15:27:48.477000"
+  },
+  {
+    "object_id": 651149365,
+    "esquema": "repl",
+    "name": "LOGS_T021_PROV_COMPROB_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 17:54:26.770000",
+    "modify_date": "2025-05-15 17:54:26.770000"
+  },
+  {
+    "object_id": 1582628681,
+    "esquema": "repl",
+    "name": "LOGS_T050_ARTICULOS_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:08:49.500000",
+    "modify_date": "2025-05-13 16:08:49.500000"
+  },
+  {
+    "object_id": 180195692,
+    "esquema": "repl",
+    "name": "LOGS_T051_ARTICULOS_SUCURSAL_BARRIO_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 17:27:03.230000",
+    "modify_date": "2025-08-22 17:27:03.230000"
+  },
+  {
+    "object_id": 1614628795,
+    "esquema": "repl",
+    "name": "LOGS_T051_ARTICULOS_SUCURSAL_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:09:27.850000",
+    "modify_date": "2025-05-13 16:09:27.850000"
+  },
+  {
+    "object_id": 1646628909,
+    "esquema": "repl",
+    "name": "LOGS_T052_ARTICULOS_PROVEEDOR_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:09:56.887000",
+    "modify_date": "2025-05-13 17:01:18.867000"
+  },
+  {
+    "object_id": 1323151759,
+    "esquema": "repl",
+    "name": "LOGS_T055_ART_SUCU_PROV_DIAS_ENTREGA_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 19:33:02.083000",
+    "modify_date": "2025-05-15 19:34:11.410000"
+  },
+  {
+    "object_id": 1678629023,
+    "esquema": "repl",
+    "name": "LOGS_T055_ARTICULOS_CONDCOMPRA_COSTOS_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:10:23.063000",
+    "modify_date": "2025-05-13 16:10:23.063000"
+  },
+  {
+    "object_id": 1710629137,
+    "esquema": "repl",
+    "name": "LOGS_T055_ARTICULOS_PARAM_STOCK_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:10:43.913000",
+    "modify_date": "2025-05-13 16:10:43.913000"
+  },
+  {
+    "object_id": 1742629251,
+    "esquema": "repl",
+    "name": "LOGS_T055_LEAD_TIME_B2_SUCURSALES_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:11:15.760000",
+    "modify_date": "2025-05-13 16:11:15.760000"
+  },
+  {
+    "object_id": 1822629536,
+    "esquema": "repl",
+    "name": "LOGS_T060_STOCK_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:30:09.957000",
+    "modify_date": "2025-05-13 16:30:09.957000"
+  },
+  {
+    "object_id": 1650820943,
+    "esquema": "repl",
+    "name": "LOGS_T061_STOCK_DIARIO_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-07 15:31:26.303000",
+    "modify_date": "2026-06-07 15:31:26.303000"
+  },
+  {
+    "object_id": 731149650,
+    "esquema": "repl",
+    "name": "LOGS_T079_SNC_CUOTAS_CABE_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:05:47.917000",
+    "modify_date": "2025-05-15 18:05:47.917000"
+  },
+  {
+    "object_id": 811149935,
+    "esquema": "repl",
+    "name": "LOGS_T079_SNC_CUOTAS_DETA_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:12:06.103000",
+    "modify_date": "2025-05-15 18:12:06.103000"
+  },
+  {
+    "object_id": 1854629650,
+    "esquema": "repl",
+    "name": "LOGS_T080_OC_CABE_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:30:25.817000",
+    "modify_date": "2025-05-13 16:30:25.817000"
+  },
+  {
+    "object_id": 1886629764,
+    "esquema": "repl",
+    "name": "LOGS_T081_OC_DETA_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:30:39.077000",
+    "modify_date": "2025-05-13 16:30:39.077000"
+  },
+  {
+    "object_id": 1918629878,
+    "esquema": "repl",
+    "name": "LOGS_T085_ARTICULOS_EAN_EDI_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:31:00.687000",
+    "modify_date": "2025-05-13 16:31:00.687000"
+  },
+  {
+    "object_id": 907150277,
+    "esquema": "repl",
+    "name": "LOGS_T090_COMPETENCIA_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:17:10.130000",
+    "modify_date": "2025-05-15 18:17:10.130000"
+  },
+  {
+    "object_id": 1051150790,
+    "esquema": "repl",
+    "name": "LOGS_T091_COMPETENCIA_PRECIOS_CABE_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:29:23.967000",
+    "modify_date": "2025-05-15 18:29:23.967000"
+  },
+  {
+    "object_id": 1083150904,
+    "esquema": "repl",
+    "name": "LOGS_T091_COMPETENCIA_PRECIOS_DETA_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:30:52.190000",
+    "modify_date": "2025-05-15 18:30:52.190000"
+  },
+  {
+    "object_id": 1950629992,
+    "esquema": "repl",
+    "name": "LOGS_T100_EMPRESA_SUC_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:31:34.297000",
+    "modify_date": "2025-05-13 16:31:34.297000"
+  },
+  {
+    "object_id": 1982630106,
+    "esquema": "repl",
+    "name": "LOGS_T114_RUBROS_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:31:54.500000",
+    "modify_date": "2025-05-13 16:31:54.500000"
+  },
+  {
+    "object_id": 1310627712,
+    "esquema": "repl",
+    "name": "LOGS_T117_COMPRADORES_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:18:12.970000",
+    "modify_date": "2025-05-13 15:18:12.970000"
+  },
+  {
+    "object_id": 1655676946,
+    "esquema": "repl",
+    "name": "LOGS_T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-20 11:37:10.360000",
+    "modify_date": "2025-08-20 11:37:10.360000"
+  },
+  {
+    "object_id": 599673184,
+    "esquema": "repl",
+    "name": "LOGS_T702_VTAS_BARRIO_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-23 11:56:03.647000",
+    "modify_date": "2025-06-23 11:56:03.647000"
+  },
+  {
+    "object_id": 1198627313,
+    "esquema": "repl",
+    "name": "LOGS_T702_VTAS_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 13:57:02.430000",
+    "modify_date": "2025-05-13 13:57:02.430000"
+  },
+  {
+    "object_id": 1179151246,
+    "esquema": "repl",
+    "name": "LOGS_T710_ESTADIS_OFERTA_FOLDER_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:44:01.757000",
+    "modify_date": "2025-05-15 18:44:01.757000"
+  },
+  {
+    "object_id": 1524200480,
+    "esquema": "repl",
+    "name": "LOGS_T710_ESTADIS_PRECIOS_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-09-28 17:48:47.287000",
+    "modify_date": "2025-09-28 17:48:47.287000"
+  },
+  {
+    "object_id": 1118627028,
+    "esquema": "repl",
+    "name": "LOGS_T710_REPOSICION_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 12:37:31.227000",
+    "modify_date": "2025-05-13 12:37:31.227000"
+  },
+  {
+    "object_id": 1038626743,
+    "esquema": "repl",
+    "name": "LOGS_T710_SYNC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 11:57:23.883000",
+    "modify_date": "2025-05-13 11:57:23.883000"
+  },
+  {
+    "object_id": 743673697,
+    "esquema": "repl",
+    "name": "M_3_ARTICULOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-27 08:59:36.743000",
+    "modify_date": "2025-06-27 08:59:36.743000"
+  },
+  {
+    "object_id": 2066106401,
+    "esquema": "repl",
+    "name": "M_91_SUCURSALES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-03 11:36:26.330000",
+    "modify_date": "2025-05-03 11:36:26.330000"
+  },
+  {
+    "object_id": 1017770683,
+    "esquema": "repl",
+    "name": "MV_USO_MENSUAL_COMPRADOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-02-24 12:16:24.623000",
+    "modify_date": "2026-02-24 12:16:24.623000"
+  },
+  {
+    "object_id": 1033770740,
+    "esquema": "repl",
+    "name": "MV_USO_MENSUAL_PROVEEDOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-02-24 12:24:27.350000",
+    "modify_date": "2026-02-24 12:24:27.350000"
+  },
+  {
+    "object_id": 1049770797,
+    "esquema": "repl",
+    "name": "MV_USO_SEMANAL_COMPRADOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-02-24 12:26:00.850000",
+    "modify_date": "2026-02-24 12:26:00.850000"
+  },
+  {
+    "object_id": 1065770854,
+    "esquema": "repl",
+    "name": "MV_USO_SEMANAL_PROVEEDOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-02-24 12:26:57.440000",
+    "modify_date": "2026-02-24 12:26:57.440000"
+  },
+  {
+    "object_id": 303340145,
+    "esquema": "repl",
+    "name": "PK__IMPORTAR__3213E83F3AFBE09A",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2026-06-18 13:43:47.200000",
+    "modify_date": "2026-06-18 13:43:47.200000"
+  },
+  {
+    "object_id": 1291151645,
+    "esquema": "repl",
+    "name": "PK__LOGS_T00__3213E83F015A1776",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 18:58:01.317000",
+    "modify_date": "2025-05-15 18:58:01.317000"
+  },
+  {
+    "object_id": 571149080,
+    "esquema": "repl",
+    "name": "PK__LOGS_T00__3213E83FCABFAD49",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 17:15:46.070000",
+    "modify_date": "2025-05-15 17:15:46.070000"
+  },
+  {
+    "object_id": 468196718,
+    "esquema": "repl",
+    "name": "PK__LOGS_T02__3213E83F229B2D43",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-08-22 18:08:10.473000",
+    "modify_date": "2025-08-22 18:08:10.473000"
+  },
+  {
+    "object_id": 500196832,
+    "esquema": "repl",
+    "name": "PK__LOGS_T02__3213E83F2C6C6407",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-08-22 18:08:18.510000",
+    "modify_date": "2025-08-22 18:08:18.510000"
+  },
+  {
+    "object_id": 1502628396,
+    "esquema": "repl",
+    "name": "PK__LOGS_T02__3213E83F5483A7DE",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 15:56:49.063000",
+    "modify_date": "2025-05-13 15:56:49.063000"
+  },
+  {
+    "object_id": 667149422,
+    "esquema": "repl",
+    "name": "PK__LOGS_T02__3213E83F7690ADFB",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 17:54:26.770000",
+    "modify_date": "2025-05-15 17:54:26.770000"
+  },
+  {
+    "object_id": 1374627940,
+    "esquema": "repl",
+    "name": "PK__LOGS_T02__3213E83FB2A7781A",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 15:27:48.490000",
+    "modify_date": "2025-05-13 15:27:48.490000"
+  },
+  {
+    "object_id": 1598628738,
+    "esquema": "repl",
+    "name": "PK__LOGS_T05__3213E83F1CE53409",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:08:49.503000",
+    "modify_date": "2025-05-13 16:08:49.503000"
+  },
+  {
+    "object_id": 1662628966,
+    "esquema": "repl",
+    "name": "PK__LOGS_T05__3213E83F4A977CC0",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:09:56.907000",
+    "modify_date": "2025-05-13 16:09:56.907000"
+  },
+  {
+    "object_id": 1758629308,
+    "esquema": "repl",
+    "name": "PK__LOGS_T05__3213E83F5726D038",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:11:15.760000",
+    "modify_date": "2025-05-13 16:11:15.760000"
+  },
+  {
+    "object_id": 1694629080,
+    "esquema": "repl",
+    "name": "PK__LOGS_T05__3213E83FA7F6E755",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:10:23.080000",
+    "modify_date": "2025-05-13 16:10:23.080000"
+  },
+  {
+    "object_id": 1726629194,
+    "esquema": "repl",
+    "name": "PK__LOGS_T05__3213E83FB613AC8B",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:10:43.917000",
+    "modify_date": "2025-05-13 16:10:43.917000"
+  },
+  {
+    "object_id": 1630628852,
+    "esquema": "repl",
+    "name": "PK__LOGS_T05__3213E83FDB8C66E2",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:09:27.860000",
+    "modify_date": "2025-05-13 16:09:27.860000"
+  },
+  {
+    "object_id": 196195749,
+    "esquema": "repl",
+    "name": "PK__LOGS_T05__3213E83FDEF224B3",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-08-22 17:27:03.243000",
+    "modify_date": "2025-08-22 17:27:03.243000"
+  },
+  {
+    "object_id": 1838629593,
+    "esquema": "repl",
+    "name": "PK__LOGS_T06__3213E83F63F51820",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:30:09.960000",
+    "modify_date": "2025-05-13 16:30:09.960000"
+  },
+  {
+    "object_id": 1666821000,
+    "esquema": "repl",
+    "name": "PK__LOGS_T06__3213E83F8BA19819",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2026-06-07 15:31:26.330000",
+    "modify_date": "2026-06-07 15:31:26.330000"
+  },
+  {
+    "object_id": 827149992,
+    "esquema": "repl",
+    "name": "PK__LOGS_T07__3213E83F42321F7F",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 18:12:06.107000",
+    "modify_date": "2025-05-15 18:12:06.107000"
+  },
+  {
+    "object_id": 747149707,
+    "esquema": "repl",
+    "name": "PK__LOGS_T07__3213E83FB6C47833",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 18:05:47.920000",
+    "modify_date": "2025-05-15 18:05:47.920000"
+  },
+  {
+    "object_id": 1902629821,
+    "esquema": "repl",
+    "name": "PK__LOGS_T08__3213E83F0B638120",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:30:39.077000",
+    "modify_date": "2025-05-13 16:30:39.077000"
+  },
+  {
+    "object_id": 1934629935,
+    "esquema": "repl",
+    "name": "PK__LOGS_T08__3213E83F15794F3F",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:31:00.697000",
+    "modify_date": "2025-05-13 16:31:00.697000"
+  },
+  {
+    "object_id": 1870629707,
+    "esquema": "repl",
+    "name": "PK__LOGS_T08__3213E83FD5BDC03B",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:30:25.820000",
+    "modify_date": "2025-05-13 16:30:25.820000"
+  },
+  {
+    "object_id": 1067150847,
+    "esquema": "repl",
+    "name": "PK__LOGS_T09__3213E83F7929F156",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 18:29:23.970000",
+    "modify_date": "2025-05-15 18:29:23.970000"
+  },
+  {
+    "object_id": 923150334,
+    "esquema": "repl",
+    "name": "PK__LOGS_T09__3213E83F9ADBDE4D",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 18:17:10.133000",
+    "modify_date": "2025-05-15 18:17:10.133000"
+  },
+  {
+    "object_id": 1099150961,
+    "esquema": "repl",
+    "name": "PK__LOGS_T09__3213E83F9F0F528D",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 18:30:52.193000",
+    "modify_date": "2025-05-15 18:30:52.193000"
+  },
+  {
+    "object_id": 1966630049,
+    "esquema": "repl",
+    "name": "PK__LOGS_T10__3213E83F5EBD951E",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:31:34.297000",
+    "modify_date": "2025-05-13 16:31:34.297000"
+  },
+  {
+    "object_id": 1998630163,
+    "esquema": "repl",
+    "name": "PK__LOGS_T11__3213E83FF70242A5",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 16:31:54.500000",
+    "modify_date": "2025-05-13 16:31:54.500000"
+  },
+  {
+    "object_id": 1326627769,
+    "esquema": "repl",
+    "name": "PK__LOGS_T11__3213E83FFEE86429",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 15:18:12.970000",
+    "modify_date": "2025-05-13 15:18:12.970000"
+  },
+  {
+    "object_id": 1671677003,
+    "esquema": "repl",
+    "name": "PK__LOGS_T23__3213E83F40E10813",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-08-20 11:37:10.440000",
+    "modify_date": "2025-08-20 11:37:10.440000"
+  },
+  {
+    "object_id": 615673241,
+    "esquema": "repl",
+    "name": "PK__LOGS_T70__3213E83F4164C9BB",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-06-23 11:56:03.673000",
+    "modify_date": "2025-06-23 11:56:03.673000"
+  },
+  {
+    "object_id": 1214627370,
+    "esquema": "repl",
+    "name": "PK__LOGS_T70__3213E83F58D7D629",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 13:57:02.437000",
+    "modify_date": "2025-05-13 13:57:02.437000"
+  },
+  {
+    "object_id": 1134627085,
+    "esquema": "repl",
+    "name": "PK__LOGS_T71__3213E83F00A905F8",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 12:37:31.253000",
+    "modify_date": "2025-05-13 12:37:31.253000"
+  },
+  {
+    "object_id": 1540200537,
+    "esquema": "repl",
+    "name": "PK__LOGS_T71__3213E83F0F37FB3C",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-09-28 17:48:47.327000",
+    "modify_date": "2025-09-28 17:48:47.327000"
+  },
+  {
+    "object_id": 1054626800,
+    "esquema": "repl",
+    "name": "PK__LOGS_T71__3213E83FD2DBB81E",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 11:57:23.937000",
+    "modify_date": "2025-05-13 11:57:23.937000"
+  },
+  {
+    "object_id": 1195151303,
+    "esquema": "repl",
+    "name": "PK__LOGS_T71__3213E83FE53A45A3",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 18:44:01.757000",
+    "modify_date": "2025-05-15 18:44:01.757000"
+  },
+  {
+    "object_id": 759673754,
+    "esquema": "repl",
+    "name": "PK__M_3_ARTI__CED1FE6711D8B689",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-06-27 08:59:36.760000",
+    "modify_date": "2025-06-27 08:59:36.760000"
+  },
+  {
+    "object_id": 1339151816,
+    "esquema": "repl",
+    "name": "PK__T055_ART__3213E83F0ACDDDD8",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-15 19:33:02.083000",
+    "modify_date": "2025-05-15 19:33:02.083000"
+  },
+  {
+    "object_id": 1262627541,
+    "esquema": "repl",
+    "name": "PK__T117_COM__6E27F629CD5678E0",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-13 15:13:26.780000",
+    "modify_date": "2025-05-13 15:13:26.780000"
+  },
+  {
+    "object_id": 973246522,
+    "esquema": "repl",
+    "name": "PK__TRANSF_C__17D3D3A1035E8426",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-12-26 08:34:49.223000",
+    "modify_date": "2025-12-26 08:34:49.223000"
+  },
+  {
+    "object_id": 269244014,
+    "esquema": "repl",
+    "name": "PK__TRANSF_C__3213E83F7E9C9A1A",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-12-11 17:00:33.570000",
+    "modify_date": "2025-12-11 17:00:33.570000"
+  },
+  {
+    "object_id": 1088722931,
+    "esquema": "repl",
+    "name": "PK_T051_ARTICULOS_SUCURSAL",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-11-17 09:17:19.753000",
+    "modify_date": "2025-11-17 09:17:19.753000"
+  },
+  {
+    "object_id": 1488724356,
+    "esquema": "repl",
+    "name": "PK_T060_STOCK",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-11-21 09:18:07.270000",
+    "modify_date": "2025-11-21 09:18:07.270000"
+  },
+  {
+    "object_id": 1442820202,
+    "esquema": "repl",
+    "name": "PK_T061_STOCK_DIARIO",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2026-06-07 15:29:37.347000",
+    "modify_date": "2026-06-07 15:29:37.347000"
+  },
+  {
+    "object_id": 1620200822,
+    "esquema": "repl",
+    "name": "PK_T710_ANIO_MES_ARTICULO_SUCURSAL",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-09-28 19:18:52.427000",
+    "modify_date": "2025-09-28 19:18:52.427000"
+  },
+  {
+    "object_id": 1104722988,
+    "esquema": "repl",
+    "name": "PK_T710_ESTADIS_REPOSICION",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-11-17 09:38:08.700000",
+    "modify_date": "2025-11-17 09:38:08.700000"
+  },
+  {
+    "object_id": 446624634,
+    "esquema": "repl",
+    "name": "PK_T710_ESTADIS_STOCK",
+    "type": "PK",
+    "type_desc": "PRIMARY_KEY_CONSTRAINT",
+    "create_date": "2025-05-07 10:31:40.983000",
+    "modify_date": "2025-05-07 10:31:40.983000"
+  },
+  {
+    "object_id": 797245895,
+    "esquema": "repl",
+    "name": "SP_PUBLICAR_TRANSF_CONNEXA_SGM",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-12-23 11:43:26.150000",
+    "modify_date": "2026-02-20 14:08:25.567000"
+  },
+  {
+    "object_id": 1149247149,
+    "esquema": "repl",
+    "name": "SP_PUBLICAR_TRANSF_CONNEXA_VK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-12-29 09:33:15.860000",
+    "modify_date": "2026-02-12 12:51:59.490000"
+  },
+  {
+    "object_id": 873770170,
+    "esquema": "repl",
+    "name": "SP_PUBLICAR_TRANSF_DUPLICADAS_SGM",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-02-20 13:13:52.547000",
+    "modify_date": "2026-02-20 13:13:52.547000"
+  },
+  {
+    "object_id": 1005246636,
+    "esquema": "repl",
+    "name": "SP_TRANSF_CONNEXA_MARCAR_RETORNO_ACK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-12-26 08:34:59.950000",
+    "modify_date": "2025-12-26 08:34:59.950000"
+  },
+  {
+    "object_id": 941246408,
+    "esquema": "repl",
+    "name": "SP_TRANSF_CONNEXA_OBTENER_RETORNO_ESTADOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-12-26 08:33:40.577000",
+    "modify_date": "2025-12-26 08:33:40.577000"
+  },
+  {
+    "object_id": 1021246693,
+    "esquema": "repl",
+    "name": "SP_TRANSF_CONNEXA_RETORNO_CABECERAS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-12-26 08:37:58.323000",
+    "modify_date": "2026-02-20 11:29:41.917000"
+  },
+  {
+    "object_id": 1037246750,
+    "esquema": "repl",
+    "name": "SP_TRANSF_CONNEXA_RETORNO_DETALLES_ERROR",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-12-26 08:38:22.237000",
+    "modify_date": "2025-12-26 08:38:22.237000"
+  },
+  {
+    "object_id": 935674381,
+    "esquema": "repl",
+    "name": "SUCURSALES_EXCLUIDAS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-27 15:57:42.917000",
+    "modify_date": "2025-06-27 15:57:42.917000"
+  },
+  {
+    "object_id": 1190295300,
+    "esquema": "repl",
+    "name": "T_COMPETENCIA_DETALLE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-04-16 08:56:30.557000",
+    "modify_date": "2026-04-16 08:56:30.557000"
+  },
+  {
+    "object_id": 523148909,
+    "esquema": "repl",
+    "name": "T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANTERIOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 17:12:43.490000",
+    "modify_date": "2025-05-15 17:13:43.943000"
+  },
+  {
+    "object_id": 539148966,
+    "esquema": "repl",
+    "name": "T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANTERIOR_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 17:14:51.620000",
+    "modify_date": "2025-05-15 17:43:27.883000"
+  },
+  {
+    "object_id": 1227151417,
+    "esquema": "repl",
+    "name": "T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:53:14.073000",
+    "modify_date": "2025-05-15 18:59:14.760000"
+  },
+  {
+    "object_id": 1259151531,
+    "esquema": "repl",
+    "name": "T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:56:58.533000",
+    "modify_date": "2025-05-15 18:56:58.533000"
+  },
+  {
+    "object_id": 1438628168,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:37:42.990000",
+    "modify_date": "2025-05-13 15:37:42.990000"
+  },
+  {
+    "object_id": 516196889,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR_DIAS_ENTREGA_CABE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 18:21:51",
+    "modify_date": "2025-08-22 18:21:51"
+  },
+  {
+    "object_id": 532196946,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR_DIAS_ENTREGA_CABE_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 18:23:40.260000",
+    "modify_date": "2025-08-22 18:23:40.260000"
+  },
+  {
+    "object_id": 548197003,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 18:23:58.373000",
+    "modify_date": "2025-08-22 18:23:58.373000"
+  },
+  {
+    "object_id": 564197060,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR_DIAS_ENTREGA_DETA_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 18:24:13.293000",
+    "modify_date": "2025-08-22 18:24:13.293000"
+  },
+  {
+    "object_id": 1470628282,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR_GESTION_COMPRA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:56:31.733000",
+    "modify_date": "2025-05-27 08:56:26.480000"
+  },
+  {
+    "object_id": 1534628510,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR_GESTION_COMPRA_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:00:54.393000",
+    "modify_date": "2025-05-13 16:00:54.393000"
+  },
+  {
+    "object_id": 1406628054,
+    "esquema": "repl",
+    "name": "T020_PROVEEDOR_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:32:48.917000",
+    "modify_date": "2025-05-13 15:32:48.917000"
+  },
+  {
+    "object_id": 635149308,
+    "esquema": "repl",
+    "name": "T021_PROV_COMPROB",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 17:51:17.110000",
+    "modify_date": "2025-05-15 17:52:43.017000"
+  },
+  {
+    "object_id": 683149479,
+    "esquema": "repl",
+    "name": "T021_PROV_COMPROB_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 17:55:37.933000",
+    "modify_date": "2025-05-15 17:55:37.933000"
+  },
+  {
+    "object_id": 2014630220,
+    "esquema": "repl",
+    "name": "T050_ARTICULOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:34:04.427000",
+    "modify_date": "2026-06-04 11:28:14.510000"
+  },
+  {
+    "object_id": 1566628624,
+    "esquema": "repl",
+    "name": "T050_ARTICULOS_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:05:29.507000",
+    "modify_date": "2025-05-13 16:05:29.507000"
+  },
+  {
+    "object_id": 2094630505,
+    "esquema": "repl",
+    "name": "T051_ARTICULOS_SUCURSAL",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:51:31.840000",
+    "modify_date": "2026-09-11 00:00:54.937000"
+  },
+  {
+    "object_id": 244195920,
+    "esquema": "repl",
+    "name": "T051_ARTICULOS_SUCURSAL_BARRIO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 17:35:11.817000",
+    "modify_date": "2025-08-22 17:35:11.817000"
+  },
+  {
+    "object_id": 164195635,
+    "esquema": "repl",
+    "name": "T051_ARTICULOS_SUCURSAL_BARRIO_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-22 17:26:32.820000",
+    "modify_date": "2025-08-22 17:26:32.820000"
+  },
+  {
+    "object_id": 2062630391,
+    "esquema": "repl",
+    "name": "T051_ARTICULOS_SUCURSAL_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:39:28.810000",
+    "modify_date": "2025-05-13 16:39:28.810000"
+  },
+  {
+    "object_id": 2110630562,
+    "esquema": "repl",
+    "name": "T052_ARTICULOS_PROVEEDOR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:58:00.260000",
+    "modify_date": "2026-06-04 11:28:16.067000"
+  },
+  {
+    "object_id": 2126630619,
+    "esquema": "repl",
+    "name": "T052_ARTICULOS_PROVEEDOR_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 16:58:11.317000",
+    "modify_date": "2025-05-13 16:58:11.317000"
+  },
+  {
+    "object_id": 1307151702,
+    "esquema": "repl",
+    "name": "T055_ART_SUCU_PROV_DIAS_ENTREGA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 19:32:09.230000",
+    "modify_date": "2025-05-15 19:33:25.873000"
+  },
+  {
+    "object_id": 1355151873,
+    "esquema": "repl",
+    "name": "T055_ART_SUCU_PROV_DIAS_ENTREGA_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 19:36:09.397000",
+    "modify_date": "2025-05-15 19:36:09.397000"
+  },
+  {
+    "object_id": 27147142,
+    "esquema": "repl",
+    "name": "T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 17:05:22.493000",
+    "modify_date": "2025-05-13 17:05:22.493000"
+  },
+  {
+    "object_id": 11147085,
+    "esquema": "repl",
+    "name": "T055_ARTICULOS_CONDCOMPRA_COSTOS_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 17:05:12.820000",
+    "modify_date": "2025-05-13 17:05:12.820000"
+  },
+  {
+    "object_id": 75147313,
+    "esquema": "repl",
+    "name": "T055_ARTICULOS_PARAM_STOCK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 17:51:27.123000",
+    "modify_date": "2025-05-13 17:51:27.123000"
+  },
+  {
+    "object_id": 59147256,
+    "esquema": "repl",
+    "name": "T055_ARTICULOS_PARAM_STOCK_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 17:51:21.797000",
+    "modify_date": "2025-05-13 17:51:21.797000"
+  },
+  {
+    "object_id": 123147484,
+    "esquema": "repl",
+    "name": "T055_LEAD_TIME_B2_SUCURSALES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 17:56:23.337000",
+    "modify_date": "2025-05-13 17:56:23.337000"
+  },
+  {
+    "object_id": 107147427,
+    "esquema": "repl",
+    "name": "T055_LEAD_TIME_B2_SUCURSALES_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 17:56:16.760000",
+    "modify_date": "2025-05-13 17:56:16.760000"
+  },
+  {
+    "object_id": 171147655,
+    "esquema": "repl",
+    "name": "T060_STOCK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 18:10:53.233000",
+    "modify_date": "2026-09-11 00:01:01.207000"
+  },
+  {
+    "object_id": 155147598,
+    "esquema": "repl",
+    "name": "T060_STOCK_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 18:10:47.407000",
+    "modify_date": "2025-05-13 18:10:47.407000"
+  },
+  {
+    "object_id": 1426820145,
+    "esquema": "repl",
+    "name": "T061_STOCK_DIARIO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-07 15:29:37.317000",
+    "modify_date": "2026-06-07 15:29:37.807000"
+  },
+  {
+    "object_id": 1698821114,
+    "esquema": "repl",
+    "name": "T061_STOCK_DIARIO_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-07 15:33:55.630000",
+    "modify_date": "2026-06-07 15:33:55.630000"
+  },
+  {
+    "object_id": 715149593,
+    "esquema": "repl",
+    "name": "T079_SNC_CUOTAS_CABE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:03:40.960000",
+    "modify_date": "2025-05-15 18:04:51.520000"
+  },
+  {
+    "object_id": 763149764,
+    "esquema": "repl",
+    "name": "T079_SNC_CUOTAS_CABE_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:06:21.267000",
+    "modify_date": "2025-05-15 18:06:21.267000"
+  },
+  {
+    "object_id": 795149878,
+    "esquema": "repl",
+    "name": "T079_SNC_CUOTAS_DETA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:11:11.013000",
+    "modify_date": "2025-05-15 18:11:44.440000"
+  },
+  {
+    "object_id": 843150049,
+    "esquema": "repl",
+    "name": "T079_SNC_CUOTAS_DETA_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:12:35.260000",
+    "modify_date": "2025-05-15 18:12:35.260000"
+  },
+  {
+    "object_id": 55671246,
+    "esquema": "repl",
+    "name": "T080_OC_CABE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-03 10:11:08.747000",
+    "modify_date": "2026-09-11 00:01:09.087000"
+  },
+  {
+    "object_id": 71671303,
+    "esquema": "repl",
+    "name": "T080_OC_CABE_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-03 10:12:37.280000",
+    "modify_date": "2026-09-11 00:01:10.347000"
+  },
+  {
+    "object_id": 1353771880,
+    "esquema": "repl",
+    "name": "T080_OC_PENDIENTES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-02-26 12:58:53.493000",
+    "modify_date": "2026-02-26 12:58:53.493000"
+  },
+  {
+    "object_id": 1410104064,
+    "esquema": "repl",
+    "name": "T081_OC_DETA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-01 18:12:28.993000",
+    "modify_date": "2026-09-11 00:01:12.580000"
+  },
+  {
+    "object_id": 219147826,
+    "esquema": "repl",
+    "name": "T081_OC_DETA_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 18:17:47.023000",
+    "modify_date": "2025-05-13 18:17:47.023000"
+  },
+  {
+    "object_id": 1986106116,
+    "esquema": "repl",
+    "name": "T085_ARTICULOS_EAN_EDI",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-03 11:36:05.707000",
+    "modify_date": "2025-05-13 18:19:01.813000"
+  },
+  {
+    "object_id": 299148111,
+    "esquema": "repl",
+    "name": "T085_ARTICULOS_EAN_EDI_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 18:28:31.103000",
+    "modify_date": "2025-05-13 18:28:31.103000"
+  },
+  {
+    "object_id": 363148339,
+    "esquema": "repl",
+    "name": "T090_COMPETENCIA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-14 10:41:33.900000",
+    "modify_date": "2025-05-14 16:32:24.270000"
+  },
+  {
+    "object_id": 891150220,
+    "esquema": "repl",
+    "name": "T090_COMPETENCIA_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:16:00.067000",
+    "modify_date": "2025-05-15 18:16:00.067000"
+  },
+  {
+    "object_id": 379148396,
+    "esquema": "repl",
+    "name": "T090_COMPETENCIA_ZONAS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-14 10:42:20.663000",
+    "modify_date": "2025-05-14 16:32:37.570000"
+  },
+  {
+    "object_id": 395148453,
+    "esquema": "repl",
+    "name": "T090_COMPETENCIA_ZONAS_COMPETIDORES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-14 10:42:43.400000",
+    "modify_date": "2025-05-14 16:32:51.393000"
+  },
+  {
+    "object_id": 411148510,
+    "esquema": "repl",
+    "name": "T090_COMPETENCIA_ZONAS_SUCURSALES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-14 10:43:09.050000",
+    "modify_date": "2025-05-14 16:33:04.207000"
+  },
+  {
+    "object_id": 427148567,
+    "esquema": "repl",
+    "name": "T091_COMPETENCIA_PRECIOS_CABE",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-14 10:47:38.360000",
+    "modify_date": "2025-05-14 16:33:17.603000"
+  },
+  {
+    "object_id": 955150448,
+    "esquema": "repl",
+    "name": "T091_COMPETENCIA_PRECIOS_CABE_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:22:46.610000",
+    "modify_date": "2025-05-15 18:22:46.610000"
+  },
+  {
+    "object_id": 443148624,
+    "esquema": "repl",
+    "name": "T091_COMPETENCIA_PRECIOS_DETA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-14 10:47:57.063000",
+    "modify_date": "2025-05-14 16:33:31.643000"
+  },
+  {
+    "object_id": 1131151075,
+    "esquema": "repl",
+    "name": "T091_COMPETENCIA_PRECIOS_DETA_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:36:09.653000",
+    "modify_date": "2025-05-15 18:36:09.653000"
+  },
+  {
+    "object_id": 1679345047,
+    "esquema": "repl",
+    "name": "T100_EMPRESA_SUC",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-07-24 16:06:54.987000",
+    "modify_date": "2026-07-24 16:06:54.987000"
+  },
+  {
+    "object_id": 1695345104,
+    "esquema": "repl",
+    "name": "T100_EMPRESA_SUC_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-07-24 16:07:57.943000",
+    "modify_date": "2026-07-24 16:07:57.943000"
+  },
+  {
+    "object_id": 2002106173,
+    "esquema": "repl",
+    "name": "T114_RUBROS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-03 11:36:10.307000",
+    "modify_date": "2025-05-13 18:18:48.723000"
+  },
+  {
+    "object_id": 235147883,
+    "esquema": "repl",
+    "name": "T114_RUBROS_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 18:21:20.503000",
+    "modify_date": "2025-05-13 18:21:20.503000"
+  },
+  {
+    "object_id": 1278627598,
+    "esquema": "repl",
+    "name": "T117_COMPRADORES",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:16:33.980000",
+    "modify_date": "2025-05-13 15:16:33.980000"
+  },
+  {
+    "object_id": 1246627484,
+    "esquema": "repl",
+    "name": "T117_COMPRADORES_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 15:13:26.763000",
+    "modify_date": "2025-05-13 15:13:26.763000"
+  },
+  {
+    "object_id": 1799677459,
+    "esquema": "repl",
+    "name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-20 11:44:59.787000",
+    "modify_date": "2025-08-23 08:35:57.313000"
+  },
+  {
+    "object_id": 1863677687,
+    "esquema": "repl",
+    "name": "T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-08-20 11:46:37.407000",
+    "modify_date": "2025-08-23 08:36:21.293000"
+  },
+  {
+    "object_id": 1426104121,
+    "esquema": "repl",
+    "name": "T702_EST_VTAS_POR_ARTICULO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-01 19:14:41.040000",
+    "modify_date": "2026-08-17 00:06:32.103000"
+  },
+  {
+    "object_id": 583673127,
+    "esquema": "repl",
+    "name": "T702_EST_VTAS_POR_ARTICULO_DBARRIO",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-06-23 11:55:13.733000",
+    "modify_date": "2026-08-27 00:02:14.977000"
+  },
+  {
+    "object_id": 1182627256,
+    "esquema": "repl",
+    "name": "T702_EST_VTAS_POR_ARTICULO_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 13:01:28.890000",
+    "modify_date": "2025-05-13 13:01:28.890000"
+  },
+  {
+    "object_id": 1147151132,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_OFERTA_FOLDER",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:41:56.600000",
+    "modify_date": "2026-06-01 21:41:01.577000"
+  },
+  {
+    "object_id": 1163151189,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_OFERTA_FOLDER_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-15 18:43:04.990000",
+    "modify_date": "2025-05-15 18:43:04.990000"
+  },
+  {
+    "object_id": 1604200765,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_PRECIOS",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-09-28 17:52:16.777000",
+    "modify_date": "2026-08-09 00:03:14.980000"
+  },
+  {
+    "object_id": 1588200708,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_PRECIOS_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-09-28 17:50:48.093000",
+    "modify_date": "2025-09-28 17:50:48.093000"
+  },
+  {
+    "object_id": 1086626914,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_REPOSICION",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 12:29:35.403000",
+    "modify_date": "2026-09-11 00:01:16.747000"
+  },
+  {
+    "object_id": 1102626971,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_REPOSICION_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 12:36:43.900000",
+    "modify_date": "2025-05-13 12:36:43.900000"
+  },
+  {
+    "object_id": 430624577,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_STOCK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-07 10:31:40.930000",
+    "modify_date": "2026-08-27 00:04:26.920000"
+  },
+  {
+    "object_id": 1070626857,
+    "esquema": "repl",
+    "name": "T710_ESTADIS_STOCK_STG",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-05-13 12:13:37.780000",
+    "modify_date": "2026-04-20 16:28:37.193000"
+  },
+  {
+    "object_id": 715865617,
+    "esquema": "repl",
+    "name": "T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-08-28 05:17:15.777000",
+    "modify_date": "2026-08-28 05:17:15.777000"
+  },
+  {
+    "object_id": 699865560,
+    "esquema": "repl",
+    "name": "T874_PRECARGA_CONNEXA_HIST",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-08-28 05:00:20.033000",
+    "modify_date": "2026-08-28 05:00:20.033000"
+  },
+  {
+    "object_id": 253243957,
+    "esquema": "repl",
+    "name": "TRANSF_CONNEXA_IN",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-12-11 17:00:33.557000",
+    "modify_date": "2026-08-24 00:00:45.040000"
+  },
+  {
+    "object_id": 957246465,
+    "esquema": "repl",
+    "name": "TRANSF_CONNEXA_RETORNO_ACK",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2025-12-26 08:34:49.220000",
+    "modify_date": "2025-12-26 08:34:49.220000"
+  },
+  {
+    "object_id": 47339233,
+    "esquema": "repl",
+    "name": "TRANSF_CONNEXA_VK_BASE_FULL",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-12 13:00:08.190000",
+    "modify_date": "2026-06-12 13:10:06.883000"
+  },
+  {
+    "object_id": 351340316,
+    "esquema": "repl",
+    "name": "TRANSFERENCIAS_IMPORTAR",
+    "type": "U ",
+    "type_desc": "USER_TABLE",
+    "create_date": "2026-06-18 14:14:07.140000",
+    "modify_date": "2026-06-18 14:14:07.140000"
+  },
+  {
+    "object_id": 784721848,
+    "esquema": "repl",
+    "name": "usp_purge_huerfanas_T702",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-10-31 15:56:51.380000",
+    "modify_date": "2025-10-31 15:56:51.380000"
+  },
+  {
+    "object_id": 800721905,
+    "esquema": "repl",
+    "name": "usp_purge_huerfanas_T702_BARRIO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-10-31 16:01:18.887000",
+    "modify_date": "2025-10-31 16:01:18.887000"
+  },
+  {
+    "object_id": 663673412,
+    "esquema": "repl",
+    "name": "usp_replicar_M_3_ARTICULOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-26 11:15:55.833000",
+    "modify_date": "2025-08-13 09:41:49.693000"
+  },
+  {
+    "object_id": 1174295243,
+    "esquema": "repl",
+    "name": "usp_replicar_T_COMPETENCIA_DETALLE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-04-16 08:55:48.937000",
+    "modify_date": "2026-04-16 08:59:10.453000"
+  },
+  {
+    "object_id": 619149251,
+    "esquema": "repl",
+    "name": "usp_replicar_T000_GESTION_COMPRA_PROVEEDOR_DETA_DIA_ANT",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 17:45:25.683000",
+    "modify_date": "2025-05-15 17:45:25.683000"
+  },
+  {
+    "object_id": 1243151474,
+    "esquema": "repl",
+    "name": "usp_replicar_T000_SNC_PLAN_SEMANA_VIGENTE_DIA_ANT",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 18:55:00.430000",
+    "modify_date": "2025-05-15 18:55:00.430000"
+  },
+  {
+    "object_id": 1422628111,
+    "esquema": "repl",
+    "name": "usp_replicar_T020_PROVEEDOR",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 15:33:18.343000",
+    "modify_date": "2025-05-13 15:49:32.747000"
+  },
+  {
+    "object_id": 580197117,
+    "esquema": "repl",
+    "name": "usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_CABE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-08-22 18:24:47.270000",
+    "modify_date": "2025-09-20 19:52:04.937000"
+  },
+  {
+    "object_id": 596197174,
+    "esquema": "repl",
+    "name": "usp_replicar_T020_PROVEEDOR_DIAS_ENTREGA_DETA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-08-22 18:57:47.597000",
+    "modify_date": "2025-09-20 19:53:07.373000"
+  },
+  {
+    "object_id": 1518628453,
+    "esquema": "repl",
+    "name": "usp_replicar_T020_PROVEEDOR_GESTION_COMPRA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 15:57:06.800000",
+    "modify_date": "2025-05-27 08:55:47.340000"
+  },
+  {
+    "object_id": 699149536,
+    "esquema": "repl",
+    "name": "usp_replicar_T021_PROV_COMPROB",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 17:57:14.200000",
+    "modify_date": "2026-08-05 10:49:58.780000"
+  },
+  {
+    "object_id": 2030630277,
+    "esquema": "repl",
+    "name": "usp_replicar_T050_ARTICULOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 16:35:32.920000",
+    "modify_date": "2025-05-13 16:35:32.920000"
+  },
+  {
+    "object_id": 2078630448,
+    "esquema": "repl",
+    "name": "usp_replicar_T051_ARTICULOS_SUCURSAL",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 16:44:00.193000",
+    "modify_date": "2025-05-13 16:44:00.193000"
+  },
+  {
+    "object_id": 228195863,
+    "esquema": "repl",
+    "name": "usp_replicar_T051_ARTICULOS_SUCURSAL_BARRIO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-08-22 17:32:18.210000",
+    "modify_date": "2025-08-22 17:32:18.210000"
+  },
+  {
+    "object_id": 2142630676,
+    "esquema": "repl",
+    "name": "usp_replicar_T052_ARTICULOS_PROVEEDOR",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 17:00:09.123000",
+    "modify_date": "2025-05-13 17:00:09.123000"
+  },
+  {
+    "object_id": 1371151930,
+    "esquema": "repl",
+    "name": "usp_replicar_T055_ART_SUCU_PROV_DIAS_ENTREGA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 19:37:20.417000",
+    "modify_date": "2025-05-15 19:37:20.417000"
+  },
+  {
+    "object_id": 43147199,
+    "esquema": "repl",
+    "name": "usp_replicar_T055_ARTICULOS_CONDCOMPRA_COSTOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 17:06:40.130000",
+    "modify_date": "2026-04-16 13:27:24.430000"
+  },
+  {
+    "object_id": 91147370,
+    "esquema": "repl",
+    "name": "usp_replicar_T055_ARTICULOS_PARAM_STOCK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 17:53:52.680000",
+    "modify_date": "2025-05-26 09:23:56.753000"
+  },
+  {
+    "object_id": 139147541,
+    "esquema": "repl",
+    "name": "usp_replicar_T055_LEAD_TIME_B2_SUCURSALES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 18:08:11.627000",
+    "modify_date": "2025-05-13 18:08:11.627000"
+  },
+  {
+    "object_id": 187147712,
+    "esquema": "repl",
+    "name": "usp_replicar_T060_STOCK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 18:12:27.573000",
+    "modify_date": "2025-05-13 18:12:27.573000"
+  },
+  {
+    "object_id": 1714821171,
+    "esquema": "repl",
+    "name": "usp_replicar_T061_STOCK_DIARIO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-06-07 15:53:12.860000",
+    "modify_date": "2026-06-07 15:53:12.860000"
+  },
+  {
+    "object_id": 779149821,
+    "esquema": "repl",
+    "name": "usp_replicar_T079_SNC_CUOTAS_CABE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 18:07:11.060000",
+    "modify_date": "2026-04-09 07:59:15.753000"
+  },
+  {
+    "object_id": 859150106,
+    "esquema": "repl",
+    "name": "usp_replicar_T079_SNC_CUOTAS_DETA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 18:12:51.270000",
+    "modify_date": "2025-05-15 18:12:51.270000"
+  },
+  {
+    "object_id": 1335675806,
+    "esquema": "repl",
+    "name": "usp_replicar_T080_OC_CABE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-07-02 14:16:07.350000",
+    "modify_date": "2025-09-05 11:37:32.720000"
+  },
+  {
+    "object_id": 948198428,
+    "esquema": "repl",
+    "name": "usp_replicar_T080_OC_PENDIENTES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-09-05 12:06:08.583000",
+    "modify_date": "2026-05-18 11:53:31.313000"
+  },
+  {
+    "object_id": 1351675863,
+    "esquema": "repl",
+    "name": "usp_replicar_T081_OC_DETA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-07-02 14:41:21.820000",
+    "modify_date": "2025-07-02 14:41:21.820000"
+  },
+  {
+    "object_id": 315148168,
+    "esquema": "repl",
+    "name": "usp_replicar_T085_ARTICULOS_EAN_EDI",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 18:30:07.210000",
+    "modify_date": "2025-05-13 18:30:07.210000"
+  },
+  {
+    "object_id": 939150391,
+    "esquema": "repl",
+    "name": "usp_replicar_T090_COMPETENCIA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 18:17:51.980000",
+    "modify_date": "2025-05-15 18:17:51.980000"
+  },
+  {
+    "object_id": 1035150733,
+    "esquema": "repl",
+    "name": "usp_replicar_T091_COMPETENCIA_PRECIOS_CABE",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 18:26:55.897000",
+    "modify_date": "2025-05-15 18:26:55.897000"
+  },
+  {
+    "object_id": 1115151018,
+    "esquema": "repl",
+    "name": "usp_replicar_T091_COMPETENCIA_PRECIOS_DETA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 18:32:12.273000",
+    "modify_date": "2025-05-15 18:32:12.273000"
+  },
+  {
+    "object_id": 267147997,
+    "esquema": "repl",
+    "name": "usp_replicar_T100_EMPRESA_SUC",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 18:24:49.273000",
+    "modify_date": "2026-07-24 16:03:54.410000"
+  },
+  {
+    "object_id": 251147940,
+    "esquema": "repl",
+    "name": "usp_replicar_T114_RUBROS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 18:22:00.860000",
+    "modify_date": "2025-05-13 18:22:00.860000"
+  },
+  {
+    "object_id": 1294627655,
+    "esquema": "repl",
+    "name": "usp_replicar_T117_COMPRADORES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 15:17:01.163000",
+    "modify_date": "2025-05-13 15:17:01.163000"
+  },
+  {
+    "object_id": 1911677858,
+    "esquema": "repl",
+    "name": "usp_replicar_T230_FACTURADOR_NEGOCIOS_ESPECIALES_POR_CANTIDAD",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-08-20 12:54:22.917000",
+    "modify_date": "2025-08-20 12:54:22.917000"
+  },
+  {
+    "object_id": 1230627427,
+    "esquema": "repl",
+    "name": "usp_replicar_T702_EST_VTAS_POR_ARTICULO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 13:57:33.877000",
+    "modify_date": "2026-08-22 19:53:33.340000"
+  },
+  {
+    "object_id": 567673070,
+    "esquema": "repl",
+    "name": "usp_replicar_T702_EST_VTAS_POR_ARTICULO_BARRIO",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-06-23 11:53:15.363000",
+    "modify_date": "2026-08-22 19:53:33.550000"
+  },
+  {
+    "object_id": 1211151360,
+    "esquema": "repl",
+    "name": "usp_replicar_T710_ESTADIS_OFERTA_FOLDER",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-15 18:46:09.273000",
+    "modify_date": "2026-04-20 18:14:57.580000"
+  },
+  {
+    "object_id": 1556200594,
+    "esquema": "repl",
+    "name": "usp_replicar_T710_ESTADIS_PRECIOS",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-09-28 17:49:04.960000",
+    "modify_date": "2026-04-20 17:59:38.373000"
+  },
+  {
+    "object_id": 1150627142,
+    "esquema": "repl",
+    "name": "usp_replicar_T710_ESTADIS_REPOSICION",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 12:45:59.460000",
+    "modify_date": "2025-05-13 12:45:59.460000"
+  },
+  {
+    "object_id": 1022626686,
+    "esquema": "repl",
+    "name": "usp_replicar_T710_ESTADIS_STOCK",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-05-13 11:57:01.767000",
+    "modify_date": "2026-04-20 18:00:51.447000"
+  },
+  {
+    "object_id": 644197345,
+    "esquema": "repl",
+    "name": "usp_replicar_T804_HIST_MARCA_LISTO_PARA_VENTA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-08-22 19:11:49.987000",
+    "modify_date": "2025-08-22 19:11:49.987000"
+  },
+  {
+    "object_id": 1552724584,
+    "esquema": "repl",
+    "name": "usp_replicar_T874_PRECARGA_CONNEXA_HIST",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2025-11-22 09:41:49.347000",
+    "modify_date": "2026-04-09 08:05:12.727000"
+  },
+  {
+    "object_id": 1081770911,
+    "esquema": "repl",
+    "name": "usp_replicar_USO_CONNEXA",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-02-24 12:50:06.467000",
+    "modify_date": "2026-02-24 12:50:06.467000"
+  },
+  {
+    "object_id": 2095346529,
+    "esquema": "repl",
+    "name": "usp_reprocesar_T710_ESTADIS_PRECIOS_MES",
+    "type": "P ",
+    "type_desc": "SQL_STORED_PROCEDURE",
+    "create_date": "2026-08-05 13:10:52.097000",
+    "modify_date": "2026-08-05 13:10:52.097000"
+  },
+  {
+    "object_id": 2137774673,
+    "esquema": "repl",
+    "name": "V_CONNEXA_RETORNO_CABECERAS_VK",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-03-12 16:23:35.640000",
+    "modify_date": "2026-03-12 16:23:35.640000"
+  },
+  {
+    "object_id": 2105774559,
+    "esquema": "repl",
+    "name": "V_CONNEXA_VK_BASE",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-03-12 16:17:24.447000",
+    "modify_date": "2026-03-12 16:17:24.447000"
+  },
+  {
+    "object_id": 2121774616,
+    "esquema": "repl",
+    "name": "V_CONNEXA_VK_ULTIMO_ESTADO_LINEA",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-03-12 16:20:10.507000",
+    "modify_date": "2026-03-12 16:20:10.507000"
+  },
+  {
+    "object_id": 2089774502,
+    "esquema": "repl",
+    "name": "V_VALKIMIA_ESTADO_TRANFERENCIAS",
+    "type": "V ",
+    "type_desc": "VIEW",
+    "create_date": "2026-03-12 15:48:37.060000",
+    "modify_date": "2026-03-12 15:48:37.060000"
+  }
+]

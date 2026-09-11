@@ -1,0 +1,1482 @@
+[
+  {
+    "object_id": 11147085,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 27147142,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 47339233,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 55671246,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 59147256,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 71671303,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 75147313,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 107147427,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 116195464,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 123147484,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 155147598,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 162099618,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 164195635,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 171147655,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 180195692,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 219147826,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 223339860,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 235147883,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 244195920,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 253243957,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 287340088,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 299148111,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 322100188,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 351340316,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 363148339,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 379148396,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 386100416,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 388196433,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 395148453,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 411148510,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 427148567,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 430624577,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 443148624,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 452196661,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 484196775,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 491864819,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 507148852,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 516196889,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 523148909,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 532196946,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 539148966,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 546100986,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 548197003,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 551673013,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 555149023,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 562101043,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 564197060,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 578101100,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 583673127,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 594101157,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 599673184,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 629577281,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 635149308,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 642101328,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 651149365,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 661577395,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 674101442,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 683149479,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 690101499,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 693577509,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 699865560,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 715149593,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 715865617,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 722101613,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 725577623,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 731149650,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 743673697,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 763149764,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 773577794,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 795149878,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 811149935,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 834102012,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 837578022,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 843150049,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 845246066,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 866102126,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 869578136,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 891150220,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 901578250,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 907150277,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 933578364,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 935674381,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 946102411,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 955150448,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 957246465,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 981578535,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1006626629,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1010102639,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1013578649,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1017770683,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1033770740,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1038626743,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1045578763,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1049770797,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1051150790,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1065770854,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1070626857,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1083150904,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1086626914,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1093578934,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1102626971,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1118627028,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1131151075,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1141579105,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1147151132,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1163151189,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1179151246,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1182627256,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1190295300,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1198627313,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1202103323,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1227151417,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1234103437,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1246627484,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1259151531,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1266819575,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1271675578,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1275151588,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1278627598,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1282103608,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1282819632,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1300199682,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1307151702,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1310627712,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1317579732,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1323151759,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1349579846,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1353771880,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1355151873,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1358627883,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1381579960,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1397580017,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1406628054,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1410104064,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1426104121,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1426820145,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1438628168,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1470628282,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1486628339,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1520724470,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1524200480,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1534628510,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1566628624,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1582628681,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1588200708,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1604200765,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1607676775,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1614628795,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1646628909,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1650820943,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1655676946,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1678629023,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1679345047,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1695345104,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1698821114,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1710629137,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1711345161,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1712725154,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1717581157,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1733581214,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1742629251,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1749581271,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1765581328,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1797581442,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1799677459,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1813581499,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1822629536,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1854629650,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1856725667,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1863677687,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1886629764,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1893581784,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1909581841,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1918629878,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1950629992,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1982630106,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 1986106116,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2002106173,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2014630220,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2062630391,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2066106401,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2094630505,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2098106515,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2110630562,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  },
+  {
+    "object_id": 2126630619,
+    "temporal_type_desc": "NON_TEMPORAL_TABLE",
+    "is_memory_optimized": false,
+    "durability_desc": "SCHEMA_AND_DATA",
+    "is_tracked_by_cdc": false,
+    "lock_escalation_desc": "TABLE"
+  }
+]

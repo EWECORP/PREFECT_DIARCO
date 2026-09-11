@@ -1,0 +1,22 @@
+[
+  {
+    "rol": "db_owner",
+    "miembro": "dbo"
+  },
+  {
+    "rol": "db_owner",
+    "miembro": "cdc"
+  },
+  {
+    "rol": "db_owner",
+    "miembro": "gananos"
+  },
+  {
+    "rol": "db_owner",
+    "miembro": "smugetti"
+  },
+  {
+    "rol": "db_owner",
+    "miembro": "mochoa"
+  }
+]

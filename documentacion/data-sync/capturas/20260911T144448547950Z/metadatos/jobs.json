@@ -1,0 +1,82 @@
+[
+  {
+    "job_id": "A90D5220-AB22-4AFD-90F0-25300EEC92F7",
+    "name": "ETL_T080",
+    "enabled": 0,
+    "description": "No description available.",
+    "date_created": "2025-07-03 17:46:36.860000",
+    "date_modified": "2025-07-08 12:23:45.093000"
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "name": "datasync-tablas-maestras",
+    "enabled": 1,
+    "description": "Ejecución SP heredados de parámetrosl",
+    "date_created": "2025-07-31 12:17:24.240000",
+    "date_modified": "2025-07-31 12:44:11.213000"
+  },
+  {
+    "job_id": "B8D54ACB-B3AA-42B5-807E-764F8236F3A6",
+    "name": "datasync-oc-recupero",
+    "enabled": 0,
+    "description": "No description available.",
+    "date_created": "2025-01-31 09:45:44.317000",
+    "date_modified": "2025-08-19 11:49:29.853000"
+  },
+  {
+    "job_id": "78F049AC-2101-4F79-B05C-94A3005DF8A5",
+    "name": "ZEETREX_DATOS_DIARIOS",
+    "enabled": 0,
+    "description": "No description available.",
+    "date_created": "2024-09-11 11:32:00.327000",
+    "date_modified": "2024-11-06 15:08:49.690000"
+  },
+  {
+    "job_id": "0DB73BEE-EF05-49DE-B3A7-995F14932512",
+    "name": "DBA-Rebuild Index.Subplan_1",
+    "enabled": 1,
+    "description": "No description available.",
+    "date_created": "2026-06-01 21:28:16.430000",
+    "date_modified": "2026-06-01 21:28:17.170000"
+  },
+  {
+    "job_id": "196140A4-ECB3-4C2B-982E-A01616E9C95D",
+    "name": "cdc.data-sync_cleanup",
+    "enabled": 0,
+    "description": "CDC Cleanup Job",
+    "date_created": "2025-05-27 10:52:50.813000",
+    "date_modified": "2025-06-12 21:07:35.303000"
+  },
+  {
+    "job_id": "BBB7A7EC-4EFA-4894-951D-B616DBF9CC52",
+    "name": "datasync-oc",
+    "enabled": 0,
+    "description": "No description available.",
+    "date_created": "2025-01-24 12:38:12.343000",
+    "date_modified": "2025-08-19 11:50:06.213000"
+  },
+  {
+    "job_id": "C99885B7-9418-44DC-A459-BD7209DADED2",
+    "name": "cdc.data-sync_capture",
+    "enabled": 0,
+    "description": "CDC Log Scan Job",
+    "date_created": "2025-05-27 10:52:46.813000",
+    "date_modified": "2025-06-12 21:07:32.867000"
+  },
+  {
+    "job_id": "263678EE-C1CD-46B4-9531-DAF84493B16A",
+    "name": "datasync-stock",
+    "enabled": 0,
+    "description": "No description available.",
+    "date_created": "2025-01-20 15:55:38.143000",
+    "date_modified": "2025-08-19 11:47:16.047000"
+  },
+  {
+    "job_id": "455D39FC-F4EB-40BA-8C76-FA8F9491A1BA",
+    "name": "syspolicy_purge_history",
+    "enabled": 1,
+    "description": "No description available.",
+    "date_created": "2022-06-21 10:39:12.397000",
+    "date_modified": "2022-06-21 10:39:13.617000"
+  }
+]

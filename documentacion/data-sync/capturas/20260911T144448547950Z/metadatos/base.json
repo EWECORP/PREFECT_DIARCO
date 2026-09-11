@@ -1,0 +1,18 @@
+[
+  {
+    "name": "data-sync",
+    "compatibility_level": 130,
+    "collation_name": "SQL_Latin1_General_CP1_CI_AS",
+    "recovery_model_desc": "SIMPLE",
+    "state_desc": "ONLINE",
+    "containment_desc": "NONE",
+    "page_verify_option_desc": "CHECKSUM",
+    "is_read_committed_snapshot_on": false,
+    "snapshot_isolation_state_desc": "OFF",
+    "is_auto_close_on": false,
+    "is_auto_shrink_on": false,
+    "is_cdc_enabled": true,
+    "is_broker_enabled": false,
+    "is_trustworthy_on": false
+  }
+]

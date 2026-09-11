@@ -1,0 +1,82 @@
+[
+  {
+    "rol": "sysadmin",
+    "miembro": "sa"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "DCO-01SRV-T02\\Administrator"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "NT SERVICE\\SQLWriter"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "NT SERVICE\\Winmgmt"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "NT Service\\MSSQLSERVER"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "NT SERVICE\\SQLSERVERAGENT"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "DCO-01SRV-T02\\sromano"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "DCO-01SRV-T02\\eettlin"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "eettlin"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "DCO-01SRV-T02\\jgalvan"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "jgalvan"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "DCO-DIARCOCI-T0\\sopdbail"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "ssis"
+  },
+  {
+    "rol": "sysadmin",
+    "miembro": "ffallardi"
+  },
+  {
+    "rol": "serveradmin",
+    "miembro": "DCO-DIARCOCI-T0\\alledesma"
+  },
+  {
+    "rol": "setupadmin",
+    "miembro": "DCO-DIARCOCI-T0\\alledesma"
+  },
+  {
+    "rol": "processadmin",
+    "miembro": "DCO-DIARCOCI-T0\\alledesma"
+  },
+  {
+    "rol": "diskadmin",
+    "miembro": "DCO-DIARCOCI-T0\\alledesma"
+  },
+  {
+    "rol": "dbcreator",
+    "miembro": "DCO-DIARCOCI-T0\\alledesma"
+  },
+  {
+    "rol": "bulkadmin",
+    "miembro": "DCO-DIARCOCI-T0\\alledesma"
+  }
+]

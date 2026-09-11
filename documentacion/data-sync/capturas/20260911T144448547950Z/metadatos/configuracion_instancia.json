@@ -1,0 +1,446 @@
+[
+  {
+    "name": "recovery interval (min)",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Maximum recovery interval in minutes"
+  },
+  {
+    "name": "allow updates",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Allow updates to system tables"
+  },
+  {
+    "name": "user connections",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Number of user connections allowed"
+  },
+  {
+    "name": "locks",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Number of locks for all users"
+  },
+  {
+    "name": "open objects",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Number of open database objects"
+  },
+  {
+    "name": "fill factor (%)",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Default fill factor percentage"
+  },
+  {
+    "name": "disallow results from triggers",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Disallow returning results from triggers"
+  },
+  {
+    "name": "nested triggers",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Allow triggers to be invoked within triggers"
+  },
+  {
+    "name": "server trigger recursion",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Allow recursion for server level triggers"
+  },
+  {
+    "name": "remote access",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Allow remote access"
+  },
+  {
+    "name": "default language",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "default language"
+  },
+  {
+    "name": "cross db ownership chaining",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Allow cross db ownership chaining"
+  },
+  {
+    "name": "max worker threads",
+    "value": "200",
+    "value_in_use": "200",
+    "description": "Maximum worker threads"
+  },
+  {
+    "name": "network packet size (B)",
+    "value": "4096",
+    "value_in_use": "4096",
+    "description": "Network packet size"
+  },
+  {
+    "name": "show advanced options",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "show advanced options"
+  },
+  {
+    "name": "remote proc trans",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Create DTC transaction for remote procedures"
+  },
+  {
+    "name": "c2 audit mode",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "c2 audit mode"
+  },
+  {
+    "name": "default full-text language",
+    "value": "1033",
+    "value_in_use": "1033",
+    "description": "default full-text language"
+  },
+  {
+    "name": "two digit year cutoff",
+    "value": "2049",
+    "value_in_use": "2049",
+    "description": "two digit year cutoff"
+  },
+  {
+    "name": "index create memory (KB)",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Memory for index create sorts (kBytes)"
+  },
+  {
+    "name": "priority boost",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Priority boost"
+  },
+  {
+    "name": "remote login timeout (s)",
+    "value": "10",
+    "value_in_use": "10",
+    "description": "remote login timeout"
+  },
+  {
+    "name": "remote query timeout (s)",
+    "value": "600",
+    "value_in_use": "600",
+    "description": "remote query timeout"
+  },
+  {
+    "name": "cursor threshold",
+    "value": "-1",
+    "value_in_use": "-1",
+    "description": "cursor threshold"
+  },
+  {
+    "name": "set working set size",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "set working set size"
+  },
+  {
+    "name": "user options",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "user options"
+  },
+  {
+    "name": "affinity mask",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "affinity mask"
+  },
+  {
+    "name": "max text repl size (B)",
+    "value": "65536",
+    "value_in_use": "65536",
+    "description": "Maximum size of a text field in replication."
+  },
+  {
+    "name": "media retention",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Tape retention period in days"
+  },
+  {
+    "name": "cost threshold for parallelism",
+    "value": "5",
+    "value_in_use": "5",
+    "description": "cost threshold for parallelism"
+  },
+  {
+    "name": "max degree of parallelism",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "maximum degree of parallelism"
+  },
+  {
+    "name": "min memory per query (KB)",
+    "value": "1024",
+    "value_in_use": "1024",
+    "description": "minimum memory per query (kBytes)"
+  },
+  {
+    "name": "query wait (s)",
+    "value": "-1",
+    "value_in_use": "-1",
+    "description": "maximum time to wait for query memory (s)"
+  },
+  {
+    "name": "min server memory (MB)",
+    "value": "0",
+    "value_in_use": "16",
+    "description": "Minimum size of server memory (MB)"
+  },
+  {
+    "name": "max server memory (MB)",
+    "value": "2147483647",
+    "value_in_use": "2147483647",
+    "description": "Maximum size of server memory (MB)"
+  },
+  {
+    "name": "query governor cost limit",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Maximum estimated cost allowed by query governor"
+  },
+  {
+    "name": "lightweight pooling",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "User mode scheduler uses lightweight pooling"
+  },
+  {
+    "name": "scan for startup procs",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "scan for startup stored procedures"
+  },
+  {
+    "name": "affinity64 mask",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "affinity64 mask"
+  },
+  {
+    "name": "affinity I/O mask",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "affinity I/O mask"
+  },
+  {
+    "name": "affinity64 I/O mask",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "affinity64 I/O mask"
+  },
+  {
+    "name": "transform noise words",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Transform noise words for full-text query"
+  },
+  {
+    "name": "precompute rank",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Use precomputed rank for full-text query"
+  },
+  {
+    "name": "PH timeout (s)",
+    "value": "60",
+    "value_in_use": "60",
+    "description": "DB connection timeout for full-text protocol handler (s)"
+  },
+  {
+    "name": "clr enabled",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "CLR user code execution enabled in the server"
+  },
+  {
+    "name": "max full-text crawl range",
+    "value": "4",
+    "value_in_use": "4",
+    "description": "Maximum  crawl ranges allowed in full-text indexing"
+  },
+  {
+    "name": "ft notify bandwidth (min)",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Number of reserved full-text notifications buffers"
+  },
+  {
+    "name": "ft notify bandwidth (max)",
+    "value": "100",
+    "value_in_use": "100",
+    "description": "Max number of full-text notifications buffers"
+  },
+  {
+    "name": "ft crawl bandwidth (min)",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Number of reserved full-text crawl buffers"
+  },
+  {
+    "name": "ft crawl bandwidth (max)",
+    "value": "100",
+    "value_in_use": "100",
+    "description": "Max number of full-text crawl buffers"
+  },
+  {
+    "name": "default trace enabled",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Enable or disable the default trace"
+  },
+  {
+    "name": "blocked process threshold (s)",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Blocked process reporting threshold"
+  },
+  {
+    "name": "in-doubt xact resolution",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Recovery policy for DTC transactions with unknown outcome"
+  },
+  {
+    "name": "remote admin connections",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Dedicated Admin Connections are allowed from remote clients"
+  },
+  {
+    "name": "backup compression default",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Enable compression of backups by default"
+  },
+  {
+    "name": "filestream access level",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Sets the FILESTREAM access level"
+  },
+  {
+    "name": "optimize for ad hoc workloads",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "When this option is set, plan cache size is further reduced for single-use adhoc OLTP workload."
+  },
+  {
+    "name": "access check cache bucket count",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Default hash bucket count for the access check result security cache"
+  },
+  {
+    "name": "access check cache quota",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Default quota for the access check result security cache"
+  },
+  {
+    "name": "backup checksum default",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Enable checksum of backups by default"
+  },
+  {
+    "name": "automatic soft-NUMA disabled",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Automatic soft-NUMA is enabled by default"
+  },
+  {
+    "name": "external scripts enabled",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Allows execution of external scripts"
+  },
+  {
+    "name": "Agent XPs",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Enable or disable Agent XPs"
+  },
+  {
+    "name": "Database Mail XPs",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Enable or disable Database Mail XPs"
+  },
+  {
+    "name": "SMO and DMO XPs",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Enable or disable SMO and DMO XPs"
+  },
+  {
+    "name": "Ole Automation Procedures",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Enable or disable Ole Automation Procedures"
+  },
+  {
+    "name": "xp_cmdshell",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Enable or disable command shell"
+  },
+  {
+    "name": "Ad Hoc Distributed Queries",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Enable or disable Ad Hoc Distributed Queries"
+  },
+  {
+    "name": "Replication XPs",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Enable or disable Replication XPs"
+  },
+  {
+    "name": "contained database authentication",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Enables contained databases and contained authentication"
+  },
+  {
+    "name": "hadoop connectivity",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Configure SQL Server to connect to external Hadoop or Microsoft Azure storage blob data sources through PolyBase"
+  },
+  {
+    "name": "polybase network encryption",
+    "value": "1",
+    "value_in_use": "1",
+    "description": "Configure SQL Server to encrypt control and data channels when using PolyBase"
+  },
+  {
+    "name": "remote data archive",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Allow the use of the REMOTE_DATA_ARCHIVE data access for databases"
+  },
+  {
+    "name": "allow polybase export",
+    "value": "0",
+    "value_in_use": "0",
+    "description": "Allow INSERT into a Hadoop external table"
+  }
+]

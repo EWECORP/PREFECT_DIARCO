@@ -1,0 +1,282 @@
+[
+  {
+    "job_id": "A90D5220-AB22-4AFD-90F0-25300EEC92F7",
+    "step_id": 1,
+    "step_name": "carga_T080",
+    "subsystem": "CmdExec",
+    "database_name": null,
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 1,
+    "step_name": "M_1_CATEGORIAS",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 2,
+    "step_name": "M_10_PROVEEDORES",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 3,
+    "step_name": "M_2_TIPO_MOVIMIENTO",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 4,
+    "step_name": "M_3_1_FAMILIA",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 5,
+    "step_name": "M_3_2_FAMILIA_ARTICULO",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 6,
+    "step_name": "M_9_COMPRADORES",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 7,
+    "step_name": "M_91_SUCURSALES",
+    "subsystem": "TSQL",
+    "database_name": "master",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 8,
+    "step_name": "M_92_DEPOSITOS",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 9,
+    "step_name": "M_93_SUSTITUTOS",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 10,
+    "step_name": "M_94_ALTERNATIVOS",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 11,
+    "step_name": "M_95_SENSIBLES",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "EE5AD048-89E5-41C5-97A2-5BE9649F5F8C",
+    "step_id": 12,
+    "step_name": "M_96_STOCK_SEGURIDAD",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "B8D54ACB-B3AA-42B5-807E-764F8236F3A6",
+    "step_id": 1,
+    "step_name": "data-load",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "B8D54ACB-B3AA-42B5-807E-764F8236F3A6",
+    "step_id": 2,
+    "step_name": "data-send",
+    "subsystem": "CmdExec",
+    "database_name": null,
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "78F049AC-2101-4F79-B05C-94A3005DF8A5",
+    "step_id": 1,
+    "step_name": "Envio Interfases",
+    "subsystem": "TSQL",
+    "database_name": "kikker",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "78F049AC-2101-4F79-B05C-94A3005DF8A5",
+    "step_id": 2,
+    "step_name": "Generar ZIP con Archivos",
+    "subsystem": "TSQL",
+    "database_name": "kikker",
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "0DB73BEE-EF05-49DE-B3A7-995F14932512",
+    "step_id": 1,
+    "step_name": "Subplan_1",
+    "subsystem": "SSIS",
+    "database_name": null,
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "196140A4-ECB3-4C2B-982E-A01616E9C95D",
+    "step_id": 1,
+    "step_name": "Change Data Capture Cleanup Agent",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 10
+  },
+  {
+    "job_id": "BBB7A7EC-4EFA-4894-951D-B616DBF9CC52",
+    "step_id": 1,
+    "step_name": "data-load",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "BBB7A7EC-4EFA-4894-951D-B616DBF9CC52",
+    "step_id": 2,
+    "step_name": "data-send",
+    "subsystem": "CmdExec",
+    "database_name": null,
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "C99885B7-9418-44DC-A459-BD7209DADED2",
+    "step_id": 1,
+    "step_name": "Starting Change Data Capture Collection Agent",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 3,
+    "retry_attempts": 10
+  },
+  {
+    "job_id": "C99885B7-9418-44DC-A459-BD7209DADED2",
+    "step_id": 2,
+    "step_name": "Change Data Capture Collection Agent",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 10
+  },
+  {
+    "job_id": "263678EE-C1CD-46B4-9531-DAF84493B16A",
+    "step_id": 1,
+    "step_name": "SP_CNX_T_5_MOVIMIENTOS_DIARIOS",
+    "subsystem": "TSQL",
+    "database_name": "data-sync",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "263678EE-C1CD-46B4-9531-DAF84493B16A",
+    "step_id": 2,
+    "step_name": "sender_T_5_1_MOVIMIENTOS_DIARIOS",
+    "subsystem": "CmdExec",
+    "database_name": null,
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "455D39FC-F4EB-40BA-8C76-FA8F9491A1BA",
+    "step_id": 1,
+    "step_name": "Verify that automation is enabled.",
+    "subsystem": "TSQL",
+    "database_name": "master",
+    "on_success_action": 3,
+    "on_fail_action": 1,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "455D39FC-F4EB-40BA-8C76-FA8F9491A1BA",
+    "step_id": 2,
+    "step_name": "Purge history.",
+    "subsystem": "TSQL",
+    "database_name": "master",
+    "on_success_action": 3,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  },
+  {
+    "job_id": "455D39FC-F4EB-40BA-8C76-FA8F9491A1BA",
+    "step_id": 3,
+    "step_name": "Erase Phantom System Health Records.",
+    "subsystem": "PowerShell",
+    "database_name": "master",
+    "on_success_action": 1,
+    "on_fail_action": 2,
+    "retry_attempts": 0
+  }
+]

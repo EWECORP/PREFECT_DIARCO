@@ -1,0 +1,1506 @@
+[
+  {
+    "usuario": "public",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "VIEW ANY COLUMN ENCRYPTION KEY DEFINITION",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "VIEW ANY COLUMN MASTER KEY DEFINITION",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "dbo",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "CONNECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "jgalvan",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "CONNECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "cdc",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "CONNECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "gananos",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "CONNECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "smugetti",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "CONNECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "mochoa",
+    "class_desc": "DATABASE",
+    "major_id": 0,
+    "minor_id": 0,
+    "permission_name": "CONNECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -582,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -580,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -572,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -571,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -570,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -569,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -568,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -567,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -566,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -565,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -564,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -563,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -562,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -561,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -560,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -559,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -558,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -557,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -551,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -550,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -549,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -541,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -540,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -539,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -538,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -537,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -536,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -535,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -519,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -518,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -517,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -516,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -515,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -514,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -513,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -505,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -504,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -503,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -502,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -501,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -500,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -499,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -498,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -497,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -496,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -494,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -489,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -485,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -484,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -483,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -482,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -481,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -480,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -479,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -478,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -477,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -476,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -469,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -468,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -467,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -466,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -465,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -464,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -463,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -462,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -461,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -460,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -459,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -458,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -457,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -456,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -455,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -454,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -453,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -452,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -451,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -450,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -449,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -448,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -447,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -446,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -445,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -444,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -443,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -442,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -441,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -440,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -439,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -438,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -437,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -436,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -435,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -434,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -433,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -432,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -431,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -430,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -429,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -428,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -426,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -425,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -424,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -423,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -422,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -421,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -420,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -419,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -418,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -417,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -416,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -415,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -414,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -413,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -412,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -411,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -410,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -409,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -408,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -407,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -406,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -405,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -404,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -403,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -402,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -401,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -400,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -399,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -398,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -397,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -396,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -395,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -394,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -393,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -392,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -391,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -390,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -389,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -388,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -387,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -386,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -385,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -143,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -142,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -141,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -140,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -139,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -138,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -137,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -136,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -135,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -134,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -133,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -132,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -131,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -130,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -129,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -107,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -106,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -105,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -104,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -103,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -102,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": -101,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1058102810,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "guest",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1058102810,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "DENY"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1074102867,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "guest",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1074102867,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "DENY"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1090102924,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "guest",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1090102924,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "DENY"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1106102981,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "guest",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1106102981,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "DENY"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1122103038,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "guest",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1122103038,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "DENY"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1138103095,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "guest",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1138103095,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "DENY"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1154103152,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "guest",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1154103152,
+    "minor_id": 0,
+    "permission_name": "EXECUTE",
+    "state_desc": "DENY"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1659152956,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1787153412,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  },
+  {
+    "usuario": "public",
+    "class_desc": "OBJECT_OR_COLUMN",
+    "major_id": 1803153469,
+    "minor_id": 0,
+    "permission_name": "SELECT",
+    "state_desc": "GRANT"
+  }
+]

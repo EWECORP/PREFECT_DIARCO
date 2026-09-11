@@ -1,0 +1,1182 @@
+[
+  {
+    "object_id": 18099105,
+    "parameter_id": 1,
+    "name": "@FechaDesde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 38291196,
+    "parameter_id": 1,
+    "name": "@JSON",
+    "tipo": "nvarchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 212195806,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 212195806,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 212195806,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 311672158,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 311672158,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 327672215,
+    "parameter_id": 1,
+    "name": "@fechadesde",
+    "tipo": "char",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 327672215,
+    "parameter_id": 2,
+    "name": "@fechahasta",
+    "tipo": "char",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 343672272,
+    "parameter_id": 1,
+    "name": "@fecha",
+    "tipo": "char",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 359672329,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 359672329,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 370100359,
+    "parameter_id": 1,
+    "name": "@FechaDesde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 375672386,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 375672386,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 391672443,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 391672443,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 402100473,
+    "parameter_id": 1,
+    "name": "@FechaDesde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 407672500,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 407672500,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 407672500,
+    "parameter_id": 3,
+    "name": "@dia",
+    "tipo": "char",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 423672557,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 423672557,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 439672614,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 439672614,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 450100644,
+    "parameter_id": 1,
+    "name": "@FechaDesde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 455672671,
+    "parameter_id": 1,
+    "name": "@anio",
+    "tipo": "char",
+    "max_length": 4,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 455672671,
+    "parameter_id": 2,
+    "name": "@mes",
+    "tipo": "char",
+    "max_length": 2,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 466100701,
+    "parameter_id": 1,
+    "name": "@FechaDesde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 471672728,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 471672728,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 471672728,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 487672785,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 487672785,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 487672785,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 503672842,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 503672842,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 503672842,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 597577167,
+    "parameter_id": 0,
+    "name": "",
+    "tipo": "varchar",
+    "max_length": 1000,
+    "precision": 0,
+    "scale": 0,
+    "is_output": true
+  },
+  {
+    "object_id": 597577167,
+    "parameter_id": 1,
+    "name": "@TESTI",
+    "tipo": "varchar",
+    "max_length": 1000,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 784721848,
+    "parameter_id": 1,
+    "name": "@dias",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 784721848,
+    "parameter_id": 2,
+    "name": "@max_rows",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 784721848,
+    "parameter_id": 3,
+    "name": "@dry_run",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 784721848,
+    "parameter_id": 4,
+    "name": "@reason",
+    "tipo": "nvarchar",
+    "max_length": 400,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 797245895,
+    "parameter_id": 1,
+    "name": "@BatchSize",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 797245895,
+    "parameter_id": 2,
+    "name": "@MaxSeconds",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 797245895,
+    "parameter_id": 3,
+    "name": "@M_CONECTION",
+    "tipo": "varchar",
+    "max_length": 1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 797245895,
+    "parameter_id": 4,
+    "name": "@DefaultUsuario",
+    "tipo": "varchar",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 797245895,
+    "parameter_id": 5,
+    "name": "@DefaultTerminal",
+    "tipo": "varchar",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 800721905,
+    "parameter_id": 1,
+    "name": "@dias",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 800721905,
+    "parameter_id": 2,
+    "name": "@max_rows",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 800721905,
+    "parameter_id": 3,
+    "name": "@dry_run",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 800721905,
+    "parameter_id": 4,
+    "name": "@reason",
+    "tipo": "nvarchar",
+    "max_length": 400,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 873770170,
+    "parameter_id": 1,
+    "name": "@BatchSize",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 873770170,
+    "parameter_id": 2,
+    "name": "@MaxSeconds",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 873770170,
+    "parameter_id": 3,
+    "name": "@M_CONECTION",
+    "tipo": "varchar",
+    "max_length": 1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 873770170,
+    "parameter_id": 4,
+    "name": "@DefaultUsuario",
+    "tipo": "varchar",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 873770170,
+    "parameter_id": 5,
+    "name": "@DefaultTerminal",
+    "tipo": "varchar",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 941246408,
+    "parameter_id": 1,
+    "name": "@Desde",
+    "tipo": "datetime2",
+    "max_length": 6,
+    "precision": 19,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 941246408,
+    "parameter_id": 2,
+    "name": "@SoloCerrables",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 946818435,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 946818435,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 946818435,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1005246636,
+    "parameter_id": 1,
+    "name": "@connexa_header_uuid",
+    "tipo": "uniqueidentifier",
+    "max_length": 16,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1005246636,
+    "parameter_id": 2,
+    "name": "@resultado",
+    "tipo": "varchar",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1005246636,
+    "parameter_id": 3,
+    "name": "@mensaje_error",
+    "tipo": "varchar",
+    "max_length": 255,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1021246693,
+    "parameter_id": 1,
+    "name": "@SoloCerrables",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1021246693,
+    "parameter_id": 2,
+    "name": "@Desde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 1021246693,
+    "parameter_id": 3,
+    "name": "@IncluirEstadosOK",
+    "tipo": "varchar",
+    "max_length": 200,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1037246750,
+    "parameter_id": 1,
+    "name": "@Desde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 1058102810,
+    "parameter_id": 1,
+    "name": "@diagramname",
+    "tipo": "sysname",
+    "max_length": 256,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1058102810,
+    "parameter_id": 2,
+    "name": "@owner_id",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1074102867,
+    "parameter_id": 1,
+    "name": "@diagramname",
+    "tipo": "sysname",
+    "max_length": 256,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1074102867,
+    "parameter_id": 2,
+    "name": "@owner_id",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1090102924,
+    "parameter_id": 1,
+    "name": "@diagramname",
+    "tipo": "sysname",
+    "max_length": 256,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1090102924,
+    "parameter_id": 2,
+    "name": "@owner_id",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1090102924,
+    "parameter_id": 3,
+    "name": "@version",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1090102924,
+    "parameter_id": 4,
+    "name": "@definition",
+    "tipo": "varbinary",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1106102981,
+    "parameter_id": 1,
+    "name": "@diagramname",
+    "tipo": "sysname",
+    "max_length": 256,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1106102981,
+    "parameter_id": 2,
+    "name": "@owner_id",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1106102981,
+    "parameter_id": 3,
+    "name": "@new_diagramname",
+    "tipo": "sysname",
+    "max_length": 256,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1122103038,
+    "parameter_id": 1,
+    "name": "@diagramname",
+    "tipo": "sysname",
+    "max_length": 256,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1122103038,
+    "parameter_id": 2,
+    "name": "@owner_id",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1122103038,
+    "parameter_id": 3,
+    "name": "@version",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1122103038,
+    "parameter_id": 4,
+    "name": "@definition",
+    "tipo": "varbinary",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1129771082,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1129771082,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1129771082,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1138103095,
+    "parameter_id": 1,
+    "name": "@diagramname",
+    "tipo": "sysname",
+    "max_length": 256,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1138103095,
+    "parameter_id": 2,
+    "name": "@owner_id",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1149247149,
+    "parameter_id": 1,
+    "name": "@BatchSize",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1149247149,
+    "parameter_id": 2,
+    "name": "@MaxSeconds",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1149247149,
+    "parameter_id": 3,
+    "name": "@pC_ARTICULO",
+    "tipo": "decimal",
+    "max_length": 5,
+    "precision": 6,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1149247149,
+    "parameter_id": 4,
+    "name": "@pTerminal",
+    "tipo": "char",
+    "max_length": 10,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1154103152,
+    "parameter_id": 0,
+    "name": "",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": true
+  },
+  {
+    "object_id": 1174295243,
+    "parameter_id": 1,
+    "name": "@FechaDesde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 1314819746,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1314819746,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1314819746,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1319675749,
+    "parameter_id": 0,
+    "name": "",
+    "tipo": "nvarchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": true
+  },
+  {
+    "object_id": 1319675749,
+    "parameter_id": 1,
+    "name": "@sep",
+    "tipo": "nvarchar",
+    "max_length": 20,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1319675749,
+    "parameter_id": 2,
+    "name": "@val1",
+    "tipo": "nvarchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1319675749,
+    "parameter_id": 3,
+    "name": "@val2",
+    "tipo": "nvarchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1319675749,
+    "parameter_id": 4,
+    "name": "@val3",
+    "tipo": "nvarchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1319675749,
+    "parameter_id": 5,
+    "name": "@val4",
+    "tipo": "nvarchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1319675749,
+    "parameter_id": 6,
+    "name": "@val5",
+    "tipo": "nvarchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1645248916,
+    "parameter_id": 1,
+    "name": "@json",
+    "tipo": "varchar",
+    "max_length": -1,
+    "precision": 0,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1728725211,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1728725211,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1728725211,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1808725496,
+    "parameter_id": 1,
+    "name": "@C_SUCU_EMPR",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1808725496,
+    "parameter_id": 2,
+    "name": "@C_FAMILIA",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1808725496,
+    "parameter_id": 3,
+    "name": "@INCLUIR_NO_HABILITADOS",
+    "tipo": "bit",
+    "max_length": 1,
+    "precision": 1,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 1957582012,
+    "parameter_id": 1,
+    "name": "@FechaDesde",
+    "tipo": "datetime",
+    "max_length": 8,
+    "precision": 23,
+    "scale": 3,
+    "is_output": false
+  },
+  {
+    "object_id": 2095346529,
+    "parameter_id": 1,
+    "name": "@AnioDesde",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 2095346529,
+    "parameter_id": 2,
+    "name": "@MesDesde",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 2095346529,
+    "parameter_id": 3,
+    "name": "@AnioHasta",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  },
+  {
+    "object_id": 2095346529,
+    "parameter_id": 4,
+    "name": "@MesHasta",
+    "tipo": "int",
+    "max_length": 4,
+    "precision": 10,
+    "scale": 0,
+    "is_output": false
+  }
+]

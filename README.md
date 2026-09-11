@@ -1,5 +1,7 @@
 # Proyecto ETL_DIARCO
 
+La estructura de SQL Server `data-sync`, sus definiciones SQL y la guía de recuperación están en [documentacion/data-sync](documentacion/data-sync/README.md).
+
 Este repositorio contiene el proyecto ETL_DIARCO, un conjunto de procesos de orquestación, extracción, transformación y carga de datos que conectan sistemas legados de DIARCO con PostgreSQL y la plataforma CONNEXA.
 
 El proyecto está basado en Prefect 3.4.x y está diseñado principalmente para trabajar en un entorno Windows/DMZ con:

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "data-sync",
+    "type_desc": "ROWS",
+    "physical_name": "D:\\SQL Server\\DATA\\data-sync.mdf",
+    "size": 11006976,
+    "growth": 12800,
+    "is_percent_growth": false,
+    "max_size": -1
+  },
+  {
+    "name": "data-sync_log",
+    "type_desc": "LOG",
+    "physical_name": "D:\\SQL Server\\LOG\\data-sync_log.ldf",
+    "size": 2147328,
+    "growth": 8192,
+    "is_percent_growth": false,
+    "max_size": 268435456
+  }
+]
