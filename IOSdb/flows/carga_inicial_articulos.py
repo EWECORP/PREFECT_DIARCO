@@ -10,6 +10,7 @@ from prefect import flow, get_run_logger, task
 from IOSdb.clients.api_client import get_api_client
 from IOSdb.clients.sqlserver import open_sqlserver_connection
 from IOSdb.config.settings import load_settings
+from IOSdb.flows.master_guard import ensure_master_writes_enabled
 
 QUERY_SQLSERVER_FULL = """
 SELECT DISTINCT
@@ -139,6 +140,7 @@ def send_all_products(items: list[dict[str, Any]]) -> dict[str, int]:
 
 @flow(name="iosdb_products_initial_load", log_prints=True)
 def initial_load_products() -> dict[str, int]:
+    ensure_master_writes_enabled()
     logger = get_run_logger()
     items = fetch_all_products()
     result = send_all_products(items)

@@ -7,6 +7,7 @@ from prefect import flow, get_run_logger, task
 from IOSdb.clients.api_client import get_api_client
 from IOSdb.clients.sqlserver import open_sqlserver_connection
 from IOSdb.config.settings import load_settings
+from IOSdb.flows.master_guard import ensure_master_writes_enabled
 
 QUERY = """
 WITH Jerarquia AS (
@@ -102,6 +103,7 @@ def send_categories(items: list[dict[str, Any]]) -> dict[str, int]:
 
 @flow(name="iosdb_categories_sync", log_prints=True)
 def sync_categories() -> dict[str, int]:
+    ensure_master_writes_enabled()
     logger = get_run_logger()
     items = fetch_categories()
     result = send_categories(items)

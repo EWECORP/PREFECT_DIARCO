@@ -9,6 +9,7 @@ from IOSdb.clients.api_client import get_api_client
 from IOSdb.clients.postgres import open_postgres_connection
 from IOSdb.clients.sqlserver import open_sqlserver_connection
 from IOSdb.config.settings import load_settings
+from IOSdb.flows.master_guard import ensure_master_writes_enabled
 
 QUERY_SQLSERVER_COMPARE = """
 WITH ArticulosProcesados AS (
@@ -237,6 +238,7 @@ def send_products(items: list[dict[str, Any]], label: str) -> dict[str, int]:
 
 @flow(name="iosdb_products_sync", log_prints=True)
 def sync_products() -> dict[str, int]:
+    ensure_master_writes_enabled()
     logger = get_run_logger()
 
     sqlserver_products = fetch_sqlserver_products()
