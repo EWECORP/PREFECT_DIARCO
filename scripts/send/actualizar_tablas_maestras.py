@@ -243,8 +243,13 @@ def actualizar_tablas_maestras():
     logger = get_run_logger()
     errores: list[tuple[str, str]] = []
     tablas = [
-        # Tablas aun mantenidas por refresh batch legacy.
         # Las tablas cubiertas por CDC estable se retiran gradualmente de esta lista.
+        ("repl", "t020_proveedor", "T020_PROVEEDOR"),
+        ("repl", "t114_rubros", "T114_RUBROS"),
+        ("repl", "t117_compradores", "T117_COMPRADORES"),
+        ("repl", "t020_proveedor_dias_entrega_cabe","T020_PROVEEDOR_DIAS_ENTREGA_CABE"),
+        
+        # Tablas aun mantenidas por refresh batch legacy.
         ("repl","t050_articulos", "T050_ARTICULOS"),
         ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
         ("repl", "t060_stock", "T060_STOCK"),
