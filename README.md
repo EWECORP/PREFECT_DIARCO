@@ -1,5 +1,7 @@
 # Proyecto ETL_DIARCO
 
+El [diccionario de equivalencias SGM → diarco_data → Connexa](documentacion/DICCIONARIO_EQUIVALENCIAS_SGM_DIARCO_DATA_CONNEXA.md) reúne los mapeos de tablas y campos verificados en el código, sus transformaciones y las interfaces Connexa aún en modo shadow.
+
 La estructura de SQL Server `data-sync`, sus definiciones SQL y la guía de recuperación están en [documentacion/data-sync](documentacion/data-sync/README.md).
 
 Este repositorio contiene el proyecto ETL_DIARCO, un conjunto de procesos de orquestación, extracción, transformación y carga de datos que conectan sistemas legados de DIARCO con PostgreSQL y la plataforma CONNEXA.
