@@ -110,7 +110,7 @@ ESQUEMA_BASE_STOCK = {
 
 
 def transformar_chunk(df, chunk_index, task_logger):
-    df["FUENTE_ORIGEN"] = "SP_BASE_STOCK_DMZ"
+    df["FUENTE_ORIGEN"] = "SP_BASE_STOCK_EXTEND"
     df["FECHA_EXTRACCION"] = datetime.now()
     df["ESTADO_SINCRONIZACION"] = 0
 
