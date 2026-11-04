@@ -18,6 +18,7 @@ from psycopg2 import sql
 from psycopg2 import errors as pg_errors
 
 from flujo_maestro_replica_datos import flujo_maestro, generar_nombre_archivo
+from refresh_t055_condcompra import refresh_t055_condcompra
 
 # ====================== CONFIGURACIÓN Y LOGGING ======================
 load_dotenv()
@@ -251,6 +252,7 @@ def actualizar_tablas_maestras():
         
         # Tablas aun mantenidas por refresh batch legacy.
         ("repl","t050_articulos", "T050_ARTICULOS"),
+        ("repl", "t055_articulos_condcompra_costos", "T055_ARTICULOS_CONDCOMPRA_COSTOS"),
         ("repl", "t052_articulos_proveedor", "T052_ARTICULOS_PROVEEDOR"),
         ("repl", "t060_stock", "T060_STOCK"),
         ("repl", "t061_stock_diario", "T061_STOCK_DIARIO"),
@@ -291,9 +293,14 @@ def actualizar_tablas_maestras():
 
         try:
             logger.info(f"🔄 Procesando tabla {tabla_pg}...")
-            vaciar_tabla(tabla_pg) # Forzar a que termine antes de seguir
-            # vaciar_tabla.submit(tabla_pg)
-            flujo_maestro(esquema=origen, tabla=tabla_sql, filtro_sql="1=1")  # no usar run_deployment aquí si no está controlado
+            if tabla_pg == "t055_articulos_condcompra_costos":
+                # Esta tabla grande se reemplaza en una sola transacción: nunca
+                # se vacía antes de completar la extracción desde SQL Server.
+                refresh_t055_condcompra(logger=logger)
+            else:
+                vaciar_tabla(tabla_pg) # Forzar a que termine antes de seguir
+                # vaciar_tabla.submit(tabla_pg)
+                flujo_maestro(esquema=origen, tabla=tabla_sql, filtro_sql="1=1")  # no usar run_deployment aquí si no está controlado
             logger.info(f"✅ Tabla {tabla_pg} actualizada con éxito.")
         except Exception as e:
             logger.error(f"❌ Error procesando {tabla_pg}: {e}")
