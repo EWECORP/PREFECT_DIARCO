@@ -1,0 +1,250 @@
+2026-11-11T09:50:03.819562Z Iniciando script 1/6 | nombre=obtener_base_stock.py | ruta=E:\ETL\ETL_DIARCO\scripts\push\obtener_base_stock.py
+
+2026-11-11T09:50:10.757100Z [obtener_base_stock.py] 06:50:10.757 | INFO    | Task run 'Carga Base Stock Sucursal-633' - Tabla destino recreada: src.base_stock_sucursal
+
+2026-11-11T09:55:36.570863Z [obtener_base_stock.py] 06:55:36.570 | INFO    | Task run 'Carga Base Stock Sucursal-633' - Carga finalizada | tabla_destino=src.base_stock_sucursal | filas=1339542 | chunks=67 | duracion=325.96s
+
+2026-11-11T09:55:37.508361Z [obtener_base_stock.py] 06:55:37.508 | ERROR   | Task run 'Asegurar Indices Base Stock-ed7' - Error creando indices de apoyo: must be owner of table base_productos_vigentes
+
+2026-11-11T09:55:37.523973Z [obtener_base_stock.py] 06:55:37.508 | ERROR   | Task run 'Asegurar Indices Base Stock-ed7' - Task run failed with exception: InsufficientPrivilege('must be owner of table base_productos_vigentes\n')
+
+2026-11-11T09:55:37.555216Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T09:55:37.555216Z [obtener_base_stock.py] 06:55:37.539 | ERROR   | Task run 'Asegurar Indices Base Stock-ed7' - Finished in state Failed('Task run encountered an exception InsufficientPrivilege: must be owner of table base_productos_vigentes\n')
+
+2026-11-11T09:55:37.555216Z [obtener_base_stock.py] 06:55:37.539 | ERROR   | Flow run 'fine-muskrat' - Error general en el flujo de base_stock: must be owner of table base_productos_vigentes
+
+2026-11-11T09:55:37.570842Z [obtener_base_stock.py] 06:55:37.539 | ERROR   | Flow run 'fine-muskrat' - Encountered exception during execution: InsufficientPrivilege('must be owner of table base_productos_vigentes\n')
+
+2026-11-11T09:55:37.648964Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T09:55:37.914621Z [obtener_base_stock.py] 06:55:37.914 | INFO    | Flow run 'fine-muskrat' - Finished in state Failed('Flow run encountered an exception: InsufficientPrivilege: must be owner of table base_productos_vigentes\n')
+
+2026-11-11T09:55:38.008342Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T09:55:38.805224Z Script con error | nombre=obtener_base_stock.py | exit_code=1 | posicion=1/6 | duracion=334.98s
+
+2026-11-11T09:55:38.805224Z Task run failed with exception: Exception('[FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=334.98s') - Retry 1/2 will start 60 second(s) from now
+
+2026-11-11T09:56:38.817175Z Iniciando script 1/6 | nombre=obtener_base_stock.py | ruta=E:\ETL\ETL_DIARCO\scripts\push\obtener_base_stock.py
+
+2026-11-11T09:56:46.285990Z [obtener_base_stock.py] 06:56:46.285 | INFO    | Task run 'Carga Base Stock Sucursal-4b4' - Tabla destino recreada: src.base_stock_sucursal
+
+2026-11-11T10:04:28.803783Z [obtener_base_stock.py] 07:04:28.803 | INFO    | Task run 'Carga Base Stock Sucursal-4b4' - Carga finalizada | tabla_destino=src.base_stock_sucursal | filas=1339542 | chunks=67 | duracion=462.60s
+
+2026-11-11T10:04:29.913180Z [obtener_base_stock.py] 07:04:29.897 | ERROR   | Task run 'Asegurar Indices Base Stock-980' - Error creando indices de apoyo: must be owner of table base_productos_vigentes
+
+2026-11-11T10:04:29.913180Z [obtener_base_stock.py] 07:04:29.913 | ERROR   | Task run 'Asegurar Indices Base Stock-980' - Task run failed with exception: InsufficientPrivilege('must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:04:29.928711Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T10:04:29.928711Z [obtener_base_stock.py] 07:04:29.913 | ERROR   | Task run 'Asegurar Indices Base Stock-980' - Finished in state Failed('Task run encountered an exception InsufficientPrivilege: must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:04:29.928711Z [obtener_base_stock.py] 07:04:29.928 | ERROR   | Flow run 'cunning-rattlesnake' - Error general en el flujo de base_stock: must be owner of table base_productos_vigentes
+
+2026-11-11T10:04:30.038084Z [obtener_base_stock.py] 07:04:29.928 | ERROR   | Flow run 'cunning-rattlesnake' - Encountered exception during execution: InsufficientPrivilege('must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:04:30.116205Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T10:04:30.116205Z [obtener_base_stock.py] 07:04:30.116 | INFO    | Flow run 'cunning-rattlesnake' - Finished in state Failed('Flow run encountered an exception: InsufficientPrivilege: must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:04:30.209955Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T10:04:30.647462Z Script con error | nombre=obtener_base_stock.py | exit_code=1 | posicion=1/6 | duracion=471.83s
+
+2026-11-11T10:04:30.647462Z Task run failed with exception: Exception('[FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=471.83s') - Retry 2/2 will start 60 second(s) from now
+
+2026-11-11T10:05:30.651401Z Iniciando script 1/6 | nombre=obtener_base_stock.py | ruta=E:\ETL\ETL_DIARCO\scripts\push\obtener_base_stock.py
+
+2026-11-11T10:05:38.104603Z [obtener_base_stock.py] 07:05:38.104 | INFO    | Task run 'Carga Base Stock Sucursal-f3d' - Tabla destino recreada: src.base_stock_sucursal
+
+2026-11-11T10:13:01.434355Z [obtener_base_stock.py] 07:13:01.434 | INFO    | Task run 'Carga Base Stock Sucursal-f3d' - Carga finalizada | tabla_destino=src.base_stock_sucursal | filas=1339542 | chunks=67 | duracion=443.55s
+
+2026-11-11T10:13:02.590663Z [obtener_base_stock.py] 07:13:02.590 | ERROR   | Task run 'Asegurar Indices Base Stock-7ff' - Error creando indices de apoyo: must be owner of table base_productos_vigentes
+
+2026-11-11T10:13:02.606220Z [obtener_base_stock.py] 07:13:02.590 | ERROR   | Task run 'Asegurar Indices Base Stock-7ff' - Task run failed with exception: InsufficientPrivilege('must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:13:02.637454Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T10:13:02.637454Z [obtener_base_stock.py] 07:13:02.621 | ERROR   | Task run 'Asegurar Indices Base Stock-7ff' - Finished in state Failed('Task run encountered an exception InsufficientPrivilege: must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:13:02.637454Z [obtener_base_stock.py] 07:13:02.621 | ERROR   | Flow run 'inescapable-fennec' - Error general en el flujo de base_stock: must be owner of table base_productos_vigentes
+
+2026-11-11T10:13:02.637454Z [obtener_base_stock.py] 07:13:02.621 | ERROR   | Flow run 'inescapable-fennec' - Encountered exception during execution: InsufficientPrivilege('must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:13:02.699957Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T10:13:02.699957Z [obtener_base_stock.py] 07:13:02.684 | INFO    | Flow run 'inescapable-fennec' - Finished in state Failed('Flow run encountered an exception: InsufficientPrivilege: must be owner of table base_productos_vigentes\n')
+
+2026-11-11T10:13:02.778080Z [obtener_base_stock.py] psycopg2.errors.InsufficientPrivilege: must be owner of table base_productos_vigentes
+
+2026-11-11T10:13:03.168706Z Script con error | nombre=obtener_base_stock.py | exit_code=1 | posicion=1/6 | duracion=452.51s
+
+2026-11-11T10:13:03.168706Z Task run failed with exception: Exception('[FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=452.51s') - Retries are exhausted
+Traceback (most recent call last):
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 56, in ejecutar_script
+    raise subprocess.CalledProcessError(return_code, argumentos)
+subprocess.CalledProcessError: Command '['E:\\ETL\\ETL_DIARCO\\venv\\Scripts\\python.exe', '-u', 'E:\\ETL\\ETL_DIARCO\\scripts\\push\\obtener_base_stock.py']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1014, in run_context
+    yield self
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1673, in run_task_sync
+    engine.call_task_fn(txn)
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1031, in call_task_fn
+    result = call_with_parameters(self.task.fn, parameters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 76, in ejecutar_script
+    raise Exception(
+Exception: [FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=452.51s
+
+2026-11-11T10:13:03.184332Z Finished in state Failed('Task run encountered an exception Exception: [FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=452.51s')
+
+2026-11-11T10:13:03.184332Z Encountered exception during execution: Exception('[FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=452.51s')
+Traceback (most recent call last):
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 56, in ejecutar_script
+    raise subprocess.CalledProcessError(return_code, argumentos)
+subprocess.CalledProcessError: Command '['E:\\ETL\\ETL_DIARCO\\venv\\Scripts\\python.exe', '-u', 'E:\\ETL\\ETL_DIARCO\\scripts\\push\\obtener_base_stock.py']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 989, in run_context
+    yield self
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 1634, in run_flow_sync
+    engine.call_flow_fn()
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 1009, in call_flow_fn
+    result = call_with_parameters(self.flow.fn, self.parameters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 100, in forecast_flow
+    resultado = ejecutar_script.submit(script, posicion, len(scripts)).result()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\futures.py", line 224, in result
+    _result = self._final_state.result(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\compatibility\async_dispatch.py", line 94, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\client\schemas\objects.py", line 394, in result
+    return run_coro_as_sync(
+           ^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\asyncutils.py", line 207, in run_coro_as_sync
+    return call.result()
+           ^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 365, in result
+    return self.future.result(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 192, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eettlin\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 441, in _run_async
+    result = await coro
+             ^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\asyncutils.py", line 188, in coroutine_wrapper
+    return await task
+           ^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\states.py", line 85, in get_state_result
+    return await _get_state_result(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\states.py", line 157, in _get_state_result
+    raise await aget_state_exception(state)
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1014, in run_context
+    yield self
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1673, in run_task_sync
+    engine.call_task_fn(txn)
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1031, in call_task_fn
+    result = call_with_parameters(self.task.fn, parameters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 76, in ejecutar_script
+    raise Exception(
+Exception: [FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=452.51s
+
+2026-11-11T10:13:03.309413Z Finished in state Failed('Flow run encountered an exception: Exception: [FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=452.51s')
+
+2026-11-11T10:13:03.309413Z Engine execution exited with unexpected exception
+Traceback (most recent call last):
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 56, in ejecutar_script
+    raise subprocess.CalledProcessError(return_code, argumentos)
+subprocess.CalledProcessError: Command '['E:\\ETL\\ETL_DIARCO\\venv\\Scripts\\python.exe', '-u', 'E:\\ETL\\ETL_DIARCO\\scripts\\push\\obtener_base_stock.py']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 1791, in run_flow
+    ret_val = run_flow_sync(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 1636, in run_flow_sync
+    return engine.state if return_type == "state" else engine.result()
+                                                       ^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 539, in result
+    raise self._raised
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 989, in run_context
+    yield self
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 1634, in run_flow_sync
+    engine.call_flow_fn()
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\flow_engine.py", line 1009, in call_flow_fn
+    result = call_with_parameters(self.flow.fn, self.parameters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 100, in forecast_flow
+    resultado = ejecutar_script.submit(script, posicion, len(scripts)).result()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\futures.py", line 224, in result
+    _result = self._final_state.result(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\compatibility\async_dispatch.py", line 94, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\client\schemas\objects.py", line 394, in result
+    return run_coro_as_sync(
+           ^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\asyncutils.py", line 207, in run_coro_as_sync
+    return call.result()
+           ^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 365, in result
+    return self.future.result(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 192, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eettlin\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 441, in _run_async
+    result = await coro
+             ^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\asyncutils.py", line 188, in coroutine_wrapper
+    return await task
+           ^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\states.py", line 85, in get_state_result
+    return await _get_state_result(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\states.py", line 157, in _get_state_result
+    raise await aget_state_exception(state)
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1014, in run_context
+    yield self
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1673, in run_task_sync
+    engine.call_task_fn(txn)
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\task_engine.py", line 1031, in call_task_fn
+    result = call_with_parameters(self.task.fn, parameters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\venv\Lib\site-packages\prefect\utilities\callables.py", line 210, in call_with_parameters
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\ETL\ETL_DIARCO\scripts\push\flujo_push_datos_forecast.py", line 76, in ejecutar_script
+    raise Exception(
+Exception: [FAIL] Script con error: obtener_base_stock.py | exit_code=1 | tiempo_transcurrido=452.51s
